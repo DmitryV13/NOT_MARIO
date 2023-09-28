@@ -22,7 +22,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1500, 640), "SFML works!");
     sf::Texture t1;
 
-    if (!t1.loadFromFile("D:\\видео\\grass_path_side.png")){
+    if (!t1.loadFromFile("../Textures/grass_path_side.png")){
         return -1;
     }
 
