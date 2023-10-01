@@ -1,50 +1,6 @@
 ﻿#include <SFML/Graphics.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
-//int main()
-//{
-//    sf::RenderWindow window(sf::VideoMode(900, 900), "SFML works!");
-//    sf::CircleShape shape(100.f);
-//    shape.setFillColor(sf::Color::Green);
-//    shape.setPosition(400, 400);
-//    while (window.isOpen())
-//    {
-//        sf::Event event;
-//        while (window.pollEvent(event))
-//        {
-//            if (event.type == sf::Event::Closed)
-//                window.close();
-//            if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-//                shape.move(0, 5);
-//            }
-//            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-//                shape.move(5, 0);
-//            }
-//            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-//                shape.move(-5, 0);
-//            }
-//            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-//                shape.move(0, -5);
-//            }
-//            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
-//                shape.setScale(2, 2);
-//            }
-//            if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
-//                shape.setScale(0.5, 0.5);
-//            }
-//            
-//        }
-//
-//        window.clear();
-//        window.draw(shape);
-//        window.display();
-//    }
-//
-//    return 0;
-//}
-//
-#include <SFML/Graphics.hpp>
-
 const int H = 10;
 const int W = 100;
 const int size_texture = 60;
@@ -77,7 +33,7 @@ int main()
     const int screenWidth = 1500;
 
     sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight), "NOT_MARIO");
-
+    window.
     // window, which will see usual user
     sf::View view;
     view.reset(sf::FloatRect(0, 0, screenWidth, screenHeight));
@@ -108,7 +64,7 @@ int main()
     float windowBottom = static_cast<float>(window.getSize().y);
 
     // game-area variables
-    int ballSpeed = 10;
+    float ballSpeed = 300;
 
     // sprites
     sf::Sprite block_S(block_T);
@@ -128,18 +84,22 @@ int main()
                 window.close();
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-                if (spritePosition.y + ball_S.getLocalBounds().height >= windowBottom) {
-                    if (spritePosition.y + ball_S.getLocalBounds().height >= absoluteBottom) {
+                if (spritePosition.y + ball_S.getLocalBounds().height + ballSpeed >= windowBottom) {
+                    if (spritePosition.y + ball_S.getLocalBounds().height + ballSpeed >= absoluteBottom) {
                         windowBottom = absoluteBottom;
                         windowTop = absoluteBottom-screenHeight;
                         spritePosition.y = absoluteBottom - ball_S.getLocalBounds().height;
+                        ball_S.setPosition(spritePosition);
+                        view.setCenter(windowRight - (screenWidth / 2), windowBottom - (screenHeight / 2));
+                        window.setView(view);
                     }
                     else {
-                        view.move(0,ballSpeed);
+                        float offset = ballSpeed - (windowBottom - (spritePosition.y + ball_S.getLocalBounds().height));
+                        view.move(0, offset);
                         window.setView(view);
 
-                        windowTop += ballSpeed;
-                        windowBottom += ballSpeed;
+                        windowTop += offset;
+                        windowBottom += offset;
 
                         ball_S.move(0,ballSpeed);
                     }
@@ -150,18 +110,22 @@ int main()
             }
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-                if (spritePosition.x + ball_S.getLocalBounds().width >= windowRight) {
-                    if (spritePosition.x + ball_S.getLocalBounds().width >= absoluteRight) {
+                if (spritePosition.x + ball_S.getLocalBounds().width + ballSpeed >= windowRight) {
+                    if (spritePosition.x + ball_S.getLocalBounds().width + ballSpeed  >= absoluteRight) {
                         windowLeft = absoluteRight-screenWidth;
                         windowRight = absoluteRight;
                         spritePosition.x = absoluteRight - ball_S.getLocalBounds().width;
+                        ball_S.setPosition(spritePosition);
+                        view.setCenter(windowRight-(screenWidth/2),windowBottom-(screenHeight/2));
+                        window.setView(view);
                     }
                     else {
-                        view.move(ballSpeed, 0);
+                        float offset = ballSpeed - (windowRight - (spritePosition.x + ball_S.getLocalBounds().width));
+                        view.move(offset, 0);
                         window.setView(view);
 
-                        windowLeft += ballSpeed;
-                        windowRight += ballSpeed;
+                        windowLeft += offset;
+                        windowRight += offset;
 
                         ball_S.move(ballSpeed, 0);
                     }
@@ -172,18 +136,21 @@ int main()
             }
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-                if (spritePosition.x <= windowLeft) {
-                    if (spritePosition.x <= absoluteLeft) {
+                if (spritePosition.x - ballSpeed <= windowLeft) {
+                    if (spritePosition.x - ballSpeed <= absoluteLeft) {
                         windowLeft = absoluteLeft;
                         windowRight = absoluteLeft+screenWidth;
                         spritePosition.x = absoluteLeft;
+                        ball_S.setPosition(spritePosition);
+                        view.setCenter(windowRight - (screenWidth / 2), windowBottom - (screenHeight / 2));
+                        window.setView(view);
                     }
                     else {
-                        view.move(-ballSpeed, 0);
+                        float offset = ballSpeed - (spritePosition.x - windowLeft);
+                        view.move(-offset, 0);
                         window.setView(view);
-
-                        windowLeft -= ballSpeed;
-                        windowRight -= ballSpeed;
+                        windowLeft -= offset;
+                        windowRight -= offset;
 
                         ball_S.move(-ballSpeed, 0);
                     }
@@ -194,24 +161,21 @@ int main()
             }
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-                if (spritePosition.y <= windowTop) {
-                    spritePosition.y = windowTop;
-                }
-                else {
-                    ball_S.move(0, -ballSpeed);
-                }
-                if (spritePosition.y <= windowTop) {
-                    if (spritePosition.y <= absoluteTop) {
+                if (spritePosition.y - ballSpeed <= windowTop) {
+                    if (spritePosition.y - ballSpeed <= absoluteTop) {
                         windowBottom = absoluteTop+screenHeight;
                         windowTop = absoluteTop;
                         spritePosition.y = absoluteTop;
+                        ball_S.setPosition(spritePosition);
+                        view.setCenter(windowRight - (screenWidth / 2), windowBottom - (screenHeight / 2));
+                        window.setView(view);
                     }
                     else {
-                        view.move(0, -ballSpeed);
+                        float offset = ballSpeed - (spritePosition.y - windowTop);
+                        view.move(0, -offset);
                         window.setView(view);
-
-                        windowTop -= ballSpeed;
-                        windowBottom -= ballSpeed;
+                        windowTop -= offset;
+                        windowBottom -= offset;
 
                         ball_S.move(0, -ballSpeed);
                     }
@@ -239,7 +203,6 @@ int main()
                 }
             }
         }
-
         window.draw(block_S);
         window.draw(ball_S);
         window.display();
