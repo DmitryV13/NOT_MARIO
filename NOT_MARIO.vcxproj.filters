@@ -13,7 +13,7 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Others">
+    <Filter Include="Source Files\ServiceClasses">
       <UniqueIdentifier>{6bbd2e3b-6f6d-4553-94d7-5743fc4cdd8c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -21,24 +21,18 @@
     <ClCompile Include="NOT_MARIO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
-    <ClCompile Include="Zombi.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Ghost.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Enemy.h">
+    <ClInclude Include="Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Zombi.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Ghost.h">
+    <ClInclude Include="Map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
