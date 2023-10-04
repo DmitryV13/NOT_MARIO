@@ -135,9 +135,6 @@
   <ItemGroup>
     <ClCompile Include="NOT_MARIO.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\Видео\grass_path_side.png" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
