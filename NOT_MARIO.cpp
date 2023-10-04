@@ -205,25 +205,24 @@ void Enemy::Collision()
 }
 /*
 void Gost::MoveEnemy(std::string map[H], float startX, int startY) {
-    int lookAhead = 3; // Сколько клеток вперед смотреть
+    int lookAhead = 3; 
     bool obstacleAhead = false;
     update(startX, startY);
-    // Проверка наличия преграды впереди
+   
     for (int i = 1; i <= lookAhead; ++i) {
         int nextX = (int)(rect.left / size_texture) + i;
         int nextY = (int)(rect.top / size_texture);
 
-        // Проверка на выход за границы карты
         if (nextX >= W) {
             break;
         }
 
-        // Проверка на преграду (символ 'B')
+  
         if (map[nextY][nextX] == 'B') {
             obstacleAhead = true;
 
-            // Проверка, можно ли двигаться вверх
-            int maxHeight = 3; // Максимальная высота преграды, чтобы можно было перепрыгнуть
+            
+            int maxHeight = 3;
             int checkX = nextX;
             int checkY = nextY - 1;
 
@@ -233,19 +232,19 @@ void Gost::MoveEnemy(std::string map[H], float startX, int startY) {
             }
 
             if (maxHeight > 0) {
-                // Можно перепрыгнуть
-                dy = -0.2; // Измените это значение на желаемое для силы прыжка
+              
+                dy = -0.2;
                 break;
             }
             else {
-                // Вернуться обратно
+               
                 dx = -dx;
                 break;
             }
         }
     }
 
-    // Если нет преграды, продолжить движение в текущем направлении
+    
     if (!obstacleAhead) {
         return;
     }
