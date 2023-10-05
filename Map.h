@@ -1,5 +1,5 @@
-#pragma once
-class Map
-{
-};
-
+//#pragma once
+//class Map
+//{
+//};
+//

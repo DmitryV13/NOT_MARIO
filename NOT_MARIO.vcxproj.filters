@@ -18,14 +18,14 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="NOT_MARIO.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="NOT_MARIO.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
