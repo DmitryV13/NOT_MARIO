@@ -133,7 +133,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="NOT_MARIO.cpp" />
+    <ClCompile Include="Zombi.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Ghost.h" />
+    <ClInclude Include="Zombi.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

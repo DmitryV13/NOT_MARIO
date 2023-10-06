@@ -1,254 +1,13 @@
 ﻿#include <SFML/Graphics.hpp>
 #include <SFML/Window/Keyboard.hpp>
-const int H = 20;
-const int W = 100;
-const int size_texture = 73;
-const int screenHeight = 600;
-const int screenWidth = 1500;
-
-std::string TileMap[H] = {
-    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-    "A                                                                                                   A",
-    "A                                                                                                   A",
-    "A                                                                                                   A",
-    "A                                                                                                   A",
-    "A                                                                                                   A",
-    "A                                                                                                   A",
-    "A                                                                                                   A",
-    "A                                                                                                   A",
-    "A                 7                                                                                 A",
-    "A                OPQ                                                                                A",
-    "A     0  98            9 0                                                                          A",
-    "A    BCCCCCCCCD        OPQ                                                                          A",
-    "A)   EFFFFFFFFG                                                                                     A",
-    "AD   NIIIIIIIIM    17 0  )                                                                          A",
-    "AG      0          BCCCCCCCCD                                                                       A",
-    "AG 19 BCCCD   0   9EFFFFFFFFG                                                                       A",
-    "AJKCCLHFFFJKCCCCCCLHFFFFFFFFJKFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA",
-    "AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA",
-    "AIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIA",
-};
-enum Direction { Left, Right };
-Direction gostDirection = Right;  
-Direction zombiDirection = Right; 
-
-class Enemy
-{
-public:
-    virtual void set(int x, int y) = 0;
-    virtual void update(float time, float y) = 0;
-    void Collision();
-
-    sf::Sprite enemy_S;
-    sf::Texture enemy_T;
-    sf::FloatRect rect;
-    float currentFrame;
-    float dx, dy;
-    float HP;
-    float power;
-    bool life;
-};
-
-class Gost : public Enemy
-{
-public:
-    void set(int x, int y) override;
-    void update(float time, float y) override;
-    Gost() :Enemy() {
-        HP = 100;
-        dx = 0.01;
-        dy = 0.01;
-        power = 20;
-        life = true;
-    }
-
-    ~Gost() = default;
-    //void battle(float HP_PLAYER, float power_player);
-    //void MoveEnemy(std::string map[H], float startX, int startY);
-};
-class Zombi:public  Enemy
-{
-public:
-    void set(int x, int y) override;
-    void update(float time, float y) override;
-    Zombi() :Enemy() {
-        HP = 300;
-        dx = 0.02;
-        dy = 0.02;
-        power = 50;
-        life = true;
-    }
-    ~Zombi() = default;
-
-private:
-
-};
+#include <string>
+#include "Enemy.h"
+#include "Ghost.h"
+#include "Zombi.h"
 
 
 
-void Gost::set(int x, int y)
-{
 
-    enemy_S.setTexture(enemy_T);
-    rect = sf::FloatRect(x, y, 60, 60);
-    currentFrame = 0;
-
-}
-void Zombi::set(int x, int y)
-{
-
-    enemy_S.setTexture(enemy_T);
-    rect = sf::FloatRect(x, y, 20, 60);
-    currentFrame = 0;
-
-
-}
-void Gost::update(float time, float y)
-{
-
-    rect.top = y;
-    rect.left += dx * time;
-    Collision();
-    //currentFrame += time * 0.005;
-     //if (currentFrame > 2)currentFrame -= 2;
-    if (dx > 0) {
-        gostDirection = Right;
-    }
-    else if (dx < 0) {
-        gostDirection = Left;
-    }
-    if (gostDirection == Left) {
-        enemy_S.setTextureRect(sf::IntRect(60, 0, -60, 60));
-    }
-    else {
-        enemy_S.setTextureRect(sf::IntRect(0, 0, 60, 60));
-
-    }
-     
-   
-    enemy_S.setPosition(rect.left, rect.top);
-
-}
-void Zombi::update(float time, float y)
-{
-    rect.top = y;
-    float newX = rect.left + dx * time;
-    bool collisionDetected = false;
-
-    if (newX >= 0 && newX <= (W * size_texture - rect.width)) {
-       
-        for (int j = (int)(newX / size_texture); j < (int)((newX + rect.width) / size_texture); j++) {
-            for (int i = (int)(rect.top / size_texture); i < (int)((rect.top + rect.height) / size_texture); i++) {
-                if (TileMap[i][j + 1] == 'B' || TileMap[i][j] == 'G' || TileMap[i][j] == 'D' || TileMap[i][j] == 'E' || TileMap[i][j] == '9' || TileMap[i][j] == 'F') {
-                    collisionDetected = true;
-                    break;
-                }
-            }
-            if (collisionDetected) {
-                break;
-            }
-        }
-    }
-    else {
-        collisionDetected = true; 
-    }
-
-    if (collisionDetected) {
-        dx = -dx; 
-        if (dx > 0) {
-            zombiDirection = Right;
-        }
-        else if (dx < 0) {
-            zombiDirection = Left;
-        }
-    }
-    else {
-       
-        rect.left = newX;
-    }
-
-    Collision();
-
-    currentFrame += time  * 0.002;
-    if (currentFrame > 5) currentFrame -= 5;
-
-    
-    if (dx > 0) {
-        zombiDirection = Right;
-    }
-    else if (dx < 0) {
-        zombiDirection = Left;
-    }
-    if (zombiDirection == Left) {
-
-        enemy_S.setTextureRect(sf::IntRect(50 * int(currentFrame), 0, -50, 60));
-    }
-    else {
-
-        enemy_S.setTextureRect(sf::IntRect(50 * int(currentFrame), 0, 50, 60));
-    }
-    enemy_S.setPosition(rect.left, rect.top);
-
-}
-void Enemy::Collision()
-{
-    for (int j = (int)(rect.left / size_texture); j < (int)((rect.left + rect.width) / size_texture); j++) {
-        for (int i = (int)(rect.top / size_texture); i < (int)((rect.top + rect.height) / size_texture); i++) {
-            if (TileMap[i][j + 1] == 'B' || TileMap[i][j] == 'G'|| TileMap[i][j] == 'D'|| TileMap[i][j] == 'E'|| TileMap[i][j] == '9'|| TileMap[i][j] == 'F') {
-
-
-                dx = -dx;
-                return;
-            }
-        }
-    }
-}
-/*
-void Gost::MoveEnemy(std::string map[H], float startX, int startY) {
-    int lookAhead = 3; 
-    bool obstacleAhead = false;
-    update(startX, startY);
-   
-    for (int i = 1; i <= lookAhead; ++i) {
-        int nextX = (int)(rect.left / size_texture) + i;
-        int nextY = (int)(rect.top / size_texture);
-
-        if (nextX >= W) {
-            break;
-        }
-
-  
-        if (map[nextY][nextX] == 'B') {
-            obstacleAhead = true;
-
-            
-            int maxHeight = 3;
-            int checkX = nextX;
-            int checkY = nextY - 1;
-
-            while (checkY >= 0 && map[checkY][checkX] == 'B') {
-                --checkY;
-                --maxHeight;
-            }
-
-            if (maxHeight > 0) {
-              
-                dy = -0.2;
-                break;
-            }
-            else {
-               
-                dx = -dx;
-                break;
-            }
-        }
-    }
-
-    
-    if (!obstacleAhead) {
-        return;
-    }
-}*/
 
 
 //  Keys for control
@@ -261,8 +20,7 @@ void Gost::MoveEnemy(std::string map[H], float startX, int startY) {
 
 int main()
 {
-    Gost gost;
-    Zombi zombi;
+    
     sf::Clock clock;
     //window characteristics
    
@@ -291,15 +49,24 @@ int main()
     // 
     // 
     // //
- 
-    if (!gost.enemy_T.loadFromFile("Images/gost.png")) {
+
+    
+
+    sf::Texture ghost_T;
+    sf::Texture zombie_T;
+    if (!ghost_T.loadFromFile("Images/ghost.png")) {
         return -1;
     }
-    gost.set(225, 1200);
-    if (!zombi.enemy_T.loadFromFile("Images/zombi.png")) {
+    
+    if (!zombie_T.loadFromFile("Images/zombi.png")) {
         return -1;
     }
-    zombi.set(877, 1200);
+
+    Ghost ghost(ghost_T, 225, 1200);
+    Zombi zombi(zombie_T, 877, 1200);
+
+    //gost.set(225, 1200);
+    //zombi.set(877, 1200);
     
    
     ////
@@ -341,13 +108,13 @@ int main()
         // 
         // 
         // //
-        float time = clock.getElapsedTime().asMicroseconds();
+    	auto time = clock.getElapsedTime().asMicroseconds();
         clock.restart();
         time = time / 500;
         if (time > 20) time = 20;
    
         zombi.update(time, 1200);
-        gost.update(time,1200);
+        ghost.update(time,1200);
         //gost.MoveEnemy(TileMap, time, 1200);
         ////
         // 
@@ -567,7 +334,7 @@ int main()
                     window.draw(block_S);
                 }
             }
-            window.draw(gost.enemy_S);
+            window.draw(ghost.enemy_S);
             window.draw(zombi.enemy_S);
             window.draw(ball_S);
             window.display();
