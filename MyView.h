@@ -1,6 +1,8 @@
 #pragma once
-
-#include "TileMap.h"
+#include "Map.h"
+#include <SFML/Graphics.hpp>
+#ifndef MYVIEW_H
+#define MYVIEW_H
 
 using sf::View;
 using sf::FloatRect;
@@ -26,10 +28,12 @@ private:
 public:
 	View view;
 
-	MyView(TileMap map, double screenWidth_, double screenHeight_);
+	MyView(Map map, double windowRight_, double windowBottom_, double screenWidth_, double screenHeight_);
 	void updateView(FloatRect coordinates);
 	void updateLeft(double left);
 	void updateRight(double right);
 	void updateTop(double top);
 	void updateBottom(double bottom);
 };
+
+#endif
