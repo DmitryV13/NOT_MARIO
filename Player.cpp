@@ -1,123 +1,98 @@
-//#include "Player.h"
-//
-//
-//Player::Player(Texture hero_T, const float mapW, const float mapH, const float size_texture, const float sH, const float sW) 
-//    : absoluteRight(mapW * size_texture), 
-//    absoluteBottom(mapH * size_texture), 
-//    absoluteTop(0.0f), 
-//    absoluteLeft(0.0f), 
-//    windowLeft(0.0f), 
-//    windowTop(0.0f), 
-//    windowRight(sW), 
-//    windowBottom(sH),
-//    screenHeight(sH), 
-//    screenWidth(sW){
-//    player_S.setTexture(hero_T);
-//    player_S.setPosition(0, 0);
-//}
-//
-//void Player::moveRight(RenderWindow& window, View& view) {
-//    Vector2f spritePosition = player_S.getPosition();
-//    if (spritePosition.x + player_S.getLocalBounds().width + playerSpeed >= windowRight) {
-//        if (spritePosition.x + player_S.getLocalBounds().width + playerSpeed >= absoluteRight) {
-//            windowLeft = absoluteRight - screenWidth;
-//            windowRight = absoluteRight;
-//            spritePosition.x = absoluteRight - player_S.getLocalBounds().width;
-//            player_S.setPosition(spritePosition);
-//            view.setCenter(windowRight - (screenWidth / 2), windowBottom - (screenHeight / 2));
-//            window.setView(view);
-//        }
-//        else {
-//            float offset = playerSpeed - (windowRight - (spritePosition.x + player_S.getLocalBounds().width));
-//            view.move(offset, 0);
-//            window.setView(view);
-//
-//            windowLeft += offset;
-//            windowRight += offset;
-//
-//            player_S.move(playerSpeed, 0);
-//        }
-//    }
-//    else {
-//        player_S.move(playerSpeed, 0);
-//    }
-//}
-//void Player::moveLeft(RenderWindow& window, View& view) {
-//    Vector2f spritePosition = player_S.getPosition();
-//    if (spritePosition.x - playerSpeed <= windowLeft) {
-//        if (spritePosition.x - playerSpeed <= absoluteLeft) {
-//            windowLeft = absoluteLeft;
-//            windowRight = absoluteLeft + screenWidth;
-//            spritePosition.x = absoluteLeft;
-//            player_S.setPosition(spritePosition);
-//            view.setCenter(windowRight - (screenWidth / 2), windowBottom - (screenHeight / 2));
-//            window.setView(view);
-//        }
-//        else {
-//            float offset = playerSpeed - (spritePosition.x - windowLeft);
-//            view.move(-offset, 0);
-//            window.setView(view);
-//            windowLeft -= offset;
-//            windowRight -= offset;
-//
-//            player_S.move(-playerSpeed, 0);
-//        }
-//    }
-//    else {
-//        player_S.move(-playerSpeed, 0);
-//    }
-//}
-//
-//void Player::moveUp(RenderWindow& window, View& view) {
-//    Vector2f spritePosition = player_S.getPosition();
-//    if (spritePosition.y - playerSpeed <= windowTop) {
-//        if (spritePosition.y - playerSpeed <= absoluteTop) {
-//            windowBottom = absoluteTop + screenHeight;
-//            windowTop = absoluteTop;
-//            spritePosition.y = absoluteTop;
-//            player_S.setPosition(spritePosition);
-//            view.setCenter(windowRight - (screenWidth / 2), windowBottom - (screenHeight / 2));
-//            window.setView(view);
-//        }
-//        else {
-//            float offset = playerSpeed - (spritePosition.y - windowTop);
-//            view.move(0, -offset);
-//            window.setView(view);
-//            windowTop -= offset;
-//            windowBottom -= offset;
-//
-//            player_S.move(0, -playerSpeed);
-//        }
-//    }
-//    else {
-//        player_S.move(0, -playerSpeed);
-//    }
-//}
-//
-//void Player::moveDown(RenderWindow& window, View& view) {
-//    Vector2f spritePosition = player_S.getPosition();
-//    if (spritePosition.y + player_S.getLocalBounds().height + playerSpeed >= windowBottom) {
-//        if (spritePosition.y + player_S.getLocalBounds().height + playerSpeed >= absoluteBottom) {
-//            windowBottom = absoluteBottom;
-//            windowTop = absoluteBottom - screenHeight;
-//            spritePosition.y = absoluteBottom - player_S.getLocalBounds().height;
-//            player_S.setPosition(spritePosition);
-//            view.setCenter(windowRight - (screenWidth / 2), windowBottom - (screenHeight / 2));
-//            window.setView(view);
-//        }
-//        else {
-//            float offset = playerSpeed - (windowBottom - (spritePosition.y + player_S.getLocalBounds().height));
-//            view.move(0, offset);
-//            window.setView(view);
-//
-//            windowTop += offset;
-//            windowBottom += offset;
-//
-//            player_S.move(0, playerSpeed);
-//        }
-//    }
-//    else {
-//        player_S.move(0, playerSpeed);
-//    }
-//}
-//
+#include "Player.h"
+#include <string.h>
+#include<iostream>
+
+    Player::Player(Texture& texture, RenderWindow& window_, Map& levelMap_)
+        :absoluteRight(levelMap.Width* levelMap.sizeTexture)
+        ,absoluteBottom(levelMap.Height* levelMap.sizeTexture)
+        ,levelMap(levelMap_)
+        ,player_S(texture)
+        ,coordinates(547, 173, 56, 73)
+        ,speedX(0)
+        ,speedY(0)
+        ,currentFrame(0){
+        player_S.setTextureRect(sf::IntRect(0, 23, 56, 73));
+    }
+
+    // Collisions willwork only if there is a border on global map
+    void Player::update(double time, RenderWindow& window) {
+        coordinates.left += speedX * time;
+        checkingBordersX();
+        checkCollisionX();
+        
+
+        fallingTest();
+        if (!onGround) {
+            speedY = speedY + acceleration * time;
+        }
+        coordinates.top += speedY * (time * heightCoeficient);
+        checkingBordersY();
+        checkCollisionY();
+        
+        changeFrames(time);
+        speedX = 0;
+        player_S.setPosition(coordinates.left, coordinates.top);
+    }
+
+    void Player::checkCollisionX() {
+        for (int i = coordinates.top / 73; i < ((coordinates.top + coordinates.height) / 73); i++)
+            for (int j = coordinates.left / 73; j < ((coordinates.width + coordinates.left) / 73); j++) {
+                if (levelMap.TileMap[i][j] != ' ') {
+                    if (speedX > 0) {
+                        coordinates.left = j * levelMap.sizeTexture - coordinates.width;
+                    }
+                    if (speedX < 0) {
+                        coordinates.left = j * levelMap.sizeTexture + levelMap.sizeTexture;
+                    }
+                }
+            }
+    }
+
+    void Player::checkCollisionY() {
+        for (int i = coordinates.top / 73; i < ((coordinates.top + coordinates.height) / 73); i++)
+            for (int j = coordinates.left / 73; j < ((coordinates.width + coordinates.left) / 73); j++) {
+                if (levelMap.TileMap[i][j] != ' ') {
+                    if (speedY > 0) {
+                        coordinates.top = i * levelMap.sizeTexture - coordinates.height;
+                        speedY = 0;
+                        onGround = true;
+                    }
+                    if (speedY < 0) {
+                        coordinates.top = i * levelMap.sizeTexture + levelMap.sizeTexture;
+                        speedY = 0;
+                    }
+                }
+            }
+    }
+
+    void Player::changeFrames(double& time) {
+        currentFrame += 0.004 * time;
+        if (currentFrame > 6) currentFrame -= 6;
+        if (speedX > 0) {
+            player_S.setTextureRect(sf::IntRect(75 * (int)currentFrame, 23, 56, 73));
+        }
+        if (speedX < 0) {
+            player_S.setTextureRect(sf::IntRect(75 * (int)currentFrame + 75, 23, -56, 73));
+        }
+    }
+
+    void Player::fallingTest(){
+        if (levelMap.TileMap[((int)(coordinates.top + coordinates.height)) / 73][(int)(coordinates.left / 73)] == ' ' &&
+            levelMap.TileMap[((int)(coordinates.top + coordinates.height)) / 73][(int)((coordinates.width + coordinates.left) / 73)] == ' ') {
+            onGround = false;// only one change in this.class
+        }
+    }
+
+    void Player::checkingBordersX() {
+        if (coordinates.left + coordinates.width >= absoluteRight)
+            coordinates.left = absoluteRight - coordinates.width;
+        if (coordinates.left <= 0)
+            coordinates.left = 0;
+    }
+
+    void Player::checkingBordersY() {
+        if (coordinates.top + coordinates.height >= absoluteBottom)
+            coordinates.top = absoluteBottom - coordinates.height;
+        if (coordinates.top <= 0)
+            coordinates.top = 0;
+    }
