@@ -1,5 +1,5 @@
+#include "stdafx.h"
 #include "MyView.h"
-#include<iostream>
 
 MyView::MyView(Map map, double windowRight_, double windowBottom_, double screenWidth_, double screenHeight_)
 	:absoluteRight(map.Width * map.sizeTexture)

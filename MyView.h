@@ -1,8 +1,6 @@
 #pragma once
+
 #include "Map.h"
-#include <SFML/Graphics.hpp>
-#ifndef MYVIEW_H
-#define MYVIEW_H
 
 using sf::View;
 using sf::FloatRect;
@@ -35,5 +33,3 @@ public:
 	void updateTop(double top);
 	void updateBottom(double bottom);
 };
-
-#endif
