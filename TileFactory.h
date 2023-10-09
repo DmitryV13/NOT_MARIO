@@ -1,17 +1,12 @@
 #pragma once
 #include "Tile.h"
 
-class TileFactory {
+class TileFactory{
 private:
-
-
-
-sf::IntRect initRect_tile(char tile);
-
+	std::unordered_map<std::string, Tile>  blocks;
+	void initBlocks();
 public:
-    TileFactory();
-    Tile tile_map_inFactory[20][100];
-
-
+	TileFactory();
+	//Tile getBlock(std::string blockName);
 };
 
