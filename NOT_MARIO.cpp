@@ -1,5 +1,4 @@
-#include <SFML/Graphics.hpp>
-#include <SFML/Window/Keyboard.hpp>
+﻿#include <SFML/Graphics.hpp>
 
 
 const int H = 20;
@@ -220,8 +219,6 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
         {
-            sf::Vector2f spritePosition = ball_S.getPosition();
-
             if (event.type == sf::Event::Closed)
                 window.close();
 
@@ -339,6 +336,7 @@ int main()
         window.draw(ball_S);
         window.display();
     }
-   
+
     return 0;
 }
+// df,ldlfd
