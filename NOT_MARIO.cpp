@@ -1,9 +1,132 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
+
 const int H = 20;
 const int W = 100;
 const int size_texture = 73;
+
+class Map {
+private:
+    struct Node {
+        char front_block;
+        char back_block;
+        short int matrix;
+        Node() {
+            this->front_block = ' ';
+            this->back_block = ' ';
+            this->matrix = 0;
+        }
+    };
+    Node* pos;
+public:
+    Map() {
+        pos = new Node{};
+    }
+    short int get_matrix() {
+        return pos->matrix;
+    }
+    char get_front_block() {
+        return pos->front_block;
+    }
+    char get_back_block() {
+        return pos->back_block;
+    }
+    void map_build(char block) {
+        pos->front_block = block;
+    }
+    sf::Sprite map_paint(int i, int j, sf::Sprite block_S) {
+        if (pos->front_block == 'B') {
+            block_S.setTextureRect(sf::IntRect(97 + 3, 18 + 3, size_texture, size_texture));
+            block_S.setPosition(j * size_texture, i * size_texture);            
+        }
+        if (pos->front_block == 'C') {
+            block_S.setTextureRect(sf::IntRect(183 + 3, 18 + 3, size_texture, size_texture));
+            block_S.setPosition(j * size_texture, i * size_texture);           
+        }
+        if (pos->front_block == 'D') {
+            block_S.setTextureRect(sf::IntRect(267 + 3, 18 + 3, size_texture, size_texture));
+            block_S.setPosition(j * size_texture, i * size_texture);            
+        }
+        if (pos->front_block == 'E') {
+            block_S.setTextureRect(sf::IntRect(97 + 3, 102 + 3, size_texture, size_texture));
+            block_S.setPosition(j * size_texture, i * size_texture);            
+        }
+        if (pos->front_block == 'F') {
+            block_S.setTextureRect(sf::IntRect(183 + 3, 102 + 3, size_texture, size_texture));
+            block_S.setPosition(j * size_texture, i * size_texture);            
+        }
+        if (pos->front_block == 'G') {
+            block_S.setTextureRect(sf::IntRect(267 + 3, 102 + 3, size_texture, size_texture));
+            block_S.setPosition(j * size_texture, i * size_texture);            
+        }
+        if (pos->front_block == 'H') {
+            block_S.setTextureRect(sf::IntRect(97 + 3, 188 + 3, size_texture, size_texture));
+            block_S.setPosition(j * size_texture, i * size_texture);            
+        }
+        if (pos->front_block == 'I') {
+            block_S.setTextureRect(sf::IntRect(183 + 3, 188 + 3, size_texture, size_texture));
+            block_S.setPosition(j * size_texture, i * size_texture);            
+        }
+        if (pos->front_block == 'J') {
+            block_S.setTextureRect(sf::IntRect(267 + 3, 188 + 3, size_texture, size_texture));
+            block_S.setPosition(j * size_texture, i * size_texture);            
+        }
+        if (pos->front_block == 'K') {
+            block_S.setTextureRect(sf::IntRect(352 + 3, 182 + 7, size_texture, size_texture));
+            block_S.setPosition(j * size_texture, i * size_texture);            
+        }
+        if (pos->front_block == 'L') {
+            block_S.setTextureRect(sf::IntRect(13 + 3, 188 + 3, size_texture, size_texture));
+            block_S.setPosition(j * size_texture, i * size_texture);            
+        }
+        if (pos->front_block == 'M') {
+            block_S.setTextureRect(sf::IntRect(352 + 3, 272 + 3, size_texture, size_texture));
+            block_S.setPosition(j * size_texture, i * size_texture);            
+        }
+        if (pos->front_block == 'N') {
+            block_S.setTextureRect(sf::IntRect(13 + 3, 272 + 3, size_texture, size_texture));
+            block_S.setPosition(j * size_texture, i * size_texture);            
+        }
+        if (pos->front_block == 'O') {
+            block_S.setTextureRect(sf::IntRect(97 + 3, 272 + 3, size_texture, size_texture));
+            block_S.setPosition(j * size_texture, i * size_texture);            
+        }
+        if (pos->front_block == 'P') {
+            block_S.setTextureRect(sf::IntRect(183 + 3, 272 + 3, size_texture, size_texture));
+            block_S.setPosition(j * size_texture, i * size_texture);            
+        }
+        if (pos->front_block == 'Q') {
+            block_S.setTextureRect(sf::IntRect(267 + 3, 272 + 3, size_texture, size_texture));
+            block_S.setPosition(j * size_texture, i * size_texture);            
+        }
+        if (pos->front_block == '0') {
+            block_S.setTextureRect(sf::IntRect(454, 32, 45, 45));
+            block_S.setPosition(j * size_texture, i * size_texture + 30);            
+        }
+        if (pos->front_block == '1') {
+            block_S.setTextureRect(sf::IntRect(514, 39, 35, 37));
+            block_S.setPosition(j * size_texture, i * size_texture + 37);            
+        }
+        if (pos->front_block == '7') {
+            block_S.setTextureRect(sf::IntRect(445, 90, 170, 180));
+            block_S.setPosition(j * size_texture, i * size_texture - 104);            
+        }
+        if (pos->front_block == '8') {
+            block_S.setTextureRect(sf::IntRect(618, 105, 170, 170));
+            block_S.setPosition(j * size_texture, i * size_texture - 90);            
+        }
+        if (pos->front_block == '9') {
+            block_S.setTextureRect(sf::IntRect(478, 300, 80, 38));
+            block_S.setPosition(j * size_texture, i * size_texture + 35);            
+        }
+        if (pos->front_block == ')') {
+            block_S.setTextureRect(sf::IntRect(566, 300, 80, 38));
+            block_S.setPosition(j * size_texture, i * size_texture + 35);           
+        }
+       return block_S;
+    }
+};
 
 std::string TileMap[H] = {
     "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
@@ -28,6 +151,7 @@ std::string TileMap[H] = {
     "AIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIA",
 };
 
+
 //  Keys for control
 // W - forward
 // S - backward
@@ -38,6 +162,7 @@ std::string TileMap[H] = {
 
 int main()
 {
+    
     //window characteristics
     const int screenHeight = 600;
     const int screenWidth = 1500;
@@ -79,8 +204,15 @@ int main()
     // sprites
     sf::Sprite block_S(block_T);
     sf::Sprite ball_S(ball_T);
-    //block_S.setTextureRect(sf::IntRect(183, 18, size_texture, size_texture));
     ball_S.setPosition(0, 0);
+
+    // build Map
+    Map TilMap[H][W];
+    for (int i = 0; i < H; i++) {
+        for (int j = 0; j < W; j++) {
+            TilMap[i][j].map_build(TileMap[i][j]);
+        }
+    }
 
     //  ---------GAME_CODE----------
     while (window.isOpen())
@@ -196,109 +328,17 @@ int main()
             }
 
         }
-        //отрисовка карты!!!
+        // Map rendering
         window.clear(sf::Color::White);
-        for (int i = 0; i < H; i++) {
-            for (int j = 0; j < W; j++) {
-                if (TileMap[i][j] == ' ') { 
-                    continue; 
-                }
-                if (TileMap[i][j] == 'B') {
-                    block_S.setTextureRect(sf::IntRect(97+3, 18+3, size_texture, size_texture)); 
-                    block_S.setPosition(j* size_texture, i* size_texture);
-                }
-                if (TileMap[i][j] == 'C') {
-                    block_S.setTextureRect(sf::IntRect(183+3, 18+3, size_texture, size_texture));
-                    block_S.setPosition(j* size_texture, i* size_texture);
-                }
-                if (TileMap[i][j] == 'D') {
-                    block_S.setTextureRect(sf::IntRect(267+3, 18+3, size_texture, size_texture));
-                    block_S.setPosition(j* size_texture, i* size_texture);
-                }
-                if (TileMap[i][j] == 'E') {
-                    block_S.setTextureRect(sf::IntRect(97+3, 102+3, size_texture, size_texture));
-                    block_S.setPosition(j* size_texture, i* size_texture);
-                }
-                if (TileMap[i][j] == 'F') {
-                    block_S.setTextureRect(sf::IntRect(183+3, 102+3, size_texture, size_texture));
-                    block_S.setPosition(j* size_texture, i* size_texture);
-                }
-                if (TileMap[i][j] == 'G') {
-                    block_S.setTextureRect(sf::IntRect(267+3, 102+3, size_texture, size_texture));
-                    block_S.setPosition(j* size_texture, i* size_texture);
-                }
-                if (TileMap[i][j] == 'H') {
-                    block_S.setTextureRect(sf::IntRect(97+3, 188+3, size_texture, size_texture));
-                    block_S.setPosition(j* size_texture, i* size_texture);
-                }
-                if (TileMap[i][j] == 'I') {
-                    block_S.setTextureRect(sf::IntRect(183+3, 188+3, size_texture, size_texture));
-                    block_S.setPosition(j* size_texture, i* size_texture);
-                }
-                if (TileMap[i][j] == 'J') {
-                    block_S.setTextureRect(sf::IntRect(267+3, 188+3, size_texture, size_texture));
-                    block_S.setPosition(j* size_texture, i* size_texture);
-                }
-                if (TileMap[i][j] == 'K') {
-                    block_S.setTextureRect(sf::IntRect(352+3, 182+7, size_texture, size_texture));
-                    block_S.setPosition(j* size_texture, i* size_texture);
-                }
-                if (TileMap[i][j] == 'L') {
-                    block_S.setTextureRect(sf::IntRect(13+3, 188+3, size_texture, size_texture));
-                    block_S.setPosition(j* size_texture, i* size_texture);
-                }
-                if (TileMap[i][j] == 'M') {
-                    block_S.setTextureRect(sf::IntRect(352+3, 272+3, size_texture, size_texture));
-                    block_S.setPosition(j* size_texture, i* size_texture);
-                }
-                if (TileMap[i][j] == 'N') {
-                    block_S.setTextureRect(sf::IntRect(13+3, 272+3, size_texture, size_texture));
-                    block_S.setPosition(j* size_texture, i* size_texture);
-                }
-                if (TileMap[i][j] == 'O') {
-                    block_S.setTextureRect(sf::IntRect(97+3, 272+3, size_texture, size_texture));
-                    block_S.setPosition(j* size_texture, i* size_texture);
-                }
-                if (TileMap[i][j] == 'P') {
-                    block_S.setTextureRect(sf::IntRect(183+3, 272+3, size_texture, size_texture));
-                    block_S.setPosition(j* size_texture, i* size_texture);
-                }
-                if (TileMap[i][j] == 'Q') {
-                    block_S.setTextureRect(sf::IntRect(267+3, 272+3, size_texture, size_texture));
-                    block_S.setPosition(j* size_texture, i* size_texture);
-                }
-                if (TileMap[i][j] == 'A'){
-                    continue;
-                }
-                if (TileMap[i][j] == '0') {
-                    block_S.setTextureRect(sf::IntRect(454, 32, 45, 45));
-                    block_S.setPosition(j * size_texture, i * size_texture+30);
-                }
-                if (TileMap[i][j] == '1') {
-                    block_S.setTextureRect(sf::IntRect(514, 39, 35, 37));
-                    block_S.setPosition(j * size_texture, i * size_texture+37);
-                }
-                if (TileMap[i][j] == '7') {
-                    block_S.setTextureRect(sf::IntRect(445, 90, 170, 180));
-                    block_S.setPosition(j* size_texture, i* size_texture-104);
-                }
-                if (TileMap[i][j] == '8') {
-                    block_S.setTextureRect(sf::IntRect(618, 105, 170, 170));
-                    block_S.setPosition(j * size_texture, i * size_texture - 90);
-                }
-                if (TileMap[i][j] == '9') {
-                    block_S.setTextureRect(sf::IntRect(478, 300, 80, 38));
-                    block_S.setPosition(j * size_texture, i * size_texture +35);
-                }
-                if (TileMap[i][j] == ')') {
-                    block_S.setTextureRect(sf::IntRect(566, 300, 80, 38));
-                    block_S.setPosition(j * size_texture, i * size_texture +35);
-                }
-                window.draw(block_S);
+        for (int i = 0; i < H; i++){
+            for (int j = 0; j < W; j++){
+                if (TilMap[i][j].get_front_block() == ' ' || TilMap[i][j].get_front_block() == 'A') continue;
+                window.draw(TilMap[i][j].map_paint(i, j, block_S)); 
             }
-        }
+        }         
         window.draw(ball_S);
         window.display();
     }
+   
     return 0;
 }
