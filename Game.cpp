@@ -48,6 +48,7 @@
 				}
 				if (event.key.code == sf::Keyboard::Space) {
 					player->resetAnimationTimer();
+					player->resetNTHJump();
 				}
 			}
 		}
@@ -61,6 +62,7 @@
 			player->setPosition(
 				player->getPosition().x,
 				window.getSize().y - player->getGlobalBounds().height);
+			player->resetJumpAccess();
 		}
 		if (player->getPosition().y < 0.f) {
 			player->setPosition(
@@ -82,6 +84,10 @@
 	void Game::renderPLayer(){
 		player->render(window);
 	}
+
+	//void Game::renderMap(){
+	//	sandbox.render(window);
+	//}
 	
 	void Game::updatePlayer(){
 		player->update();
@@ -90,7 +96,7 @@
 	void Game::render(){
 		window.clear(sf::Color::White);
 	
-	
+		//renderMap();
 		renderPLayer();
 		window.display();
 	}

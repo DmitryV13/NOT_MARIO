@@ -1,12 +1,11 @@
-#pragma once
-#include "Tile.h"
-
-class TileFactory{
-private:
-	std::unordered_map<std::string, Tile>  blocks;
-	void initBlocks();
-public:
-	TileFactory();
-	//Tile getBlock(std::string blockName);
-};
+//#pragma once
+//#include "Tile.h"
+//
+//enum BLOCK_TYPE { VOID = 0, GRANITE, EARTH, BUSH, WATER, LADDER };
+//
+//class TileFactory{
+//public:
+//	TileFactory();
+//	Tile* getBlock(int e);
+//};
 
