@@ -147,6 +147,7 @@
     <ClCompile Include="NOT_MARIO.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="TextureFactory.cpp" />
     <ClCompile Include="TileFactory.cpp" />
     <ClCompile Include="TileMap.cpp" />
   </ItemGroup>
@@ -157,6 +158,7 @@
     <ClInclude Include="MyView.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="TextureFactory.h" />
     <ClInclude Include="TileFactory.h" />
     <ClInclude Include="TileMap.h" />
   </ItemGroup>
