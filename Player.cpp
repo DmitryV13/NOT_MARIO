@@ -43,15 +43,29 @@
 
     void Player::initPhysics(){
         velocityMax = 4.f;
-        velocityMin = 1.f;
+        velocityMin = 0.5f;
         acceleration = 1.7f;
-        deceleration = 0.77f;
-        gravity = 4.f;
+        deceleration = 0.77f;//0.77
+        gravity = 2.5f;
         velocityMaxY = 15.f;
+
+        spaceRealeased = false;
+        onGround = false;
+        isJumping = false;
+        jumpVelocity = 7.f;
+        jumpCount = 0;
+        jumpLimit = 3;
     }
 
     void Player::render(sf::RenderTarget& target){
         target.draw(player_S);
+    }
+
+    void Player::resetJumpAccess(){
+        onGround = true;
+        isJumping=false;
+        jumpCount = 0;
+        spaceRealeased = false;
     }
 
     void Player::move(const float dir_x, const float dir_y){
@@ -62,6 +76,23 @@
         if (std::abs(velocity.x) > velocityMax) {
             velocity.x = velocityMax * ((velocity.x > 0.f) ? 1.f : -1.f);
         }
+
+        velocity.y += dir_y * gravity;
+    }
+
+
+    void Player::jump(const float dir_y) {
+        if (onGround) {
+            onGround = false;
+            isJumping = true;
+            jumpCount++;
+            jumpVelocity = 7.f;
+        } else if (isJumping && jumpCount < jumpLimit && spaceRealeased) {
+            spaceRealeased = false;
+            jumpCount++;
+            jumpVelocity = 7.f;
+        }
+
     }
 
     void Player::update(){
@@ -71,17 +102,24 @@
     }
 
     void Player::updatePhysics(){
-        // gravity
 
+        // gravity
         velocity.y += 1.f * gravity;
         if (std::abs(velocity.y) > velocityMaxY) {
             velocity.y = velocityMaxY * ((velocity.y > 0.f) ? 1.f : -1.f);
         }
+
+        //jumping
+        if (isJumping) {
+            velocity.y -= jumpVelocity;
+            //jump deceleratin
+            jumpVelocity *= 0.96;      
+        }
+
         // deceleration
-
         velocity *= deceleration;
-        // limits
 
+        // limits
         if (std::abs(velocity.x) < velocityMin) {
             velocity.x = 0.f;
         }
@@ -123,16 +161,18 @@
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-            move(0.f, -1.f);
+            onGround = false;
+            isJumping = false;
+            move(0.f, -1.4f);
             animationState = PLAYER_ANIMATION_STATES::MOVING_UP;
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
             move(0.f, 1.f);
             animationState = PLAYER_ANIMATION_STATES::MOVING_DOWN;
         }
-
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-
+            jump(-20.0f);
+            animationState = PLAYER_ANIMATION_STATES::JUMPING;
         }
     }
 
@@ -151,7 +191,6 @@
         //else 
         if (animationState == PLAYER_ANIMATION_STATES::MOVING_RIGHT) {
             if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
-                std::cout << animationTimer.getElapsedTime().asSeconds() << "  ";
                 currentFrame.left += 75;
                 if (currentFrame.left >= 450.f) {
                     currentFrame.left = 0.f;
@@ -163,7 +202,6 @@
         }
         else if (animationState == PLAYER_ANIMATION_STATES::MOVING_LEFT) {
             if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
-                std::cout << animationTimer.getElapsedTime().asSeconds() << std::endl;
                 currentFrame.left -= 75;
                 if (currentFrame.left <= 0.f) {
                     currentFrame.left = 450.f;
@@ -228,6 +266,10 @@
     void Player::resetAnimationTimer(){
         animationTimer.restart();
         animationSwitch = true;
+    }
+
+    void Player::resetNTHJump(){
+        spaceRealeased = true;
     }
 
     const bool& Player::getAnimationSwitch(){
