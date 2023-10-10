@@ -1,5 +1,6 @@
 #pragma once
 #include "Player.h"
+#include "TileMap.h"
 
 class Game
 {
@@ -7,6 +8,7 @@ private:
 	sf::RenderWindow window;
 	sf::Event event;
 	Player* player;
+	//TileMap sandbox;
 
 	double screenWidth;
 	double screenHeight;
@@ -22,6 +24,7 @@ public:
 	void update();
 	void updateCollision();
 	void renderPLayer();
+	void renderMap();
 	void render();
 };
 
