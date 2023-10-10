@@ -40,6 +40,29 @@ using std::endl;
 //    "AFFFFFFF   FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA",
 //    "AIIIIIIIAAAIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIA",
 //};
+// 
+// //std::string TileMap[H] = {
+//    "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+//    "F                                                    FF                                            F",
+//    "F                                               FF                                                 F",
+//    "F                                           FF                                                     F",
+//    "F                                                                                                  F",
+//    "F                                    FFFFFFF                                                       F",
+//    "F                                   FF                                                             F",
+//    "F                             FF   FF                                                              F",
+//    "F                                                                                                  F",
+//    "F                        FFFFFF                                                                    F",
+//    "F                             FF                                                                   F",
+//    "F                              FF                                                                  F",
+//    "F                               FFF                                                                F",
+//    "F                                    FFF                                                           F",
+//    "F                                         FFFF                                                     F",
+//    "F                                           FFFF                                                   F",
+//    "FF                 FFFFF       FFFFF                                                              FF",
+//    "FFFFFFFF    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+//    "FFFFFFFF   FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+//    "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+//};
 //
 //
 ////window characteristics

@@ -34,6 +34,13 @@ private:
     float deceleration;
     float gravity;
     float velocityMaxY;
+
+    bool spaceRealeased;
+    float jumpVelocity;
+    bool onGround;
+    bool isJumping;
+    short jumpCount;
+    short jumpLimit;
     //FloatRect coordinates;
     //double speedX;
     //double speedY;
@@ -59,11 +66,14 @@ public:
     //modifiers
     void resetVelocityY();
     void setPosition(const float x, const float y);
+    void resetJumpAccess();
+    void resetNTHJump();
 
     
     //void updateMovement(double time, RenderWindow& window);
     void render(sf::RenderTarget& target);
     void move(const float dir_x, const float dir_y);
+    void jump(const float dir_y);
     void update();
     void updatePhysics();
     void updateMovement();
