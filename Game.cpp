@@ -3,7 +3,7 @@
 
 	Game::Game(double screenWidth_, double screenHeight_)
 		:screenWidth(screenWidth_)
-		,screenHeight(screenHeight_){
+		,screenHeight(screenHeight_), myView(1500, 600, 1500, 600){
 		initWindow();
 		initPlayer();
 	}
@@ -19,6 +19,10 @@
 	
 	void Game::initPlayer(){
 		player = new Player();
+	}
+
+	void Game::initView(){
+
 	}
 	
 	const sf::RenderWindow& Game::getWindow() const{
@@ -52,24 +56,27 @@
 			}
 		}
 		updatePlayer();
+		myView.updateView(player->getGlobalBounds());
+		std::cout << "y - " << player->getPosition().y << ", x - " << player->getPosition().x<<std::endl;
+		window.setView(myView.view);
 		updateCollision();
 	}
 
 	void Game::updateCollision(){
-		if ((player->getPosition().y + player->getGlobalBounds().height) > window.getSize().y) {
+		if ((player->getPosition().y + player->getGlobalBounds().height) > 73*600) {
 			player->resetVelocityY();
 			player->setPosition(
 				player->getPosition().x,
-				window.getSize().y - player->getGlobalBounds().height);
+				73*600 - player->getGlobalBounds().height);
 		}
 		if (player->getPosition().y < 0.f) {
 			player->setPosition(
 				player->getPosition().x,
 				0);
 		}
-		if ((player->getPosition().x + player->getGlobalBounds().width) > window.getSize().x) {
+		if ((player->getPosition().x + player->getGlobalBounds().width) > 73*1500) {
 			player->setPosition(
-				window.getSize().x - player->getGlobalBounds().width,
+				73*1500 - player->getGlobalBounds().width,
 				player->getPosition().y);
 		}
 		if (player->getPosition().x < 0) {
@@ -77,6 +84,9 @@
 				0,
 				player->getPosition().y);
 		}
+	}
+	void Game::renderMap() {
+		map.render(window);
 	}
 	
 	void Game::renderPLayer(){
@@ -89,8 +99,7 @@
 	
 	void Game::render(){
 		window.clear(sf::Color::White);
-	
-	
+		renderMap();
 		renderPLayer();
 		window.display();
 	}

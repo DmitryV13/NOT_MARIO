@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "MyView.h"
 
-MyView::MyView(Map map, double windowRight_, double windowBottom_, double screenWidth_, double screenHeight_)
-	:absoluteRight(map.Width * map.sizeTexture)
-	,absoluteBottom(map.Height * map.sizeTexture)
+MyView::MyView(double windowRight_, double windowBottom_, double screenWidth_, double screenHeight_)
+	:absoluteRight(1500 * 73)
+	,absoluteBottom(600 * 73)
 	,absoluteLeft(0.0f)
 	,absoluteTop(0.0f)
 	,windowRight(windowRight_)

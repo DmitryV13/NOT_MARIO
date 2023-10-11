@@ -32,7 +32,7 @@
 
     void Player::initSprite(){
         player_S.setTexture(player_T);
-        currentFrame = IntRect(0, 23, 56, 73);
+        currentFrame = IntRect(75, 23, 56, 73);
         player_S.setTextureRect(currentFrame);
     }
 
@@ -42,9 +42,9 @@
     }
 
     void Player::initPhysics(){
-        velocityMax = 4.f;
+        velocityMax = 8.f;
         velocityMin = 1.f;
-        acceleration = 1.7f;
+        acceleration = 2.7f;
         deceleration = 0.77f;
         gravity = 4.f;
         velocityMaxY = 15.f;
@@ -151,7 +151,6 @@
         //else 
         if (animationState == PLAYER_ANIMATION_STATES::MOVING_RIGHT) {
             if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
-                std::cout << animationTimer.getElapsedTime().asSeconds() << "  ";
                 currentFrame.left += 75;
                 if (currentFrame.left >= 450.f) {
                     currentFrame.left = 0.f;
@@ -163,7 +162,6 @@
         }
         else if (animationState == PLAYER_ANIMATION_STATES::MOVING_LEFT) {
             if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
-                std::cout << animationTimer.getElapsedTime().asSeconds() << std::endl;
                 currentFrame.left -= 75;
                 if (currentFrame.left <= 0.f) {
                     currentFrame.left = 450.f;
