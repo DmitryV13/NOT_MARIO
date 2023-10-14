@@ -3,7 +3,9 @@
 
 	Game::Game(double screenWidth_, double screenHeight_)
 		:screenWidth(screenWidth_)
-		,screenHeight(screenHeight_){
+		,screenHeight(screenHeight_)
+		,myView(sandbox, screenWidth_, screenHeight_)
+		,sandbox(){
 		initWindow();
 		initPlayer();
 	}
@@ -18,7 +20,7 @@
 	}
 	
 	void Game::initPlayer(){
-		player = new Player();
+		player = new Player(sandbox);
 	}
 	
 	const sf::RenderWindow& Game::getWindow() const{
@@ -42,6 +44,7 @@
 				}
 				if (event.key.code == sf::Keyboard::W) {
 					player->resetAnimationTimer();
+					player->resetIsFlying();
 				}
 				if (event.key.code == sf::Keyboard::S) {
 					player->resetAnimationTimer();
@@ -53,15 +56,21 @@
 			}
 		}
 		updatePlayer();
+		updateView();
 		updateCollision();
+		//updateCollisionMap();
+	}
+
+	void Game::updateView(){
+		myView.updateView(player->getGlobalBounds());
 	}
 
 	void Game::updateCollision(){
-		if ((player->getPosition().y + player->getGlobalBounds().height) > window.getSize().y) {
+		if ((player->getPosition().y + player->getGlobalBounds().height) > 1460.f) {
 			player->resetVelocityY();
 			player->setPosition(
 				player->getPosition().x,
-				window.getSize().y - player->getGlobalBounds().height);
+				1460.f - player->getGlobalBounds().height);
 			player->resetJumpAccess();
 		}
 		if (player->getPosition().y < 0.f) {
@@ -69,9 +78,9 @@
 				player->getPosition().x,
 				0);
 		}
-		if ((player->getPosition().x + player->getGlobalBounds().width) > window.getSize().x) {
+		if ((player->getPosition().x + player->getGlobalBounds().width) > 7300.f) {
 			player->setPosition(
-				window.getSize().x - player->getGlobalBounds().width,
+				7300.f - player->getGlobalBounds().width,
 				player->getPosition().y);
 		}
 		if (player->getPosition().x < 0) {
@@ -85,9 +94,9 @@
 		player->render(window);
 	}
 
-	//void Game::renderMap(){
-	//	sandbox.render(window);
-	//}
+	void Game::renderMap(){
+		sandbox.render(window);
+	}
 	
 	void Game::updatePlayer(){
 		player->update();
@@ -96,7 +105,8 @@
 	void Game::render(){
 		window.clear(sf::Color::White);
 	
-		//renderMap();
+		renderMap();
 		renderPLayer();
+		window.setView(myView.view);
 		window.display();
 	}
