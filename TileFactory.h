@@ -1,11 +1,17 @@
-//#pragma once
-//#include "Tile.h"
-//
-//enum BLOCK_TYPE { VOID = 0, GRANITE, EARTH, BUSH, WATER, LADDER };
-//
-//class TileFactory{
-//public:
-//	TileFactory();
-//	Tile* getBlock(int e);
-//};
+#pragma once
+#include "Tile.h"
+
+class TileFactory {
+private:
+
+
+
+sf::IntRect initRect_tile(char tile);
+
+public:
+    TileFactory();
+    Tile tile_map_inFactory[20][100];
+
+
+};
 

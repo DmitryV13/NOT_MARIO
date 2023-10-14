@@ -1,25 +1,18 @@
-//#pragma once
-//class Tile
-//{
-//private:
-//	sf::Texture tile_T;
-//	sf::Sprite tile_S;
-//	sf::IntRect currentFrame;
-//	int interaction;
-//public:
-//	Tile(std::string path_T, sf::IntRect textureRect, int interaction);
-//	Tile();
-//	
-//	void initTexture(std::string path_T);
-//	void initSprite();
-//
-//	// Accessors
-//	const sf::Vector2f getPosition() const;
-//
-//	// Modifiers
-//	void setPosition(const float x, const float y);
-//	
-//	void update();
-//	void render(sf::RenderTarget& target);
-//};
-//
+#pragma once
+class Tile
+{
+private:
+
+	char front_tile;
+	char back_tile = ' ';
+	bool player = false;
+	sf::IntRect cord;
+
+public:
+	Tile();
+	Tile(sf::IntRect cord_, char f_b);
+	char give_front_tile();
+	char give_back_tile();
+	bool give_player_info();
+	sf::IntRect give_cord();
+};
