@@ -1,248 +1,292 @@
-﻿#include <SFML/Graphics.hpp>
-#include <SFML/Window/Keyboard.hpp>
+﻿#include "stdafx.h"//for each class
+#include "Player.h"
+#include "Map.h"
+#include "MyView.h"
+#include "Game.h"
 
+using sf::Clock;
+using sf::FloatRect;
+using sf::RenderWindow;
+using sf::Sprite;
+using sf::Texture;
+using sf::View;
+using std::cout;
+using std::endl;
+
+
+//const int H = 20;
+//const int W = 100;
+//const int size_texture = 73;
+//
+//std::string TileMap[H] = {
+//    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+//    "A                                                    FF                                            A",
+//    "A                                               FF                                                 A",
+//    "A                                           FF                                                     A",
+//    "A                                                                                                  A",
+//    "A                                    FFFFFFF                                                       A",
+//    "A                                   FF                                                             A",
+//    "A                             FF   FF                                                              A",
+//    "A                                                                                                  A",
+//    "A                        FFFFFF                                                                    A",
+//    "A                             FF                                                                   A",
+//    "A                              FF                                                                  A",
+//    "A                               FFF                                                                A",
+//    "A                                    FFF                                                           A",
+//    "A                                         FFFF                                                     A",
+//    "A                                           FFFF                                                   A",
+//    "AG                 EFFFF       FFFFG                                                              FA",
+//    "AJKCCLHF    CCCCCCLHFFFFFFFFJKFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA",
+//    "AFFFFFFF   FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA",
+//    "AIIIIIIIAAAIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIA",
+//};
+// 
+// //std::string TileMap[H] = {
+//    "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+//    "F                                                    FF                                            F",
+//    "F                                               FF                                                 F",
+//    "F                                           FF                                                     F",
+//    "F                                                                                                  F",
+//    "F                                    FFFFFFF                                                       F",
+//    "F                                   FF                                                             F",
+//    "F                             FF   FF                                                              F",
+//    "F                                                                                                  F",
+//    "F                        FFFFFF                                                                    F",
+//    "F                             FF                                                                   F",
+//    "F                              FF                                                                  F",
+//    "F                               FFF                                                                F",
+//    "F                                    FFF                                                           F",
+//    "F                                         FFFF                                                     F",
+//    "F                                           FFFF                                                   F",
+//    "FF                 FFFFF       FFFFF                                                              FF",
+//    "FFFFFFFF    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+//    "FFFFFFFF   FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+//    "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+//};
+//
+//
+////window characteristics
+//const int screenHeight = 600;
+//const int screenWidth = 1500;    
+//
+//// characteristics of map
+//double absoluteLeft = 0.0f;
+//double absoluteTop = 0.0f;
+//double absoluteRight = W * size_texture;
+//double absoluteBottom = H * size_texture;
+//
+//// characteristics of window
+//double windowLeft = 0.0f;
+//double windowTop = 0.0f;
+//double windowRight = 1500.0f;
+//double windowBottom = 600.0f;
+//
+////  Keys for control
+//// W - forward
+//// S - backward
+//// A - left
+//// D - right
+//// Q - enlarge
+//// E - shrink
+//
 //int main()
 //{
-//    sf::RenderWindow window(sf::VideoMode(900, 900), "SFML works!");
-//    sf::CircleShape shape(100.f);
-//    shape.setFillColor(sf::Color::Green);
-//    shape.setPosition(400, 400);
+//
+//
+//    sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight), "NOT_MARIO");
+//
+//    // window, which will see usual user
+//   //sf::View view;
+//   //view.reset(sf::FloatRect(0, 900, screenWidth, screenHeight));
+//    
+//
+//    // textures
+//    sf::Texture block_T;
+//    sf::Texture hero_T;
+//
+//    if (!hero_T.loadFromFile("Images/hero.png")) {
+//        return -1;
+//    }
+//
+//    if (!block_T.loadFromFile("Images/earth.png")) {
+//        return -1;
+//    }
+//
+//
+//
+//    // game-area variables
+//    double ballSpeed = 4.2;
+//
+//    // sprites
+//    sf::Sprite block_S(block_T);
+//
+//
+//    Map map(H, W, size_texture, TileMap);
+//
+//    MyView gameView(map, windowRight, windowBottom, screenWidth, screenHeight);
+//
+//    window.setView(gameView.view);
+//    window.setFramerateLimit(144);
+//    Player player_1(hero_T, window, map);
+//
+//    Clock clock;
+//    //  ---------GAME_CODE----------
 //    while (window.isOpen())
 //    {
+//
+//        double time = clock.getElapsedTime().asMicroseconds();
+//        clock.restart();
+//        time = time / 500;
+//
 //        sf::Event event;
 //        while (window.pollEvent(event))
 //        {
+//
 //            if (event.type == sf::Event::Closed)
 //                window.close();
-//            if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-//                shape.move(0, 5);
-//            }
-//            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-//                shape.move(5, 0);
-//            }
-//            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-//                shape.move(-5, 0);
-//            }
-//            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-//                shape.move(0, -5);
-//            }
-//            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
-//                shape.setScale(2, 2);
-//            }
-//            if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
-//                shape.setScale(0.5, 0.5);
-//            }
-//            
-//        }
 //
-//        window.clear();
-//        window.draw(shape);
+//            if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+//            }
+//
+//            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+//                player_1.speedX = ballSpeed;
+//            }
+//
+//            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+//                player_1.speedX = -ballSpeed;
+//            }
+//
+//            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+//                
+//            }
+//            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+//                if (player_1.onGround) {
+//                    player_1.speedY = -0.4;
+//                    player_1.onGround = false;
+//                }
+//            }
+//
+//        }
+//        window.clear(sf::Color::White);
+//        for (int i = 0; i < H; i++) {
+//            for (int j = 0; j < W; j++) {
+//                //std::cout << "i - " << i << std::endl << "j - " << j << std::endl;
+//                if (TileMap[i][j] == ' ') {
+//                    continue;
+//                }
+//                if (TileMap[i][j] == 'B') {
+//                    block_S.setTextureRect(sf::IntRect(97 + 3, 18 + 3, size_texture, size_texture));
+//                    block_S.setPosition(j * size_texture, i * size_texture);
+//                }
+//                if (TileMap[i][j] == 'C') {
+//                    block_S.setTextureRect(sf::IntRect(183 + 3, 18 + 3, size_texture, size_texture));
+//                    block_S.setPosition(j * size_texture, i * size_texture);
+//                }
+//                if (TileMap[i][j] == 'D') {
+//                    block_S.setTextureRect(sf::IntRect(267 + 3, 18 + 3, size_texture, size_texture));
+//                    block_S.setPosition(j * size_texture, i * size_texture);
+//                }
+//                if (TileMap[i][j] == 'E') {
+//                    block_S.setTextureRect(sf::IntRect(97 + 3, 102 + 3, size_texture, size_texture));
+//                    block_S.setPosition(j * size_texture, i * size_texture);
+//                }
+//                if (TileMap[i][j] == 'F') {
+//                    block_S.setTextureRect(sf::IntRect(183 + 3, 102 + 3, size_texture, size_texture));
+//                    block_S.setPosition(j * size_texture, i * size_texture);
+//                }
+//                if (TileMap[i][j] == 'G') {
+//                    block_S.setTextureRect(sf::IntRect(267 + 3, 102 + 3, size_texture, size_texture));
+//                    block_S.setPosition(j * size_texture, i * size_texture);
+//                }
+//                if (TileMap[i][j] == 'H') {
+//                    block_S.setTextureRect(sf::IntRect(97 + 3, 188 + 3, size_texture, size_texture));
+//                    block_S.setPosition(j * size_texture, i * size_texture);
+//                }
+//                if (TileMap[i][j] == 'I') {
+//                    block_S.setTextureRect(sf::IntRect(183 + 3, 188 + 3, size_texture, size_texture));
+//                    block_S.setPosition(j * size_texture, i * size_texture);
+//                }
+//                if (TileMap[i][j] == 'J') {
+//                    block_S.setTextureRect(sf::IntRect(267 + 3, 188 + 3, size_texture, size_texture));
+//                    block_S.setPosition(j * size_texture, i * size_texture);
+//                }
+//                if (TileMap[i][j] == 'K') {
+//                    block_S.setTextureRect(sf::IntRect(352 + 3, 182 + 7, size_texture, size_texture));
+//                    block_S.setPosition(j * size_texture, i * size_texture);
+//                }
+//                if (TileMap[i][j] == 'L') {
+//                    block_S.setTextureRect(sf::IntRect(13 + 3, 188 + 3, size_texture, size_texture));
+//                    block_S.setPosition(j * size_texture, i * size_texture);
+//                }
+//                if (TileMap[i][j] == 'M') {
+//                    block_S.setTextureRect(sf::IntRect(352 + 3, 272 + 3, size_texture, size_texture));
+//                    block_S.setPosition(j * size_texture, i * size_texture);
+//                }
+//                if (TileMap[i][j] == 'N') {
+//                    block_S.setTextureRect(sf::IntRect(13 + 3, 272 + 3, size_texture, size_texture));
+//                    block_S.setPosition(j * size_texture, i * size_texture);
+//                }
+//                if (TileMap[i][j] == 'O') {
+//                    block_S.setTextureRect(sf::IntRect(97 + 3, 272 + 3, size_texture, size_texture));
+//                    block_S.setPosition(j * size_texture, i * size_texture);
+//                }
+//                if (TileMap[i][j] == 'P') {
+//                    block_S.setTextureRect(sf::IntRect(183 + 3, 272 + 3, size_texture, size_texture));
+//                    block_S.setPosition(j * size_texture, i * size_texture);
+//                }
+//                if (TileMap[i][j] == 'Q') {
+//                    block_S.setTextureRect(sf::IntRect(267 + 3, 272 + 3, size_texture, size_texture));
+//                    block_S.setPosition(j * size_texture, i * size_texture);
+//                }
+//                if (TileMap[i][j] == 'A') {
+//                    continue;
+//                }
+//                if (TileMap[i][j] == '0') {
+//                    block_S.setTextureRect(sf::IntRect(454, 32, 45, 45));
+//                    block_S.setPosition(j * size_texture, i * size_texture + 30);
+//                }
+//                if (TileMap[i][j] == '1') {
+//                    block_S.setTextureRect(sf::IntRect(514, 39, 35, 37));
+//                    block_S.setPosition(j * size_texture, i * size_texture + 37);
+//                }
+//                if (TileMap[i][j] == '7') {
+//                    block_S.setTextureRect(sf::IntRect(445, 90, 170, 180));
+//                    block_S.setPosition(j * size_texture, i * size_texture - 104);
+//                }
+//                if (TileMap[i][j] == '8') {
+//                    block_S.setTextureRect(sf::IntRect(618, 105, 170, 170));
+//                    block_S.setPosition(j * size_texture, i * size_texture - 90);
+//                }
+//                if (TileMap[i][j] == '9') {
+//                    block_S.setTextureRect(sf::IntRect(478, 300, 80, 38));
+//                    block_S.setPosition(j * size_texture, i * size_texture + 35);
+//                }
+//                if (TileMap[i][j] == ')') {
+//                    block_S.setTextureRect(sf::IntRect(566, 300, 80, 38));
+//                    block_S.setPosition(j * size_texture, i * size_texture + 35);
+//                }
+//                window.draw(block_S);
+//            }
+//        }
+//        player_1.update(time, window);
+//        gameView.updateView(player_1.coordinates);
+//        window.setView(gameView.view);
+//        window.draw(player_1.player_S);
 //        window.display();
 //    }
-//
 //    return 0;
 //}
-//
-#include <SFML/Graphics.hpp>
 
-const int H = 10;
-const int W = 100;
-const int size_texture = 60;
 
-std::string TileMap[H] = {
-    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-    "A                                                                                                  A",
-    "A                                                                                                  A",
-    "A                                                                                                  A",
-    "A         BB                                                              BB                       A",
-    "A        BBBBBB    BB                                 BBBBBB            BBBBBB      BB             A",
-    "A      BBBBBBBBBBBBBBBB              BBBBB           BBBBBBBBB  B  BB  BBBBBBBBBB BBBBBB           A",
-    "ABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBA",
-    "ABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBA",
-    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-};
 
-//  Keys for control
-// W - forward
-// S - backward
-// A - left
-// D - right
-// Q - enlarge
-// E - shrink
+int main() {
+    srand(static_cast<unsigned>(time(0)));
 
-int main()
-{
-    //window characteristics
-    const int screenHeight = 600;
-    const int screenWidth = 1500;
+    Game game(1500,600);
 
-    sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight), "NOT_MARIO");
-
-    // window, which will see usual user
-    sf::View view;
-    view.reset(sf::FloatRect(0, 0, screenWidth, screenHeight));
-    window.setView(view);
-
-    // textures
-    sf::Texture block_T;
-    sf::Texture ball_T;
-
-    if (!ball_T.loadFromFile("Images/ball.png")) {
-        return -1;
-    }
-
-    if (!block_T.loadFromFile("Images/cube.jpg")) {
-        return -1;
-    }
-
-    // characteristics of map
-    float absoluteLeft = 0.0f;
-    float absoluteTop = 0.0f;
-    float absoluteRight = W * size_texture;
-    float absoluteBottom = H * size_texture;
-
-    // characteristics of window
-    float windowLeft = 0.0f;
-    float windowTop = 0.0f;
-    float windowRight = static_cast<float>(window.getSize().x);
-    float windowBottom = static_cast<float>(window.getSize().y);
-
-    // game-area variables
-    int ballSpeed = 10;
-
-    // sprites
-    sf::Sprite block_S(block_T);
-    sf::Sprite ball_S(ball_T);
-    block_S.setTextureRect(sf::IntRect(4, 4, size_texture, size_texture));
-    ball_S.setPosition(0, 0);
-
-    //  ---------GAME_CODE----------
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            sf::Vector2f spritePosition = ball_S.getPosition();
-
-            if (event.type == sf::Event::Closed)
-                window.close();
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-                if (spritePosition.y + ball_S.getLocalBounds().height >= windowBottom) {
-                    if (spritePosition.y + ball_S.getLocalBounds().height >= absoluteBottom) {
-                        windowBottom = absoluteBottom;
-                        windowTop = absoluteBottom-screenHeight;
-                        spritePosition.y = absoluteBottom - ball_S.getLocalBounds().height;
-                    }
-                    else {
-                        view.move(0,ballSpeed);
-                        window.setView(view);
-
-                        windowTop += ballSpeed;
-                        windowBottom += ballSpeed;
-
-                        ball_S.move(0,ballSpeed);
-                    }
-                }
-                else {
-                    ball_S.move(0,ballSpeed);
-                }
-            }
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-                if (spritePosition.x + ball_S.getLocalBounds().width >= windowRight) {
-                    if (spritePosition.x + ball_S.getLocalBounds().width >= absoluteRight) {
-                        windowLeft = absoluteRight-screenWidth;
-                        windowRight = absoluteRight;
-                        spritePosition.x = absoluteRight - ball_S.getLocalBounds().width;
-                    }
-                    else {
-                        view.move(ballSpeed, 0);
-                        window.setView(view);
-
-                        windowLeft += ballSpeed;
-                        windowRight += ballSpeed;
-
-                        ball_S.move(ballSpeed, 0);
-                    }
-                }
-                else {
-                    ball_S.move(ballSpeed, 0);
-                }
-            }
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-                if (spritePosition.x <= windowLeft) {
-                    if (spritePosition.x <= absoluteLeft) {
-                        windowLeft = absoluteLeft;
-                        windowRight = absoluteLeft+screenWidth;
-                        spritePosition.x = absoluteLeft;
-                    }
-                    else {
-                        view.move(-ballSpeed, 0);
-                        window.setView(view);
-
-                        windowLeft -= ballSpeed;
-                        windowRight -= ballSpeed;
-
-                        ball_S.move(-ballSpeed, 0);
-                    }
-                }
-                else {
-                    ball_S.move(-ballSpeed, 0);
-                }
-            }
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-                if (spritePosition.y <= windowTop) {
-                    spritePosition.y = windowTop;
-                }
-                else {
-                    ball_S.move(0, -ballSpeed);
-                }
-                if (spritePosition.y <= windowTop) {
-                    if (spritePosition.y <= absoluteTop) {
-                        windowBottom = absoluteTop+screenHeight;
-                        windowTop = absoluteTop;
-                        spritePosition.y = absoluteTop;
-                    }
-                    else {
-                        view.move(0, -ballSpeed);
-                        window.setView(view);
-
-                        windowTop -= ballSpeed;
-                        windowBottom -= ballSpeed;
-
-                        ball_S.move(0, -ballSpeed);
-                    }
-                }
-                else {
-                    ball_S.move(0, -ballSpeed);
-                }
-            }
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
-                ball_S.setScale(2, 2);
-            }
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
-                ball_S.setScale(0.5, 0.5);
-            }
-
-        }
-        window.clear();
-        for (int i = 0; i < H; i++) {
-            for (int j = 0; j < W; j++) {
-                if (TileMap[i][j] == 'A' || TileMap[i][j] == 'B') {
-                    block_S.setPosition(j * size_texture, i * size_texture);
-                    window.draw(block_S);
-                }
-            }
-        }
-
-        window.draw(block_S);
-        window.draw(ball_S);
-        window.display();
+    while (game.getWindow().isOpen()) {
+        game.update();
+        game.render();
     }
     return 0;
 }
