@@ -9,7 +9,7 @@ private:
 	sf::RenderWindow window;
 	sf::Event event;
 	Player* player;
-	TileMap map;
+	TileMap sandbox;
 	MyView myView;
 
 	double screenWidth;
@@ -17,7 +17,6 @@ private:
 
 	void initWindow();
 	void initPlayer();
-	void initView();
 public:
 	Game(double screenWidth_, double screenHeight_);
 	~Game();
@@ -25,9 +24,10 @@ public:
 	const sf::RenderWindow& getWindow() const;
 	void updatePlayer();
 	void update();
+	void updateView();
 	void updateCollision();
-	void renderMap();
 	void renderPLayer();
+	void renderMap();
 	void render();
 };
 

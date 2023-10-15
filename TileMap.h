@@ -2,16 +2,24 @@
 #include "Tile.h"
 #include "TileFactory.h"
 
-class TileMap{
+class TileMap {
 private:
-	
+
 	sf::Texture block_T;
 	sf::Sprite block_S;
 	Tile tilemap[20][100];
-
+	float sizeTexture;
+	float mapW;
+	float mapH;
 public:
 	TileMap();
-	int init_texture();
+
+	float getMapWidth();
+	float getMapHeight();
+	float getSizeTexture();
+	bool isBlock(int i, int j);
+
+	void init_texture();
 	void render(sf::RenderTarget& target);
 };
 

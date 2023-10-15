@@ -1,5 +1,6 @@
 #pragma once
 #include "Map.h"
+#include "TileMap.h"
 
 using sf::Sprite;
 using sf::RenderWindow;
@@ -15,9 +16,7 @@ enum PLAYER_ANIMATION_STATES{IDLE=0, MOVING_LEFT, MOVING_RIGHT, MOVING_DOWN, MOV
 
 class Player {
 private:
-    //Map levelMap;
-    //double absoluteRight;
-    //double absoluteBottom;
+    TileMap sandbox;
 
     Texture player_T;
     Sprite player_S;
@@ -34,6 +33,15 @@ private:
     float deceleration;
     float gravity;
     float velocityMaxY;
+
+    bool spaceRealeased;
+    float jumpVelocity;
+    bool onGround;
+    bool isJumping;
+    short jumpCount;
+    short jumpLimit;
+    bool isFlying;
+    float flyVelocity;
     //FloatRect coordinates;
     //double speedX;
     //double speedY;
@@ -49,25 +57,32 @@ private:
 
 public:
     //Player(Texture& texture, RenderWindow& window_, Map& levelMap_);
-    Player();
+    Player(TileMap& map);
 
     // accessors
     const bool& getAnimationSwitch();
     const sf::Vector2f getPosition() const;
     const FloatRect getGlobalBounds() const;
+    const sf::Vector2f getVelocity() const;
 
     //modifiers
     void resetVelocityY();
     void setPosition(const float x, const float y);
-
+    void resetJumpAccess();
+    void resetNTHJump();
+    void resetIsFlying();
     
     //void updateMovement(double time, RenderWindow& window);
     void render(sf::RenderTarget& target);
-    void move(const float dir_x, const float dir_y);
+    void walk(const float dir_x);
+    void jump(const float dir_y);
+    void fly(const float dir_y);
     void update();
     void updatePhysics();
     void updateMovement();
     void updateAnimation();
+    bool updateCollisionX();
+    bool updateCollisionY();
     void resetAnimationTimer();
     
     //void checkCollisionX();;

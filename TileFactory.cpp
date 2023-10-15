@@ -1,11 +1,11 @@
 #include "stdafx.h"
 #include "TileFactory.h"
 
-sf::IntRect TileFactory::initRect_tile(char tile_C){
+sf::IntRect TileFactory::initRect_tile(char tile_C) {
     if (tile_C == 'B') {
-       
+
         return sf::IntRect(100, 21, 73, 73);
-        
+
     }
     if (tile_C == 'C') {
 
@@ -51,7 +51,7 @@ sf::IntRect TileFactory::initRect_tile(char tile_C){
 
         return sf::IntRect(355, 191, 73, 73);
 
-    }   
+    }
     if (tile_C == 'L') {
 
         return sf::IntRect(18, 191, 73, 73);
@@ -84,8 +84,29 @@ sf::IntRect TileFactory::initRect_tile(char tile_C){
     }
 }
 
-TileFactory::TileFactory(){
-
+TileFactory::TileFactory() {
+    std::string template_1[20] = {
+  "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+  "A                                                                                                 A",
+  "A                                                                                                 A",
+  "A                                                                                                 A",
+  "A                                                                                                 A",
+  "A                                                                                                 A",
+  "A                                                                                                 A",
+  "A   FFF     FFF      FFFFF     FFFFFFFFFFF          FFF     FFF       FFF      FFFFFFF            A",
+  "A   FFFF    FFF     FFFFFFF    FFFFFFFFFFF          FFFF   FFFF      FFFFF     FFFFFFFF           A",
+  "A   FFFFF   FFF    FF     FF       FFF              FFFFF FFFFF     FFF FFF    FFF   FF           A",
+  "A   FFFFFFFFFFF   FFF     FFF      FFF      FFFFF   FFF FFF FFF    FFF   FFF   FFFFFFFF           A",
+  "A   FFF   FFFFF    FF     FF       FFF              FFF     FFF    FFFFFFFFF   FFFFFF             A",
+  "A   FFF    FFFF     FFFFFFF        FFF              FFF     FFF   FFF     FFF  FFF FFF            A",
+  "A   FFF     FFF      FFFFF         FFF              FFF     FFF   FFF     FFF  FFF  FFF  F F F    A",
+  "A                                                                                                 A",
+  "A                   FFF                                                                           A",
+  "A                FFF                                                                              A",
+  "AJKCCLHFFFJKCCCCCCLHFFFFFFFFJKFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA",
+  "AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA",
+  "AIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIA",
+    };
     Tile tile_B(initRect_tile('B'), 'B');
     Tile tile_C(initRect_tile('C'), 'C');
     Tile tile_D(initRect_tile('D'), 'D');
@@ -105,28 +126,23 @@ TileFactory::TileFactory(){
 
     for (int i = 0; i < 20; i++) {
         for (int j = 0; j < 100; j++) {
-            if (template_1[i][j] == 'B'){ tile_map_inFactory[i][j] = tile_B; }
-            if (template_1[i][j] == 'C'){ tile_map_inFactory[i][j] = tile_C; }
-            if (template_1[i][j] == 'D'){ tile_map_inFactory[i][j] = tile_D; }
-            if (template_1[i][j] == 'E'){ tile_map_inFactory[i][j] = tile_E; }
-            if (template_1[i][j] == 'F'){ tile_map_inFactory[i][j] = tile_F; }
-            if (template_1[i][j] == 'G'){ tile_map_inFactory[i][j] = tile_G; }
-            if (template_1[i][j] == 'H'){ tile_map_inFactory[i][j] = tile_H; }
-            if (template_1[i][j] == 'I'){ tile_map_inFactory[i][j] = tile_I; }
-            if (template_1[i][j] == 'J'){ tile_map_inFactory[i][j] = tile_J; }
-            if (template_1[i][j] == 'K'){ tile_map_inFactory[i][j] = tile_K; }
-            if (template_1[i][j] == 'L'){ tile_map_inFactory[i][j] = tile_L; }
-            if (template_1[i][j] == 'M'){ tile_map_inFactory[i][j] = tile_M; }
-            if (template_1[i][j] == 'N'){ tile_map_inFactory[i][j] = tile_N; }
-            if (template_1[i][j] == 'O'){ tile_map_inFactory[i][j] = tile_O; }
-            if (template_1[i][j] == 'P'){ tile_map_inFactory[i][j] = tile_P; }
-            if (template_1[i][j] == 'Q'){ tile_map_inFactory[i][j] = tile_Q; }
+            if (template_1[i][j] == 'B') { tile_map_inFactory[i][j] = tile_B; }
+            if (template_1[i][j] == 'C') { tile_map_inFactory[i][j] = tile_C; }
+            if (template_1[i][j] == 'D') { tile_map_inFactory[i][j] = tile_D; }
+            if (template_1[i][j] == 'E') { tile_map_inFactory[i][j] = tile_E; }
+            if (template_1[i][j] == 'F') { tile_map_inFactory[i][j] = tile_F; }
+            if (template_1[i][j] == 'G') { tile_map_inFactory[i][j] = tile_G; }
+            if (template_1[i][j] == 'H') { tile_map_inFactory[i][j] = tile_H; }
+            if (template_1[i][j] == 'I') { tile_map_inFactory[i][j] = tile_I; }
+            if (template_1[i][j] == 'J') { tile_map_inFactory[i][j] = tile_J; }
+            if (template_1[i][j] == 'K') { tile_map_inFactory[i][j] = tile_K; }
+            if (template_1[i][j] == 'L') { tile_map_inFactory[i][j] = tile_L; }
+            if (template_1[i][j] == 'M') { tile_map_inFactory[i][j] = tile_M; }
+            if (template_1[i][j] == 'N') { tile_map_inFactory[i][j] = tile_N; }
+            if (template_1[i][j] == 'O') { tile_map_inFactory[i][j] = tile_O; }
+            if (template_1[i][j] == 'P') { tile_map_inFactory[i][j] = tile_P; }
+            if (template_1[i][j] == 'Q') { tile_map_inFactory[i][j] = tile_Q; }
         }
     }
 }
-
-
-
-
-
 

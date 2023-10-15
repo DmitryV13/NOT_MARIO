@@ -42,6 +42,9 @@
     <ClCompile Include="TileMap.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
+    <ClCompile Include="TextureFactory.cpp">
+      <Filter>Source Files\ServiceClasses</Filter>
+    </ClCompile>
     <ClCompile Include="TileFactory.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
@@ -66,6 +69,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TileMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TileFactory.h">

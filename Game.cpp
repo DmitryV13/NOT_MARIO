@@ -3,7 +3,9 @@
 
 	Game::Game(double screenWidth_, double screenHeight_)
 		:screenWidth(screenWidth_)
-		,screenHeight(screenHeight_), myView(1500, 600, 1500, 600){
+		,screenHeight(screenHeight_)
+		,myView(sandbox, screenWidth_, screenHeight_)
+		,sandbox(){
 		initWindow();
 		initPlayer();
 	}
@@ -18,11 +20,7 @@
 	}
 	
 	void Game::initPlayer(){
-		player = new Player();
-	}
-
-	void Game::initView(){
-
+		player = new Player(sandbox);
 	}
 	
 	const sf::RenderWindow& Game::getWindow() const{
@@ -46,37 +44,43 @@
 				}
 				if (event.key.code == sf::Keyboard::W) {
 					player->resetAnimationTimer();
+					player->resetIsFlying();
 				}
 				if (event.key.code == sf::Keyboard::S) {
 					player->resetAnimationTimer();
 				}
 				if (event.key.code == sf::Keyboard::Space) {
 					player->resetAnimationTimer();
+					player->resetNTHJump();
 				}
 			}
 		}
 		updatePlayer();
-		myView.updateView(player->getGlobalBounds());
-		std::cout << "y - " << player->getPosition().y << ", x - " << player->getPosition().x<<std::endl;
-		window.setView(myView.view);
+		updateView();
 		updateCollision();
+		//updateCollisionMap();
+	}
+
+	void Game::updateView(){
+		myView.updateView(player->getGlobalBounds());
 	}
 
 	void Game::updateCollision(){
-		if ((player->getPosition().y + player->getGlobalBounds().height) > 73*600) {
+		if ((player->getPosition().y + player->getGlobalBounds().height) > 1460.f) {
 			player->resetVelocityY();
 			player->setPosition(
 				player->getPosition().x,
-				73*600 - player->getGlobalBounds().height);
+				1460.f - player->getGlobalBounds().height);
+			player->resetJumpAccess();
 		}
 		if (player->getPosition().y < 0.f) {
 			player->setPosition(
 				player->getPosition().x,
 				0);
 		}
-		if ((player->getPosition().x + player->getGlobalBounds().width) > 73*1500) {
+		if ((player->getPosition().x + player->getGlobalBounds().width) > 7300.f) {
 			player->setPosition(
-				73*1500 - player->getGlobalBounds().width,
+				7300.f - player->getGlobalBounds().width,
 				player->getPosition().y);
 		}
 		if (player->getPosition().x < 0) {
@@ -92,6 +96,10 @@
 	void Game::renderPLayer(){
 		player->render(window);
 	}
+
+	void Game::renderMap(){
+		sandbox.render(window);
+	}
 	
 	void Game::updatePlayer(){
 		player->update();
@@ -99,7 +107,9 @@
 	
 	void Game::render(){
 		window.clear(sf::Color::White);
+	
 		renderMap();
 		renderPLayer();
+		window.setView(myView.view);
 		window.display();
 	}
