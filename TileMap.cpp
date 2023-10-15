@@ -18,7 +18,6 @@ int TileMap::init_texture(){
 	block_S.setTexture(block_T);
 
 }
-
 void TileMap::render(sf::RenderTarget& target)
 {
 	for (int i = 0; i < 20; i++) {
