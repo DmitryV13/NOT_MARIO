@@ -31,7 +31,7 @@
     }
 
     void Player::initPhysics(){
-        velocityMax = 4.f;
+        velocityMax = 14.f;
         velocityMin = 0.5f;
         acceleration = 1.7f;
         deceleration = 0.77f;//0.77
@@ -144,11 +144,11 @@
         animationState = PLAYER_ANIMATION_STATES::IDLE;
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            walk(1.f);
+            walk(4.f);
             animationState = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-            walk(-1.f);
+            walk(-4.f);
             animationState = PLAYER_ANIMATION_STATES::MOVING_LEFT;
         }
 

@@ -4,6 +4,9 @@
 #include <vector>
 #include <string>
 #include <chrono>
+#include <cstdlib>
+
+using  std::vector;
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>

@@ -38,6 +38,7 @@
 		return mapH * sizeTexture;
 	}
 
+
 	float TileMap::getMapHeight(){
 		return mapW * sizeTexture;
 	}

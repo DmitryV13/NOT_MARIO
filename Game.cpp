@@ -8,10 +8,14 @@
 		,sandbox(){
 		initWindow();
 		initPlayer();
+		initEvilBall();
 	}
 	
 	Game::~Game(){
 		delete player;
+		delete evilBall;
+		evilball.clear();
+		
 	}
 	
 	void Game::initWindow(){
@@ -22,10 +26,19 @@
 	void Game::initPlayer(){
 		player = new Player(sandbox);
 	}
-	
-	const sf::RenderWindow& Game::getWindow() const{
-		return window;
+
+	void Game::initEvilBall()
+	{
+		for (int i = 0; i < numOfEnemy; i++) {
+			EvilBall enemy(sandbox);
+			evilball.push_back(enemy);
+		}
+		evilBall = new EvilBall(sandbox);
 	}
+
+	const sf::RenderWindow& Game::getWindow() const{
+			return window;
+		}
 	
 	void Game::update(){
 		while (window.pollEvent(event)) {
@@ -55,7 +68,9 @@
 				}
 			}
 		}
+		
 		updatePlayer();
+		updateEvilBall();
 		updateView();
 		updateCollision();
 		//updateCollisionMap();
@@ -63,6 +78,7 @@
 
 	void Game::updateView(){
 		myView.updateView(player->getGlobalBounds());
+		
 	}
 
 	void Game::updateCollision(){
@@ -88,9 +104,21 @@
 				0,
 				player->getPosition().y);
 		}
+
+
+
+		
 	}
-	
-	void Game::renderPLayer(){
+
+void Game::renderEvilBall()
+{
+	for (int i = 0; i < numOfEnemy; i++) {
+		evilball[i].render(window);
+	}
+	evilBall->render(window);
+}
+
+void Game::renderPLayer(){
 		player->render(window);
 	}
 
@@ -101,12 +129,21 @@
 	void Game::updatePlayer(){
 		player->update();
 	}
-	
-	void Game::render(){
+
+void Game::updateEvilBall()
+{
+	for (int i = 0; i < numOfEnemy; i++) {
+		evilball[i].update();
+	}
+	evilBall->update();
+}
+
+void Game::render(){
 		window.clear(sf::Color::White);
 	
 		renderMap();
 		renderPLayer();
+		renderEvilBall();
 		window.setView(myView.view);
 		window.display();
 	}
