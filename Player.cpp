@@ -31,7 +31,7 @@
     }
 
     void Player::initPhysics(){
-        velocityMax = 4.f;
+        velocityMax = 15.f;
         velocityMin = 0.5f;
         acceleration = 1.7f;
         deceleration = 0.77f;//0.77
@@ -124,7 +124,6 @@
         else {
             flyVelocity = 0.f;
         }
-        std::cout << flyVelocity << std::endl;
         // deceleration
         velocity *= deceleration;
         
@@ -144,11 +143,11 @@
         animationState = PLAYER_ANIMATION_STATES::IDLE;
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            walk(1.f);
+            walk(10.f);
             animationState = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-            walk(-1.f);
+            walk(-10.f);
             animationState = PLAYER_ANIMATION_STATES::MOVING_LEFT;
         }
 
@@ -263,10 +262,10 @@
     }
 
     bool Player::updateCollisionX(){
-        bool wasCollision = false;
+         bool wasCollision = false;
         sf::Vector2f newPosition(getPosition().x, getPosition().y);
-        for (int i = player_S.getPosition().y / 73; i < (player_S.getPosition().y + player_S.getGlobalBounds().height) / 73; i++) {
-            for (int j = (player_S.getPosition().x + velocity.x) / 73; j < (player_S.getPosition().x + velocity.x + player_S.getGlobalBounds().width) / 73; j++) {
+        for (int i = player_S.getPosition().y / 60; i < (player_S.getPosition().y + player_S.getGlobalBounds().height) / 60; i++) {
+            for (int j = (player_S.getPosition().x + velocity.x) / 60; j < (player_S.getPosition().x + velocity.x + player_S.getGlobalBounds().width) / 60; j++) {
                 if (sandbox.isBlock(i, j)) {
                     if (velocity.x > 0) {
                         wasCollision = true;
@@ -287,8 +286,8 @@
         bool wasCollision = false;
         sf::Vector2f newPosition(player_S.getPosition().x, player_S.getPosition().y);
 
-        for (int i = (player_S.getPosition().y + velocity.y) / 73; i < (player_S.getPosition().y + velocity.y + player_S.getGlobalBounds().height) / 73; i++) {
-            for (int j = player_S.getPosition().x / 73; j < (player_S.getPosition().x + player_S.getGlobalBounds().width) / 73; j++) {
+        for (int i = (player_S.getPosition().y + velocity.y) / 60; i < (player_S.getPosition().y + velocity.y + player_S.getGlobalBounds().height) / 60; i++) {
+            for (int j = player_S.getPosition().x / 60; j < (player_S.getPosition().x + player_S.getGlobalBounds().width) / 60; j++) {
                 if (sandbox.isBlock(i, j)) {
                     if (velocity.y > 0) {
                         wasCollision = true;

@@ -58,6 +58,7 @@
 		updatePlayer();
 		updateView();
 		updateCollision();
+		//std::cout << "x- " << player->getPosition().x << ", y- " << player->getPosition().y << std::endl;
 		//updateCollisionMap();
 	}
 
@@ -66,11 +67,11 @@
 	}
 
 	void Game::updateCollision(){
-		if ((player->getPosition().y + player->getGlobalBounds().height) > 1460.f) {
+		if ((player->getPosition().y + player->getGlobalBounds().height) > 2400.f) {
 			player->resetVelocityY();
 			player->setPosition(
 				player->getPosition().x,
-				1460.f - player->getGlobalBounds().height);
+				2400.f - player->getGlobalBounds().height);
 			player->resetJumpAccess();
 		}
 		if (player->getPosition().y < 0.f) {
@@ -78,9 +79,9 @@
 				player->getPosition().x,
 				0);
 		}
-		if ((player->getPosition().x + player->getGlobalBounds().width) > 7300.f) {
+		if ((player->getPosition().x + player->getGlobalBounds().width) > 12000.f) {
 			player->setPosition(
-				7300.f - player->getGlobalBounds().width,
+				12000.f - player->getGlobalBounds().width,
 				player->getPosition().y);
 		}
 		if (player->getPosition().x < 0) {
@@ -88,9 +89,6 @@
 				0,
 				player->getPosition().y);
 		}
-	}
-	void Game::renderMap() {
-		map.render(window);
 	}
 	
 	void Game::renderPLayer(){

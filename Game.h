@@ -10,6 +10,7 @@ private:
 	sf::Event event;
 	Player* player;
 	TileMap sandbox;
+
 	MyView myView;
 
 	double screenWidth;
@@ -17,6 +18,7 @@ private:
 
 	void initWindow();
 	void initPlayer();
+	void initView();
 public:
 	Game(double screenWidth_, double screenHeight_);
 	~Game();

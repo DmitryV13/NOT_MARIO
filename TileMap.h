@@ -2,12 +2,15 @@
 #include "Tile.h"
 #include "TileFactory.h"
 
+
 class TileMap {
 private:
 
-	sf::Texture block_T;
-	sf::Sprite block_S;
-	Tile tilemap[20][100];
+	sf::Texture block_T[2];
+	sf::Sprite block_S[2];
+	sf::Texture background_T;
+	sf::Sprite background_S;
+	Tile tilemap[40][201];
 	float sizeTexture;
 	float mapW;
 	float mapH;
