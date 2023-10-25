@@ -1,35 +1,48 @@
 #include "stdafx.h"
 #include "TileMap.h"
 
-	TileMap::TileMap()
-		:sizeTexture(73)
-		,mapW(20)
-		,mapH(100) {
+TileMap::TileMap()
+	:sizeTexture(60)
+	, mapW(40)
+	, mapH(200) {
 
-		init_texture();
-		TileFactory factory;
-		for (int i = 0; i < 20; i++) {
-			for (int j = 0; j < 100; j++) {
-				tilemap[i][j] = factory.tile_map_inFactory[i][j];
-			}
+	init_texture();
+	TileFactory factory;
+	for (int i = 0; i < 40; i++) {
+		for (int j = 0; j < 200; j++) {
+			tilemap[i][j] = factory.tile_map_inFactory[i][j];
 		}
 	}
-	
-	void TileMap::init_texture() {
-	
-		if (!block_T.loadFromFile("Textures/Textures_map/earth.png")) {
-			std::cout << "Error -> TileMap -> couldn't load texture";
-		}
-		block_S.setTexture(block_T);
+}
+
+void TileMap::init_texture() {
+
+	if (!block_T[0].loadFromFile("Textures/Textures_map/map.png")) {
+		std::cout << "Error -> TileMap -> couldn't load texture";
 	}
+	if (!block_T[1].loadFromFile("Textures/Textures_map/map_back.png")) {
+		std::cout << "Error -> TileMap -> couldn't load texture";
+	}
+	if (!background_T.loadFromFile("Textures/Textures_map/background_test.jpg")) {
+		std::cout << "Error -> TileMap -> couldn't load texture";
+	}
+	block_S[0].setTexture(block_T[0]);
+	block_S[1].setTexture(block_T[1]);
+	background_S.setTexture(background_T);
+}
 	
 	void TileMap::render(sf::RenderTarget& target)
 	{
-		for (int i = 0; i < 20; i++) {
-			for (int j = 0; j < 100; j++) {
-				block_S.setTextureRect(tilemap[i][j].give_cord());
-				block_S.setPosition(j * 73, i * 73);
-				target.draw(block_S);
+		//target.draw(background_S);
+		for (int i = 0; i < 40; i++) {
+			for (int j = 0; j < 200; j++) {
+				//block_S[1].setTextureRect(tilemap[i][j].give_cord());
+				//block_S[1].setPosition(j * 60, i * 60);
+				//target.draw(block_S[1]);
+				block_S[0].setTextureRect(tilemap[i][j].give_cord());
+				block_S[0].setPosition(j * 60, i * 60);
+				target.draw(block_S[0]);
+
 			}
 		}
 	}

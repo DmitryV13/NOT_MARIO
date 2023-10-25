@@ -8,9 +8,8 @@
         this->player = false;
         this->cord = sf::IntRect();
     }
-    
-    Tile::Tile(sf::IntRect cord_, char f_b) : cord(cord_), front_tile(f_b) {
-        this->back_tile = ' ';
+
+    Tile::Tile(sf::IntRect cord_, char f_b, char b_b) : cord(cord_), front_tile(f_b), back_tile(b_b) {
         this->player = false;
     }
     
