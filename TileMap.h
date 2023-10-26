@@ -7,13 +7,14 @@ private:
 
 	sf::Texture block_T;
 	sf::Sprite block_S;
-	Tile tilemap[20][100];
+	Tile tilemap[40][200];
 	float sizeTexture;
 	float mapW;
 	float mapH;
 public:
 	TileMap();
-
+	Tile& getTile();
+	Tile& setPosTile(int i, int j);
 	float getMapWidth();
 	float getMapHeight();
 	float getSizeTexture();

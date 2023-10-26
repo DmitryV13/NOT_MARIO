@@ -11,7 +11,8 @@ using sf::IntRect;
 using sf::Clock;
 
 enum Enemy_ANIMATION_STATES { ENEMY_IDLE = 0, ENEMY_MOVING_LEFT, ENEMY_MOVING_RIGHT,
-	ENEMY_MOVING_DOWN, ENEMY_MOVING_UP, ENEMY_JUMPING, ENEMY_FALLING };
+	ENEMY_MOVING_DOWN, ENEMY_MOVING_UP, ENEMY_JUMPING, ENEMY_FALLING , ENEMY_ATTENTION};
+
 
 class Enemy
 {
@@ -19,13 +20,13 @@ protected:
     TileMap sandbox;
     Texture Enemy_T;
     Sprite Enemy_S;
-
+    Tile pos_Player[TileFactory::n][TileFactory::m];
     IntRect currentFrame;
     Clock animationTimer;
     short animationState;
     bool animationSwitch;
-
-
+  
+    sf::Vector2f startPosition;
     int currentBlockX{0};
     int currentBlockY{0};
     int stepLeft;
@@ -85,6 +86,10 @@ public:
     bool updateCollisionX();
     bool updateCollisionY();
     void resetAnimationTimer();
+
+
+    bool search_for_enemies();
+    
 
     //void checkCollisionX();;
     //void checkCollisionY();

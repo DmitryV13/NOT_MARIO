@@ -33,3 +33,8 @@
     {
         return cord;
     }
+
+void Tile::setPlayerCur()
+{
+    player = true;
+}

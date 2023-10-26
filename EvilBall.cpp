@@ -10,6 +10,7 @@ EvilBall::EvilBall(TileMap& map):Enemy(map)
 		}
 	}
 
+	
 	void EvilBall::init_texture()
 	{
 		Texture tmp;
