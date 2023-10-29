@@ -12,80 +12,30 @@ sf::IntRect TileFactory::initRect_tile(char tile_C)
 }
 
 
-//TileFactory::TileFactory() {
-//    std::string template_1[20] = {
-//  "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF",
-//  "F                                                                                                 F",
-//  "F                                                                                                 F",
-//  "F                                                                                                 F",
-//  "F                                                                                                 F",
-//  "F                                                                                                 F",
-//  "F                                                                                                 F",
-//  "F   FFF     FFF      FFFFF     FFFFFFFFFFF          FFF     FFF       FFF      FFFFFFF            F",
-//  "F   FFFF    FFF     FFFFFFF    FFFFFFFFFFF          FFFF   FFFF      FFFFF     FFFFFFFF           F",
-//  "F   FFFFF   FFF    FF     FF       FFF              FFFFF FFFFF     FFF FFF    FFF   FF           F",
-//  "F   FFFFFFFFFFF   FFF     FFF      FFF      FFFFF   FFF FFF FFF    FFF   FFF   FFFFFFFF           F",
-//  "F   FFF   FFFFF    FF     FF       FFF              FFF     FFF    FFFFFFFFF   FFFFFF             F",
-//  "F   FFF    FFFF     FFFFFFF        FFF              FFF     FFF   FFF     FFF  FFF FFF            F",
-//  "F   FFF     FFF        FFF         FFF              FFF     FFF   FFF     FFF  FFF  FFF  F F F    F",
-//  "F                                                        F                                        F",
-//  "FF                  FFF                                FFF                                        F",
-//  "F F              FFFFFFF            F          F     FFFFF                                        F",
-//  "FJKCCLHFFFJKCCCCCCLHFFFFFFFFJKFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
-//  "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
-//  "FIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIF",
-//    };
-
-
 TileFactory::TileFactory()
 {
-	/* std::string template_1[20] = {
-   "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF",
-   "F                                                                                                 F",
-   "F                                                                                                 F",
-   "F                                                                                                 F",
-   "F                                                                                                 F",
-   "F                                                                                                 F",
-   "F                                                                                                 F",
-   "F   FFF     FFF      FFFFF     FFFFFFFFFFF          FFF     FFF       FFF      FFFFFFF            F",
-   "F   FFFF    FFF     FFFFFFF    FFFFFFFFFFF          FFFF   FFFF      FFFFF     FFFFFFFF           F",
-   "F   FFFFF   FFF    FF     FF       FFF              FFFFF FFFFF     FFF FFF    FFF   FF           F",
-   "F   FFFFFFFFFFF   FFF     FFF      FFF      FFFFF   FFF FFF FFF    FFF   FFF   FFFFFFFF           F",
-   "F   FFF   FFFFF    FF     FF       FFF              FFF     FFF    FFFFFFFFF   FFFFFF             F",
-   "F   FFF    FFFF     FFFFFFF        FFF              FFF     FFF   FFF     FFF  FFF FFF            F",
-   "F   FFF     FFF        FFF         FFF              FFF     FFF   FFF     FFF  FFF  FFF  F F F    F",
-   "F                                                        F                                        F",
-   "FF                  FFF                                FFF                                        F",
-   "F F              FFFFFFF            F          F     FFFFF                                        F",
-   "FJKCCLHFFFJKCCCCCCLHFFFFFFFFJKFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
-   "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
-   "FIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIF", };*/
 	std::string template_1[n][m];
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < m; j++)
 		{
-			if (i == 0 || j == 0)
-			{
-				template_1[i][j] = " ";
-			}
-			else
-			{
-				template_1[i][j] = "B";
-			}
+			template_1[i][j] = "NaN";
 		}
 	}
 
 
 	map_generation(template_1);
 
-	for (int i = 0; i < 15; i++)
+	
+	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < m; j++)
 		{
-			template_1[i][j] = " ";
+			std::cout << template_1[i][j];
 		}
+		std::cout << std::endl;
 	}
+	filterMap(template_1);
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < m; j++)
@@ -95,7 +45,6 @@ TileFactory::TileFactory()
 		std::cout << std::endl;
 	}
 
-	
 	Tile tile_B(initRect_tile('B'), 'B');
 	Tile tile_C(initRect_tile('C'), 'C');
 	Tile tile_D(initRect_tile('D'), 'D');
@@ -113,7 +62,7 @@ TileFactory::TileFactory()
 			if (template_1[i][j] == "L") { tile_map_inFactory[i][j] = tile_L; }
 			if (template_1[i][j] == "L") { tile_map_inFactory[i][j] = tile_L; }
 			if (template_1[i][j] == "A") { tile_map_inFactory[i][j] = tile_A; }
-		
+
 			if (template_1[i][j] == "P") { tile_map_inFactory[i][j] = tile_P; }
 		}
 	}
@@ -124,192 +73,372 @@ bool TileFactory::getPosPlayer(int i, int j)
 	return tile_map_inFactory[i][j].give_player_info();
 }
 
-/*for(int f = 0; f < 10;f++)
-	{
-		int i = rand() % 11 + f ;
 
-	afill(template_2, i, 1);
-	}*/
 void TileFactory::map_generation(std::string template_2[n][m])
 {
-	int i = rand() % 20 + 5, j = 1;
-	
-	afill(template_2, i, j);
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	int i = rand() % 10 + 15, j = 0;
+
+	afill(template_2, i, j, gen);
 }
 
-void TileFactory::down(std::string (*map)[200], int &i, int &j)
+
+void TileFactory::afill(std::string map[n][m], int& i, int& j, std::mt19937 gen)
 {
-	int step = rand() % 10 + 1;
-	for (int k = j; k < step+j && k<m-2; k++)
+	std::uniform_int_distribution<int> cofShift(3, 5);
+
+	int min = 1;
+	int max = 5;
+	std::uniform_int_distribution<int> distribution(min, max);
+	int choice = distribution(gen);
+	bool wormhole_b = true;
+	int coutn = 5;
+	int SHIFT;
+	while (j != m)
 	{
-		for (int g = i++; g < i + 2  && g < 38; g++)
-		{
-			map[g][k] = " ";
-			if (g == i + 1) {
-				map[g + 1][k] = "B";
-			}
-		}
-	}
-	if(j+step < m-1)j += step;
-	
-}
-
-void TileFactory::up(std::string(* map)[200], int &i, int &j)
-{
-	int step = rand() % 10 + 1;
-	for (int k = j; k < step+j && k < m - 2; k++)
-	{
-		map[i+2][k] = "B";
-		for (int g = --i+2; g > i - 2 && g > 5; g--)
-		{
-			map[g][k] = " ";
-		}
-	}
-	if (j + step < m - 1)j += step;
-}
-
-void TileFactory::directly(std::string(* map)[200], int &i, int &j)
-{
-	int step = rand() % 10 + 1;
-	for (int k = j; k < step+j && k < m - 2; k++)
-	{
-		for (int g = i + 4; g > i - 1 && g > 5; g--)
-		{
-			if (g == i + 4) {
-				map[g+1][k] = "B";
-			}
-				map[g][k] = " ";
-
-		}
-	}
-
-	if (j + step < m - 1)j += step;
-}
-
-void TileFactory::zigzag(std::string(* map)[200], int &i, int &j, int area)
-{
-	
-	if (i == 20) i += area;
-	int p = i;
-		while (p < n/2)
-		{
-			down(map, i, j);
-			p = i;
-		}
-		while (p > n / 2)
-		{
-			up(map, i, j);
-			p = i;
-		}
-		
-}
-
-void TileFactory::river(std::string(* map)[200], int& i, int& j)
-{
-	int step = rand() % 10 + 1;
-	if (i > 5) up(map, i, j);
-	directly(map, i, j);
-	//down
-	for (int k = j; k < step + j && k < m - 2; k++)
-	{
-		for (int g = 5 + i++; g > i - 2  && g < 38 && g > 5; g--)
-		{
-			map[g][k] = " ";
+		SHIFT = cofShift(gen);
+		int choice = distribution(gen);
+		if (choice == 1 && i > 30)
+			flatland(map, i, j, SHIFT, gen);
+		else if (choice == 2)
+			mountainous_terrain(map, i, j, SHIFT, gen);
+		else if (choice == 3)
+			water_bodies(map, i, j, SHIFT, gen);
+		else if (choice == 4)
+			tunnel(map, i, j, SHIFT, gen);
 			
-		}
-	}
-	j += step;
-	//right
-	for (int k = j; k < 2*step + j && k < m - 2; k++)
-	{
-		for (int g = i + 4; g > i - 1 && g > 5 && g < 38; g--)
+		else if (choice == 5 && wormhole_b)
 		{
-			if (g == i + 4) {
-				map[g + 1][k] = "B";
+			wormhole(map, i, j, SHIFT, gen);
+			coutn--;
+			if (coutn <= 0) wormhole_b = false;
+		}
+	/*	else if (choice == 6)
+			soaring_islands(map, i, j, SHIFT, gen);*/
+	}
+	cavern(map, i, j, SHIFT, gen);
+	
+}
+
+void TileFactory::flatland(std::string (*map)[200], int& i, int& j, int shift, std::mt19937 gen)
+{
+	std::uniform_int_distribution<int> distribution(-1, 1);
+
+	int bool_tap = 0;
+	for (int top = 0; top < shift; top++)
+	{
+		int right = j;
+		for (; right < j + shift && right < m; right++)
+		{
+			if (bool_tap == 1)map[i][right] = "B"; //·ÎÓÍ Ò Ú‡‚ÓÈ Ò‚ÂıÛ Ë ÒÎÂ‚‡
+			else if (bool_tap == -1)map[i][right] = "B"; //ÒÔ‡‚‡
+			else
+				map[i][right] = "B"; //¡ÀŒ  ƒÀﬂ “–¿¬€ — ¬≈–’Õ≈… —“Œ–ŒÕ€
+
+			for (int down = i + 1; down < n; down++) // «¿œŒÀÕ»Ã ¬Õ»« ¬—≈ œ”—“Œ“€
+			{
+				if (map[down][right] == "NaN")map[down][right] = "B"; //¡ÀŒ  ƒÀﬂ «≈ÃÀ»
 			}
-			map[g][k] = " ";
-
+			for (int up = i - 1; up >= 0; up--) // «¿œŒÀÕ»Ã ¬Õ»« ¬—≈ ‚‚Âı
+			{
+				if (map[up][right] == "NaN")map[up][right] = " "; //¡ÀŒ  ÔÛÒÚÓÚ˚
+			}
 		}
-	}
-	j += step*2;
-	//up
-	for (int k = j; k < step + j && k < m - 2; k++)
-	{
-		
-		for (int g = 4 + i-- ; g  > i - 1  && g < 38  && g > 5; g--)
+		j = right;
+		bool_tap = distribution(gen);
+		if (i >= 15 && i <= 25)i += bool_tap;
+		else if (i >= 25)
 		{
-			map[g][k] = " ";
+			i += -1;
+			bool_tap = -1;
 		}
-	}
-	j += step;
-
-
-	//fill water
-	for(int p = i + step+5; p > i+5; p--)
-	{
-		for(int y =  j - step*4; y < j; y ++)
+		else
 		{
-			if (map[p][y] == " ") map[p][y] = "B";
+			i += 1;
+			bool_tap = 1;
+		}
+	}
+}
+
+void TileFactory::mountainous_terrain(std::string (*map)[200], int& i, int& j, int& shift, std::mt19937 gen)
+{
+	std::uniform_int_distribution<int> distribution(-1, 1);
+	int bool_tap = distribution(gen);
+
+
+	for (int STEP = 0; STEP < shift; STEP++)
+	{
+		int right = j;
+		for (; right < j + shift && right < m; right++)
+		{
+			if (bool_tap == 1)map[i][right] = "B"; //·ÎÓÍ Ò Ú‡‚ÓÈ Ò‚ÂıÛ Ë ÒÎÂ‚‡
+			else if (bool_tap == -1)map[i][right] = "B"; //ÒÔ‡‚‡
+			else map[i][right] = "B"; //¡ÀŒ  ƒÀﬂ “–¿¬€ — ¬≈–’Õ≈… —“Œ–ŒÕ€
+
+			for (int down = i + 1; down < n; down++) // «¿œŒÀÕ»Ã ¬Õ»« ¬—≈ œ”—“Œ“€
+			{
+				if (map[down][right] == "NaN")map[down][right] = "B"; //¡ÀŒ  ƒÀﬂ «≈ÃÀ»
+			}
+			for (int up = i - 1; up >= 0; up--) // «¿œŒÀÕ»Ã ¬Õ»« ¬—≈ ‚‚Âı
+			{
+				if (map[up][right] == "NaN")map[up][right] = " "; //¡ÀŒ  ÔÛÒÚÓÚ˚
+			}
+			i += bool_tap;
+		}
+		j = right;
+		for (; right < j + shift / 2 && right < m; right++)
+		{
+			map[i][right] = "B"; // ¡ÀŒ  “–¿¬¿ —¬≈–’”
+			for (int down = i + 1; down < n; down++) // «¿œŒÀÕ»Ã ¬Õ»« ¬—≈ œ”—“Œ“€
+			{
+				if (map[down][right] == "NaN")map[down][right] = "B"; //¡ÀŒ  ƒÀﬂ «≈ÃÀ»
+			}
+			for (int up = i - 1; up >= 0; up--) // «¿œŒÀÕ»Ã ¬Õ»« ¬—≈ ‚‚Âı
+			{
+				if (map[up][right] == "NaN")map[up][right] = " "; //¡ÀŒ  ÔÛÒÚÓÚ˚
+			}
+		}
+		j = right;
+		if (i >= 10 && i <= 25) bool_tap = distribution(gen);
+		else if (i >= 25) bool_tap = -1;
+		else bool_tap = 1;
+	}
+}
+
+void TileFactory::water_bodies(std::string (*map)[200], int& i, int& j, int shift, std::mt19937 gen)
+{
+	std::uniform_int_distribution<int> distribution(-1, 1);
+	int bool_tap = 1;
+	int stat_i = i;
+
+	for (int STEP = 0; STEP < 2; STEP++)
+	{
+		int right = j;
+		for (; right < j + shift && right < m; right++)
+		{
+			if (bool_tap == 1)map[i][right] = "B"; //·ÎÓÍ Ò Ú‡‚ÓÈ Ò‚ÂıÛ Ë ÒÎÂ‚‡
+			else if (bool_tap == -1)map[i][right] = "B"; //ÒÔ‡‚‡
+			else map[i][right] = "B"; //¡ÀŒ  ƒÀﬂ “–¿¬€ — ¬≈–’Õ≈… —“Œ–ŒÕ€
+
+			for (int down = i + 1; down < n; down++) // «¿œŒÀÕ»Ã ¬Õ»« ¬—≈ œ”—“Œ“€
+			{
+				if (map[down][right] == "NaN")map[down][right] = "B"; //¡ÀŒ  ƒÀﬂ «≈ÃÀ»
+			}
+			for (int up = i - 1; up >= 0; up--) // «¿œŒÀÕ»Ã ¬—≈ ‚‚Âı
+
+			{
+				if (up > stat_i) map[up][right] = "C"; //¡ÀŒ  ¬Œƒ€
+				if (map[up][right] == "NaN")map[up][right] = " "; //¡ÀŒ  ÔÛÒÚÓÚ˚
+			}
+			i += bool_tap;
+		}
+		j = right;
+		for (; right < j + shift && right < m; right++)
+		{
+			map[i][right] = "B"; // ¡ÀŒ  “–¿¬¿ —¬≈–’”
+			for (int down = i + 1; down < n; down++) // «¿œŒÀÕ»Ã ¬Õ»« ¬—≈ œ”—“Œ“€
+			{
+				if (map[down][right] == "NaN")map[down][right] = "B"; //¡ÀŒ  ƒÀﬂ «≈ÃÀ»
+			}
+			for (int up = i - 1; up >= 0; up--) // «¿œŒÀÕ»Ã ¬Õ»« ¬—≈ ‚‚Âı
+			{
+				if (up > stat_i) map[up][right] = "C"; //¡ÀŒ  ¬Œƒ€
+				if (map[up][right] == "NaN")map[up][right] = " "; //¡ÀŒ  ÔÛÒÚÓÚ˚
+			}
+		}
+		j = right;
+		bool_tap = -1;
+	}
+}
+
+void TileFactory::tunnel(std::string (*map)[200], int& i, int& j, int shift, std::mt19937 gen)
+{
+	std::uniform_int_distribution<int> distribution(-1, 1);
+	std::uniform_int_distribution<int> emptiness(3, 5);
+	int bool_tap = 1;
+	int stat_i = i;
+	i += bool_tap;
+	int count_emptiness = 0;
+	int count_block = 0;
+
+	int right = j;
+
+	for (; right < j + shift * 3 && right < m; right++)
+	{
+		if (bool_tap == 1)map[i][right] = "B"; //·ÎÓÍ Ò Ú‡‚ÓÈ Ò‚ÂıÛ Ë ÒÎÂ‚‡
+		else if (bool_tap == -1)map[i][right] = "B"; //ÒÔ‡‚‡
+		else map[i][right] = "B"; //¡ÀŒ  ƒÀﬂ “–¿¬€ — ¬≈–’Õ≈… —“Œ–ŒÕ€
+
+		for (int down = i + 1; down < n; down++) // «¿œŒÀÕ»Ã ¬Õ»« ¬—≈ œ”—“Œ“€
+		{
+			if (map[down][right] == "NaN")map[down][right] = "B"; //¡ÀŒ  ƒÀﬂ «≈ÃÀ»
+		}
+		count_emptiness = emptiness(gen);
+		count_block = emptiness(gen);
+
+		for (int up = i - 1; up >= 0; up--) // «¿œŒÀÕ»Ã ¬—≈ ‚‚Âı
+
+		{
+			if (count_emptiness-- > 0) map[up][right] = " "; //¡ÀŒ  ÔÛÒÚÓÚ˚ Á‡‰ÌËÈ ÙÓÌ
+			else if (count_block-- > 0) map[up][right] = "B"; //·ÎÓÂ ÁÂÏÎË Ò‚ÂıÛ
+			else if (count_block-- == -1)map[up][right] = "A"; //¡ÀŒ  —¬≈–’”
+			else if (map[up][right] == "NaN")map[up][right] = " "; //¡ÀŒ  ÔÛÒÚÓÚ˚
+		}
+		i += distribution(gen);
+	}
+	j = right;
+}
+
+void TileFactory::wormhole(std::string (*map)[200], int& i, int& j, int shift, std::mt19937 gen)
+{
+	std::uniform_int_distribution<int> distribution(-1, 1);
+	int bool_tap = 1;
+	int stat_i = i;
+	int stat_j = j;
+
+	if (i > 30)return;
+	int right = j;
+	int top = 0;
+	int count = shift + 3;
+
+
+	for (; right < j + 4 && right < m; right++)
+	{
+		top = i;
+
+		for (int down = i + 1; down < n; down++) // «¿œŒÀÕ»Ã ¬Õ»« ¬—≈ œ”—“Œ“€
+		{
+			if (map[down][right] == "NaN")map[down][right] = "B"; //¡ÀŒ  ƒÀﬂ «≈ÃÀ»
+		}
+		for (; top < i + 5 && top < n; top++)
+		{
+			if (j == right || j + 3 == right)map[top][right] = "A";
+				//·ÎÓÍË ‰Îˇ ˜Â‚‡ÚÓ˜ËÌ˚ ÌÛ ËÎË Í‡ÏÌË ÚÛÔÓ, ÌÛ ËÎË ÁÂÏÎˇ
+			else if (top == i + 4) map[top][right] = "A";
+			else map[top][right] = " "; //·ÎÓÍË ÙÓÌ‡ ÔÂ¯Â˚ ËÎË ˜Â‚‡ÚÓ˜ËÌ˚
+		}
+		for (int up = i - 1; up >= 0; up--) // «¿œŒÀÕ»Ã ¬—≈ ‚‚Âı
+
+		{
+			if (map[up][right] == "NaN")map[up][right] = " "; //¡ÀŒ  ÔÛÒÚÓÚ˚
 		}
 	}
 
-	directly(map, i, j);
+	if (j > m / 2) {
+		std::uniform_int_distribution<int> stp_d(3, 4);
+		int stp = stp_d(gen);
+		right = j;
+		for (; right > j - shift * 4; right--)
+		{
+			top = i + 1;
+			for (; top < i + 7 && top < n - 1; top++)
+			{
+				if (top == i + 1)map[top][right] = "A"; //¡ÀŒ   –¿≈¬ ¬ œ≈Ÿ≈– ≈
+				else if (top == i + 6)map[top][right] = "A";
+				else map[top][right] = " "; //·ÎÓÂ ÒÚÂÌ˚, Á‡‰ÌÂ„Ó ÙÓÌ‡
+			}
+			i += distribution(gen);
+			if (distribution(gen))
+			{
+				i += 1;
+
+			}
+		}
+	}
+	else
+	{
+		std::uniform_int_distribution<int> stp_d(3, 4);
+		int stp = stp_d(gen);
+		right = j;
+		for (; right < j + shift * 4; right++) // »ÁÏÂÌËÎÒˇ ÁÌ‡Í ">" Ì‡ "<"
+		{
+			top = i + 1;
+			for (; top < i + 7 && top < n - 1; top++)
+			{
+				if (top == i + 1) map[top][right] = "A"; // ¡ÀŒ   –¿≈¬ ¬ œ≈Ÿ≈– ≈
+				else if (top == i + 6) map[top][right] = "A";
+				else map[top][right] = " "; // ¡ÎÓÍË ÒÚÂÌ˚, Á‡‰ÌÂ„Ó ÙÓÌ‡
+			}
+			i += distribution(gen);
+			if (distribution(gen))
+			{
+				i += 1;
+			}
+		}
+
+	}
+
+	j = stat_j + 4;
+	i = stat_i;
+
+
+	
+}
+
+void TileFactory::cavern(std::string (*map)[200], int& i, int& j, int shift, std::mt19937 gen)
+{
+
+	std::uniform_int_distribution<int> distribution(-1, 1);
+	std::uniform_int_distribution<int> cavern_rand(26, 35);
+	std::uniform_int_distribution<int> cavern_rand_step(3, 6);
+	int right = 0;
+	int top = cavern_rand(gen);
+	int step = cavern_rand_step(gen);
+	i = top;
+	for(;right < m; right++)
+	{
+
+		for(;top < i+step && top < n-1; top++)
+		{
+			map[top][right] = " ";
+		}
+		top = i;
+		if (top > 37) top += -1;
+		else top+=distribution(gen);
+		i = top;
+	}
+
+
 
 }
 
-void TileFactory::afill(std::string map[n][m], int &i, int &j)
+void TileFactory::soaring_islands(std::string (*map)[200], int& i, int& j, int shift, std::mt19937 gen)
 {
-	if (j > m - 20)
-		return;
-	 
-	int choiÒÂ = rand() % 4;
-	if (choiÒÂ == 0 && i > 35) down(map, i, j);
-	else if (choiÒÂ == 1 && i < 5) up(map, i, j);
-	else if (choiÒÂ == 2 ) directly(map, i, j);
-	else if (choiÒÂ == 3 && i < 35 && i > 4) river(map, i, j);
-	//else if (choiÒÂ == 5 && i > 10) gap(map, i, j);
-	//else if (choice == 6) hole(map, i, j);
-	else zigzag(map, i, j, (i > 20) ? -1 : 1);
+}
 
-	afill(map, i, j);
+void TileFactory::filterMap(std::string map[n][m])
+{
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            if (map[i][j] != " ")
+            {
+                int emptyNeighbors = countEmptyNeighbors(map, i, j);
 
-	/*int d;
-	int tmp_i = i;
-	if (rand() % 2 && i < 15 || i < 5)
-	{
-		d = i + rand() % 3 + 2;
-		for (int k = i; k < d && k < n; k++)
-		{
-			map[k][j] = " ";
-		}
-		i = rand() % (d - i) + i;
-	}
+              
+                if (emptyNeighbors > 4)
+                {
+                    map[i][j] = " ";
+                }
+            }
+        }
+    }
+}
 
-	else if(i > 5)
-	{
-		d = i - rand() % 1 - 2;
-		for (int k = i; k > d+1 && k>0; k--)
-		{
-			map[k][j] = " ";
-		}
-		i = rand() % (i - d) + d;
-	}else
-	{
-		d = i + rand() % 2 + 2;
-		for (int k = i; k < d+3 && k < n; k++)
-		{
-			map[k][j] = " ";
-		}
-		i = rand() % (d - i) + i;
-	}
+int TileFactory::countEmptyNeighbors(std::string map[n][m], int i, int j)
+{
+    int emptyNeighbors = 0;
 
-	
+    if (i > 0 && map[i - 1][j] == " ") emptyNeighbors++; // —‚ÂıÛ
+	if (i > 0 && j > 0 && map[i - 1][j - 1] == " ") emptyNeighbors++;
+	if (i > 0 && j < m && map[i - 1][j + 1] == " ")emptyNeighbors++;
+	if (i < n && j>0 && map[i + 1][j - 1] == " ")emptyNeighbors++;
+	if (i < n && j < m && map[i + 1][j + 1] == " ")emptyNeighbors++;
+    if (i < n  && map[i + 1][j] == " ") emptyNeighbors++; // —ÌËÁÛ
+    if (j > 0 && map[i][j - 1] == " ") emptyNeighbors++; // —ÎÂ‚‡
+    if (j < m  && map[i][j + 1] == " ") emptyNeighbors++; // —Ô‡‚‡
 
-
-
-	afill(map, i, j + 1);*/
-	/*if (i <15 &&(tmp_i+3 == i) ) 
-		afill(map, i-4, j + 1);
-	if ( i > 5  &&( tmp_i - 3 == i))
-		afill(map, i+4, j + 1);*/
+    return emptyNeighbors;
 }

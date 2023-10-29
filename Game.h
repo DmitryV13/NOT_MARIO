@@ -15,7 +15,7 @@ private:
 	TileMap sandbox;
 	MyView myView;
 
-	int numOfEnemy{30};
+	int numOfEnemy{60};
 	double screenWidth;
 	double screenHeight;
 
