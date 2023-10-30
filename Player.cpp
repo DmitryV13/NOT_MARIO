@@ -21,7 +21,7 @@
 
     void Player::initSprite(){
         player_S.setTexture(player_T);
-        currentFrame = IntRect(0, 23, 56, 73);
+        currentFrame = IntRect(75, 23, 56, 73);
         player_S.setTextureRect(currentFrame);
     }
 

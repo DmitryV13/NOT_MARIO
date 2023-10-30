@@ -22,6 +22,10 @@
 	void Game::initPlayer(){
 		player = new Player(sandbox);
 	}
+
+	void Game::initView(){
+
+	}
 	
 	const sf::RenderWindow& Game::getWindow() const{
 		return window;
@@ -89,6 +93,9 @@
 				0,
 				player->getPosition().y);
 		}
+	}
+	void Game::renderMap() {
+		map.render(window);
 	}
 	
 	void Game::renderPLayer(){

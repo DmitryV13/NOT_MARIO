@@ -17,6 +17,7 @@ private:
 
 	void initWindow();
 	void initPlayer();
+	void initView();
 public:
 	Game(double screenWidth_, double screenHeight_);
 	~Game();
@@ -26,6 +27,7 @@ public:
 	void update();
 	void updateView();
 	void updateCollision();
+	void renderMap();
 	void renderPLayer();
 	void renderMap();
 	void render();
