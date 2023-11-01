@@ -16,4 +16,5 @@ public:
 	bool give_player_info();
 	sf::IntRect give_cord();
 	void setPlayerCur();
+	void setTilePresence(int presence);
 };
