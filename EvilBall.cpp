@@ -14,7 +14,7 @@ EvilBall::EvilBall(TileMap& map):Enemy(map)
 	void EvilBall::init_texture()
 	{
 		Texture tmp;
-		if (!Enemy_T.loadFromFile("Textures/EvilBall.png"))
+		if (!Enemy_T.loadFromFile("Textures/eye.png"))
 		{
 			std::cout << "Error -> Enemy -> couldn't load enemy texture" << std::endl;
 		}
@@ -24,6 +24,6 @@ EvilBall::EvilBall(TileMap& map):Enemy(map)
 	{
 		//Enemy_T = init_texture();
 		Enemy_S.setTexture(Enemy_T);
-		currentFrame = IntRect(0, 0, 50, 50);
+		currentFrame = IntRect(0, 0, 60, 55.5);
 		Enemy_S.setTextureRect(currentFrame);
 	}

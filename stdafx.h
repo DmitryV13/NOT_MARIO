@@ -6,6 +6,7 @@
 #include <chrono>
 #include <cstdlib>
 #include <random>
+#include <cmath>
 
 using  std::vector;
 

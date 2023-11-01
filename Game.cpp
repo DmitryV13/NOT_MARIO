@@ -96,7 +96,7 @@
 		}
 		if ((player->getPosition().x + player->getGlobalBounds().width) > 12000.f) {
 			player->setPosition(
-				1200.f - player->getGlobalBounds().width,
+				12000.f - player->getGlobalBounds().width,
 				player->getPosition().y);
 		}
 		if (player->getPosition().x < 0) {

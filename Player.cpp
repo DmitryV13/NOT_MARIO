@@ -124,7 +124,7 @@
         else {
             flyVelocity = 0.f;
         }
-        std::cout << flyVelocity << std::endl;
+       // std::cout << flyVelocity << std::endl;
         // deceleration
         velocity *= deceleration;
         

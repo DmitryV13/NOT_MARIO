@@ -25,13 +25,13 @@ protected:
     Clock animationTimer;
     short animationState;
     bool animationSwitch;
-  
+    IntRect block;
     sf::Vector2f startPosition;
     int currentBlockX{0};
     int currentBlockY{0};
     int stepLeft;
     int stepRight;
-    int maxStep{ 500 };
+    int maxStep{ 1000 };
 
     bool jumpTile;
 	float moving;
@@ -48,6 +48,7 @@ protected:
     float velocityMaxY;
     float jumpVelocity;
     bool onGround;
+    bool onWall;
     
     void init_variables();
     virtual void init_texture() = 0;
@@ -62,20 +63,15 @@ public:
     Enemy(TileMap& map);
    virtual ~Enemy() = default;
 
-    // accessors
     const bool& get_animation_switch();
     sf::Vector2f getPosition() const;
     const FloatRect getGlobalBounds() const;
-   // const sf::Vector2f getVelocity() const;
-
-    //modifiers
+  
     void resetVelocityY();
     void setPosition(const float x, const float y);
     void resetJumpAccess();
-    //void resetNTHJump();
-    //void resetIsFlying();
+    
 
-    //void updateMovement(double time, RenderWindow& window);
     void render(sf::RenderTarget& target);
     void walk(const float dir_x);
     void jump(const float dir_y);
@@ -84,18 +80,10 @@ public:
     void updateMovement();
     void updateAnimation();
     bool updateCollisionX();
+    bool updateCollisionXJump();
     bool updateCollisionY();
     void resetAnimationTimer();
-
-
     bool search_for_enemies();
-    
 
-    //void checkCollisionX();;
-    //void checkCollisionY();
-    //void fallingTest();
-    //void changeFrames(double& time);
-    //void checkingBordersX();
-    //void checkingBordersY();
 };
 
