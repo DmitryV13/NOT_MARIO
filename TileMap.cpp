@@ -1,48 +1,44 @@
 #include "stdafx.h"
 #include "TileMap.h"
 
-TileMap::TileMap()
-	:sizeTexture(60)
-	, mapW(40)
-	, mapH(200) {
+	TileMap::TileMap()
+		:sizeTexture(60)
+		,mapW(40)
+		,mapH(200) {
 
-	init_texture();
-	TileFactory factory;
-	for (int i = 0; i < 40; i++) {
-		for (int j = 0; j < 200; j++) {
-			tilemap[i][j] = factory.tile_map_inFactory[i][j];
+		init_texture();
+		TileFactory factory;
+		for (int i = 0; i < 40; i++) {
+			for (int j = 0; j < 200; j++) {
+				tilemap[i][j] = factory.tile_map_inFactory[i][j];
+			}
 		}
 	}
-}
 
-void TileMap::init_texture() {
-
-	if (!block_T[0].loadFromFile("Textures/Textures_map/map.png")) {
-		std::cout << "Error -> TileMap -> couldn't load texture";
+    Tile& TileMap::getTile()
+	{
+		return **tilemap;
 	}
-	//if (!block_T[1].loadFromFile("Textures/Textures_map/map_back.png")) {
-	//	std::cout << "Error -> TileMap -> couldn't load texture";
-	//}
-	//if (!background_T.loadFromFile("Textures/Textures_map/background_test.jpg")) {
-	//	std::cout << "Error -> TileMap -> couldn't load texture";
-	//}
-	block_S[0].setTexture(block_T[0]);
-	//block_S[1].setTexture(block_T[1]);
-	//background_S.setTexture(background_T);
-}
+	Tile& TileMap::setPosTile(int i, int j)
+	{
+		return tilemap[i][j];
+	}
+	void TileMap::init_texture() {
+	
+		if (!block_T.loadFromFile("Textures/Textures_map/map.png")) {
+			std::cout << "Error -> TileMap -> couldn't load texture";
+		}
+		block_S.setTexture(block_T);
+	}
 	
 	void TileMap::render(sf::RenderTarget& target)
 	{
 		//target.draw(background_S);
 		for (int i = 0; i < 40; i++) {
 			for (int j = 0; j < 200; j++) {
-				//block_S[1].setTextureRect(tilemap[i][j].give_cord());
-				//block_S[1].setPosition(j * 60, i * 60);
-				//target.draw(block_S[1]);
-				block_S[0].setTextureRect(tilemap[i][j].give_cord());
-				block_S[0].setPosition(j * 60, i * 60);
-				target.draw(block_S[0]);
-
+				block_S.setTextureRect(tilemap[i][j].give_cord());
+				block_S.setPosition(j * 60, i * 60);
+				target.draw(block_S);
 			}
 		}
 	}
@@ -50,6 +46,7 @@ void TileMap::init_texture() {
 	float TileMap::getMapWidth(){
 		return mapH * sizeTexture;
 	}
+
 
 	float TileMap::getMapHeight(){
 		return mapW * sizeTexture;

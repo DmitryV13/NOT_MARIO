@@ -4,7 +4,11 @@
 #include <vector>
 #include <string>
 #include <chrono>
+#include <cstdlib>
+#include <random>
 #include <cmath>
+
+using  std::vector;
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
