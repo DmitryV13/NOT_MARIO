@@ -94,9 +94,6 @@
 				player->getPosition().y);
 		}
 	}
-	void Game::renderMap() {
-		map.render(window);
-	}
 	
 	void Game::renderPLayer(){
 		player->render(window);

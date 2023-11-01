@@ -20,15 +20,15 @@ void TileMap::init_texture() {
 	if (!block_T[0].loadFromFile("Textures/Textures_map/map.png")) {
 		std::cout << "Error -> TileMap -> couldn't load texture";
 	}
-	if (!block_T[1].loadFromFile("Textures/Textures_map/map_back.png")) {
-		std::cout << "Error -> TileMap -> couldn't load texture";
-	}
-	if (!background_T.loadFromFile("Textures/Textures_map/background_test.jpg")) {
-		std::cout << "Error -> TileMap -> couldn't load texture";
-	}
+	//if (!block_T[1].loadFromFile("Textures/Textures_map/map_back.png")) {
+	//	std::cout << "Error -> TileMap -> couldn't load texture";
+	//}
+	//if (!background_T.loadFromFile("Textures/Textures_map/background_test.jpg")) {
+	//	std::cout << "Error -> TileMap -> couldn't load texture";
+	//}
 	block_S[0].setTexture(block_T[0]);
-	block_S[1].setTexture(block_T[1]);
-	background_S.setTexture(background_T);
+	//block_S[1].setTexture(block_T[1]);
+	//background_S.setTexture(background_T);
 }
 	
 	void TileMap::render(sf::RenderTarget& target)
@@ -63,4 +63,15 @@ void TileMap::init_texture() {
 		if (tilemap[i][j].give_front_tile() != ' ')
 			return true;
 		return false;
+	}
+
+	void TileMap::updatePlayerPresence(int indexI[], int indexJ[]) {
+		for (int k = 0; k < mapW; k++){
+			for (int l = 0; l < mapH; l++) {
+				tilemap[k][l].setTilePresence(0);
+			}
+		}
+		for (int i = 0; i < 4 || indexI[i]!=-1; i++){
+			tilemap[indexI[i]][indexJ[i]].setTilePresence(1);
+		}
 	}

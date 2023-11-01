@@ -27,7 +27,6 @@ public:
 	void update();
 	void updateView();
 	void updateCollision();
-	void renderMap();
 	void renderPLayer();
 	void renderMap();
 	void render();

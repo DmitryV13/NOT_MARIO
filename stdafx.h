@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <chrono>
+#include <cmath>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>

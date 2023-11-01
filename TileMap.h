@@ -21,6 +21,8 @@ public:
 	float getSizeTexture();
 	bool isBlock(int i, int j);
 
+	void updatePlayerPresence(int indexI[], int indexJ[]);
+
 	void init_texture();
 	void render(sf::RenderTarget& target);
 };

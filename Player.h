@@ -11,7 +11,7 @@ using sf::IntRect;
 using sf::Clock;
 
 
-enum PLAYER_ANIMATION_STATES{IDLE=0, MOVING_LEFT, MOVING_RIGHT, MOVING_DOWN, MOVING_UP, JUMPING, FALLING};
+enum PLAYER_ANIMATION_STATES{IDLE_LEFT=0, IDLE_RIGHT, MOVING_LEFT, MOVING_RIGHT, MOVING_DOWN, MOVING_UP, JUMPING, FALLING};
 
 
 class Player {
@@ -42,6 +42,8 @@ private:
     short jumpLimit;
     bool isFlying;
     float flyVelocity;
+
+    bool movingDirection;
     //FloatRect coordinates;
     //double speedX;
     //double speedY;
@@ -83,6 +85,7 @@ public:
     void updateAnimation();
     bool updateCollisionX();
     bool updateCollisionY();
+    void updatePresence();
     void resetAnimationTimer();
     
     //void checkCollisionX();;

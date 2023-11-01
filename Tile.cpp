@@ -12,6 +12,10 @@
     Tile::Tile(sf::IntRect cord_, char f_b, char b_b) : cord(cord_), front_tile(f_b), back_tile(b_b) {
         this->player = false;
     }
+
+    void Tile::setTilePresence(int presence){
+        player = presence;
+    }
     
     char Tile::give_front_tile()
     {
