@@ -11,10 +11,12 @@ private:
 	float sizeTexture;
 	float mapW;
 	float mapH;
+
 public:
 	TileMap();
 	Tile& getTile();
 	Tile& setPosTile(int i, int j);
+	Tile& getPosTile(int i, int j);
 	float getMapWidth();
 	float getMapHeight();
 	float getSizeTexture();

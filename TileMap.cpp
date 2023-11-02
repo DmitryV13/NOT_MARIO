@@ -23,7 +23,14 @@
 	{
 		return tilemap[i][j];
 	}
-	void TileMap::init_texture() {
+
+Tile& TileMap::getPosTile(int i, int j)
+{
+		return tilemap[i][j];
+}
+
+
+void TileMap::init_texture() {
 	
 		if (!block_T.loadFromFile("Textures/Textures_map/map.png")) {
 			std::cout << "Error -> TileMap -> couldn't load texture";
@@ -68,7 +75,8 @@
 				tilemap[k][l].setTilePresence(0);
 			}
 		}
-		for (int i = 0; i < 4 || indexI[i]!=-1; i++){
+		for (int i = 0; i < 4 && indexI[i]!=-1&&indexJ[i] != -1; i++){
+			std::cout << " " << indexI[i] << " " << indexJ[i] << std::endl;
 			tilemap[indexI[i]][indexJ[i]].setTilePresence(1);
 		}
 	}

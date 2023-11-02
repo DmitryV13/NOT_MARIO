@@ -98,6 +98,7 @@
         updateMovement();
         updateAnimation();
         updatePhysics();
+        updatePresence();
     }
 
     void Player::updatePhysics(){
@@ -321,10 +322,10 @@
         for (int i = (player_S.getPosition().y + velocity.y) / 60, i1=0; i < (player_S.getPosition().y + velocity.y + player_S.getGlobalBounds().height) / 60; i++, i1++) {
             for (int j = player_S.getPosition().x / 60, j1=0; j < (player_S.getPosition().x + player_S.getGlobalBounds().width) / 60; j++, j1++) {
                 indexI[i1] = i;
-                indexJ[j1] = j;
+                indexJ[j1] = j;sandbox.getPosTile(i,j).setPlayerCur();
             }
         }
-        sandbox.updatePlayerPresence(indexI, indexJ);
+        
     }
 
     void Player::resetNTHJump(){

@@ -116,19 +116,21 @@ void Enemy::resetAnimationTimer()
 bool Enemy::search_for_enemies()
 
 {
+	pos_Player[TileFactory::n][TileFactory::m] = sandbox.getTile();
+
 	if (getPosition().y / 60 > 5)
-		for (int i = getPosition().y / 60; i < getPosition().y / 60 + 5; i++)
+		for (int i = getPosition().y / 60; i < getPosition().y / 60 - 5; i++)
 		{
-			if (sandbox.getMapWidth() - 10 * 60 > getPosition().x)
+			if (sandbox.getMapWidth() - 10  > getPosition().x)
 				for (int j = getPosition().x / 60; j < getPosition().x / 60 + 10; j++)
 				{
 					if (pos_Player[i][j].give_player_info())
 					{
-						animationState = Enemy_ANIMATION_STATES::ENEMY_ATTENTION;
+ 						animationState = Enemy_ANIMATION_STATES::ENEMY_ATTENTION;
 						return true;
 					}
 				}
-			if (10 * 60 < getPosition().x)
+			if (60 < getPosition().x)
 				for (int j = getPosition().x / 60 - 10; j < getPosition().x / 60; j++)
 				{
 					if (pos_Player[i][j].give_player_info())
@@ -163,13 +165,10 @@ void Enemy::updateAnimation()
 	{
 		if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
-			currentFrame.left = 60;
-			if (currentFrame.left >= 450.f)
-			{
-				currentFrame.left = 0.f;
-			}
+			currentFrame.left = 0;
+			
 			currentFrame.width = 60;
-			currentFrame.top = 0;
+			currentFrame.top = 60;
 			Enemy_S.setTextureRect(currentFrame);
 			animationTimer.restart();
 		}
@@ -236,10 +235,7 @@ void Enemy::init_physics()
 
 void Enemy::walk(const float dir_x)
 {
-	if (dir_x > 0)
-		stepRight++;
-	if (dir_x < 0)
-		stepLeft++;
+	
 	if(onWall)
 	{
 		displacement.x += dir_x * acceleration;
@@ -263,6 +259,11 @@ void Enemy::walk(const float dir_x)
 	}
 	if (dir_x > 0.f) animationState = Enemy_ANIMATION_STATES::ENEMY_MOVING_RIGHT;
 	else animationState = Enemy_ANIMATION_STATES::ENEMY_MOVING_LEFT;
+	if(search_for_enemies())
+	{
+		displacement.x = 0;
+		
+	}
 
 }
 
@@ -306,7 +307,15 @@ void Enemy::updateMovement()
 		//if (!updateCollisionX())jumpTile = false;
 		
 	}
-	/*if (stepRight == maxStep)
+	
+	if (Enemy_S.getPosition().x <= 0.1f || Enemy_S.getPosition().x + Enemy_S.getGlobalBounds().width > sandbox.getMapWidth())
+	{
+
+		moving *= -1.f;
+	}
+
+
+	if (stepRight == maxStep)
 	{
 		iterationStart = 0;
 		moving *= -1.f;
@@ -317,13 +326,7 @@ void Enemy::updateMovement()
 		moving *= -1.f;
 		stepLeft = 0;
 		iterationStart = 0;
-	}*/
-	if (Enemy_S.getPosition().x <= 0.1f || Enemy_S.getPosition().x + Enemy_S.getGlobalBounds().width > sandbox.getMapWidth())
-	{
-
-		moving *= -1.f;
 	}
-
 	walk(moving);
 
 	/*if (!onGround)iterationStart = 0;
@@ -427,6 +430,11 @@ void Enemy::updatePhysics()
 		displacement.y = 0.f;
 	}
 
+
+	if (displacement.x > 0)
+		stepRight++;
+	if (displacement.x < 0)
+		stepLeft++;
 
 	Enemy_S.move(displacement);
 }
