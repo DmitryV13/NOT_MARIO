@@ -15,6 +15,17 @@ TileMap::TileMap()
 	}
 }
 
+Tile& TileMap::getTile()
+{
+	return **tilemap;
+}
+
+Tile& TileMap::setPosTile(int i, int j)
+{
+	return tilemap[i][j];
+}
+
+
 void TileMap::init_texture() {
 
 	if (!block_T[0].loadFromFile("Textures/Textures_map/map.png")) {
@@ -39,11 +50,13 @@ void TileMap::init_texture() {
 				//block_S[1].setTextureRect(tilemap[i][j].give_cord());
 				//block_S[1].setPosition(j * 60, i * 60);
 				//target.draw(block_S[1]);
+				//std::cout << tilemap[i][j].give_player_info();
 				block_S[0].setTextureRect(tilemap[i][j].give_cord());
 				block_S[0].setPosition(j * 60, i * 60);
 				target.draw(block_S[0]);
 
 			}
+			//std::cout << std::endl;
 		}
 	}
 
@@ -65,14 +78,18 @@ void TileMap::init_texture() {
 		return false;
 	}
 
+	bool TileMap::isOccupied(int i, int j) {
+		return tilemap[i][j].give_player_info();
+	}
+
 	void TileMap::updatePlayerPresence(int indexI[], int indexJ[]) {
 		for (int k = 0; k < mapW; k++){
 			for (int l = 0; l < mapH; l++) {
-				tilemap[k][l].setTilePresence(0);
+				tilemap[k][l].setTilePresence(false);
 			}
 		}
 		for (int i = 0; i < 6 && indexI[i]!=-1 && indexJ[i] != -1; i++){
-			std::cout << " " << indexI[i] << " " << indexJ[i] << std::endl;
-			tilemap[indexI[i]][indexJ[i]].setTilePresence(1);
+			//std::cout << " " << indexI[i] << " " << indexJ[i] << std::endl;
+			tilemap[indexI[i]][indexJ[i]].setTilePresence(true);
 		}
 	}

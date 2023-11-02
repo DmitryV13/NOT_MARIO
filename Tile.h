@@ -12,7 +12,7 @@ public:
 	Tile();
 	Tile(sf::IntRect cord_, char f_b, char b_b);
 
-	void setTilePresence(int presence);
+	void setTilePresence(bool presence);
 
 	char give_front_tile();
 	char give_back_tile();

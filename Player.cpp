@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "Player.h"
 
-    Player::Player(TileMap& map): sandbox(map){
+    Player::Player(TileMap& map) {
+        sandbox = &map;
         initVariables();
         initTexture();
         initSprite();
@@ -307,14 +308,14 @@
         sf::Vector2f newPosition(getPosition().x, getPosition().y);
         for (int i = player_S.getPosition().y / 60; i < (player_S.getPosition().y + player_S.getGlobalBounds().height) / 60; i++) {
             for (int j = (player_S.getPosition().x + velocity.x) / 60; j < (player_S.getPosition().x + velocity.x + player_S.getGlobalBounds().width) / 60; j++) {
-                if (sandbox.isBlock(i, j)) {
+                if (sandbox->isBlock(i, j)) {
                     if (velocity.x > 0) {
                         wasCollision = true;
-                        newPosition.x = j * sandbox.getSizeTexture() - player_S.getGlobalBounds().width;
+                        newPosition.x = j * sandbox->getSizeTexture() - player_S.getGlobalBounds().width;
                     }
                     if (velocity.x < 0) {
                         wasCollision = true;
-                        newPosition.x = j * sandbox.getSizeTexture() + sandbox.getSizeTexture();
+                        newPosition.x = j * sandbox->getSizeTexture() + sandbox->getSizeTexture();
                     }
                 }
             }
@@ -329,15 +330,15 @@
 
         for (int i = (player_S.getPosition().y + velocity.y) / 60; i < (player_S.getPosition().y + velocity.y + player_S.getGlobalBounds().height) / 60; i++) {
             for (int j = player_S.getPosition().x / 60; j < (player_S.getPosition().x + player_S.getGlobalBounds().width) / 60; j++) {
-                if (sandbox.isBlock(i, j)) {
+                if (sandbox->isBlock(i, j)) {
                     if (velocity.y > 0) {
                         wasCollision = true;
-                        newPosition.y = (i * sandbox.getSizeTexture() - player_S.getGlobalBounds().height);
+                        newPosition.y = (i * sandbox->getSizeTexture() - player_S.getGlobalBounds().height);
                         resetJumpAccess();
                     }
                     if (velocity.y < 0) {
                         wasCollision = true;
-                        newPosition.y = i * sandbox.getSizeTexture() + sandbox.getSizeTexture();
+                        newPosition.y = i * sandbox->getSizeTexture() + sandbox->getSizeTexture();
                         //speedY = 0;
                     }
                 }
@@ -361,7 +362,7 @@
                 indexJ[j1++] = j;
             }
         }
-        sandbox.updatePlayerPresence(indexI, indexJ);
+        sandbox->updatePlayerPresence(indexI, indexJ);
     }
 
     void Player::resetNTHJump(){

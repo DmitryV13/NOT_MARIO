@@ -6,6 +6,9 @@ class TileFactory {
 public:
     Tile tile_map_inFactory[40][200];
     TileFactory();
+
+    static const int n = 40;
+    static const int m = 200;
 private:
     sf::IntRect initRect_tile(char tile);
     void generation_map(char map[40][200]);

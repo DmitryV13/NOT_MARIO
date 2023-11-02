@@ -16,7 +16,7 @@ enum PLAYER_ANIMATION_STATES{IDLE_LEFT=0, IDLE_RIGHT, MOVING_LEFT, MOVING_RIGHT,
 
 class Player {
 private:
-    TileMap sandbox;
+    TileMap* sandbox;
 
     Texture player_T;
     Sprite player_S;
