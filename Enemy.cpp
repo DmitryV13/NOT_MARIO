@@ -114,38 +114,21 @@ void Enemy::resetAnimationTimer()
 	animationSwitch = true;
 }
 
-bool Enemy::search_for_enemies(){
-	if (getPosition().y / 60 > 0 && getPosition().y / 60 < 40 && getPosition().x / 60 > 0 && getPosition().y / 60 < 200) {
-		int i = getPosition().y / 60;
-		int j = getPosition().x / 60;
-		if (sandbox->isOccupied(i, j)) {
-			animationState = Enemy_ANIMATION_STATES::ENEMY_ATTENTION;
-			return true;
+bool Enemy::search_for_enemies() {
+	int centerX = getPosition().x / 60;
+	int centerY = getPosition().y / 60;
+
+	for (int i = centerY - 2; i <= centerY + 2; i++) {
+		for (int j = centerX - 2; j <= centerX +2; j++) {
+			if (i >= 0 && i < 40 && j >= 0 && j < 200) {
+				if (sandbox->isOccupied(i, j)) {
+					animationState = Enemy_ANIMATION_STATES::ENEMY_ATTENTION;
+					return true;
+				}
+			}
 		}
 	}
-	//if (getPosition().y / 60 > 5){
-	//	for (int i = getPosition().y / 60; i < getPosition().y / 60 - 5; i++)
-	//	{
-	//		if (sandbox->getMapWidth() - 10 > getPosition().x)
-	//			for (int j = getPosition().x / 60; j < getPosition().x / 60 + 10; j++)
-	//			{
-	//				if (sandbox->isOccupied(i, j))
-	//				{
-	//					animationState = Enemy_ANIMATION_STATES::ENEMY_ATTENTION;
-	//					return true;
-	//				}
-	//			}
-	//		if (60 < getPosition().x)
-	//			for (int j = getPosition().x / 60 - 10; j < getPosition().x / 60; j++)
-	//			{
-	//				if (sandbox->isOccupied(i, j))
-	//				{
-	//					animationState = Enemy_ANIMATION_STATES::ENEMY_ATTENTION;
-	//					return true;
-	//				}
-	//			}
-	//	}
-	//}
+
 	return false;
 }
 
@@ -171,7 +154,7 @@ void Enemy::updateAnimation()
 	{
 		if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
-			currentFrame.top = 0;
+			currentFrame.top = 60;
 			currentFrame.left = 0;
 			currentFrame.width = 60;
 
