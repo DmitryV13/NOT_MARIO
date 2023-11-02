@@ -9,6 +9,8 @@ sf::IntRect TileFactory::initRect_tile(char tile_C)
 	if (tile_C == 'D') { return sf::IntRect(194, 2, 60, 60); }
 	if (tile_C == 'L') { return sf::IntRect(258, 2, 60, 60); }
 	if (tile_C == 'P') { return sf::IntRect(322, 2, 60, 60); }
+	if (tile_C == 'O') { return sf::IntRect(514, 2, 60, 60); }
+	if (tile_C == 'W') { return sf::IntRect(2, 130, 60, 60); }
 }
 
 
@@ -51,6 +53,8 @@ TileFactory::TileFactory()
 	Tile tile_L(initRect_tile('L'), 'L');
 	Tile tile_A(initRect_tile('A'), 'A');
 	Tile tile_P(initRect_tile('P'), 'P');
+	Tile tile_O(initRect_tile('O'), 'O');
+	Tile tile_W(initRect_tile('W'), 'W');
 
 	for (int i = 0; i < n; i++)
 	{
@@ -60,9 +64,9 @@ TileFactory::TileFactory()
 			if (template_1[i][j] == "C") { tile_map_inFactory[i][j] = tile_C; }
 			if (template_1[i][j] == "D") { tile_map_inFactory[i][j] = tile_D; }
 			if (template_1[i][j] == "L") { tile_map_inFactory[i][j] = tile_L; }
-			if (template_1[i][j] == "L") { tile_map_inFactory[i][j] = tile_L; }
 			if (template_1[i][j] == "A") { tile_map_inFactory[i][j] = tile_A; }
-
+			if (template_1[i][j] == "O") { tile_map_inFactory[i][j] = tile_O; }
+			if (template_1[i][j] == "W") { tile_map_inFactory[i][j] = tile_W; }
 			if (template_1[i][j] == "P") { tile_map_inFactory[i][j] = tile_P; }
 		}
 	}
@@ -217,9 +221,9 @@ void TileFactory::water_bodies(std::string (*map)[200], int& i, int& j, int shif
 		int right = j;
 		for (; right < j + shift && right < m; right++)
 		{
-			if (bool_tap == 1)map[i][right] = "B"; //блок с травой сверху и слева
-			else if (bool_tap == -1)map[i][right] = "B"; //справа
-			else map[i][right] = "B"; //БЛОК ДЛЯ ТРАВЫ С ВЕРХНЕЙ СТОРОНЫ
+			if (bool_tap == 1)map[i][right] = "P"; //блок с травой сверху и слева
+			else if (bool_tap == -1)map[i][right] = "L"; //справа
+			else map[i][right] = "A"; //БЛОК ДЛЯ ТРАВЫ С ВЕРХНЕЙ СТОРОНЫ
 
 			for (int down = i + 1; down < n; down++) // ЗАПОЛНИМ ВНИЗ ВСЕ ПУСТОТЫ
 			{
@@ -228,7 +232,7 @@ void TileFactory::water_bodies(std::string (*map)[200], int& i, int& j, int shif
 			for (int up = i - 1; up >= 0; up--) // ЗАПОЛНИМ ВСЕ вверх
 
 			{
-				if (up > stat_i) map[up][right] = "C"; //БЛОК ВОДЫ
+				if (up > stat_i) map[up][right] = "W"; //БЛОК ВОДЫ
 				if (map[up][right] == "NaN")map[up][right] = " "; //БЛОК пустоты
 			}
 			i += bool_tap;
@@ -243,7 +247,7 @@ void TileFactory::water_bodies(std::string (*map)[200], int& i, int& j, int shif
 			}
 			for (int up = i - 1; up >= 0; up--) // ЗАПОЛНИМ ВНИЗ ВСЕ вверх
 			{
-				if (up > stat_i) map[up][right] = "C"; //БЛОК ВОДЫ
+				if (up > stat_i) map[up][right] = "W"; //БЛОК ВОДЫ
 				if (map[up][right] == "NaN")map[up][right] = " "; //БЛОК пустоты
 			}
 		}
@@ -268,7 +272,7 @@ void TileFactory::tunnel(std::string (*map)[200], int& i, int& j, int shift, std
 	{
 		if (bool_tap == 1)map[i][right] = "B"; //блок с травой сверху и слева
 		else if (bool_tap == -1)map[i][right] = "B"; //справа
-		else map[i][right] = "B"; //БЛОК ДЛЯ ТРАВЫ С ВЕРХНЕЙ СТОРОНЫ
+		else map[i][right] = "A"; //БЛОК ДЛЯ ТРАВЫ С ВЕРХНЕЙ СТОРОНЫ
 
 		for (int down = i + 1; down < n; down++) // ЗАПОЛНИМ ВНИЗ ВСЕ ПУСТОТЫ
 		{
@@ -313,7 +317,8 @@ void TileFactory::wormhole(std::string (*map)[200], int& i, int& j, int shift, s
 		}
 		for (; top < i + 5 && top < n; top++)
 		{
-			if (j == right || j + 3 == right)map[top][right] = "A";
+			if (j == right )map[top][right] = "C";
+			if (j + 3 == right)map[top][right] = "A";
 				//блоки для черваточины ну или камни тупо, ну или земля
 			else if (top == i + 4) map[top][right] = "A";
 			else map[top][right] = " "; //блоки фона пешеры или черваточины
@@ -356,7 +361,7 @@ void TileFactory::wormhole(std::string (*map)[200], int& i, int& j, int shift, s
 			top = i + 1;
 			for (; top < i + 7 && top < n - 1; top++)
 			{
-				if (top == i + 1) map[top][right] = "A"; // БЛОК КРАЕВ В ПЕЩЕРКЕ
+				if (top == i + 1) map[top][right] = "B"; // БЛОК КРАЕВ В ПЕЩЕРКЕ
 				else if (top == i + 6) map[top][right] = "A";
 				else map[top][right] = " "; // Блоки стены, заднего фона
 			}
@@ -381,20 +386,22 @@ void TileFactory::cavern(std::string (*map)[200], int& i, int& j, int shift, std
 
 	std::uniform_int_distribution<int> distribution(-1, 1);
 	std::uniform_int_distribution<int> cavern_rand(26, 35);
-	std::uniform_int_distribution<int> cavern_rand_step(3, 6);
+	std::uniform_int_distribution<int> cavern_rand_step(4, 6);
 	int right = 0;
 	int top = cavern_rand(gen);
 	int step = cavern_rand_step(gen);
 	i = top;
 	for(;right < m; right++)
 	{
-
+		step = cavern_rand_step(gen);
 		for(;top < i+step && top < n-1; top++)
 		{
-			map[top][right] = " ";
+			if(top == i)map[top][right] = "O";
+			else if(top == i + step )map[top][right] = "O";
+			else map[top][right] = " ";
 		}
 		top = i;
-		if (top > 37) top += -1;
+		if (top > 35) top += -1;
 		else top+=distribution(gen);
 		i = top;
 	}
