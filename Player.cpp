@@ -10,18 +10,18 @@
     }
 
     void Player::initVariables(){
-        animationState = PLAYER_ANIMATION_STATES::IDLE_RIGHT;
+        animationState = PLAYER_ANIMATION_STATES::IDLE;
     }
 
     void Player::initTexture(){
-        if (!player_T.loadFromFile("Textures/hero1.png")) {
+        if (!player_T.loadFromFile("Textures/hero.png")) {
             std::cout << "Error -> Player -> couldn't load player texture" << std::endl;
         }
     }
 
     void Player::initSprite(){
         player_S.setTexture(player_T);
-        currentFrame = IntRect(2, 80, 48, 70);
+        currentFrame = IntRect(0, 23, 56, 73);
         player_S.setTextureRect(currentFrame);
     }
 
@@ -127,10 +127,10 @@
         else {
             flyVelocity = 0.f;
         }
-        //std::cout << flyVelocity << std::endl;
+       // std::cout << flyVelocity << std::endl;
         // deceleration
         velocity *= deceleration;
-       // std::cout << "x - " << getPosition().x << ", y - " << getPosition().y << std::endl;
+        
         // limits
         if (std::abs(velocity.x) < velocityMin || updateCollisionX()) {
             velocity.x = 0.f;
@@ -144,12 +144,7 @@
     }
 
     void Player::updateMovement() {
-        if (movingDirection) {
-            animationState = PLAYER_ANIMATION_STATES::IDLE_RIGHT;
-        }
-        else {
-            animationState = PLAYER_ANIMATION_STATES::IDLE_LEFT;
-        }
+        animationState = PLAYER_ANIMATION_STATES::IDLE;
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
             movingDirection = true;
@@ -181,51 +176,36 @@
     }
 
     void Player::updateAnimation(){
-        if (animationState == PLAYER_ANIMATION_STATES::IDLE_LEFT) {
-            if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
-                currentFrame.top = 80;
-                currentFrame.left -= 48;
-                if (currentFrame.left <= 0.f) {
-                    currentFrame.left = 288.f;
-                }
-                currentFrame.width = -48;
-                animationTimer.restart();
-                player_S.setTextureRect(currentFrame);
-            }
-        }else
-            if(animationState == PLAYER_ANIMATION_STATES::IDLE_RIGHT) {
-                if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
-                    currentFrame.top = 80;
-                    currentFrame.left += 48;
-                    if (currentFrame.left >= 288.f) {
-                        currentFrame.left = 0.f;
-                    }
-                    currentFrame.width = 48;
-                    animationTimer.restart();
-                    player_S.setTextureRect(currentFrame);
-                }
-            }
-        else 
+        //if (animationState == PLAYER_ANIMATION_STATES::IDLE) {
+        //    if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
+        //        currentFrame.left += 75;
+        //        if (currentFrame.left >= 450.f) {
+        //            currentFrame.left = 0.f;
+        //        }
+        //
+        //        animationTimer.restart();
+        //        player_S.setTextureRect(currentFrame);
+        //    }
+        //}
+        //else 
         if (animationState == PLAYER_ANIMATION_STATES::MOVING_RIGHT) {
             if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
-                currentFrame.top = 160;
-                currentFrame.left += 48;
-                if (currentFrame.left >= 288.f) {
+                currentFrame.left += 75;
+                if (currentFrame.left >= 450.f) {
                     currentFrame.left = 0.f;
                 }
-                currentFrame.width = 48;
+                currentFrame.width = 56;
                 player_S.setTextureRect(currentFrame);
                 animationTimer.restart();
             }
         }
         else if (animationState == PLAYER_ANIMATION_STATES::MOVING_LEFT) {
             if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
-                currentFrame.top = 160;
-                currentFrame.left -= 48;
+                currentFrame.left -= 75;
                 if (currentFrame.left <= 0.f) {
-                    currentFrame.left = 288.f;
+                    currentFrame.left = 450.f;
                 }
-                currentFrame.width = -48;
+                currentFrame.width = -56;
                 player_S.setTextureRect(currentFrame);
                 animationTimer.restart();
             }
@@ -233,32 +213,17 @@
         
         // OTHER KEY EVENTS
 
-        else if (animationState == PLAYER_ANIMATION_STATES::MOVING_UP) {
-            if (movingDirection) {
-                if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
-                    currentFrame.top = 240;
-                    currentFrame.left += 48;
-                    if (currentFrame.left >= 288.f) {
-                        currentFrame.left = 0.f;
-                    }
-                    currentFrame.width = 48;
-                    animationTimer.restart();
-                    player_S.setTextureRect(currentFrame);
-                }
-            }
-            else {
-                if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
-                    currentFrame.top = 240;
-                    currentFrame.left += 48;
-                    if (currentFrame.left >= 336.f) {
-                        currentFrame.left = 48.f;
-                    }
-                    currentFrame.width = -48;
-                    animationTimer.restart();
-                    player_S.setTextureRect(currentFrame);
-                }
-            }
-        }
+        //else if (animationState == PLAYER_ANIMATION_STATES::MOVING_UP) {
+        //    if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
+        //        currentFrame.left += 75;
+        //        if (currentFrame.left >= 450.f) {
+        //            currentFrame.left = 0.f;
+        //        }
+        //
+        //        animationTimer.restart();
+        //        player_S.setTextureRect(currentFrame);
+        //    }
+        //}
         //else if (animationState == PLAYER_ANIMATION_STATES::MOVING_DOWN) {
         //    if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
         //        currentFrame.left += 75;

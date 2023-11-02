@@ -8,11 +8,12 @@
         this->player = false;
         this->cord = sf::IntRect();
     }
-
-    Tile::Tile(sf::IntRect cord_, char f_b, char b_b) : cord(cord_), front_tile(f_b), back_tile(b_b) {
+    
+    Tile::Tile(sf::IntRect cord_, char f_b) : cord(cord_), front_tile(f_b) {
+        this->back_tile = ' ';
         this->player = false;
     }
-
+    
     void Tile::setTilePresence(int presence){
         player = presence;
     }
@@ -36,3 +37,8 @@
     {
         return cord;
     }
+
+void Tile::setPlayerCur()
+{
+    player = true;
+}
