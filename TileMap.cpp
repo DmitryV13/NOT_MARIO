@@ -71,7 +71,8 @@ void TileMap::init_texture() {
 				tilemap[k][l].setTilePresence(0);
 			}
 		}
-		for (int i = 0; i < 4 || indexI[i]!=-1; i++){
+		for (int i = 0; i < 6 && indexI[i]!=-1 && indexJ[i] != -1; i++){
+			std::cout << " " << indexI[i] << " " << indexJ[i] << std::endl;
 			tilemap[indexI[i]][indexJ[i]].setTilePresence(1);
 		}
 	}

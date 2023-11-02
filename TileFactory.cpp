@@ -379,12 +379,12 @@ TileFactory::TileFactory() {
 
     platformGeneration(yF, xF, map);
     //std::cout << "UFUUFUIFUFYIFYFYIFYIFIYFFUIIFUUIUI";
-    for (int i = 0; i < 40; i++) {
-        for (int j = 0; j < 200; j++) {
-            std::cout << map[i][j];
-        }
-        std::cout << std::endl;
-    }
+    //for (int i = 0; i < 40; i++) {
+    //    for (int j = 0; j < 200; j++) {
+    //        std::cout << map[i][j];
+    //    }
+    //    std::cout << std::endl;
+    //}
 
     // A - grass upward
     // B - earth
