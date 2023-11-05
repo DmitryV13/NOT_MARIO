@@ -300,7 +300,7 @@ void Enemy::updateMovement()
 		//if (!updateCollisionX())jumpTile = false;
 
 	}
-	/*if (stepRight == maxStep)
+	if (stepRight == maxStep)
 	{
 		iterationStart = 0;
 		moving *= -1.f;
@@ -311,7 +311,7 @@ void Enemy::updateMovement()
 		moving *= -1.f;
 		stepLeft = 0;
 		iterationStart = 0;
-	}*/
+	}
 	if (Enemy_S.getPosition().x <= 0.1f || Enemy_S.getPosition().x + Enemy_S.getGlobalBounds().width > sandbox->getMapWidth())
 	{
 
@@ -416,7 +416,10 @@ void Enemy::updatePhysics()
 		displacement.y = 0.f;
 	}
 
-
+	if (displacement.x > 0)
+		stepRight++;
+	if (displacement.x < 0)
+		stepLeft++;
 	Enemy_S.move(displacement);
 }
 

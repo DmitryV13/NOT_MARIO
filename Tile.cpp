@@ -13,6 +13,7 @@
         this->player = false;
     }
 
+
     void Tile::setTilePresence(bool presence){
         player = presence;
     }

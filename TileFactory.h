@@ -1,39 +1,32 @@
 #pragma once
+#include <random>
+
 #include "Tile.h"
-#include "random"
-class coord;
-class TileFactory {
-public:
-    Tile tile_map_inFactory[40][200];
-    TileFactory();
 
-    static const int n = 40;
-    static const int m = 200;
+
+class TileFactory
+{
 private:
-    sf::IntRect initRect_tile(char tile);
-    void generation_map(char map[40][200]);
-    coord* generationF1();
-    coord* generationF2();
-    coord* generationF3();
-    coord* generationF4();
-    coord* generate();
-};
+	sf::IntRect initRect_tile(char tile);
 
-//#pragma once
-//#include "Tile.h"
-//#include "random"
-//
-//class TileFactory {
-//private:
-//
-//sf::IntRect initRect_tile(char tile);
-//void generation_map(std::string map[40][201]);
-//void build_generation_map(std::string map[40][201]);
-//
-//
-//public:
-//    TileFactory();
-//    Tile tile_map_inFactory[40][200];
-//
-//
-//};
+public:
+
+	TileFactory();
+	static const int n = 40;
+	static const int m = 200;
+	Tile tile_map_inFactory[n][m];
+	bool getPosPlayer(int, int);
+	void map_generation(std::string[n][m]);
+	void flatland(std::string(*map)[200], int& i, int& j, int shift, std::mt19937 gen);
+	void mountainous_terrain(std::string(*map)[200], int& i, int& j, int& shift, std::mt19937 gen);
+	void water_bodies(std::string(*map)[200], int& i, int& j, int shift, std::mt19937 gen);
+	void tunnel(std::string(*map)[200], int& i, int& j, int shift, std::mt19937 gen);
+	void wormhole(std::string(*map)[200], int& i, int& j, int shift, std::mt19937 gen);
+	void cavern(std::string(*map)[200], int& i, int& j, int shift, std::mt19937 gen);
+	void soaring_islands(std::string(*map)[200], int& i, int& j, int shift, std::mt19937 gen);
+	void afill(std::string[n][m], int& i, int& j, std::mt19937 gen);
+	void filterMap(std::string map[n][m]);
+	int countEmptyNeighbors(std::string map[n][m], int i, int j);
+	void filterMap1(std::string map[n][m]);
+	bool hasBlocksOnBothSides(std::string map[n][m], int i, int j);
+};

@@ -11,6 +11,8 @@ private:
 public:
 	Tile();
 	Tile(sf::IntRect cord_, char f_b, char b_b);
+	Tile(sf::IntRect rect, char c);
+
 
 	void setTilePresence(bool presence);
 
