@@ -49,8 +49,8 @@ private:
     //double speedY;
     //double acceleration = 0.0009;
     //double heightCoeficient = 2;
-    //bool onGround;
-    //double currentFrame;
+    //bool on_ground;
+    //double current_frame;
     void initVariables();
     void initTexture();
     void initSprite();
@@ -74,7 +74,7 @@ public:
     void resetNTHJump();
     void resetIsFlying();
     
-    //void updateMovement(double time, RenderWindow& window);
+    //void update_movement(double time, RenderWindow& window);
     void render(sf::RenderTarget& target);
     void walk(const float dir_x);
     void jump(const float dir_y);

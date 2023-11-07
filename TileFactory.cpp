@@ -22,11 +22,7 @@ TileFactory::TileFactory()
 			template_1[i][j] = "NaN";
 		}
 	}
-
-
 	map_generation(template_1);
-
-
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < m; j++)
@@ -35,7 +31,7 @@ TileFactory::TileFactory()
 		}
 		std::cout << std::endl;
 	}
-	filterMap(template_1);
+	filter_map(template_1);
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < m; j++)
@@ -44,7 +40,7 @@ TileFactory::TileFactory()
 		}
 		std::cout << std::endl;
 	}
-	filterMap1(template_1);
+	filter_map1(template_1);
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < m; j++)
@@ -94,12 +90,11 @@ void TileFactory::map_generation(std::string template_2[n][m])
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	int i = rand() % 10 + 15, j = 0;
-
-	afill(template_2, i, j, gen);
+	start_of_map_generation_(template_2, i, j, gen);
 }
 
 
-void TileFactory::afill(std::string map[n][m], int& i, int& j, std::mt19937 gen)
+void TileFactory::start_of_map_generation_(std::string map[n][m], int& i, int& j, std::mt19937 gen)
 {
 	std::uniform_int_distribution<int> cofShift(3, 5);
 
@@ -385,11 +380,8 @@ void TileFactory::wormhole(std::string(*map)[200], int& i, int& j, int shift, st
 		}
 
 	}
-
 	j = stat_j + 4;
 	i = stat_i;
-
-
 
 }
 
@@ -426,7 +418,7 @@ void TileFactory::soaring_islands(std::string(*map)[200], int& i, int& j, int sh
 {
 }
 
-void TileFactory::filterMap(std::string map[n][m])
+void TileFactory::filter_map(std::string map[n][m])
 {
 	for (int i = 0; i < n; i++)
 	{
@@ -434,7 +426,7 @@ void TileFactory::filterMap(std::string map[n][m])
 		{
 			if (map[i][j] != " ")
 			{
-				int emptyNeighbors = countEmptyNeighbors(map, i, j);
+				int emptyNeighbors = count_empty_neighbors(map, i, j);
 
 
 				if (emptyNeighbors > 4)
@@ -447,7 +439,7 @@ void TileFactory::filterMap(std::string map[n][m])
 }
 
 
-void TileFactory::filterMap1(std::string map[n][m])
+void TileFactory::filter_map1(std::string map[n][m])
 {
 	for (int i = 0; i < n; i++)
 	{
@@ -455,7 +447,7 @@ void TileFactory::filterMap1(std::string map[n][m])
 		{
 			if (map[i][j] == " ")
 			{
-				if (hasBlocksOnBothSides(map, i, j)) {
+				if (has_blocks_on_both_sides(map, i, j)) {
 					map[i][j] = "B"; // Заменить пустой блок землей, если с двух сторон есть блоки
 				}
 			}
@@ -463,7 +455,7 @@ void TileFactory::filterMap1(std::string map[n][m])
 	}
 }
 
-bool TileFactory::hasBlocksOnBothSides(std::string map[n][m], int i, int j)
+bool TileFactory::has_blocks_on_both_sides(std::string map[n][m], int i, int j)
 {
 	if ((i > 0 && map[i - 1][j] != " ") && (i < n - 1 && map[i + 1][j] != " ")) {
 		return true; // Сверху и снизу есть блоки
@@ -476,7 +468,7 @@ bool TileFactory::hasBlocksOnBothSides(std::string map[n][m], int i, int j)
 	return false;
 }
 
-int TileFactory::countEmptyNeighbors(std::string map[n][m], int i, int j)
+int TileFactory::count_empty_neighbors(std::string map[n][m], int i, int j)
 {
 	int emptyNeighbors = 0;
 

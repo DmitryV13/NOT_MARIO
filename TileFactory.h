@@ -24,9 +24,9 @@ public:
 	void wormhole(std::string(*map)[200], int& i, int& j, int shift, std::mt19937 gen);
 	void cavern(std::string(*map)[200], int& i, int& j, int shift, std::mt19937 gen);
 	void soaring_islands(std::string(*map)[200], int& i, int& j, int shift, std::mt19937 gen);
-	void afill(std::string[n][m], int& i, int& j, std::mt19937 gen);
-	void filterMap(std::string map[n][m]);
-	int countEmptyNeighbors(std::string map[n][m], int i, int j);
-	void filterMap1(std::string map[n][m]);
-	bool hasBlocksOnBothSides(std::string map[n][m], int i, int j);
+	void start_of_map_generation_(std::string[n][m], int& i, int& j, std::mt19937 gen);
+	void filter_map(std::string map[n][m]);
+	int count_empty_neighbors(std::string map[n][m], int i, int j);
+	void filter_map1(std::string map[n][m]);
+	bool has_blocks_on_both_sides(std::string map[n][m], int i, int j);
 };

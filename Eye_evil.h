@@ -1,15 +1,15 @@
 #pragma once
 #include "Enemy.h"
 
-class EvilBall :public Enemy
+class Eye_evil :public Enemy
 {
 public:
-	explicit EvilBall(TileMap& map);
-	~EvilBall() override = default;
+	explicit Eye_evil(TileMap& map);
+	~Eye_evil() override = default;
 
 private:
 
-	Texture EvilBall_T;
+	Texture evil_ball_t_;
 	void init_texture() override;
 	void init_sprite() override;
 

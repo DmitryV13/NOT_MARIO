@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "TileMap.h"
 #include "MyView.h"
-#include "EvilBall.h"
+#include "Eye_evil.h"
 
 class Game
 {
@@ -13,8 +13,8 @@ private:
 	TileMap sandbox;
 	MyView myView;
 
-	EvilBall* evilBall;
-	vector<EvilBall> evilball;
+	Eye_evil* evilBall;
+	vector<Eye_evil> evilball;
 
 	int numOfEnemy{ 60 };
 

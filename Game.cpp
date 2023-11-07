@@ -25,10 +25,10 @@
 	void Game::initEvilBall()
 	{
 		for (int i = 0; i < numOfEnemy; i++) {
-			EvilBall enemy(sandbox);
+			Eye_evil enemy(sandbox);
 			evilball.push_back(enemy);
 		}
-		evilBall = new EvilBall(sandbox);
+		evilBall = new Eye_evil(sandbox);
 	}
 
 	void Game::updateEvilBall()
