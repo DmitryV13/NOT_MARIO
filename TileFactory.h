@@ -29,4 +29,6 @@ public:
 	int count_empty_neighbors(std::string map[n][m], int i, int j);
 	void filter_map1(std::string map[n][m]);
 	bool has_blocks_on_both_sides(std::string map[n][m], int i, int j);
+	void artist_method(std::string map[n][m]);
+	void fill_lakes_with_ground(std::string map[n][m]);
 };

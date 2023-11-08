@@ -263,7 +263,8 @@ void Enemy::update_movement()
 		step_left = 0;
 	}
 	//turning when approaching the map boundaries
-	if (Enemy_S.getPosition().x <= 0.1f || Enemy_S.getPosition().x + Enemy_S.getGlobalBounds().width > sandbox->getMapWidth())
+	if (displacement.x+Enemy_S.getPosition().x <= 0.f ||
+		Enemy_S.getPosition().x + Enemy_S.getGlobalBounds().width + displacement.y > sandbox->getMapWidth())
 	{
 		moving *= -1.f;
 	}

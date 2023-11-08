@@ -29,7 +29,7 @@ protected:
     sf::Vector2f start_position;
     int step_left;
     int step_right;
-    int max_step{ 1000 };
+    int max_step{ 10000 };
 
     bool jump_tile;
     float moving;
