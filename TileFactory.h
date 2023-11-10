@@ -23,7 +23,7 @@ public:
 	void tunnel(std::string(*map)[200], int& i, int& j, int shift, std::mt19937 gen);
 	void wormhole(std::string(*map)[200], int& i, int& j, int shift, std::mt19937 gen);
 	void cavern(std::string(*map)[200], int& i, int& j, int shift, std::mt19937 gen);
-	void soaring_islands(std::string(*map)[200], int& i, int& j, int shift, std::mt19937 gen);
+	
 	void start_of_map_generation_(std::string[n][m], int& i, int& j, std::mt19937 gen);
 	void filter_map(std::string map[n][m]);
 	int count_empty_neighbors(std::string map[n][m], int i, int j);

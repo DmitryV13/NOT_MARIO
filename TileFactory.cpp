@@ -134,8 +134,7 @@ void TileFactory::start_of_map_generation_(std::string map[n][m], int& i, int& j
 			if (coutn <= 0) wormhole_b = false;
 		}
 		else flatland(map, i, j, SHIFT, gen);
-		/*	else if (choice == 6)
-				soaring_islands(map, i, j, SHIFT, gen);*/
+	
 	}
 	cavern(map, i, j, SHIFT, gen);
 
@@ -435,10 +434,9 @@ void TileFactory::cavern(std::string(*map)[200], int& i, int& j, int shift, std:
 
 }
 
-void TileFactory::soaring_islands(std::string(*map)[200], int& i, int& j, int shift, std::mt19937 gen)
-{
-}
 
+
+//stripping blocks 
 void TileFactory::filter_map(std::string map[n][m])
 {
 	for (int i = 0; i < n; i++)

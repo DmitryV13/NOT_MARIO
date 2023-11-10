@@ -11,14 +11,16 @@ using sf::IntRect;
 using sf::Clock;
 
 enum Enemy_ANIMATION_STATES {
-    ENEMY_IDLE = 0, ENEMY_MOVING_LEFT, ENEMY_MOVING_RIGHT,
-    ENEMY_MOVING_DOWN, ENEMY_MOVING_UP, ENEMY_JUMPING, ENEMY_FALLING, ENEMY_ATTENTION
+    ENEMY_IDLE = 0, ENEMY_MOVING,
+    ENEMY_MOVING_DOWN, ENEMY_JUMPING, ENEMY_FALLING, ENEMY_ATTENTION
 };
+
 
 
 class Enemy
 {
 protected:
+
     TileMap* sandbox;
     Texture Enemy_T;
     Sprite Enemy_S;
@@ -29,10 +31,13 @@ protected:
     sf::Vector2f start_position;
     int step_left;
     int step_right;
-    int max_step{ 10000 };
-
+    int attention_counter;
+    int max_step{ 1000 };
+    bool looks_to_the_left;
+    bool looks_to_the_right;
     bool jump_tile;
     float moving;
+    int animation_counter_think;
 
     sf::Vector2f displacement;
     float displacement_max;
@@ -60,7 +65,7 @@ public:
     const bool& get_animation_switch();
     sf::Vector2f get_position() const;
     const FloatRect get_global_bounds() const;
-
+    void reset_attention();
     void set_position(const float x, const float y);
     void reset_jump_access();
 
