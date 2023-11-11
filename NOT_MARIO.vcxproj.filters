@@ -54,6 +54,9 @@
     <ClCompile Include="Eye_evil.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
+    <ClCompile Include="laser_weapon.cpp">
+      <Filter>Source Files\ServiceClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -90,6 +93,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Eye_evil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="laser_weapon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

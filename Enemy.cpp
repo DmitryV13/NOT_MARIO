@@ -1,5 +1,7 @@
 ﻿#include "stdafx.h"
 #include "Enemy.h"
+
+#include "laser_weapon.h"
 #include "TileMap.h"
 
 
@@ -60,10 +62,10 @@ Enemy::Enemy(TileMap& map)
 	init_variables();
 	init_animation();
 	init_physics();
-	start_position = generate_random_start_position(sandbox->getMapWidth(), sandbox->getMapHeight());
-	set_position(start_position.x, start_position.y);
+	/*start_position = generate_random_start_position(sandbox->getMapWidth(), sandbox->getMapHeight());
+	set_position(start_position.x, start_position.y);*/
 
-	//set_position(60,60);
+	set_position(60,60);
 }
 
 sf::Vector2f Enemy::get_position() const
@@ -89,6 +91,7 @@ void Enemy::set_position(const float x, const float y)
 void Enemy::render(sf::RenderTarget& target)
 {
 	target.draw(Enemy_S);
+	
 }
 
 void Enemy::update()
@@ -142,6 +145,22 @@ bool Enemy::search_for_enemies()
 	}
 	
 	return false;
+}
+
+bool Enemy::laser_existence()
+{
+	if (laser.empty())return false;
+	else return true;
+}
+
+int Enemy::laser_length()
+{
+	return (int)laser.size();  
+}
+
+void Enemy::draw_laser(int i, sf::RenderTarget& target)
+{
+	laser[i].render(target);
 }
 
 
@@ -212,6 +231,7 @@ void Enemy::update_animation()
 	}
 	else if (animation_state == Enemy_ANIMATION_STATES::ENEMY_ATTENTION)
 	{
+		
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
 			if(looks_to_the_right)
@@ -391,11 +411,19 @@ void Enemy::walk(const float dir_x)
 	//logic when exposing a player
 	if (search_for_enemies())
 	{
-		animation_state = Enemy_ANIMATION_STATES::ENEMY_ATTENTION;
+		if (attention_counter == 1)shot();
 		
+		animation_state = Enemy_ANIMATION_STATES::ENEMY_ATTENTION;
+		for (int i = 0; i < laser.size(); i++)
+		{
+			laser[i].update();
+		}
 		displacement.x = 0;
 	}
-	else reset_attention();
+	else {
+		reset_attention();
+		clear_shot();
+	}
 }
 
 void Enemy::update_movement()
@@ -423,7 +451,7 @@ void Enemy::update_movement()
 		}
 	}
 	//step limits
-	/*if (step_right == max_step)
+	if (step_right == max_step)
 	{
 		moving *= -1.f;
 		step_right = 0;
@@ -436,7 +464,7 @@ void Enemy::update_movement()
 		moving *= -1.f;
 		step_left = 0;
 		
-	}*/
+	}
 	
 
 	//turning when approaching the map boundaries
@@ -447,15 +475,15 @@ void Enemy::update_movement()
 	}
 
 	//in case of random map generation
-	std::random_device rd;
-	std::mt19937 gen(rd());
-	std::uniform_int_distribution<int> decision_to_think(0, 10000);
-	int rand = decision_to_think(gen);
-	if(rand <25)
-	{
-		animation_counter_think = 12;
-		moving *= -1.f;
-	}
+	// std::random_device rd;
+	// std::mt19937 gen(rd());
+	// std::uniform_int_distribution<int> decision_to_think(0, 10000);
+	// int rand = decision_to_think(gen);
+	// if(rand <25)
+	// {
+	// 	animation_counter_think = 12;
+	// 	moving *= -1.f;
+	// }
 	walk(moving);
 }
 
@@ -465,6 +493,40 @@ void Enemy::reset_jump_access()
 	displacement.y = 0.f;
 	on_ground = true;
 	jump_tile = false;
+}
+
+void Enemy::shot()
+{
+	if(looks_to_the_right)
+	{
+		laser_weapon *shot_las = new laser_weapon(*sandbox, 1,Enemy_S.getPosition().x,Enemy_S.getPosition().y,looks_to_the_right);
+	laser.push_back(*shot_las);
+	for (int j = (Enemy_S.getPosition().x / 60) + 2; j < TileFactory::m && j < j + 10 && 
+		!sandbox->isBlock(Enemy_S.getPosition().y / 60,j); j++)
+		{
+		 laser_weapon *shot_cur = new laser_weapon(*sandbox, 2,j*60, Enemy_S.getPosition().y,looks_to_the_right);
+		 laser.push_back(*shot_cur);
+
+		}
+	}
+	else
+	{
+		laser_weapon* shot_las = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x-60, Enemy_S.getPosition().y,looks_to_the_right);
+		laser.push_back(*shot_las);
+		for (int j = (Enemy_S.getPosition().x / 60) ; j > 0 && j > j - 10 &&
+			!sandbox->isBlock(Enemy_S.getPosition().y / 60, j); j--)
+		{
+			laser_weapon* shot_cur = new laser_weapon(*sandbox, 2, j * 60, Enemy_S.getPosition().y, looks_to_the_right);
+			laser.push_back(*shot_cur);
+
+		}
+	}
+	
+}
+
+void Enemy::clear_shot()
+{
+	laser.clear();
 }
 
 //jump handling

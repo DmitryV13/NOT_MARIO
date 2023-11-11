@@ -140,6 +140,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Eye_evil.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="laser_weapon.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -157,6 +158,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Eye_evil.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="laser_weapon.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Map.h" />

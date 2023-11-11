@@ -14,7 +14,7 @@
 	Game::~Game(){
 		delete player;
 		delete evilBall;
-		evilball.clear();
+		//evilball.clear();
 	}
 	
 	void Game::initWindow(){
@@ -24,18 +24,18 @@
 
 	void Game::initEvilBall()
 	{
-		for (int i = 0; i < numOfEnemy; i++) {
+		/*for (int i = 0; i < numOfEnemy; i++) {
 			Eye_evil enemy(sandbox);
 			evilball.push_back(enemy);
-		}
+		}*/
 		evilBall = new Eye_evil(sandbox);
 	}
 
 	void Game::updateEvilBall()
 	{
-		for (int i = 0; i < numOfEnemy; i++) {
+		/*for (int i = 0; i < numOfEnemy; i++) {
 			evilball[i].update();
-		}
+		}*/
 		evilBall->update();
 	}
 	
@@ -140,8 +140,16 @@
 
 	void Game::renderEvilBall()
 	{
-		for (int i = 0; i < numOfEnemy; i++) {
+		/*for (int i = 0; i < numOfEnemy; i++) {
 			evilball[i].render(window);
-		}
+		}*/
+		
 		evilBall->render(window);
+		if(evilBall->laser_existence())
+		{
+			for(int i = 0; i < evilBall->laser_length();i++)
+			{
+				evilBall->draw_laser(i, window);
+			}
+		}
 	}

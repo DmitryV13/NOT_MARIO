@@ -1,6 +1,7 @@
 #pragma once
 #include "Map.h"
 #include "TileMap.h"
+#include "laser_weapon.h"
 
 using sf::Sprite;
 using sf::RenderWindow;
@@ -20,7 +21,8 @@ enum Enemy_ANIMATION_STATES {
 class Enemy
 {
 protected:
-
+ 
+    vector<laser_weapon> laser;
     TileMap* sandbox;
     Texture Enemy_T;
     Sprite Enemy_S;
@@ -33,8 +35,7 @@ protected:
     int step_right;
     int attention_counter;
     int max_step{ 1000 };
-    bool looks_to_the_left;
-    bool looks_to_the_right;
+   
     bool jump_tile;
     float moving;
     int animation_counter_think;
@@ -58,7 +59,8 @@ protected:
 
 public:
     sf::Vector2f generate_random_start_position(int mapWidth, int mapHeight);
-
+    bool looks_to_the_left;
+    bool looks_to_the_right;
     Enemy(TileMap& map);
     virtual ~Enemy() = default;
 
@@ -69,8 +71,9 @@ public:
     void set_position(const float x, const float y);
     void reset_jump_access();
 
-
-    void render(sf::RenderTarget& target);
+    void shot();
+    void clear_shot();
+	void render(sf::RenderTarget& target);
     void walk(const float dir_x);
     void jump(const float dir_y);
     void update();
@@ -82,5 +85,10 @@ public:
     bool update_collision_y();
     void reset_animation_timer();
     bool search_for_enemies();
+
+    bool laser_existence();
+    int laser_length();
+    void draw_laser(int, sf::RenderTarget&);
+
 
 };
