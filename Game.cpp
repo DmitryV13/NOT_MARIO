@@ -8,7 +8,7 @@
 		,sandbox(){
 		initWindow();
 		initPlayer();
-		initEvilBall();
+		//initEvilBall();
 	}
 	
 	Game::~Game(){
@@ -80,7 +80,7 @@
 			}
 		}
 		updatePlayer();
-		updateEvilBall();
+		//updateEvilBall();
 		updateView();
 		updateCollision();
 		
@@ -133,7 +133,7 @@
 	
 		renderMap();
 		renderPLayer();
-		renderEvilBall();
+		//renderEvilBall();
 		window.setView(myView.view);
 		window.display();
 	}

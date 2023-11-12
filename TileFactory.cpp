@@ -24,11 +24,27 @@ public:
     }
 };
 
+// A - grass upward
+// B - earth
+// C - grass left
+// D - grass right
+// L - left top
+// P - right top
+// l - left top small
+// p - right top small
+
 sf::IntRect TileFactory::initRect_tile(char tile_C) {
-    if (tile_C == 'A') { return sf::IntRect(66, 2, 60, 60); }
-    if (tile_C == 'B') { return sf::IntRect(2, 2, 60, 60); }
-    if (tile_C == 'C') { return sf::IntRect(2, 66, 60, 60); }
-    if (tile_C == 'c') { return sf::IntRect(2, 130, 60, 60); }
+    //if (tile_C == 'A') { return sf::IntRect(66, 2, 60, 60); }
+    //if (tile_C == 'B') { return sf::IntRect(2, 2, 60, 60); }
+    //if (tile_C == 'C') { return sf::IntRect(2, 66, 60, 60); }
+    //if (tile_C == 'c') { return sf::IntRect(2, 130, 60, 60); }
+    //if (tile_C == 'D') { return sf::IntRect(194, 2, 60, 60); }
+    //if (tile_C == 'L') { return sf::IntRect(258, 2, 60, 60); }
+    //if (tile_C == 'P') { return sf::IntRect(322, 2, 60, 60); }
+    if (tile_C == 'A') { return sf::IntRect(60, 0, 60, 60); }
+    if (tile_C == 'B') { return sf::IntRect(0, 0, 60, 60); }
+    if (tile_C == 'C') { return sf::IntRect(0, 60, 60, 60); }
+    if (tile_C == 'c') { return sf::IntRect(0, 120, 60, 60); }
     if (tile_C == 'D') { return sf::IntRect(194, 2, 60, 60); }
     if (tile_C == 'L') { return sf::IntRect(258, 2, 60, 60); }
     if (tile_C == 'P') { return sf::IntRect(322, 2, 60, 60); }
@@ -147,28 +163,6 @@ coord* TileFactory::generationF4() {
     return res;
 }
 
-coord* generationPBF1(int scatter) {
-    std::vector<float> x(scatter);
-    std::vector<float> y(scatter);
-    float ampl = scatter > 7 ? 0.2 : 0.1;
-    float offset = scatter > 7 ? 5.0 : 2.5;
-    for (int i = 0; i < scatter; i++) {
-        x[i] = 10.0/scatter * i;
-    }
-
-        for (int i = scatter/2; i < scatter-1; i++){
-            x[i] = x[i + 1];
-        }
-        x[scatter - 1] = 10;
-
-    for (int i = 0; i < scatter; i++) {
-        y[i] =  ( - ampl * ((x[i] - 5) * (x[i] - 5))) + offset;
-    }
-
-    coord* res = new coord(x, y, scatter);
-    return res;
-}
-
 void filterPBF1(int target[], int n, int ground[], int begI) {
     for (int i = 0, j=begI; i < n; i++, j++) {
         if (ground[j] - target[i]<=2) {
@@ -181,7 +175,7 @@ void filterPBF1(int target[], int n, int ground[], int begI) {
 //
 //}
 
-coord* TileFactory::generate() {
+coord* TileFactory::generate_landscape() {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> distribution(0, 100);
@@ -196,88 +190,326 @@ coord* TileFactory::generate() {
         return generationF4();
 }
 
-void TileFactory::generation_map(char map[40][200]) {
+void TileFactory::generate_solid_surface(int x[200], int y[200], char map[40][200]) {
+    coord* init_cord = generationF4();
 
+    for (int i = 0; i < init_cord->size; ++i) {
+        x[i] = init_cord->x[i];
+        y[i] = init_cord->y[i];
+    }
+    int i = init_cord->size;
+    free(init_cord);
+
+    for (; i < 200; ) {
+        coord* cordinates = generate_landscape();
+        int amplitude = cordinates->y[cordinates->size - 1] - cordinates->y[0];
+        int offset_pos = y[i - 1] - cordinates->y[0];
+        int offset_neg = y[i - 1] - cordinates->y[cordinates->size - 1];
+
+        if (y[i - 1] + amplitude < 33) {
+            for (int j = 0; j < cordinates->size && i < 200; ++j, i++) {
+                x[i] = i;
+                y[i] = cordinates->y[j] + offset_pos;
+            }
+        }
+        else {
+            for (int j = cordinates->size - 1; j >= 0 && i < 200; --j, i++) {
+                x[i] = i;
+                y[i] = cordinates->y[j] + offset_neg;
+            }
+        }
+        free(cordinates);
+    }
+
+    //fill
+    for (int j = 0; j < 200; ++j) {
+        map[y[j]][x[j]] = 'A';
+        for (int i = y[j] + 1; i < 40; i++) {
+            map[i][x[j]] = 'B';
+        }
+    }
 }
 
-//7-20 lakes
-std::vector<std::pair<int, int>> lakesGeneration(int y[], int n) {
-    int favorablePlaces=0;
-    bool notOnLevelBeforeS;//seven
-    bool notOnLevelAfterS;
-    std::vector<std::pair<int, int>> beginEndCord;
-    for (int i = 0; i+20 < 200; ) {
-        notOnLevelAfterS = true;
-        notOnLevelBeforeS = false;
+void TileFactory::generation_map(char map[40][200]) {
+    int x[200];
+    int y[200];
+    for (int i = 0; i < 200; ++i) {
+        x[i] = 0;
+        y[i] = 0;
+    }
+    generate_solid_surface(x, y, map);
 
-        for (int j = 1; j < 8; j++) {
-            if (y[i] > y[i + j]) {
+    std::vector<std::pair<int, int>> coords_for_water = lakes_generation(x, y, map);
+
+    tunnels_generation(y, map);
+
+    generate_platforms(x, y, map);
+
+    fill_lakes(x, y, coords_for_water, map);
+
+    
+}
+
+void TileFactory::fill_lakes(int x[200], int y[200], vector<pair<int, int>> coords_for_water, char map[40][200]) {
+    for (int i = 0; i < coords_for_water.size(); i++) {
+        fill_lake(y[coords_for_water[i].first], x[coords_for_water[i].first]+1, y[coords_for_water[i].first], map);
+    }
+}
+
+void TileFactory::fill_lake(int& water_level, int pos_x, int pos_y, char map[40][200]) {
+    if (pos_x < 0 || pos_x >= 200 || pos_y < 0 || pos_y >= 40) return;
+    if (map[pos_y][pos_x] != ' ' || pos_y<water_level) return;
+
+    map[pos_y][pos_x] = 'c';
+    //moving down
+    fill_lake(water_level, pos_x, pos_y + 1, map);
+    //moving left
+    fill_lake(water_level, pos_x - 1, pos_y, map);
+    //moving up
+    fill_lake(water_level, pos_x, pos_y - 1, map);
+    //moving right
+    fill_lake(water_level, pos_x + 1, pos_y, map);
+}
+
+//lake width 7-20
+//lake's surface will cover empty blocks or blocks at the same level as initial block
+std::vector<std::pair<int, int>>  TileFactory::lakes_generation(int x[200], int y[200], char map[40][200]) {
+    bool not_olbs;//not on level before seven
+    bool not_olas;//not on level after seven
+    short lake_min_width = 7;
+    short lake_max_width = 20;
+
+    std::vector<std::pair<int, int>> first_point_cords;
+
+    //searching for suitable places
+    for (int i = 0; i+lake_max_width < 200; ) {
+        not_olas = true;
+        not_olbs = false;
+
+        for (int j = 1; j < lake_min_width+1; j++) {
+            if (y[i] > y[i + j]) {//signs are inverted
                 i += j;
-                notOnLevelBeforeS = true;
+                not_olbs = true;
                 break;
             }
         }
-        if (notOnLevelBeforeS) {
-            notOnLevelBeforeS = false;
+        if (not_olbs) {
+            not_olbs = false;
             continue;
         }
-        for (int j = 8; j < 21; j++){
+        for (int j = 8; j < lake_max_width+1; j++){
             if (y[i] > y[i + j]) {
-                notOnLevelAfterS = false;
-                beginEndCord.push_back({i, i + j });
+                not_olas = false;
+                first_point_cords.push_back({i, i + j });
                 i += j;
                 break;
             }
         }
-        if (notOnLevelAfterS) {
-            i += 20;
+        if (not_olas) {
+            i += lake_max_width;
             continue;
         }
     }
-    return beginEndCord;
+
+    //prepare lakes' places for filling with water 
+    for (int i = 0; i < first_point_cords.size(); i++) {
+        int constY = first_point_cords[i].first;
+
+        //surface line
+        for (int j = first_point_cords[i].first + 1; j < first_point_cords[i].second - 1; j++) {
+            map[y[constY]][x[j]] = ' ';
+        }
+
+        //bottom line
+        int constL = 1;
+        int constR = -1;
+        short limBL = 0, limBR = 1;
+        short lakeWidth = first_point_cords[i].second - first_point_cords[i].first;
+        if (lakeWidth > 15) {
+            limBL = 1;
+            limBR = 2;
+        }
+        for (int k = 1; k < lakeWidth / 3; k++) {
+            int left = limBL + rand() % (limBR - limBL + 1);
+            int right = limBL + rand() % (limBR - limBL + 1);
+            constL += left;
+            constR -= right;
+            for (int j = first_point_cords[i].first + constL; j < first_point_cords[i].second + constR; j++) {
+                map[y[constY] + k][x[j]] = ' ';
+            }
+        }
+
+        //fill till bottom line with empty cells
+        for (int k = 0; k < lakeWidth; k++) {
+            for (int j = first_point_cords[i].first + 1; j < first_point_cords[i].second - 1; j++) {
+                if (map[y[constY] + k][x[j]] == ' ')
+                    map[y[constY] + k][x[j]] = ' ';
+            }
+        }
+    }
+    return first_point_cords;
 }
 
-void platformGeneration(int y[200], int x[200], char map[40][200]) {
-    std::vector<std::pair<int, int>> beginEndCord;
+void TileFactory::generate_platforms(int x[200], int y[200], char map[40][200]) {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> distribution1(3, 15);
-    int numberOfPlatforms = distribution1(gen);
+    std::uniform_int_distribution<int> distributionCount(10, 17);
+    int number_of_platforms = distributionCount(gen);
 
-    std::cout << numberOfPlatforms << std::endl;
+    for (int i = 0; i < number_of_platforms; i++) {
 
-    for (int i = 0; i < numberOfPlatforms; i++) {
-        std::uniform_int_distribution<int> distributionW(5,6);
-        int width = distributionW(gen);
+        std::uniform_int_distribution<int> distributionWidth(2, 7);
+        int width = distributionWidth(gen);
+        int height = (int)(width/2) + rand() % (width - (int)(width / 2) + 1);
 
-        std::uniform_int_distribution<int> distributionInd(0, 199-width);
-        int firstIndex = distributionInd(gen);
+        std::uniform_int_distribution<int> distributionX(2, 198-width);
+        int start_index_pos_x = distributionX(gen);
 
-        std::uniform_int_distribution<int> distributionIndHeight(3, y[firstIndex] - width>3 ? y[firstIndex] - width : y[firstIndex]);
-        int initHeight = distributionIndHeight(gen);
+        if ((y[start_index_pos_x] - 3 - height) < 3) continue;
+        std::uniform_int_distribution<int> distributionY(3, y[start_index_pos_x]-3-height);
+        int start_cord_pos_y = distributionY(gen);
+        generate_platform(x[start_index_pos_x], start_cord_pos_y, width, height, map);
+        platform_filter_y(x[start_index_pos_x], start_cord_pos_y, y, width, height, map);
+    }
+}
 
-        //firstIndex + k  -  index for x array
-        //initHeight+j  -  index for map matrix
-        
-
-        
-        for (int k = 0; k < width; k++) {
-                map[initHeight][x[firstIndex + k]] = 'A';
+void TileFactory::generate_platform(int pos_x, int pos_y, int width, int height, char map[40][200]) {
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            map[pos_y + j][pos_x + i] = 'B';
         }
+    }
+}
 
+void TileFactory::platform_filter_y(int pos_x, int pos_y, int y[200], int width, int height, char map[40][200]){
+    for (int i = 0; i < width; i++) {
+        for (int j = height-1; j >=height-2; ) {
+            if (map[pos_y + j + 2][pos_x + i] != ' ') {
+                map[pos_y + j][pos_x + i] = ' ';
+                j--;
+            }
+            else break;
+        }
+    }
+}
 
-        coord* tmp = generationPBF1(width);
-        filterPBF1(tmp->y, tmp->size, y, firstIndex);
-
-        for (int k = 0; k < width; k++){
-            for (int l = initHeight; l < initHeight + tmp->y[k]; l++) {
-                map[l][x[firstIndex + k]] = 'A';
+void TileFactory::one_tunnel_generation(int pos_x, int pos_y, int height, char map[40][200]) {
+    if (height == 0) return;
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            if (pos_y + j <= 1 || pos_y + j > 38 || pos_x + i <= 1 || pos_x + i > 198 || map[pos_y + j][pos_x + i] == ' ') {
+                return;
+                
             }
         }
-        free(tmp);
-        std::cout << std::endl;
     }
-}    
+
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            map[pos_y + j][pos_x + i] = ' ';
+        }
+    }
+    int posibility = rand() % (100);
+    if (posibility < 20) {//up
+        one_tunnel_generation(pos_x, pos_y - 2, height-1, map);
+    }
+    else if (posibility < 80) {//forward
+        one_tunnel_generation(pos_x + 2, pos_y, height - 1, map);
+    }
+    else if (posibility < 102) {//down
+        one_tunnel_generation(pos_x, pos_y + 2, height - 1, map);
+    }
+}
+
+//straight up
+void TileFactory::upward(int pos_x, int pos_y, char map[40][200]) {
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            if (pos_y + j <= 1 || pos_y + j > 38 || pos_x + i <= 1 || pos_x + i > 198) {
+                std::cout << "j - " << pos_y + j << ",i - " << pos_x + i << std::endl;
+                return;
+            }
+        }
+    }
+    int count = 0;
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            if (map[pos_y+j][pos_x+i]==' ') {
+                count++;
+            }
+        }
+    }
+    if (count == 4) return;
+
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            map[pos_y + j][pos_x + i] = ' ';
+        }
+    }
+    int posibility = rand() % (100);
+    if (posibility < 50) {//up
+        upward(pos_x, pos_y - 2, map);
+    }
+    else if (posibility < 102) {//forward
+        upward(pos_x + 2, pos_y, map);
+    }
+}
+
+void TileFactory::left_zigzag(int pos_x, int pos_y, char map[40][200]) {
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (pos_x + i <= 1) {
+                return right_zigzag(pos_x + 2, pos_y - 2, map);
+            }
+        }
+    }
+    if (map[pos_y+3][pos_x] == ' ' && map[pos_y+3][pos_x + 1]) return;
+
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 4; j++) {
+            map[pos_y + j][pos_x + i] = ' ';
+        }
+    }
+    return left_zigzag(pos_x - 2, pos_y - 2, map);
+}
+
+void TileFactory::right_zigzag(int pos_x, int pos_y, char map[40][200]) {
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (pos_x + i > 198) {
+                return left_zigzag(pos_x - 2, pos_y - 2, map);
+            }
+        }
+    }
+    if (map[pos_y+3][pos_x] == ' ' && map[pos_y+3][pos_x + 1]) return;
+
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 4; j++) {
+            map[pos_y + j][pos_x + i] = ' ';
+        }
+    }
+    return right_zigzag(pos_x + 2, pos_y - 2, map);
+}
+
+void TileFactory::tunnels_generation(int y[200], char map[40][200]) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> distributionCount(3, 7);
+    std::uniform_int_distribution<int> distributionX(2, 196);
+    int number_of_tunnels = distributionCount(gen);
+
+    for (int i = 0; i < number_of_tunnels; i++){
+        int position_x = distributionX(gen);
+        std::uniform_int_distribution<int> distributionY(y[position_x], 37);
+        int position_y = distributionY(gen);
+        one_tunnel_generation(position_x, position_y, 40, map);
+        int posibility = rand() % (100);
+        if (posibility < 50)
+            left_zigzag(position_x - 2, position_y - 2, map);
+        else right_zigzag(position_x + 2, position_y - 2, map);
+        //find_surface(position_x, position_y-2, map);
+    }
+}
 
 TileFactory::TileFactory() {
     srand(static_cast<unsigned int>(time(nullptr)));
@@ -288,112 +520,18 @@ TileFactory::TileFactory() {
         }
     }
 
-    int xF[200];
-    int yF[200];
-    for (int i = 0; i < 200; ++i) {
-        xF[i] = 0;
-        yF[i] = 0;
+
+    generation_map(map);
+
+
+
+
+    for (int i = 0; i < 40; i++) {
+        for (int j = 0; j < 200; j++) {
+            std::cout << map[i][j];
+        }
+        std::cout << std::endl;
     }
-    coord* initCord = generationF4();
-
-    for (int i = 0; i < initCord->size; ++i) {
-        xF[i] = initCord->x[i];
-        yF[i] = initCord->y[i];
-    }
-    int i = initCord->size;
-    free(initCord);
-
-    for (; i < 200; ) {
-        coord* cord = generate();
-        int Ampl = cord->y[cord->size - 1] - cord->y[0];
-        int offsetPos = yF[i - 1] - cord->y[0];
-        int offsetNeg = yF[i - 1] - cord->y[cord->size - 1];
-
-        if (yF[i - 1] + Ampl < 33) {
-            for (int j = 0; j < cord->size && i < 200; ++j, i++) {
-                xF[i] = i;
-                yF[i] = cord->y[j] + offsetPos;
-            }
-        }
-        else {
-            for (int j = cord->size - 1; j >= 0 && i < 200; --j, i++) {
-                xF[i] = i;
-                yF[i] = cord->y[j] + offsetNeg;
-            }
-        }
-        free(cord);
-    }
-
-    
-    std::vector<std::pair<int, int>> tmp= lakesGeneration(yF, 200);
-   //for (int  i = 0; i < tmp.size(); i++)
-   //{
-   //    std::cout << xF[tmp[i].first] << "," << yF[tmp[i].first] << " - " << xF[tmp[i].second] <<","<< yF[tmp[i].second]<< std::endl;
-   //}
-
-    for (int j = 0; j < 200; ++j) {
-        map[yF[j]][xF[j]] = 'A';
-        for (int i = yF[j]+1; i < 40; i++){
-            map[i][xF[j]] = 'B';
-        }
-    }
-    //earth contour
-    //for (int i = 0; i < tmp.size(); i++) {
-    //    for (int j = tmp[i].first+1; j < tmp[i].second; j++) {
-    //        //std::cout << xF[tmp[i].first] << "," << yF[tmp[i].first] << " - " << xF[tmp[i].second] << "," << yF[tmp[i].second] << std::endl;
-    //        map[yF[j]][xF[j]] = 'C';
-    //    }
-    //}
-
-    for (int i = 0; i < tmp.size(); i++) {
-        int constY = tmp[i].first;
-        for (int j = tmp[i].first + 1; j < tmp[i].second-1; j++) {
-            map[yF[constY]][xF[j]] = 'C';
-        }
-        int constL = 1;
-        int constR = -1;
-        short limBL=0, limBR=1;
-        short lakeWidth = tmp[i].second - tmp[i].first;
-        if(lakeWidth > 15) {
-            limBL = 1;
-            limBR = 2;
-        }
-        for (int k = 1; k < lakeWidth / 3; k++) {
-           // int size = 2 + rand() % (5 - 2 + 1);
-            
-            int left = limBL + rand() % (limBR - limBL + 1);
-            int right = limBL + rand() % (limBR - limBL + 1);
-            constL += left;
-            constR -= right;
-            for (int j = tmp[i].first + constL; j < tmp[i].second + constR; j++) {
-                map[yF[constY] + k][xF[j]] = 'c';
-            }
-        }
-        for (int k = 0; k < lakeWidth; k++) {
-            for (int j = tmp[i].first + 1; j < tmp[i].second - 1; j++) {
-                if (map[yF[constY] + k][xF[j]] == ' ')
-                    map[yF[constY] + k][xF[j]] = 'c';
-            }
-        }
-    }
-
-    platformGeneration(yF, xF, map);
-    //std::cout << "UFUUFUIFUFYIFYFYIFYIFIYFFUIIFUUIUI";
-    //for (int i = 0; i < 40; i++) {
-    //    for (int j = 0; j < 200; j++) {
-    //        std::cout << map[i][j];
-    //    }
-    //    std::cout << std::endl;
-    //}
-
-    // A - grass upward
-    // B - earth
-    // C - grass left
-    // D - grass right
-    // L - left top
-    // P - right top
-    // l - left top small
-    // p - right top small
 
     Tile tile_A(initRect_tile('A'), 'A', 'A');
     Tile tile_B(initRect_tile('B'), 'B', 'B');

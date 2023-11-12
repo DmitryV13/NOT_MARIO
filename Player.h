@@ -1,6 +1,7 @@
 #pragma once
 #include "Map.h"
 #include "TileMap.h"
+#include "Sword.h"
 
 using sf::Sprite;
 using sf::RenderWindow;
@@ -20,6 +21,8 @@ private:
 
     Texture player_T;
     Sprite player_S;
+
+    Sword* sword;
 
     IntRect currentFrame;
     Clock animationTimer;
@@ -43,7 +46,7 @@ private:
     bool isFlying;
     float flyVelocity;
 
-    bool movingDirection;
+    short movingDirection;
     //FloatRect coordinates;
     //double speedX;
     //double speedY;
@@ -54,6 +57,7 @@ private:
     void initVariables();
     void initTexture();
     void initSprite();
+    void initWeapon();
     void initAnimation();
     void initPhysics();
 
@@ -83,11 +87,14 @@ public:
     void updatePhysics();
     void updateMovement();
     void updateAnimation();
+    void updateSword();
     bool updateCollisionX();
     bool updateCollisionY();
     void updatePresence();
+
     void resetAnimationTimer();
     
+    void attack();
     //void checkCollisionX();;
     //void checkCollisionY();
     //void fallingTest();

@@ -28,7 +28,7 @@ Tile& TileMap::setPosTile(int i, int j)
 
 void TileMap::init_texture() {
 
-	if (!block_T[0].loadFromFile("Textures/Textures_map/map.png")) {
+	if (!block_T[0].loadFromFile("Textures/Textures_map/map1.png")) {
 		std::cout << "Error -> TileMap -> couldn't load texture";
 	}
 	//if (!block_T[1].loadFromFile("Textures/Textures_map/map_back.png")) {

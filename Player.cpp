@@ -6,6 +6,7 @@
         initVariables();
         initTexture();
         initSprite();
+        initWeapon();
         initAnimation();
         initPhysics();
     }
@@ -24,6 +25,12 @@
         player_S.setTexture(player_T);
         currentFrame = IntRect(2, 80, 48, 70);
         player_S.setTextureRect(currentFrame);
+        //initial position
+        //player_S.setPosition(67, 78);
+    }
+
+    void Player::initWeapon(){
+        sword = new Sword(player_S.getPosition(), player_S.getGlobalBounds());
     }
 
     void Player::initAnimation(){
@@ -49,11 +56,12 @@
         isFlying = false;
         flyVelocity = 0;
 
-        movingDirection = true;
+        movingDirection = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
     }
 
     void Player::render(sf::RenderTarget& target){
         target.draw(player_S);
+        sword->render(target);
     }
 
     void Player::resetJumpAccess(){
@@ -78,11 +86,13 @@
 
     void Player::jump(const float dir_y) {
         if (onGround) {
+            animationState = PLAYER_ANIMATION_STATES::JUMPING;
             onGround = false;
             isJumping = true;
             jumpCount++;
             jumpVelocity = 7.f;
         } else if (isJumping && jumpCount < jumpLimit && spaceRealeased) {
+            animationState = PLAYER_ANIMATION_STATES::JUMPING;
             spaceRealeased = false;
             jumpCount++;
             jumpVelocity = 7.f;
@@ -99,6 +109,7 @@
         updateMovement();
         updateAnimation();
         updatePhysics();
+        updateSword();
         updatePresence();
     }
 
@@ -145,7 +156,7 @@
     }
 
     void Player::updateMovement() {
-        if (movingDirection) {
+        if (movingDirection== PLAYER_ANIMATION_STATES::MOVING_RIGHT) {
             animationState = PLAYER_ANIMATION_STATES::IDLE_RIGHT;
         }
         else {
@@ -153,12 +164,12 @@
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            movingDirection = true;
+            movingDirection = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
             walk(4.f);
             animationState = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-            movingDirection = false;
+            movingDirection = PLAYER_ANIMATION_STATES::MOVING_LEFT;
             walk(-4.f);
             animationState = PLAYER_ANIMATION_STATES::MOVING_LEFT;
         }
@@ -177,7 +188,10 @@
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
             jump(-20.0f);
-            animationState = PLAYER_ANIMATION_STATES::JUMPING;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)) {
+            sword->attack(movingDirection);
+            //animationState = PLAYER_ANIMATION_STATES::JUMPING;
         }
     }
 
@@ -208,7 +222,7 @@
             }
         else 
         if (animationState == PLAYER_ANIMATION_STATES::MOVING_RIGHT) {
-            if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
+            if (animationTimer.getElapsedTime().asSeconds() >= 0.05f || getAnimationSwitch()) {
                 currentFrame.top = 160;
                 currentFrame.left += 48;
                 if (currentFrame.left >= 288.f) {
@@ -220,7 +234,7 @@
             }
         }
         else if (animationState == PLAYER_ANIMATION_STATES::MOVING_LEFT) {
-            if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
+            if (animationTimer.getElapsedTime().asSeconds() >= 0.05f || getAnimationSwitch()) {
                 currentFrame.top = 160;
                 currentFrame.left -= 48;
                 if (currentFrame.left <= 0.f) {
@@ -235,7 +249,7 @@
         // OTHER KEY EVENTS
 
         else if (animationState == PLAYER_ANIMATION_STATES::MOVING_UP) {
-            if (movingDirection) {
+            if (movingDirection==PLAYER_ANIMATION_STATES::MOVING_RIGHT) {
                 if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
                     currentFrame.top = 240;
                     currentFrame.left += 48;
@@ -298,9 +312,18 @@
         }
     }
 
+    void Player::updateSword(){
+        sword->updatePosition(player_S.getPosition(), movingDirection);
+        sword->updateAnimation();
+    }
+
     void Player::resetAnimationTimer(){
         animationTimer.restart();
         animationSwitch = true;
+    }
+
+    void Player::attack(){
+        //sword->attack();
     }
 
     bool Player::updateCollisionX(){

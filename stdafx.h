@@ -8,6 +8,7 @@
 #include <cmath>
 
 using std::vector;
+using std::pair;
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>

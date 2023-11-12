@@ -148,10 +148,12 @@
     <ClCompile Include="MyView.cpp" />
     <ClCompile Include="NOT_MARIO.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Sword.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TextureFactory.cpp" />
     <ClCompile Include="TileFactory.cpp" />
     <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemy.h" />
@@ -162,10 +164,12 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="MyView.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Sword.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TextureFactory.h" />
     <ClInclude Include="TileFactory.h" />
     <ClInclude Include="TileMap.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NOT_MARIO.rc" />
