@@ -62,10 +62,10 @@ Enemy::Enemy(TileMap& map)
 	init_variables();
 	init_animation();
 	init_physics();
-	/*start_position = generate_random_start_position(sandbox->getMapWidth(), sandbox->getMapHeight());
-	set_position(start_position.x, start_position.y);*/
+	start_position = generate_random_start_position(sandbox->getMapWidth(), sandbox->getMapHeight());
+	set_position(start_position.x, start_position.y);
 
-	set_position(60,60);
+//	set_position(60,60);
 }
 
 sf::Vector2f Enemy::get_position() const
@@ -147,196 +147,9 @@ bool Enemy::search_for_enemies()
 	return false;
 }
 
-bool Enemy::laser_existence()
-{
-	if (laser.empty())return false;
-	else return true;
-}
-
-int Enemy::laser_length()
-{
-	return (int)laser.size();  
-}
-
-void Enemy::draw_laser(int i, sf::RenderTarget& target)
-{
-	laser[i].render(target);
-}
 
 
-void Enemy::update_animation()
-{
 
-	if (animation_state == Enemy_ANIMATION_STATES::ENEMY_MOVING)
-	{
-		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
-		{
-			if(looks_to_the_right)
-			{
-				current_frame.left += 60;
-			if (current_frame.left >= 360.f)
-			{
-				current_frame.left = 0.f;
-			}
-			current_frame.width = 60;
-			current_frame.top = 0;
-			
-			}else
-			{
-				current_frame.left += 60;
-				if (current_frame.left >= 420.f)
-				{
-					current_frame.left = 60.f;
-				}
-				current_frame.width = -60;
-				current_frame.top = 0;
-			}
-
-			Enemy_S.setTextureRect(current_frame);
-			animation_timer.restart();
-			
-		}
-	}
-	else if (animation_state == Enemy_ANIMATION_STATES::ENEMY_IDLE)
-	{
-		
-		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
-		{
-			animation_counter_think--;
-			if (looks_to_the_right)
-			{
-				current_frame.left += 60;
-				if (current_frame.left >= 360.f)
-				{
-					current_frame.left =0.f;
-				}
-				current_frame.width = 60;
-				current_frame.top = 180;
-			}
-			else
-			{
-				current_frame.left += 60;
-				if (current_frame.left >= 420.f)
-				{
-					current_frame.left = 60.f;
-				}
-				current_frame.width = -60;
-				current_frame.top = 180;
-			}
-
-
-			Enemy_S.setTextureRect(current_frame);
-			animation_timer.restart();
-		}
-	}
-	else if (animation_state == Enemy_ANIMATION_STATES::ENEMY_ATTENTION)
-	{
-		
-		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
-		{
-			if(looks_to_the_right)
-			{
-				if(search_for_enemies())
-			{
-				if(attention_counter == 3)current_frame.left = 0.f;
-				attention_counter--;
-				current_frame.left += 60;
-			}
-			if (current_frame.left >= 360.f)
-			{
-				current_frame.left = 180.f;
-			}
-			current_frame.top = 120;
-			current_frame.width = 60;
-			}else
-			{
-				if (search_for_enemies())
-				{
-					if (attention_counter == 3)current_frame.left = 60.f;
-					attention_counter--;
-					current_frame.left += 60;
-				}
-				if (current_frame.left >= 420.f)
-				{
-					current_frame.left = 240.f;
-				}
-				current_frame.top = 120;
-				current_frame.width = -60;
-			}
-			
-
-			Enemy_S.setTextureRect(current_frame);
-			animation_timer.restart();
-		}
-	}
-	else if (animation_state == Enemy_ANIMATION_STATES::ENEMY_JUMPING)
-	{
-		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
-		{
-			if(looks_to_the_left)
-			{
-				current_frame.left += 60;
-			if (current_frame.left >= 420.f)
-			{
-				current_frame.left = 60.f;
-			}
-			current_frame.width = -60;
-			current_frame.top = 60;
-			}
-			else
-			{
-				current_frame.left += 60;
-				if (current_frame.left >= 360.f)
-				{
-					current_frame.left = 0.f;
-				}
-				current_frame.width = 60;
-				current_frame.top = 60;
-			}
-			
-
-			Enemy_S.setTextureRect(current_frame);
-			animation_timer.restart();
-		}
-	}
-	
-	else if (animation_state == Enemy_ANIMATION_STATES::ENEMY_MOVING_DOWN)
-	{
-		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
-		{
-			if (looks_to_the_right)
-			{
-				current_frame.left += 60;
-				if (current_frame.left >= 360.f)
-				{
-					current_frame.left = 180.f;
-				}
-				current_frame.width = 60;
-				current_frame.top = 60;
-			}
-			else
-			{
-				current_frame.left += 60;
-				if (current_frame.left >= 420.f)
-				{
-					current_frame.left = 240.f;
-				}
-				current_frame.width = -60;
-				current_frame.top = 60;
-			}
-
-
-			Enemy_S.setTextureRect(current_frame);
-			animation_timer.restart();
-		}
-	}
-
-
-	else
-	{
-		animation_timer.restart();
-	}
-}
 
 void Enemy::init_animation()
 {
@@ -411,14 +224,8 @@ void Enemy::walk(const float dir_x)
 	//logic when exposing a player
 	if (search_for_enemies())
 	{
-		if (attention_counter == 1)shot();
+		attack();
 		
-		animation_state = Enemy_ANIMATION_STATES::ENEMY_ATTENTION;
-		for (int i = 0; i < laser.size(); i++)
-		{
-			laser[i].update();
-		}
-		displacement.x = 0;
 	}
 	else {
 		reset_attention();
@@ -426,66 +233,7 @@ void Enemy::walk(const float dir_x)
 	}
 }
 
-void Enemy::update_movement()
-{
-	//decision explorer
-	if (on_ground)
-	{
-		if (update_collision_x())
-		{
-			if (!update_collision_x_jump())
-			{
-				jump(-65);
-				on_ground = false;
-				jump_tile = true;
-			}
-			else moving *= -1.f;
-		}
-		if (Enemy_S.getPosition().x <= 0)
-		{
-			displacement.x = 0;
-		}
-		if (Enemy_S.getPosition().x + Enemy_S.getGlobalBounds().width > sandbox->getMapWidth())
-		{
-			displacement.x = 0;
-		}
-	}
-	//step limits
-	if (step_right == max_step)
-	{
-		moving *= -1.f;
-		step_right = 0;
-		animation_counter_think = 12;
-		
-	}
-	if (step_left == max_step)
-	{
-		animation_counter_think = 12;
-		moving *= -1.f;
-		step_left = 0;
-		
-	}
-	
 
-	//turning when approaching the map boundaries
-	if (displacement.x + Enemy_S.getPosition().x <= 0.f ||
-		Enemy_S.getPosition().x + Enemy_S.getGlobalBounds().width + displacement.y > sandbox->getMapWidth())
-	{
-		moving *= -1.f;
-	}
-
-	//in case of random map generation
-	// std::random_device rd;
-	// std::mt19937 gen(rd());
-	// std::uniform_int_distribution<int> decision_to_think(0, 10000);
-	// int rand = decision_to_think(gen);
-	// if(rand <25)
-	// {
-	// 	animation_counter_think = 12;
-	// 	moving *= -1.f;
-	// }
-	walk(moving);
-}
 
 //ground contact
 void Enemy::reset_jump_access()
@@ -495,39 +243,6 @@ void Enemy::reset_jump_access()
 	jump_tile = false;
 }
 
-void Enemy::shot()
-{
-	if(looks_to_the_right)
-	{
-		laser_weapon *shot_las = new laser_weapon(*sandbox, 1,Enemy_S.getPosition().x,Enemy_S.getPosition().y,looks_to_the_right);
-	laser.push_back(*shot_las);
-	for (int j = (Enemy_S.getPosition().x / 60) + 2; j < TileFactory::m && j < j + 10 && 
-		!sandbox->isBlock(Enemy_S.getPosition().y / 60,j); j++)
-		{
-		 laser_weapon *shot_cur = new laser_weapon(*sandbox, 2,j*60, Enemy_S.getPosition().y,looks_to_the_right);
-		 laser.push_back(*shot_cur);
-
-		}
-	}
-	else
-	{
-		laser_weapon* shot_las = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x-60, Enemy_S.getPosition().y,looks_to_the_right);
-		laser.push_back(*shot_las);
-		for (int j = (Enemy_S.getPosition().x / 60) ; j > 0 && j > j - 10 &&
-			!sandbox->isBlock(Enemy_S.getPosition().y / 60, j); j--)
-		{
-			laser_weapon* shot_cur = new laser_weapon(*sandbox, 2, j * 60, Enemy_S.getPosition().y, looks_to_the_right);
-			laser.push_back(*shot_cur);
-
-		}
-	}
-	
-}
-
-void Enemy::clear_shot()
-{
-	laser.clear();
-}
 
 //jump handling
 void Enemy::jump(const float dir_y)
@@ -589,7 +304,7 @@ bool Enemy::update_collision_x()
 		for (int j = (Enemy_S.getPosition().x + displacement.x) / 60; j < (Enemy_S.getPosition().x + displacement.x +
 			     Enemy_S.getGlobalBounds().width) / 60; j++)
 		{
-			if (sandbox->isBlock(i, j))
+			if (sandbox->isBlock(i, j) || j <= 0 || j>= TileFactory::m)
 			{
 				wasCollision = true;
 				if (displacement.x >= 0)
@@ -618,7 +333,7 @@ bool Enemy::update_collision_x_jump()
 		for (int j = (Enemy_S.getPosition().x + displacement.x) / 60; j < (Enemy_S.getPosition().x + displacement.x +
 			     Enemy_S.getGlobalBounds().width) / 60; j++)
 		{
-			if (sandbox->isBlock(i - 1, j))
+			if (sandbox->isBlock(i - 1, j)|| j <= 0 || j >= TileFactory::m)
 			{
 				wasCollision = true;
 				if (displacement.x >= 0)

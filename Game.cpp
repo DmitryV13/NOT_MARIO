@@ -9,12 +9,14 @@
 		initWindow();
 		initPlayer();
 		initEvilBall();
+		init_Kusaka();
 	}
 	
 	Game::~Game(){
 		delete player;
-		delete evilBall;
-		//evilball.clear();
+		delete evil_Ball;
+		evil_ball_vector.clear();
+		Kusaka_vector.clear();
 	}
 	
 	void Game::initWindow(){
@@ -24,22 +26,37 @@
 
 	void Game::initEvilBall()
 	{
-		/*for (int i = 0; i < numOfEnemy; i++) {
-			Eye_evil enemy(sandbox);
-			evilball.push_back(enemy);
-		}*/
-		evilBall = new Eye_evil(sandbox);
+		for (int i = 0; i < num_of_enemy_; i++) {
+			Eye_evil *enemy = new Eye_evil(sandbox);
+			evil_ball_vector.push_back(enemy);
+		}
+		evil_Ball = new Eye_evil(sandbox);
 	}
 
-	void Game::updateEvilBall()
-	{
-		/*for (int i = 0; i < numOfEnemy; i++) {
-			evilball[i].update();
-		}*/
-		evilBall->update();
+void Game::init_Kusaka()
+{
+	for (int i = 0; i < num_of_enemy_; i++) {
+		kusaka *enemy = new kusaka(sandbox);
+		Kusaka_vector.push_back(enemy);
 	}
-	
-	void Game::initPlayer(){
+}
+
+void Game::updateEvilBall()
+	{
+		for (int i = 0; i < num_of_enemy_; i++) {
+			evil_ball_vector[i]->update();
+		}
+		evil_Ball->update();
+	}
+
+void Game::update_Kusaka()
+{
+	for (int i = 0; i < num_of_enemy_; i++) {
+		Kusaka_vector[i]->update();
+	}
+}
+
+void Game::initPlayer(){
 		player = new Player(sandbox);
 	}
 
@@ -81,6 +98,7 @@
 		}
 		updatePlayer();
 		updateEvilBall();
+		update_Kusaka();
 		updateView();
 		updateCollision();
 		
@@ -134,22 +152,47 @@
 		renderMap();
 		renderPLayer();
 		renderEvilBall();
+		render_Kusaka();
+		render_shot();
+		
 		window.setView(myView.view);
 		window.display();
 	}
 
 	void Game::renderEvilBall()
 	{
-		/*for (int i = 0; i < numOfEnemy; i++) {
-			evilball[i].render(window);
-		}*/
+		for (int i = 0; i < num_of_enemy_; i++) {
+			evil_ball_vector[i]->render(window);
+			
+		}
 		
-		evilBall->render(window);
-		if(evilBall->laser_existence())
+		evil_Ball->render(window);
+		
+	}
+
+void Game::render_Kusaka()
+{
+	for (int i = 0; i < num_of_enemy_; i++) {
+		Kusaka_vector[i]->render(window);
+	}
+}
+
+void Game::render_shot()
+{
+	if (evil_Ball->laser_existence())
+	{
+		for (int i = 0; i < evil_Ball->laser_length(); i++)
 		{
-			for(int i = 0; i < evilBall->laser_length();i++)
+			evil_Ball->draw_laser(i, window);
+		}
+	}
+	for (int i = 0; i < num_of_enemy_; i++) {
+		if (evil_ball_vector[i]->laser_existence())
+		{
+			for (int j = 0; j < evil_ball_vector[i]->laser_length(); j++)
 			{
-				evilBall->draw_laser(i, window);
+				evil_ball_vector[i]->draw_laser(j, window);
 			}
 		}
 	}
+}

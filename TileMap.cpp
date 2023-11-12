@@ -15,10 +15,7 @@ TileMap::TileMap()
 	}
 }
 
-Tile& TileMap::getTile()
-{
-	return **tilemap;
-}
+
 
 Tile& TileMap::setPosTile(int i, int j)
 {

@@ -27,7 +27,6 @@ public:
 	void render(sf::RenderTarget& target);
 
 
-	Tile& getTile();
 	Tile& setPosTile(int i, int j);
 	bool isOccupied(int i, int j);
 };
