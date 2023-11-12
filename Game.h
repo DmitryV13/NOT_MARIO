@@ -18,7 +18,7 @@ private:
 	Eye_evil* evil_Ball;
 	vector<Eye_evil*> evil_ball_vector;
 	vector<kusaka*> Kusaka_vector;
-	int num_of_enemy_{ 20 };
+	int num_of_enemy_{ 10 };
 
 
 	double screenWidth;

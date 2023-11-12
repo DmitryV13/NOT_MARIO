@@ -65,7 +65,7 @@ Enemy::Enemy(TileMap& map)
 	start_position = generate_random_start_position(sandbox->getMapWidth(), sandbox->getMapHeight());
 	set_position(start_position.x, start_position.y);
 
-//	set_position(60,60);
+	//	set_position(60,60);
 }
 
 sf::Vector2f Enemy::get_position() const
@@ -78,10 +78,7 @@ const FloatRect Enemy::get_global_bounds() const
 	return Enemy_S.getGlobalBounds();
 }
 
-void Enemy::reset_attention()
-{
-	attention_counter = 3;
-}
+
 
 void Enemy::set_position(const float x, const float y)
 {
@@ -91,7 +88,6 @@ void Enemy::set_position(const float x, const float y)
 void Enemy::render(sf::RenderTarget& target)
 {
 	target.draw(Enemy_S);
-	
 }
 
 void Enemy::update()
@@ -106,49 +102,6 @@ void Enemy::reset_animation_timer()
 	animation_timer.restart();
 	animation_switch = true;
 }
-
-bool Enemy::search_for_enemies()
-{
-	int centerX = get_position().x / 60;
-	int centerY = get_position().y / 60;
-
-	if(looks_to_the_right)
-	{
-		for (int i = centerY-1; i <= centerY + 1; i++)
-		{
-			for (int j = centerX+1; j <= centerX + 5; j++)
-			{
-				if (i >= 0 && i < 40 && j >= 0 && j < 200)
-				{
-					if (sandbox->isOccupied(i, j))
-					{
-						return true;
-					}
-				}
-			}
-		}
-	}else
-	{
-		for (int i = centerY - 1; i <= centerY + 1 ; i++)
-		{
-			for (int j = centerX - 5; j <= centerX ; j++)
-			{
-				if (i >= 0 && i < 40 && j >= 0 && j < 200)
-				{
-					if (sandbox->isOccupied(i, j))
-					{
-						return true;
-					}
-				}
-			}
-		}
-	}
-	
-	return false;
-}
-
-
-
 
 
 void Enemy::init_animation()
@@ -192,7 +145,8 @@ void Enemy::init_physics()
 
 void Enemy::walk(const float dir_x)
 {
-	if (dir_x > 0) {
+	if (dir_x > 0)
+	{
 		looks_to_the_right = true;
 		looks_to_the_left = false;
 	}
@@ -213,7 +167,8 @@ void Enemy::walk(const float dir_x)
 		displacement.x = displacement_max * ((displacement.x > 0.f) ? 1.f : -1.f);
 	}
 
-	if (animation_counter_think > 2) {
+	if (animation_counter_think > 2 && animation_state != Enemy_ANIMATION_STATES::ENEMY_ATTENTION)
+	{
 		displacement.x = 0;
 		animation_state = Enemy_ANIMATION_STATES::ENEMY_IDLE;
 	}
@@ -222,17 +177,16 @@ void Enemy::walk(const float dir_x)
 	else animation_state = Enemy_ANIMATION_STATES::ENEMY_MOVING;
 
 	//logic when exposing a player
-	if (search_for_enemies())
+	if (search_for_enemies() && ((on_ground) || (jump_tile)))
 	{
 		attack();
-		
 	}
-	else {
+	else
+	{
 		reset_attention();
 		clear_shot();
 	}
 }
-
 
 
 //ground contact
@@ -251,8 +205,49 @@ void Enemy::jump(const float dir_y)
 	{
 		on_ground = false;
 		jump_tile = true;
-		jump_velocity = 5.5f;
+		jump_velocity = dir_y * 5.5f;
 	}
+}
+
+bool Enemy::player_contact()
+{
+	int centerX = get_position().x / 60;
+	int centerY = get_position().y / 60;
+	int l = 2;
+
+	for (int i = centerY - 1; i <= centerY + 1; i++)
+	{
+		for (int j = centerX; j <= centerX + l; j++)
+		{
+			if (i >= 0 && i < 40 && j >= 0 && j < 200)
+			{
+				if (sandbox->isOccupied(i, j))
+				{
+					
+					return true;
+				}
+			}
+		}
+	}
+
+
+	for (int i = centerY - 1; i <= centerY + 1; i++)
+	{
+		for (int j = centerX ; j <= centerX+1; j++)
+		{
+			if (i >= 0 && i < 40 && j >= 0 && j < 200)
+			{
+				if (sandbox->isOccupied(i, j))
+				{
+				
+					return true;
+				}
+			}
+		}
+	}
+
+	
+	return false;
 }
 
 
@@ -275,21 +270,26 @@ void Enemy::update_physics()
 	}
 	// deceleration
 	displacement *= deceleration;
+
 	// limits
-	if (std::abs(displacement.x) < displacement_min || update_collision_x())
+	if (jump_tile&& search_for_enemies())
+	{
+		displacement.x = moving * displacement_max;
+	}
+	if (update_collision_x())
 	{
 		displacement.x = 0.f;
 	}
-	if (std::abs(displacement.y) < displacement_min || update_collision_y())
+	if (update_collision_y())
 	{
 		displacement.y = 0.f;
 	}
 	//step counter
-	if (displacement.x > 0)
+	if (displacement.x > 0 && displacement_max == 1.f)
 		step_right++;
-	if (displacement.x < 0)
+	if (displacement.x < 0 && displacement_max == 1.f)
 		step_left++;
-
+	if (player_contact())displacement.x *= 1.3f;
 	Enemy_S.move(displacement);
 }
 
@@ -304,7 +304,7 @@ bool Enemy::update_collision_x()
 		for (int j = (Enemy_S.getPosition().x + displacement.x) / 60; j < (Enemy_S.getPosition().x + displacement.x +
 			     Enemy_S.getGlobalBounds().width) / 60; j++)
 		{
-			if (sandbox->isBlock(i, j) || j <= 0 || j>= TileFactory::m)
+			if (sandbox->isBlock(i, j) || j <= 0 || j >= TileFactory::m)
 			{
 				wasCollision = true;
 				if (displacement.x >= 0)
@@ -333,7 +333,7 @@ bool Enemy::update_collision_x_jump()
 		for (int j = (Enemy_S.getPosition().x + displacement.x) / 60; j < (Enemy_S.getPosition().x + displacement.x +
 			     Enemy_S.getGlobalBounds().width) / 60; j++)
 		{
-			if (sandbox->isBlock(i - 1, j)|| j <= 0 || j >= TileFactory::m)
+			if (sandbox->isBlock(i - 1, j) || j <= 0 || j >= TileFactory::m)
 			{
 				wasCollision = true;
 				if (displacement.x >= 0)
@@ -367,6 +367,7 @@ bool Enemy::update_collision_y()
 			if (sandbox->isBlock(i, j))
 			{
 				wasCollision = true;
+				reset_jump_access();
 				if (displacement.y > 0)
 				{
 					reset_jump_access();

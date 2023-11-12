@@ -19,7 +19,6 @@ public:
 	bool laser_existence();
 	int laser_length();
 
-
 private:
 	Texture evil_ball_t_;
 	void init_texture() override;

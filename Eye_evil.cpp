@@ -36,20 +36,13 @@ void Eye_evil::update_movement()
 		{
 			if (!update_collision_x_jump())
 			{
-				jump(-65);
+				jump(1);
 				on_ground = false;
 				jump_tile = true;
 			}
 			else moving *= -1.f;
 		}
-		if (Enemy_S.getPosition().x <= 0)
-		{
-			displacement.x = 0;
-		}
-		if (Enemy_S.getPosition().x + Enemy_S.getGlobalBounds().width > sandbox->getMapWidth())
-		{
-			displacement.x = 0;
-		}
+		
 	}
 	//step limits
 	if (step_right == max_step)
@@ -321,6 +314,7 @@ void Eye_evil::draw_laser(int i, sf::RenderTarget& target)
 {
 	laser[i].render(target);
 }
+
 void Eye_evil::reset_attention()
 {
 	attention_counter = 3;
