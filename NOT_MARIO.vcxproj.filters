@@ -16,16 +16,16 @@
     <Filter Include="Source Files\ServiceClasses">
       <UniqueIdentifier>{6bbd2e3b-6f6d-4553-94d7-5743fc4cdd8c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Tabs">
+      <UniqueIdentifier>{82424bf7-a522-4fe2-810c-f49e3e060e81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Map">
+      <UniqueIdentifier>{daaa4b1f-9faf-4565-8388-00009158633e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Source Files\ServiceClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="NOT_MARIO.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MyView.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
@@ -36,29 +36,53 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
-    <ClCompile Include="Tile.cpp">
-      <Filter>Source Files\ServiceClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="TileMap.cpp">
-      <Filter>Source Files\ServiceClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureFactory.cpp">
-      <Filter>Source Files\ServiceClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="TileFactory.cpp">
-      <Filter>Source Files\ServiceClasses</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
     <ClCompile Include="EvilBall.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
-    <ClCompile Include="Weapon.cpp">
+    <ClCompile Include="Cursor.cpp">
+      <Filter>Source Files\ServiceClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="NOT_MARIO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Sword.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ServiceClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Exit.cpp">
+      <Filter>Source Files\Tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Option.cpp">
+      <Filter>Source Files\Tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Setting.cpp">
+      <Filter>Source Files\Tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source Files\Tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files\Tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="TileFactory.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureFactory.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Source Files\Tabs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -98,10 +122,28 @@
     <ClInclude Include="EvilBall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Weapon.h">
+    <ClInclude Include="Sword.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Sword.h">
+    <ClInclude Include="Cursor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Option.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Setting.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Exit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

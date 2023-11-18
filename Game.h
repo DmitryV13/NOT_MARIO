@@ -3,16 +3,18 @@
 #include "TileMap.h"
 #include "MyView.h"
 #include "EvilBall.h"
+#include "Cursor.h"
 
-class Game
-{
+enum GAME_STATE{CONTINUES=0, PAUSED, FINISHED};
+
+class Game{
 private:
-	sf::RenderWindow window;
+	//sf::RenderWindow window;
 	sf::Event event;
 	Player* player;
 	TileMap sandbox;
 	MyView myView;
-
+	//Cursor* cursor;
 	EvilBall* evilBall;
 	vector<EvilBall> evilball;
 
@@ -21,7 +23,9 @@ private:
 	double screenWidth;
 	double screenHeight;
 
-	void initWindow();
+	short game_state;
+
+	//void initWindow();
 	void initPlayer();
 	void initView();
 	void initEvilBall();
@@ -30,15 +34,22 @@ public:
 	~Game();
 
 
-	const sf::RenderWindow& getWindow() const;
+	//const sf::RenderWindow& getWindow() const;
+	void update(sf::RenderWindow& window);
 	void updatePlayer();
-	void update();
 	void updateView();
+	void updateCursor();
 	void updateCollision();
 	void updateEvilBall();
-	void renderPLayer();
-	void renderMap();
-	void render();
-	void renderEvilBall();
+	void updatePauseState(sf::RenderWindow& window);
+	void updateGameState(sf::RenderWindow& window);
+
+	void renderPLayer(sf::RenderWindow& window);
+	void renderMap(sf::RenderWindow& window);
+	void renderCursor(sf::RenderWindow& window);
+	void render(sf::RenderWindow& window);
+	void renderEvilBall(sf::RenderWindow& window);
+
+	void start(sf::RenderWindow& window);
 };
 
