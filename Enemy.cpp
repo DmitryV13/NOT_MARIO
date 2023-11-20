@@ -137,7 +137,7 @@ void Enemy::init_physics()
 	jump_tile = false;
 	displacement.x = 0.f;
 	displacement.y = 0.f;
-
+	attention_counter = 3;
 	looks_to_the_left = false;
 	looks_to_the_right = true;
 	animation_counter_think = 0;
@@ -166,7 +166,6 @@ void Enemy::walk(const float dir_x)
 	{
 		displacement.x = displacement_max * ((displacement.x > 0.f) ? 1.f : -1.f);
 	}
-
 	if (animation_counter_think > 2 && animation_state != Enemy_ANIMATION_STATES::ENEMY_ATTENTION)
 	{
 		displacement.x = 0;
@@ -175,9 +174,10 @@ void Enemy::walk(const float dir_x)
 	else if (displacement.y >= gravity)animation_state = Enemy_ANIMATION_STATES::ENEMY_MOVING_DOWN;
 	else if (jump_tile)animation_state = Enemy_ANIMATION_STATES::ENEMY_JUMPING;
 	else animation_state = Enemy_ANIMATION_STATES::ENEMY_MOVING;
+	
 
 	//logic when exposing a player
-	if (search_for_enemies() && ((on_ground) || (jump_tile)))
+	if (search_for_enemies() && ((on_ground) || (jump_tile)) )
 	{
 		attack();
 	}

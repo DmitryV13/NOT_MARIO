@@ -4,7 +4,9 @@
 class Eye_evil : public Enemy
 {
 public:
-	vector<laser_weapon> laser;
+	//vector<laser_weapon> laser;
+	laser_weapon* laser{nullptr};
+	laser_weapon* laserFL{ nullptr };
 	explicit Eye_evil(TileMap& map);
 	~Eye_evil() override = default;
 	void update_movement() override;
@@ -17,7 +19,7 @@ public:
 
 	void draw_laser(int, sf::RenderTarget&);
 	bool laser_existence();
-	int laser_length();
+	//int laser_length();
 
 private:
 	Texture evil_ball_t_;

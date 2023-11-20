@@ -53,6 +53,7 @@
     }
 
     void Player::render(sf::RenderTarget& target){
+        
         target.draw(player_S);
     }
 

@@ -117,7 +117,7 @@ void kusaka::update_animation()
 					current_frame.left = 0.f;
 				}
 				current_frame.width = 90;
-				current_frame.top = 140;
+				current_frame.top = 0;
 			}
 			else
 			{
@@ -127,7 +127,7 @@ void kusaka::update_animation()
 					current_frame.left = 90.f;
 				}
 				current_frame.width = -90;
-				current_frame.top = 140;
+				current_frame.top = 0;
 			}
 
 
@@ -224,6 +224,38 @@ void kusaka::update_animation()
 			animation_timer.restart();
 		}
 	}
+	else if (animation_state == Enemy_ANIMATION_STATES::ENEMY_SLEEP)
+	{
+		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
+		{
+			animation_counter_think--;
+			if (looks_to_the_right)
+			{
+				current_frame.left += 90;
+				if (current_frame.left >= 810.f)
+				{
+					current_frame.left = 0.f;
+				}
+				current_frame.width = 90;
+				current_frame.top = 140;
+			}
+			else
+			{
+				current_frame.left += 90;
+				if (current_frame.left >= 900.f)
+				{
+					current_frame.left = 90.f;
+				}
+				current_frame.width = -90;
+				current_frame.top = 140;
+			}
+
+
+			Enemy_S.setTextureRect(current_frame);
+			animation_timer.restart();
+		}
+		}
+
 
 	else
 	{

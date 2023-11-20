@@ -19,7 +19,7 @@ using std::endl;
 int main() {
     srand(static_cast<unsigned>(time(0)));
 
-    Game game(1500,600);
+    Game game(1600,900);
 
     while (game.getWindow().isOpen()) {
         game.update();

@@ -256,63 +256,76 @@ void Eye_evil::shot()
 
 	if (looks_to_the_right)
 	{
-		laser_weapon* shot_las = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x, Enemy_S.getPosition().y, looks_to_the_right);
-		laser.push_back(*shot_las);
+		laserFL = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x, Enemy_S.getPosition().y, looks_to_the_right);
+		laser = new laser_weapon(*sandbox, 2, Enemy_S.getPosition().x + 60, Enemy_S.getPosition().y, looks_to_the_right);
+		//laser_weapon* shot_las = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x, Enemy_S.getPosition().y, looks_to_the_right);
+		/*laser.push_back(*shot_las);
 
-		for (int j = (Enemy_S.getPosition().x / 60) + 2; j < TileFactory::m && j < j + 10 &&
+		for (int j = (Enemy_S.getPosition().x / 60) + 2; j < TileFactory::m && j < j + 5 &&
 			!sandbox->isBlock(Enemy_S.getPosition().y / 60, j); j++)
 		{
 			laser_weapon* shot_cur = new laser_weapon(*sandbox, 2, j * 60, Enemy_S.getPosition().y, looks_to_the_right);
 			laser.push_back(*shot_cur);
 
-		}
+		}*/
 	}
 	else
 	{
-		laser_weapon* shot_las = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x - 60, Enemy_S.getPosition().y, looks_to_the_right);
-		laser.push_back(*shot_las);
-		for (int j = (Enemy_S.getPosition().x / 60); j > 0 && j > j - 10 &&
+		laserFL = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x, Enemy_S.getPosition().y, looks_to_the_right);
+		laser = new laser_weapon(*sandbox, 2, Enemy_S.getPosition().x - 60, Enemy_S.getPosition().y, looks_to_the_right);
+		//laser_weapon* shot_las = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x - 60, Enemy_S.getPosition().y, looks_to_the_right);
+		/*laser.push_back(*shot_las);
+		for (int j = (Enemy_S.getPosition().x / 60); j > 0 && j > j - 5 &&
 			!sandbox->isBlock(Enemy_S.getPosition().y / 60, j); j--)
 		{
 			laser_weapon* shot_cur = new laser_weapon(*sandbox, 2, j * 60, Enemy_S.getPosition().y, looks_to_the_right);
 			laser.push_back(*shot_cur);
 
-		}
+		}*/
 	}
 
 }
 
 void Eye_evil::attack()
 {
-	if (attention_counter == 1)shot();
+	if (attention_counter == 1 ) {
+		attention_counter--;
+		shot();
+	}
 
 	animation_state = Enemy_ANIMATION_STATES::ENEMY_ATTENTION;
-	for (int i = 0; i < laser.size(); i++)
-	{
-		laser[i].update();
+	
+	if (laser_existence()) {
+		laser->update();
+		laserFL->update();
 	}
 	displacement.x = 0;
 }
 
 void Eye_evil::clear_shot()
 {
-	laser.clear();
+	//laser.clear();
+	delete laser;
+	delete laserFL;
+	laserFL = nullptr;
+	laser = nullptr;
 }
 
 bool Eye_evil::laser_existence()
 {
-	if (laser.empty())return false;
+	if (laserFL == nullptr)return false;
 	else return true;
 }
 
-int Eye_evil::laser_length()
-{
-	return (int)laser.size();
-}
+//int Eye_evil::laser_length()
+//{
+//	return (int)laser.size();
+//}
 
 void Eye_evil::draw_laser(int i, sf::RenderTarget& target)
 {
-	laser[i].render(target);
+	laserFL->render_FL(target);
+	laser->render(target);
 }
 
 void Eye_evil::reset_attention()

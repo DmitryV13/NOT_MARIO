@@ -53,6 +53,7 @@ void TileMap::init_texture() {
 				target.draw(block_S[0]);
 
 			}
+
 			//std::cout << std::endl;
 		}
 	}

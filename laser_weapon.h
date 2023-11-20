@@ -42,11 +42,15 @@ public:
     const FloatRect get_global_bounds() const;
     void set_position(const float x, const float y);
     void render(sf::RenderTarget& target);
+    void render_FL(sf::RenderTarget& target);
+
     //void update(sf::Vector2f);
     void update();
     void update_animation();
     //bool update_collision_x();
     void reset_animation_timer();
+    bool update_collision_x(float x);
+    sf::Vector2f calculateEndPosition(float x);
     //bool search_for_enemies();
 
 
