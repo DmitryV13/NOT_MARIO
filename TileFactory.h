@@ -4,15 +4,12 @@
 
 class TileFactory {
 private:
-
-sf::IntRect initRect_tile(char tile);
-void generation_map(std::string map[40][201]);
-void build_generation_map(std::string map[40][201]);
+    float template_W;
+    float template_H;
+    void generation_map(std::vector<std::vector<char>>& map);
 
 public:
-    TileFactory();
-    Tile tile_map_inFactory[40][200];
-
-
+    TileFactory(float temp_W, float temp_H);
+    std::vector<std::vector<char>> generation_template;
 };
 

@@ -15,7 +15,7 @@
 	}
 	
 	void Game::initWindow(){
-		window.create(sf::VideoMode(screenWidth, screenHeight), "NOT_MARIO", sf::Style::Close | sf::Style::Titlebar);
+		window.create(sf::VideoMode(screenWidth, screenHeight), "NOT_MARIO", sf::Style::Fullscreen);
 		window.setFramerateLimit(144);
 	}
 	
@@ -67,11 +67,11 @@
 	}
 
 	void Game::updateCollision(){
-		if ((player->getPosition().y + player->getGlobalBounds().height) > 2400.f) {
+		if ((player->getPosition().y + player->getGlobalBounds().height) > 2560.f) {
 			player->resetVelocityY();
 			player->setPosition(
 				player->getPosition().x,
-				2400.f - player->getGlobalBounds().height);
+				2560.f - player->getGlobalBounds().height);
 			player->resetJumpAccess();
 		}
 		if (player->getPosition().y < 0.f) {
@@ -79,9 +79,9 @@
 				player->getPosition().x,
 				0);
 		}
-		if ((player->getPosition().x + player->getGlobalBounds().width) > 12000.f) {
+		if ((player->getPosition().x + player->getGlobalBounds().width) > 12800.f) {
 			player->setPosition(
-				12000.f - player->getGlobalBounds().width,
+				12800.f - player->getGlobalBounds().width,
 				player->getPosition().y);
 		}
 		if (player->getPosition().x < 0) {
@@ -108,6 +108,7 @@
 	
 		renderMap();
 		renderPLayer();
+		sandbox.second_render(window);
 		window.setView(myView.view);
 		window.display();
 	}
