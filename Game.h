@@ -1,55 +1,60 @@
 #pragma once
-#include "Player.h"
-#include "TileMap.h"
-#include "MyView.h"
-#include "EvilBall.h"
-#include "Cursor.h"
+#include "RoadMap.h"
+#include "Setting.h"
+#include "Exit.h"
 
-enum GAME_STATE{CONTINUES=0, PAUSED, FINISHED};
+using namespace sf;
+
+enum MENU_OPTION{MENU_PLAY=0, MENU_SETTINGS, MENU_EXIT};
 
 class Game{
 private:
-	//sf::RenderWindow window;
-	sf::Event event;
-	Player* player;
-	TileMap sandbox;
-	MyView myView;
-	//Cursor* cursor;
-	EvilBall* evilBall;
-	vector<EvilBall> evilball;
+	double screen_width;
+	double screen_height;
 
-	int numOfEnemy{ 60 };
+	Event event;
+	View view;
+	RenderWindow window;
+	Texture menu_T;
+	Texture background_T;
+	Sprite menu_S;
+	Sprite background_S;
 
-	double screenWidth;
-	double screenHeight;
+	IntRect selected_cords;
+	Vector2f selected_position;
 
-	short game_state;
+	short option_selected;
+	IntRect options_cords[3];
+	Vector2f options_position[3];
+	short options_number;
+	short* options_indexes;
 
-	//void initWindow();
-	void initPlayer();
-	void initView();
-	void initEvilBall();
+	MainMenuOption** options;
+
+	void initWindow();
+	void initMenuTexture();
+	void initMenuSprite();
+	void initBackgroundTexture();
+	void initBackgroundSprite();
+	void initOptions();
+
 public:
-	Game(double screenWidth_, double screenHeight_);
-	~Game();
+	Game(double screen_w, double screen_h);
+	Game();
 
-
-	//const sf::RenderWindow& getWindow() const;
-	void update(sf::RenderWindow& window);
-	void updatePlayer();
-	void updateView();
+	void update();
 	void updateCursor();
-	void updateCollision();
-	void updateEvilBall();
-	void updatePauseState(sf::RenderWindow& window);
-	void updateGameState(sf::RenderWindow& window);
+	void updateSelected();
 
-	void renderPLayer(sf::RenderWindow& window);
-	void renderMap(sf::RenderWindow& window);
-	void renderCursor(sf::RenderWindow& window);
-	void render(sf::RenderWindow& window);
-	void renderEvilBall(sf::RenderWindow& window);
+	void render();
+	void renderBackground();
+	void renderOptions();
+	void renderSelected();
+	void renderCursor();
 
-	void start(sf::RenderWindow& window);
+	void moveSelected(bool up);
+	bool isOptionHovered(Vector2f cursor_pos, short option_index);
+
+	void start();
 };
 

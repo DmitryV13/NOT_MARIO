@@ -16,55 +16,94 @@
     <Filter Include="Source Files\ServiceClasses">
       <UniqueIdentifier>{6bbd2e3b-6f6d-4553-94d7-5743fc4cdd8c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Tabs">
-      <UniqueIdentifier>{82424bf7-a522-4fe2-810c-f49e3e060e81}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Map">
       <UniqueIdentifier>{daaa4b1f-9faf-4565-8388-00009158633e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GameObjects">
+      <UniqueIdentifier>{384b397c-541d-4429-8135-dd60efb3e8d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjects\Alive">
+      <UniqueIdentifier>{1f7438f4-fee9-44e9-90f1-7ebd8e20b61e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjects\Artificial">
+      <UniqueIdentifier>{4b2fe006-76c8-4913-9c8f-ebe54f2171b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Map">
+      <UniqueIdentifier>{887b391f-0bd7-4f6c-9f6e-7e75b9c318cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GUI">
+      <UniqueIdentifier>{4cbd437c-b85c-4969-92dd-edf3426f85d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameObjects">
+      <UniqueIdentifier>{436548a2-5ca5-46a0-9cd0-705cee59111b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ServiceClasses">
+      <UniqueIdentifier>{b5fd5306-3921-4771-9680-6a430e7a5e24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameObjects\Alive">
+      <UniqueIdentifier>{d37c5cdb-3b41-4a8d-80c1-2fe476cd35bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameObjects\Artificial">
+      <UniqueIdentifier>{e5f07702-9e45-4bb0-a337-f2dc1c437e29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GUI\Menu">
+      <UniqueIdentifier>{3ea33f70-7588-413e-8d4a-08baed63abf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GUI\Items">
+      <UniqueIdentifier>{2790310e-0868-4f13-bf9a-6ae924251065}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GUI\Tabs">
+      <UniqueIdentifier>{d966aea3-413c-4bf2-bbd5-5172fb12fdd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI">
+      <UniqueIdentifier>{65d21878-6202-455d-8d70-6cec66667806}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI\Tabs">
+      <UniqueIdentifier>{82424bf7-a522-4fe2-810c-f49e3e060e81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI\Menu">
+      <UniqueIdentifier>{ac5a82fa-b797-4839-a404-faf2a19de91c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI\Items">
+      <UniqueIdentifier>{7ce14292-4f76-4a3f-920b-f2923c21c33c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjects\Artificial\Weapons">
+      <UniqueIdentifier>{0956f962-2668-4eb7-9461-4b53765d1f27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjects\Artificial\Weapons\MeleeWeapon">
+      <UniqueIdentifier>{67338117-8120-4529-8b98-7f7af4d4183d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjects\Artificial\Weapons\RangedWeapon">
+      <UniqueIdentifier>{8b084ef5-5654-4e31-bedb-9bcfcda64653}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Enums">
+      <UniqueIdentifier>{65b222e0-3566-48b3-843a-eaf76da6a787}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files\ServiceClasses</Filter>
-    </ClCompile>
     <ClCompile Include="MyView.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files\ServiceClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Source Files\ServiceClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="EvilBall.cpp">
-      <Filter>Source Files\ServiceClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Cursor.cpp">
+    <ClCompile Include="Level.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
     <ClCompile Include="NOT_MARIO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sword.cpp">
-      <Filter>Source Files\ServiceClasses</Filter>
-    </ClCompile>
     <ClCompile Include="Exit.cpp">
-      <Filter>Source Files\Tabs</Filter>
+      <Filter>Source Files\GUI\Tabs</Filter>
     </ClCompile>
-    <ClCompile Include="Option.cpp">
-      <Filter>Source Files\Tabs</Filter>
+    <ClCompile Include="MainMenuOption.cpp">
+      <Filter>Source Files\GUI\Tabs</Filter>
     </ClCompile>
     <ClCompile Include="Setting.cpp">
-      <Filter>Source Files\Tabs</Filter>
+      <Filter>Source Files\GUI\Tabs</Filter>
     </ClCompile>
-    <ClCompile Include="Menu.cpp">
-      <Filter>Source Files\Tabs</Filter>
-    </ClCompile>
-    <ClCompile Include="Level.cpp">
-      <Filter>Source Files\Tabs</Filter>
+    <ClCompile Include="RoadMap.cpp">
+      <Filter>Source Files\GUI\Tabs</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>Source Files\Map</Filter>
@@ -75,76 +114,97 @@
     <ClCompile Include="TileMap.cpp">
       <Filter>Source Files\Map</Filter>
     </ClCompile>
-    <ClCompile Include="TextureFactory.cpp">
-      <Filter>Source Files\Map</Filter>
-    </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>Source Files\Map</Filter>
     </ClCompile>
-    <ClCompile Include="MainMenu.cpp">
-      <Filter>Source Files\Tabs</Filter>
+    <ClCompile Include="GameMenu.cpp">
+      <Filter>Source Files\GUI\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\GUI\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuItem.cpp">
+      <Filter>Source Files\GUI\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\GameObjects\Alive</Filter>
+    </ClCompile>
+    <ClCompile Include="EvilBall.cpp">
+      <Filter>Source Files\GameObjects\Alive</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\GameObjects\Alive</Filter>
+    </ClCompile>
+    <ClCompile Include="Sword.cpp">
+      <Filter>Source Files\GameObjects\Artificial\Weapons\MeleeWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files\GUI\Items</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MyView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TileMap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TileFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\GameObjects\Alive</Filter>
     </ClInclude>
     <ClInclude Include="EvilBall.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sword.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Cursor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MainMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Menu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Option.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Level.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Setting.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\GameObjects\Alive</Filter>
     </ClInclude>
     <ClInclude Include="Exit.h">
+      <Filter>Header Files\GUI\Tabs</Filter>
+    </ClInclude>
+    <ClInclude Include="RoadMap.h">
+      <Filter>Header Files\GUI\Tabs</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\GUI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMenu.h">
+      <Filter>Header Files\GUI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Header Files\ServiceClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuItem.h">
+      <Filter>Header Files\GUI\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="MyView.h">
+      <Filter>Header Files\ServiceClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuOption.h">
+      <Filter>Header Files\GUI\Tabs</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\GameObjects\Alive</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files\ServiceClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files\ServiceClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Setting.h">
+      <Filter>Header Files\GUI\Tabs</Filter>
+    </ClInclude>
+    <ClInclude Include="Sword.h">
+      <Filter>Header Files\GameObjects\Artificial</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="TileFactory.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMap.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GAME_STATE.h">
+      <Filter>Header Files\Enums</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

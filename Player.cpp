@@ -59,7 +59,7 @@
         movingDirection = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
     }
 
-    void Player::render(sf::RenderTarget& target){
+    void Player::render(RenderTarget& target){
         target.draw(player_S);
         sword->render(target);
     }
@@ -124,7 +124,7 @@
         //jumping
         if (isJumping) {
             velocity.y -= jumpVelocity;
-            //jump deceleratin
+            //jump deceleration
             jumpVelocity *= 0.96;      
         }
 
@@ -132,7 +132,7 @@
         velocity.y += flyVelocity;
         if (flyVelocity < -0.01f) {
             if (!isFlying) {
-                //fly deceleratin
+                //fly deceleration
                 flyVelocity *= 0.96;
             }
         }
@@ -163,33 +163,33 @@
             animationState = PLAYER_ANIMATION_STATES::IDLE_LEFT;
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+        if (Keyboard::isKeyPressed(Keyboard::D)) {
             movingDirection = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
             walk(4.f);
             animationState = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+        else if (Keyboard::isKeyPressed(Keyboard::A)) {
             movingDirection = PLAYER_ANIMATION_STATES::MOVING_LEFT;
             walk(-4.f);
             animationState = PLAYER_ANIMATION_STATES::MOVING_LEFT;
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+        if (Keyboard::isKeyPressed(Keyboard::W)) {
             onGround = false;
             isJumping = false;
             fly(-1.4f);
             animationState = PLAYER_ANIMATION_STATES::MOVING_UP;
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+        else if (Keyboard::isKeyPressed(Keyboard::S)) {
             //untill water will be done it won't have implementation
             
             //move(0.f, 1.f);
             //animationState = PLAYER_ANIMATION_STATES::MOVING_DOWN;
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+        if (Keyboard::isKeyPressed(Keyboard::Space)) {
             jump(-20.0f);
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)) {
+        if (Keyboard::isKeyPressed(Keyboard::I)) {
             sword->attack(movingDirection);
             //animationState = PLAYER_ANIMATION_STATES::JUMPING;
         }
@@ -328,7 +328,7 @@
 
     bool Player::updateCollisionX(){
         bool wasCollision = false;
-        sf::Vector2f newPosition(getPosition().x, getPosition().y);
+        Vector2f newPosition(getPosition().x, getPosition().y);
         for (int i = player_S.getPosition().y / 60; i < (player_S.getPosition().y + player_S.getGlobalBounds().height) / 60; i++) {
             for (int j = (player_S.getPosition().x + velocity.x) / 60; j < (player_S.getPosition().x + velocity.x + player_S.getGlobalBounds().width) / 60; j++) {
                 if (sandbox->isBlock(i, j)) {
@@ -349,7 +349,7 @@
     
     bool Player::updateCollisionY(){
         bool wasCollision = false;
-        sf::Vector2f newPosition(player_S.getPosition().x, player_S.getPosition().y);
+        Vector2f newPosition(player_S.getPosition().x, player_S.getPosition().y);
 
         for (int i = (player_S.getPosition().y + velocity.y) / 60; i < (player_S.getPosition().y + velocity.y + player_S.getGlobalBounds().height) / 60; i++) {
             for (int j = player_S.getPosition().x / 60; j < (player_S.getPosition().x + player_S.getGlobalBounds().width) / 60; j++) {
@@ -408,11 +408,11 @@
         return player_S.getGlobalBounds();
     }
 
-    const sf::Vector2f Player::getPosition() const {
+    const Vector2f Player::getPosition() const {
         return player_S.getPosition();
     }
 
-    const sf::Vector2f Player::getVelocity() const {
+    const Vector2f Player::getVelocity() const {
         return velocity;
     }
 

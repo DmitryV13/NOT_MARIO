@@ -1,9 +1,10 @@
 #pragma once
+#include "MainMenuOption.h"
 
-#include "Option.h"
+using namespace sf;
 
-class Exit : public Option{
+class Exit : public MainMenuOption{
 public:
-	void enter(sf::RenderWindow& window) override;
+	void enter(RenderWindow* window) override;
 };
 

@@ -3,14 +3,7 @@
 #include "TileMap.h"
 #include "Sword.h"
 
-using sf::Sprite;
-using sf::RenderWindow;
-using sf::FloatRect;
-using sf::View;
-using sf::Texture;
-using sf::IntRect;
-using sf::Clock;
-
+using namespace::sf;
 
 enum PLAYER_ANIMATION_STATES{IDLE_LEFT=0, IDLE_RIGHT, MOVING_LEFT, MOVING_RIGHT, MOVING_DOWN, MOVING_UP, JUMPING, FALLING};
 
@@ -29,7 +22,7 @@ private:
     short animationState;
     bool animationSwitch;
 
-    sf::Vector2f velocity;
+    Vector2f velocity;
     float velocityMax;
     float velocityMin;
     float acceleration;
@@ -47,29 +40,21 @@ private:
     float flyVelocity;
 
     short movingDirection;
-    //FloatRect coordinates;
-    //double speedX;
-    //double speedY;
-    //double acceleration = 0.0009;
-    //double heightCoeficient = 2;
-    //bool onGround;
-    //double currentFrame;
+
     void initVariables();
     void initTexture();
     void initSprite();
     void initWeapon();
     void initAnimation();
     void initPhysics();
-
 public:
-    //Player(Texture& texture, RenderWindow& window_, Map& levelMap_);
     Player(TileMap& map);
 
     // accessors
     const bool& getAnimationSwitch();
-    const sf::Vector2f getPosition() const;
+    const Vector2f getPosition() const;
     const FloatRect getGlobalBounds() const;
-    const sf::Vector2f getVelocity() const;
+    const Vector2f getVelocity() const;
 
     //modifiers
     void resetVelocityY();
@@ -79,7 +64,7 @@ public:
     void resetIsFlying();
     
     //void updateMovement(double time, RenderWindow& window);
-    void render(sf::RenderTarget& target);
+    void render(RenderTarget& target);
     void walk(const float dir_x);
     void jump(const float dir_y);
     void fly(const float dir_y);
@@ -95,10 +80,4 @@ public:
     void resetAnimationTimer();
     
     void attack();
-    //void checkCollisionX();;
-    //void checkCollisionY();
-    //void fallingTest();
-    //void changeFrames(double& time);
-    //void checkingBordersX();
-    //void checkingBordersY();
 };

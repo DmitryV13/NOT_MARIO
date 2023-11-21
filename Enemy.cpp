@@ -95,9 +95,9 @@ void Enemy::setPosition(const float x, const float y)
 	Enemy_S.setPosition(x, y);
 }
 
-void Enemy::render(sf::RenderTarget& target)
+void Enemy::render(sf::RenderTarget* target)
 {
-	target.draw(Enemy_S);
+	target->draw(Enemy_S);
 }
 
 void Enemy::update()

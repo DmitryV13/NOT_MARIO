@@ -1,10 +1,9 @@
-
 #include "stdafx.h"
 #include "Sword.h"
 
 
 
-Sword::Sword(sf::Vector2f player_position, sf::FloatRect player_bounds) {
+Sword::Sword(Vector2f player_position, FloatRect player_bounds) {
     initTexture();
     initSprite(player_position, player_bounds);
     initVariables();
@@ -16,7 +15,7 @@ void Sword::initTexture() {
     }
 }
 
-void Sword::initSprite(sf::Vector2f player_position, sf::FloatRect player_bounds) {
+void Sword::initSprite(Vector2f player_position, FloatRect player_bounds) {
     sword_S.setTexture(sword_T);
     currentFrame = IntRect(0, 0, 92, 112);
     sword_S.setTextureRect(currentFrame);
@@ -41,7 +40,7 @@ void Sword::render(RenderTarget& target) {
     target.draw(sword_S);
 }
 
-void Sword::updatePosition(sf::Vector2f player_position, short player_side) {
+void Sword::updatePosition(Vector2f player_position, short player_side) {
     if (player_side == 3) {
         currentFrame.width = 92.f;
         if (previous_side == 0) {

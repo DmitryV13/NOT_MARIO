@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Exit.h"
 
-	void Exit::enter(sf::RenderWindow& window){
-		window.close();
+	void Exit::enter(RenderWindow* window){
+		window->close();
 	}

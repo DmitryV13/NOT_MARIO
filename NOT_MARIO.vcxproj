@@ -137,15 +137,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Cursor.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EvilBall.cpp" />
     <ClCompile Include="Exit.cpp" />
-    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Level.cpp" />
-    <ClCompile Include="MainMenu.cpp" />
-    <ClCompile Include="Menu.cpp" />
-    <ClCompile Include="Option.cpp" />
+    <ClCompile Include="GameMenu.cpp" />
+    <ClCompile Include="RoadMap.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="MainMenuOption.cpp" />
+    <ClCompile Include="MenuItem.cpp" />
     <ClCompile Include="Setting.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -157,20 +158,21 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="Tile.cpp" />
-    <ClCompile Include="TextureFactory.cpp" />
     <ClCompile Include="TileFactory.cpp" />
     <ClCompile Include="TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Cursor.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EvilBall.h" />
     <ClInclude Include="Exit.h" />
-    <ClInclude Include="Game.h" />
+    <ClInclude Include="GAME_STATE.h" />
     <ClInclude Include="Level.h" />
-    <ClInclude Include="MainMenu.h" />
-    <ClInclude Include="Menu.h" />
-    <ClInclude Include="Option.h" />
+    <ClInclude Include="GameMenu.h" />
+    <ClInclude Include="RoadMap.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="MainMenuOption.h" />
+    <ClInclude Include="MenuItem.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Setting.h" />
     <ClInclude Include="stdafx.h" />
@@ -179,7 +181,6 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Sword.h" />
     <ClInclude Include="Tile.h" />
-    <ClInclude Include="TextureFactory.h" />
     <ClInclude Include="TileFactory.h" />
     <ClInclude Include="TileMap.h" />
   </ItemGroup>

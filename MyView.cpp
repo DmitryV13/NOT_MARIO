@@ -101,3 +101,7 @@
 		}
 		view.move(0, offset);
 	}
+
+	FloatRect MyView::getCurrentViewCords(){
+		return FloatRect(view.getCenter(), Vector2f(screenWidth, screenHeight));
+	}

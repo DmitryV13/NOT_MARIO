@@ -75,7 +75,7 @@ public:
     void resetJumpAccess();
 
 
-    void render(sf::RenderTarget& target);
+    void render(sf::RenderTarget* target);
     void walk(const float dir_x);
     void jump(const float dir_y);
     void update();
