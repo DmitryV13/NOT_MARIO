@@ -1,39 +1,36 @@
 #include "stdafx.h"
-#include "kusaka.h"
+#include "chubacabra.h"
 
-kusaka::kusaka(TileMap& map) : Enemy(map)
+chubacabra::chubacabra(TileMap& map) : Enemy(map)
 {
 	{
-		kusaka::init_texture();
-		kusaka::init_sprite();
+		chubacabra::init_texture();
+		chubacabra::init_sprite();
 	}
 }
 
-
-void kusaka::init_texture()
+void chubacabra::init_texture()
 {
-	if (!kusaka_t_.loadFromFile("Textures/kusaka.png"))
+	if (!chubacabra_t_.loadFromFile("Textures/chubacabra.png"))
 	{
-		std::cout << "Error -> Enemy_kusaka -> couldn't load enemy_kusaka texture" << std::endl;
+		std::cout << "Error -> Enemy_chubacabra -> couldn't load enemy_chubacabra texture" << std::endl;
 	}
 }
 
-void kusaka::init_sprite()
+void chubacabra::init_sprite()
 {
-	//Enemy_T = init_texture();
-	Enemy_S.setTexture(kusaka_t_);
-	current_frame = IntRect(0, 0, 90, 55);
+	Enemy_S.setTexture(chubacabra_t_);
+	current_frame = IntRect(0, 0, 70, 90);
 	Enemy_S.setTextureRect(current_frame);
 }
-
-void kusaka::update_movement()
+void chubacabra::update_movement()
 {
 	//decision explorer
 	if (on_ground)
 	{
 		if (update_collision_x())
 		{
-			if (!update_collision_x_jump() )
+			if (!update_collision_x_jump())
 			{
 				jump(1);
 				on_ground = false;
@@ -72,8 +69,7 @@ void kusaka::update_movement()
 	// }
 	walk(moving);
 }
-
-void kusaka::update_animation()
+void chubacabra::update_animation()
 {
 	if (animation_state == Enemy_ANIMATION_STATES::ENEMY_MOVING)
 	{
@@ -81,22 +77,22 @@ void kusaka::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 810.f)
+				current_frame.left += 70;
+				if (current_frame.left >= 140.f)
 				{
 					current_frame.left = 0.f;
 				}
-				current_frame.width = 90;
+				current_frame.width = 70;
 				current_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 900.f)
+				current_frame.left += 70;
+				if (current_frame.left >= 210.f)
 				{
 					current_frame.left = 90.f;
 				}
-				current_frame.width = -90;
+				current_frame.width = -70;
 				current_frame.top = 0;
 			}
 
@@ -108,28 +104,26 @@ void kusaka::update_animation()
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
-			animation_counter_think--;
 			if (looks_to_the_right)
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 810.f)
+				current_frame.left += 70;
+				if (current_frame.left >= 630.f)
 				{
 					current_frame.left = 0.f;
 				}
-				current_frame.width = 90;
+				current_frame.width = 70;
 				current_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 900.f)
+				current_frame.left += 70;
+				if (current_frame.left >= 700.f)
 				{
 					current_frame.left = 90.f;
 				}
-				current_frame.width = -90;
+				current_frame.width = -70;
 				current_frame.top = 0;
 			}
-
 
 			Enemy_S.setTextureRect(current_frame);
 			animation_timer.restart();
@@ -141,22 +135,22 @@ void kusaka::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 810.f)
+				current_frame.left += 70;
+				if (current_frame.left >= 630.f)
 				{
 					current_frame.left = 0.f;
 				}
-				current_frame.width = 90;
+				current_frame.width = 70;
 				current_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 900.f)
+				current_frame.left += 70;
+				if (current_frame.left >= 700.f)
 				{
 					current_frame.left = 90.f;
 				}
-				current_frame.width = -90;
+				current_frame.width = -70;
 				current_frame.top = 0;
 			}
 
@@ -171,25 +165,24 @@ void kusaka::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 810.f)
+				current_frame.left += 70;
+				if (current_frame.left >= 630.f)
 				{
-					current_frame.left = 90.f;
+					current_frame.left = 0.f;
 				}
-				current_frame.width = 90;
-				current_frame.top = 70;
+				current_frame.width = 70;
+				current_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 900.f)
+				current_frame.left += 70;
+				if (current_frame.left >= 700.f)
 				{
 					current_frame.left = 90.f;
 				}
-				current_frame.width = -90;
-				current_frame.top = 70;
+				current_frame.width = -70;
+				current_frame.top = 0;
 			}
-
 
 			Enemy_S.setTextureRect(current_frame);
 			animation_timer.restart();
@@ -201,23 +194,23 @@ void kusaka::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 810.f)
+				current_frame.left += 70;
+				if (current_frame.left >= 630.f)
 				{
 					current_frame.left = 0.f;
 				}
-				current_frame.width = 90;
-				current_frame.top = 70;
+				current_frame.width = 70;
+				current_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 900.f)
+				current_frame.left += 70;
+				if (current_frame.left >= 700.f)
 				{
 					current_frame.left = 90.f;
 				}
-				current_frame.width = -90;
-				current_frame.top = 70;
+				current_frame.width = -70;
+				current_frame.top = 0;
 			}
 
 			Enemy_S.setTextureRect(current_frame);
@@ -228,33 +221,31 @@ void kusaka::update_animation()
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
-			animation_counter_think--;
 			if (looks_to_the_right)
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 810.f)
+				current_frame.left += 70;
+				if (current_frame.left >= 630.f)
 				{
 					current_frame.left = 0.f;
 				}
-				current_frame.width = 90;
-				current_frame.top = 140;
+				current_frame.width = 70;
+				current_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 900.f)
+				current_frame.left += 70;
+				if (current_frame.left >= 700.f)
 				{
 					current_frame.left = 90.f;
 				}
-				current_frame.width = -90;
-				current_frame.top = 140;
+				current_frame.width = -70;
+				current_frame.top = 0;
 			}
-
 
 			Enemy_S.setTextureRect(current_frame);
 			animation_timer.restart();
 		}
-		}
+	}
 
 
 	else
@@ -263,26 +254,23 @@ void kusaka::update_animation()
 	}
 }
 
-void kusaka::shot()
+void chubacabra::shot()
 {
 	animation_state = Enemy_ANIMATION_STATES::ENEMY_SHOT;
 }
 
-void kusaka::attack()
+void chubacabra::attack()
 {
 	animation_state = Enemy_ANIMATION_STATES::ENEMY_ATTENTION;
-	if(player_contact())
+	if (player_contact())
 	{
+		shot();
+		displacement.x = 0;
 		if (count_jump == 0) {
 			jump(1.f);
 			count_jump++;
 		}
-	}
-	if (sting())
-	{
-		
-		shot();
-		displacement.x = 0;
+
 		displacement_max = 1.f;
 	}
 	else
@@ -319,18 +307,18 @@ void kusaka::attack()
 		}
 		displacement.x += 10 * moving * acceleration;
 	}
-	if(!player_contact())
+	if (!player_contact())
 	{
 		reset_attention();
 	}
 	// displacement.x = 0;
 }
 
-void kusaka::clear_shot()
+void chubacabra::clear_shot()
 {
 }
 
-bool kusaka::search_for_enemies()
+bool chubacabra::search_for_enemies()
 {
 	// int centerX = get_position().x / 60;
 	// int centerY = get_position().y / 60;
@@ -393,17 +381,10 @@ bool kusaka::search_for_enemies()
 	return false;
 }
 
-void kusaka::reset_attention()
+void chubacabra::reset_attention()
 {
 	displacement_max = 1.f;
 	displacement.x += moving * acceleration;
 	count_jump = 0;
-}
-
-bool kusaka::sting()
-{
-	FloatRect en = get_global_bounds();
-	FloatRect pl = sandbox->get_player_glob_bound();
-	return en.intersects(pl);
 }
 

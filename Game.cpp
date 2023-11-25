@@ -11,6 +11,7 @@ Game::Game(double screenWidth_, double screenHeight_)
 	initPlayer();
 	initEvilBall();
 	init_Kusaka();
+	init_chubacabra();
 }
 
 Game::~Game()
@@ -19,6 +20,7 @@ Game::~Game()
 	delete evil_Ball;
 	evil_ball_vector.clear();
 	Kusaka_vector.clear();
+	chubacabras_vector_.clear();
 }
 
 void Game::initWindow()
@@ -46,6 +48,15 @@ void Game::init_Kusaka()
 	}
 }
 
+void Game::init_chubacabra()
+{
+	for (int i = 0; i < num_of_enemy_; i++)
+	{
+		chubacabra* enemy = new chubacabra(sandbox);
+		chubacabras_vector_.push_back(enemy);
+	}
+}
+
 void Game::updateEvilBall()
 {
 	for (int i = 0; i < num_of_enemy_; i++)
@@ -60,6 +71,14 @@ void Game::update_Kusaka()
 	for (int i = 0; i < num_of_enemy_; i++)
 	{
 		Kusaka_vector[i]->update();
+	}
+}
+
+void Game::update_chubacabra()
+{
+	for (int i = 0; i < num_of_enemy_; i++)
+	{
+		chubacabras_vector_[i]->update();
 	}
 }
 
@@ -116,11 +135,14 @@ void Game::update()
 
 		}
 	}
+	
 	updatePlayer();
+	sandbox.set_player_glob_bound(player->getGlobalBounds());
 	updateEvilBall();
 	update_Kusaka();
 	updateView();
 	updateCollision();
+	update_chubacabra();
 
 	//updateCollisionMap();
 }
@@ -183,6 +205,7 @@ void Game::render()
 	renderPLayer();
 	renderEvilBall();
 	render_Kusaka();
+	render_chubacabra();
 	render_shot();
 
 	window.setView(myView.view);
@@ -204,6 +227,14 @@ void Game::render_Kusaka()
 	for (int i = 0; i < num_of_enemy_; i++)
 	{
 		Kusaka_vector[i]->render(window);
+	}
+}
+
+void Game::render_chubacabra()
+{
+	for (int i = 0; i < num_of_enemy_; i++)
+	{
+		chubacabras_vector_[i]->render(window);
 	}
 }
 

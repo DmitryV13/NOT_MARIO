@@ -15,6 +15,7 @@
 
 
     void Tile::setTilePresence(bool presence){
+        
         player = presence;
     }
     
@@ -32,6 +33,7 @@
     {
         return player;
     }
+
     
     sf::IntRect Tile::give_cord()
     {

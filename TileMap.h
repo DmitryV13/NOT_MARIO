@@ -13,9 +13,12 @@ private:
 	float sizeTexture;
 	float mapW;
 	float mapH;
+	sf::FloatRect get_pl_gl_bn;
 public:
 	TileMap();
-
+	sf::FloatRect set_player_glob_bound(sf::FloatRect get_gl_bn);
+	sf::FloatRect get_player_glob_bound();
+	
 	float getMapWidth();
 	float getMapHeight();
 	float getSizeTexture();

@@ -1,11 +1,21 @@
 #pragma once
 #include "Enemy.h"
 
-class kusaka : public Enemy
+class chubacabra: public Enemy
+
 {
+private:
+	Texture chubacabra_t_;
+	bool player_l_r[2]{ false };
+	int count_jump = 0;
+	void init_texture() override;
+	void init_sprite() override;
+
+
+
 public:
-	explicit kusaka(TileMap& map);
-	~kusaka() override = default;
+	explicit chubacabra(TileMap& map);
+	~chubacabra() override = default;
 	void update_movement() override;
 	void update_animation() override;
 	void clear_shot() override;
@@ -13,12 +23,7 @@ public:
 	void attack() override;
 	bool search_for_enemies() override;
 	void reset_attention() override;
-	bool sting();
 
-private:
-	Texture kusaka_t_;
-	bool player_l_r[2]{false};
-	int count_jump = 0;
-	void init_texture() override;
-	void init_sprite() override;
+
 };
+

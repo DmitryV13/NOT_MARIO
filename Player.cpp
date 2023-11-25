@@ -10,7 +10,12 @@
         initPhysics();
     }
 
-    void Player::initVariables(){
+IntRect Player::get_pl_frame()
+{
+    return currentFrame;
+}
+
+void Player::initVariables(){
         animationState = PLAYER_ANIMATION_STATES::IDLE_RIGHT;
     }
 
@@ -56,7 +61,7 @@
         
         target.draw(player_S);
     }
-
+    
     void Player::resetJumpAccess(){
         onGround = true;
         isJumping=false;

@@ -60,6 +60,9 @@
     <ClCompile Include="kusaka.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
+    <ClCompile Include="chubacabra.cpp">
+      <Filter>Source Files\ServiceClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -102,6 +105,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="kusaka.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="chubacabra.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -15,6 +15,11 @@ TileMap::TileMap()
 	}
 }
 
+sf::FloatRect TileMap::set_player_glob_bound(sf::FloatRect get_gl_bn)
+{
+	get_pl_gl_bn = get_gl_bn;
+	return get_gl_bn;
+}
 
 
 Tile& TileMap::setPosTile(int i, int j)
@@ -58,7 +63,14 @@ void TileMap::init_texture() {
 		}
 	}
 
-	float TileMap::getMapWidth(){
+sf::FloatRect TileMap::get_player_glob_bound()
+{
+	return get_pl_gl_bn;
+}
+
+
+
+float TileMap::getMapWidth(){
 		return mapH * sizeTexture;
 	}
 
@@ -76,7 +88,9 @@ void TileMap::init_texture() {
 		return false;
 	}
 
-	bool TileMap::isOccupied(int i, int j) {
+
+
+bool TileMap::isOccupied(int i, int j) {
 		return tilemap[i][j].give_player_info();
 	}
 

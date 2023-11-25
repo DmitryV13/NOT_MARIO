@@ -4,6 +4,7 @@
 #include "MyView.h"
 #include "Eye_evil.h"
 #include "kusaka.h"
+#include "chubacabra.h"
 
 class Game
 {
@@ -18,6 +19,7 @@ private:
 	Eye_evil* evil_Ball;
 	vector<Eye_evil*> evil_ball_vector;
 	vector<kusaka*> Kusaka_vector;
+	vector<chubacabra*> chubacabras_vector_;
 	int num_of_enemy_{ 10 };
 
 
@@ -29,6 +31,7 @@ private:
 	void initView();
 	void initEvilBall();
 	void init_Kusaka();
+	void init_chubacabra();
 public:
 	Game(double screenWidth_, double screenHeight_);
 	~Game();
@@ -41,11 +44,13 @@ public:
 	void updateCollision();
 	void updateEvilBall();
 	void update_Kusaka();
+	void update_chubacabra();
 	void renderPLayer();
 	void renderMap();
 	void render();
 	void renderEvilBall();
 	void render_Kusaka();
+	void render_chubacabra();
 	void render_shot();
 };
 

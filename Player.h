@@ -60,7 +60,7 @@ private:
 public:
     //Player(Texture& texture, RenderWindow& window_, Map& levelMap_);
     Player(TileMap& map);
-
+    IntRect get_pl_frame();
     // accessors
     const bool& getAnimationSwitch();
     const sf::Vector2f getPosition() const;

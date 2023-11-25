@@ -193,7 +193,7 @@ sf::Vector2f laser_weapon::calculateEndPosition(float x)
 	int i = (laser_S.getPosition().y) / 60;
 	if (dir_x)j = (laser_S.getPosition().x + x + laser_S.getGlobalBounds().width) / 60;
 	else j = (laser_S.getPosition().x + x) / 60;
-	// Проверка столкновения
+	
 	int g = 0;
 	while (!sandbox->isBlock(i, j) && j > 0 && j < TileFactory::m && g < 60)
 	{

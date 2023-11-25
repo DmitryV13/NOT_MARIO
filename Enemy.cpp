@@ -223,7 +223,6 @@ bool Enemy::player_contact()
 			{
 				if (sandbox->isOccupied(i, j))
 				{
-					
 					return true;
 				}
 			}
@@ -233,7 +232,7 @@ bool Enemy::player_contact()
 
 	for (int i = centerY - 1; i <= centerY + 1; i++)
 	{
-		for (int j = centerX ; j <= centerX+1; j++)
+		for (int j = centerX ; j <= centerX+l; j++)
 		{
 			if (i >= 0 && i < 40 && j >= 0 && j < 200)
 			{
@@ -354,6 +353,7 @@ bool Enemy::update_collision_x_jump()
 //collision y
 bool Enemy::update_collision_y()
 {
+	
 	bool wasCollision = false;
 
 	sf::Vector2f newPosition(Enemy_S.getPosition().x, Enemy_S.getPosition().y);
