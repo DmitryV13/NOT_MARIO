@@ -13,10 +13,11 @@
 
     void Player::initVariables(){
         animationState = PLAYER_ANIMATION_STATES::IDLE_RIGHT;
+        chosen_weapon = 0;
     }
 
     void Player::initTexture(){
-        if (!player_T.loadFromFile("Textures/hero1.png")) {
+        if (!player_T.loadFromFile("Textures/Heroes/hero1.png")) {
             std::cout << "Error -> Player -> couldn't load player texture" << std::endl;
         }
     }
@@ -29,8 +30,10 @@
         //player_S.setPosition(67, 78);
     }
 
-    void Player::initWeapon(){
-        sword = new Sword(player_S.getPosition(), player_S.getGlobalBounds());
+    void Player::initWeapon() {
+        weapons.push_back(new Fist());
+        weapons.push_back(new Sword(player_S.getPosition(), player_S.getGlobalBounds()));
+        weapons.push_back(new CombatStaff(player_S.getPosition(), player_S.getGlobalBounds(), sandbox));
     }
 
     void Player::initAnimation(){
@@ -61,7 +64,14 @@
 
     void Player::render(RenderTarget& target){
         target.draw(player_S);
-        sword->render(target);
+        weapons[chosen_weapon]->render(target);
+        renderProjectiles(target);
+    }
+
+    void Player::renderProjectiles(RenderTarget& target){
+        for (int i = 0; i < weapons.size(); i++) {
+            weapons[i]->renderProjectiles(target);
+        }
     }
 
     void Player::resetJumpAccess(){
@@ -105,11 +115,12 @@
         flyVelocity = dir_y * gravity;
     }
 
-    void Player::update(){
-        updateMovement();
+    void Player::update(RenderWindow* window, FloatRect view_cords){
+        updateMovement(window, view_cords);
         updateAnimation();
         updatePhysics();
-        updateSword();
+        updateWeapon(window, view_cords);
+        updateProjectiles();
         updatePresence();
     }
 
@@ -155,7 +166,7 @@
         player_S.move(velocity);
     }
 
-    void Player::updateMovement() {
+    void Player::updateMovement(RenderWindow* window, FloatRect view_cords) {
         if (movingDirection== PLAYER_ANIMATION_STATES::MOVING_RIGHT) {
             animationState = PLAYER_ANIMATION_STATES::IDLE_RIGHT;
         }
@@ -189,9 +200,8 @@
         if (Keyboard::isKeyPressed(Keyboard::Space)) {
             jump(-20.0f);
         }
-        if (Keyboard::isKeyPressed(Keyboard::I)) {
-            sword->attack(movingDirection);
-            //animationState = PLAYER_ANIMATION_STATES::JUMPING;
+        if (Mouse::isButtonPressed(Mouse::Left)) {
+            weapons[chosen_weapon]->attack(movingDirection, Vector2f(Mouse::getPosition(*window)), view_cords);
         }
     }
 
@@ -312,9 +322,14 @@
         }
     }
 
-    void Player::updateSword(){
-        sword->updatePosition(player_S.getPosition(), movingDirection);
-        sword->updateAnimation();
+    void Player::updateWeapon(RenderWindow* window, FloatRect view_cords){
+        weapons[chosen_weapon]->update(player_S.getPosition(), movingDirection, window, view_cords);
+    }
+
+    void Player::updateProjectiles(){
+        for (int i = 0; i < weapons.size(); i++){
+            weapons[i]->updateProjectiles();
+        }
     }
 
     void Player::resetAnimationTimer(){
@@ -322,8 +337,14 @@
         animationSwitch = true;
     }
 
-    void Player::attack(){
-        //sword->attack();
+    void Player::change_weapon(short count){
+        chosen_weapon+=count;
+        if (chosen_weapon >= static_cast<short>(weapons.size())) {
+            chosen_weapon = 0;
+        }
+        if (chosen_weapon < 0) {
+            chosen_weapon = weapons.size() - 1;
+        }
     }
 
     bool Player::updateCollisionX(){
@@ -423,35 +444,4 @@
     void Player::resetVelocityY() {
         velocity.y = 0.f;
     }
-//   void Player::checkCollisionX() {
-//      for (int i = coordinates.top / 73; i < ((coordinates.top + coordinates.height) / 73); i++)
-//          for (int j = coordinates.left / 73; j < ((coordinates.width + coordinates.left) / 73); j++) {
-//              if (levelMap.TileMap[i][j] != ' ') {
-//                  if (speedX > 0) {
-//                      coordinates.left = j * levelMap.sizeTexture - coordinates.width;
-//                  }
-//                  if (speedX < 0) {
-//                      coordinates.left = j * levelMap.sizeTexture + levelMap.sizeTexture;
-//                  }
-//              }
-//          }
-//  }
-//
-//   void Player::checkCollisionY() {
-//      for (int i = coordinates.top / 73; i < ((coordinates.top + coordinates.height) / 73); i++)
-//          for (int j = coordinates.left / 73; j < ((coordinates.width + coordinates.left) / 73); j++) {
-//              if (levelMap.TileMap[i][j] != ' ') {
-//                  if (speedY > 0) {
-//                      coordinates.top = i * levelMap.sizeTexture - coordinates.height;
-//                      speedY = 0;
-//                      onGround = true;
-//                  }
-//                  if (speedY < 0) {
-//                      coordinates.top = i * levelMap.sizeTexture + levelMap.sizeTexture;
-//                      speedY = 0;
-//                  }
-//              }
-//          }
-//  }
-//
 

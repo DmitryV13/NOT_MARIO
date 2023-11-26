@@ -137,10 +137,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bow.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="CombatStaff.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EvilBall.cpp" />
     <ClCompile Include="Exit.cpp" />
+    <ClCompile Include="Fist.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="GameMenu.cpp" />
     <ClCompile Include="RoadMap.cpp" />
@@ -160,15 +164,21 @@
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileFactory.cpp" />
     <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bow.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="CombatStaff.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EvilBall.h" />
     <ClInclude Include="Exit.h" />
+    <ClInclude Include="Fist.h" />
     <ClInclude Include="GAME_STATE.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="GameMenu.h" />
+    <ClInclude Include="PLAYER_ANIMATION_SATES.h" />
     <ClInclude Include="RoadMap.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="MainMenuOption.h" />
@@ -183,6 +193,7 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileFactory.h" />
     <ClInclude Include="TileMap.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NOT_MARIO.rc" />

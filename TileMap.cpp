@@ -20,6 +20,7 @@ Tile& TileMap::getTile()
 	return **tilemap;
 }
 
+
 Tile& TileMap::setPosTile(int i, int j)
 {
 	return tilemap[i][j];

@@ -16,7 +16,7 @@
     void Tile::setTilePresence(bool presence){
         player = presence;
     }
-    
+
     char Tile::give_front_tile()
     {
         return front_tile;

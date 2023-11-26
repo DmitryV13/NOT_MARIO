@@ -1,11 +1,13 @@
 #pragma once
+#include "PLAYER_ANIMATION_SATES.h"
 #include "Map.h"
 #include "TileMap.h"
+#include "Fist.h"
 #include "Sword.h"
+#include "CombatStaff.h"
+
 
 using namespace::sf;
-
-enum PLAYER_ANIMATION_STATES{IDLE_LEFT=0, IDLE_RIGHT, MOVING_LEFT, MOVING_RIGHT, MOVING_DOWN, MOVING_UP, JUMPING, FALLING};
 
 
 class Player {
@@ -15,7 +17,8 @@ private:
     Texture player_T;
     Sprite player_S;
 
-    Sword* sword;
+    vector<Weapon*> weapons;
+    short chosen_weapon;
 
     IntRect currentFrame;
     Clock animationTimer;
@@ -63,21 +66,23 @@ public:
     void resetNTHJump();
     void resetIsFlying();
     
-    //void updateMovement(double time, RenderWindow& window);
-    void render(RenderTarget& target);
     void walk(const float dir_x);
     void jump(const float dir_y);
     void fly(const float dir_y);
-    void update();
+
+    void update(RenderWindow* window, FloatRect view_cords);
     void updatePhysics();
-    void updateMovement();
+    void updateMovement(RenderWindow* window, FloatRect view_cords);
     void updateAnimation();
-    void updateSword();
+    void updateWeapon(RenderWindow* window, FloatRect view_cords);
+    void updateProjectiles();
     bool updateCollisionX();
     bool updateCollisionY();
     void updatePresence();
 
+    void render(RenderTarget& target);
+    void renderProjectiles(RenderTarget& target);
+
     void resetAnimationTimer();
-    
-    void attack();
+    void change_weapon(short count);
 };

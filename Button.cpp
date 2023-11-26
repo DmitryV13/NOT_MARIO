@@ -87,16 +87,12 @@
 
 		switch (button_state) {
 			case BTN_IDLE:
-				text.setOutlineThickness(3.f);
 				text.setOutlineColor(sf::Color(0, 0, 0, 0));
 				text.setFillColor(sf::Color::White);
 				//shape.setFillColor(idle_color);
 				break;
 
 			case BTN_HOVERED:
-				std::cout << text.getGlobalBounds().height << " " << text.getGlobalBounds().top << std::endl;
-				text.setOutlineThickness(3.f);
-				std::cout << text.getGlobalBounds().height << " " << text.getGlobalBounds().top << std::endl;
 				text.setOutlineColor(sf::Color(0, 0, 0, 255));
 				text.setFillColor(sf::Color(231, 71, 57, 255));
 				//text.setFillColor(sf::Color(191,42,62,255));
@@ -104,7 +100,6 @@
 				break;
 
 			case BTN_ACTIVE:
-				text.setOutlineThickness(3.f);
 				text.setOutlineColor(sf::Color(0, 0, 0, 0));
 				text.setFillColor(sf::Color(231,71,57,255));
 				//shape.setFillColor(active_color);

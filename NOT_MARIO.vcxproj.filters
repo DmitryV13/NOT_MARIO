@@ -79,6 +79,18 @@
     <Filter Include="Header Files\Enums">
       <UniqueIdentifier>{65b222e0-3566-48b3-843a-eaf76da6a787}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\GameObjects\Artificial\Weapons">
+      <UniqueIdentifier>{f581ee0e-b488-4ac4-abf8-893b0d48abab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameObjects\Artificial\Weapons\MeleeWeapons">
+      <UniqueIdentifier>{91094502-20a2-4c21-9782-688b1c8bd2e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameObjects\Artificial\Weapons\RangedWeapons">
+      <UniqueIdentifier>{c2e66bf4-b212-452a-956f-116bae510fb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjects\Artificial\Weapons\BareHands">
+      <UniqueIdentifier>{27f26f5e-9a05-411b-a35e-ff50894a5a41}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyView.cpp">
@@ -141,6 +153,21 @@
     <ClCompile Include="Button.cpp">
       <Filter>Source Files\GUI\Items</Filter>
     </ClCompile>
+    <ClCompile Include="CombatStaff.cpp">
+      <Filter>Source Files\GameObjects\Artificial\Weapons\RangedWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Bow.cpp">
+      <Filter>Source Files\GameObjects\Artificial\Weapons\RangedWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Source Files\GameObjects\Artificial\Weapons\RangedWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Fist.cpp">
+      <Filter>Source Files\GameObjects\Artificial\Weapons\BareHands</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Source Files\GameObjects\Artificial\Weapons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemy.h">
@@ -188,9 +215,6 @@
     <ClInclude Include="Setting.h">
       <Filter>Header Files\GUI\Tabs</Filter>
     </ClInclude>
-    <ClInclude Include="Sword.h">
-      <Filter>Header Files\GameObjects\Artificial</Filter>
-    </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>Header Files\Map</Filter>
     </ClInclude>
@@ -200,11 +224,32 @@
     <ClInclude Include="TileMap.h">
       <Filter>Header Files\Map</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GAME_STATE.h">
       <Filter>Header Files\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="PLAYER_ANIMATION_SATES.h">
+      <Filter>Header Files\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="Sword.h">
+      <Filter>Header Files\GameObjects\Artificial\Weapons\MeleeWeapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Bow.h">
+      <Filter>Header Files\GameObjects\Artificial\Weapons\RangedWeapons</Filter>
+    </ClInclude>
+    <ClInclude Include="CombatStaff.h">
+      <Filter>Header Files\GameObjects\Artificial\Weapons\RangedWeapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Header Files\GameObjects\Artificial\Weapons\RangedWeapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Header Files\GUI\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Fist.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

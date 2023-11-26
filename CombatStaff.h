@@ -1,15 +1,23 @@
 #pragma once
+
 #include "PLAYER_ANIMATION_SATES.h"
 #include "Weapon.h"
+#include "Bullet.h"
 
 using namespace::sf;
 
-class Sword : public Weapon{
+class CombatStaff : public Weapon{
 private:
-	Texture sword_T;
-	Sprite sword_S;
+	TileMap* sandbox;
+
+	Texture staff_T;
+	Sprite staff_S;
+
 	IntRect currentFrame;
 	Clock animationTimer;
+
+	vector<Bullet*> bullets;
+
 	short animationState;
 	bool animationSwitch;
 	bool attack_activation;
@@ -22,13 +30,16 @@ private:
 	void initAnimation();
 
 public:
-	Sword(Vector2f player_position, FloatRect player_bounds);
+	CombatStaff(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_);
 
 	void update(Vector2f player_position, short player_side, RenderWindow* window, FloatRect view_cords) override;
 	void updatePosition(Vector2f player_position, short player_side, RenderWindow* window, FloatRect view_cords);
 	void updateAnimation();
+	void updateProjectiles();
 
 	void render(RenderTarget& target) override;
+	void renderProjectiles(RenderTarget& target) override;
 
-	void attack(short side_attack, Vector2f mouse_pos, FloatRect view_cord);
+	void attack(short side_attack, Vector2f mouse_pos, FloatRect view_cords);
 };
+

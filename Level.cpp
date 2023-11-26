@@ -96,6 +96,15 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_)
 					player->resetNTHJump();
 				}
 			}
+			if (event.type == sf::Event::MouseWheelScrolled) {
+				//std::cout << event.mouseWheelScroll.delta << std::endl;
+				if (event.mouseWheelScroll.delta > 0) {
+					player->change_weapon(1);
+				}
+				else {
+					player->change_weapon(-1);
+				}
+			}
 		}
 	}
 
@@ -151,7 +160,7 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_)
 	}
 	
 	void Level::updatePlayer(){
-		player->update();
+		player->update(window, myView.getCurrentViewCords());
 	}
 	
 	void Level::render(){

@@ -33,6 +33,8 @@ private:
     void generate_platforms(int x[200], int y[200], char map[40][200]);
     void generate_platform(int pos_x, int pos_y, int width, int height, char map[40][200]);
     void platform_filter_y(int pos_x, int pos_y, int y[200], int width, int height, char map[40][200]);
+
+    void texture_arrangement(char map[40][200]);
 };
 
 //#pragma once
