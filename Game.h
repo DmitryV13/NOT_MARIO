@@ -25,6 +25,7 @@ public:
 
 	const sf::RenderWindow& getWindow() const;
 	void updatePlayer();
+	void updateMap();
 	void update();
 	void updateView();
 	void updateCollision();

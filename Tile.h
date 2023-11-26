@@ -4,26 +4,26 @@ using sf::Clock;
 
 class Tile
 {
-private:
-
-	bool player;
-	char back_tile;
-	char front_tile;
-	short int interaction;
-	short int animation_factor;
-	short int animation_quantity;
-	sf::IntRect *cord;
-	Clock animationTimer;
+protected:
 	
+	std::string tileName;
+	sf::Texture tile_T;
+	sf::Sprite	tile_S;
+	short int texture_size_W;
+	short int texture_size_H;
+	short int interaction;
+	bool player;
+	char association;
+
+	void init_texture(std::string Name);
 
 public:
+
 	Tile();
-	Tile(sf::IntRect cord_, char f_b, char b_b, short int inter, short int anim_factor, short int anim_quantity);
-	void tile_animation();
-	char give_front_tile();
-	char give_back_tile();
+	Tile(std::string Name, short int inter, short int texture_size_w, short int texture_size_h, char ass);
+	sf::Sprite render_tile(int i, int j);	
 	bool give_player_info();
-	sf::IntRect* give_cord();
-	void set_cord(sf::IntRect cord_);
-	void set_interaction(short int curr);
+	short int get_interaction();
+	virtual void tile_animation();
+	
 };

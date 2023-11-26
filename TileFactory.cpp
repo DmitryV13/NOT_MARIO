@@ -3,17 +3,16 @@
 #include "TileFactory.h"
 #include <vector>
 
-TileFactory::TileFactory (float temp_W, float temp_H) : generation_template(template_W, std::vector<char>(template_H)), template_W(temp_H), template_H(temp_H)
+TileFactory::TileFactory (float temp_W, float temp_H) : generation_template(template_W, std::vector<char>(template_H)), template_W(temp_W), template_H(temp_H)
 {
-    generation_map(generation_template);
-    for (int i = 0; i < 40; i++) 
-    {
-        for (int j = 0; j < 200; j++) 
-        {
-          std::cout << generation_template[i][j];
-        }
-        std::cout << std::endl;
-    }
+    //generation_map(generation_template);
+    
+
+}
+
+char TileFactory::give_letter(int i, int j)
+{
+    return a[i][j];
 }
 
 
@@ -36,14 +35,14 @@ void TileFactory::generation_map(std::vector<std::vector<char>> &map)
     int i = 20;
 
     //Цикл прохода по столбцам строки.
-    for (int j = 0; j < 200; j++) 
+    for (int j = 0; j < 2000; j++) 
     {
         random_number = dist(gen);
         //Вставляется нужная буква на уровень ниже, при этом исключается случий при котором мы после поднятия на 1 уровень сразу же спускаемя.
         if (random_number <= probability / 2 && i < 30 && j >= 3) 
         {
             i++;
-            map[i][j] = 'A';
+            map[i][j] = '[';
             
             if (map[i - 1][j - 2] == ' ') 
             {
@@ -264,7 +263,7 @@ void TileFactory::generation_map(std::vector<std::vector<char>> &map)
             }
         }
         // Генерируем рандомый водоем.
-        if (random_number > 0.4 && random_number <= 0.420 && j <= 180 && j >= 3 ) 
+        if (random_number > 0.4 && random_number <= 0.420 && j <= 1900 && j >= 3 ) 
         {
             random_width = dist_wather_width(gen);
             random_deep = dist_wather_deep(gen);
@@ -537,53 +536,53 @@ void TileFactory::generation_map(std::vector<std::vector<char>> &map)
 
 
     //Генерация островов.
-  std::uniform_real_distribution<float> dist_quantity(40, 90);
-  std::uniform_real_distribution<double> dist_island_width(3, 15);
-  std::uniform_real_distribution<double> dist_island_deep(1, 3);
-  std::uniform_real_distribution<float> dist_h(3, 20);
-  std::uniform_real_distribution<float> dist_l(5, 180);
-  probability = 30;
-  int quantity = dist_quantity(gen);
-  for (int ch = 0; ch <= quantity; ch++) 
-  {
-      random_number = dist(gen);
-      if (random_number <= probability) 
-      {
-          h = dist_h(gen);
-          l = dist_l(gen);
-          random_width = dist_island_width(gen);
-          random_deep = dist_island_deep(gen);
-          int tmp = l;
-          int ch = 0;
-          int flag = 0;
-          if (map[h - 1][l] == ' ' && map[h][l - 1] == ' ' && map[h + random_deep + 1][l] == ' ' && map[h + random_deep][l - 1] == ' ' && map[h][l + random_width + 1] == ' ' && map[h - 1][l + random_width] == ' ' && map[h + random_deep][l + random_width + 1] == ' ' && map[h + random_deep + 1][l + random_width] == ' ') 
-          {
-              if (map[h - 3][l] == ' ' && map[h][l - 3] == ' ' && map[h + random_deep + 3][l] == ' ' && map[h + random_deep][l - 3] == ' ' && map[h][l + random_width + 3] == ' ' && map[h - 3][l + random_width] == ' ' && map[h + random_deep][l + random_width + 3] == ' ' && map[h + random_deep + 3][l + random_width] == ' ') 
-              {
-                  while (l - tmp <= random_width) {
-  
-                      if (flag == 0) { map[h][l] = 'L'; }
-                      else if (flag == random_width) { map[h][l] = 'P'; }
-                      else { map[h][l] = 'A';}
-  
-                      ch = 0;
-                      while (ch <= random_deep) 
-                      {
-                          ch++;
-                          if (flag == 0) { map[h + ch][l] = 'C'; }
-                          else if (flag == random_width) { map[h + ch][l] = 'D'; }
-                          else { map[h + ch][l] = 'B';}
-  
-                      }
-                      flag++;
-                      l++;
-                  }
-              }
-          }
-          else continue;
-      }
-      else continue;
-  }
+ //std::uniform_real_distribution<float> dist_quantity(40, 90);
+ //std::uniform_real_distribution<double> dist_island_width(3, 15);
+ //std::uniform_real_distribution<double> dist_island_deep(1, 3);
+ //std::uniform_real_distribution<float> dist_h(3, 20);
+ //std::uniform_real_distribution<float> dist_l(5, 180);
+ //probability = 30;
+ //int quantity = dist_quantity(gen);
+ //for (int ch = 0; ch <= quantity; ch++) 
+ //{
+ //    random_number = dist(gen);
+ //    if (random_number <= probability) 
+ //    {
+ //        h = dist_h(gen);
+ //        l = dist_l(gen);
+ //        random_width = dist_island_width(gen);
+ //        random_deep = dist_island_deep(gen);
+ //        int tmp = l;
+ //        int ch = 0;
+ //        int flag = 0;
+ //        if (map[h - 1][l] == ' ' && map[h][l - 1] == ' ' && map[h + random_deep + 1][l] == ' ' && map[h + random_deep][l - 1] == ' ' && map[h][l + random_width + 1] == ' ' && map[h - 1][l + random_width] == ' ' && map[h + random_deep][l + random_width + 1] == ' ' && map[h + random_deep + 1][l + random_width] == ' ') 
+ //        {
+ //            if (map[h - 3][l] == ' ' && map[h][l - 3] == ' ' && map[h + random_deep + 3][l] == ' ' && map[h + random_deep][l - 3] == ' ' && map[h][l + random_width + 3] == ' ' && map[h - 3][l + random_width] == ' ' && map[h + random_deep][l + random_width + 3] == ' ' && map[h + random_deep + 3][l + random_width] == ' ') 
+ //            {
+ //                while (l - tmp <= random_width) {
+ //
+ //                    if (flag == 0) { map[h][l] = 'L'; }
+ //                    else if (flag == random_width) { map[h][l] = 'P'; }
+ //                    else { map[h][l] = 'A';}
+ //
+ //                    ch = 0;
+ //                    while (ch <= random_deep) 
+ //                    {
+ //                        ch++;
+ //                        if (flag == 0) { map[h + ch][l] = 'C'; }
+ //                        else if (flag == random_width) { map[h + ch][l] = 'D'; }
+ //                        else { map[h + ch][l] = 'B';}
+ //
+ //                    }
+ //                    flag++;
+ //                    l++;
+ //                }
+ //            }
+ //        }
+ //        else continue;
+ //    }
+ //    else continue;
+ //}
 
 }
 

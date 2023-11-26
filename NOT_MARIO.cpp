@@ -280,20 +280,17 @@ using std::endl;
 
 
 int main() {
+
     srand(static_cast<unsigned>(time(0)));
-    //int u = 0;
+    
     Game game(1600,900);
 
     while (game.getWindow().isOpen()) {
-        //u++;
+       
         game.update();
         game.render();
-       //if (u > 140) {
-       //    std::cout << u;
-       //    u = 0;
-       //}
+
     }
 
     return 0;
 }
-// df,ldlfd

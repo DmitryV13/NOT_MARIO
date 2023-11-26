@@ -101,3 +101,7 @@
 		}
 		view.move(0, offset);
 	}
+
+	sf::FloatRect MyView::getCurrentViewCords(){
+		return sf::FloatRect(view.getCenter(), sf::Vector2f(screenWidth, screenHeight));
+	}

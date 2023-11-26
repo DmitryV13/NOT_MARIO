@@ -15,7 +15,7 @@
 	}
 	
 	void Game::initWindow(){
-		window.create(sf::VideoMode(screenWidth, screenHeight), "NOT_MARIO", sf::Style::Fullscreen);
+		window.create(sf::VideoMode(screenWidth, screenHeight), "NOT_MARIO", sf::Style::Default ); //sf::Style::Fullscreen
 		window.setFramerateLimit(144);
 	}
 	
@@ -58,6 +58,7 @@
 		updatePlayer();
 		updateView();
 		updateCollision();
+		updateMap();
 		//std::cout << "x- " << player->getPosition().x << ", y- " << player->getPosition().y << std::endl;
 		//updateCollisionMap();
 	}
@@ -79,9 +80,9 @@
 				player->getPosition().x,
 				0);
 		}
-		if ((player->getPosition().x + player->getGlobalBounds().width) > 12800.f) {
+		if ((player->getPosition().x + player->getGlobalBounds().width) > 112800.f) {////////
 			player->setPosition(
-				12800.f - player->getGlobalBounds().width,
+				112800.f - player->getGlobalBounds().width,
 				player->getPosition().y);
 		}
 		if (player->getPosition().x < 0) {
@@ -96,19 +97,25 @@
 	}
 
 	void Game::renderMap(){
-		sandbox.render(window);
+		sandbox.first_render(window, myView.getCurrentViewCords());
 	}
 	
 	void Game::updatePlayer(){
 		player->update();
 	}
+
+	void Game::updateMap()
+	{
+		sandbox.update(window, myView.getCurrentViewCords());
+	}
 	
 	void Game::render(){
+
 		window.clear(sf::Color::White);
-	
 		renderMap();
 		renderPLayer();
-		sandbox.second_render(window);
+		sandbox.second_render(window, myView.getCurrentViewCords());
 		window.setView(myView.view);
 		window.display();
+
 	}

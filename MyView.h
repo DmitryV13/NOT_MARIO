@@ -32,4 +32,5 @@ public:
 	void updateRight(double right);
 	void updateTop(double top);
 	void updateBottom(double bottom);
+	sf::FloatRect getCurrentViewCords();
 };
