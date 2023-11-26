@@ -155,6 +155,7 @@
     <ClCompile Include="TextureFactory.cpp" />
     <ClCompile Include="TileFactory.cpp" />
     <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="Wolf_Boss.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="chubacabra.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="TextureFactory.h" />
     <ClInclude Include="TileFactory.h" />
     <ClInclude Include="TileMap.h" />
+    <ClInclude Include="Wolf_Boss.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NOT_MARIO.rc" />

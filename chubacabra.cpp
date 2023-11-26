@@ -23,6 +23,7 @@ void chubacabra::init_sprite()
 	current_frame = IntRect(0, 0, 70, 90);
 	Enemy_S.setTextureRect(current_frame);
 }
+
 void chubacabra::update_movement()
 {
 	//decision explorer
@@ -30,8 +31,11 @@ void chubacabra::update_movement()
 	{
 		if (update_collision_x())
 		{
+			//переписать дл€ подьема без прыжка
 			if (!update_collision_x_jump())
 			{
+
+				
 				jump(1);
 				on_ground = false;
 				jump_tile = true;
@@ -69,6 +73,7 @@ void chubacabra::update_movement()
 	// }
 	walk(moving);
 }
+
 void chubacabra::update_animation()
 {
 	if (animation_state == Enemy_ANIMATION_STATES::ENEMY_MOVING)
@@ -90,7 +95,7 @@ void chubacabra::update_animation()
 				current_frame.left += 70;
 				if (current_frame.left >= 210.f)
 				{
-					current_frame.left = 90.f;
+					current_frame.left = 70.f;
 				}
 				current_frame.width = -70;
 				current_frame.top = 0;
@@ -107,7 +112,7 @@ void chubacabra::update_animation()
 			if (looks_to_the_right)
 			{
 				current_frame.left += 70;
-				if (current_frame.left >= 630.f)
+				if (current_frame.left >= 140.f)
 				{
 					current_frame.left = 0.f;
 				}
@@ -117,9 +122,9 @@ void chubacabra::update_animation()
 			else
 			{
 				current_frame.left += 70;
-				if (current_frame.left >= 700.f)
+				if (current_frame.left >= 210.f)
 				{
-					current_frame.left = 90.f;
+					current_frame.left = 70.f;
 				}
 				current_frame.width = -70;
 				current_frame.top = 0;
@@ -136,7 +141,7 @@ void chubacabra::update_animation()
 			if (looks_to_the_right)
 			{
 				current_frame.left += 70;
-				if (current_frame.left >= 630.f)
+				if (current_frame.left >= 140.f)
 				{
 					current_frame.left = 0.f;
 				}
@@ -146,9 +151,9 @@ void chubacabra::update_animation()
 			else
 			{
 				current_frame.left += 70;
-				if (current_frame.left >= 700.f)
+				if (current_frame.left >= 210.f)
 				{
-					current_frame.left = 90.f;
+					current_frame.left = 70.f;
 				}
 				current_frame.width = -70;
 				current_frame.top = 0;
@@ -166,7 +171,7 @@ void chubacabra::update_animation()
 			if (looks_to_the_right)
 			{
 				current_frame.left += 70;
-				if (current_frame.left >= 630.f)
+				if (current_frame.left >= 140.f)
 				{
 					current_frame.left = 0.f;
 				}
@@ -176,9 +181,9 @@ void chubacabra::update_animation()
 			else
 			{
 				current_frame.left += 70;
-				if (current_frame.left >= 700.f)
+				if (current_frame.left >= 210.f)
 				{
-					current_frame.left = 90.f;
+					current_frame.left = 70.f;
 				}
 				current_frame.width = -70;
 				current_frame.top = 0;
@@ -195,7 +200,7 @@ void chubacabra::update_animation()
 			if (looks_to_the_right)
 			{
 				current_frame.left += 70;
-				if (current_frame.left >= 630.f)
+				if (current_frame.left >= 140.f)
 				{
 					current_frame.left = 0.f;
 				}
@@ -205,9 +210,9 @@ void chubacabra::update_animation()
 			else
 			{
 				current_frame.left += 70;
-				if (current_frame.left >= 700.f)
+				if (current_frame.left >= 210.f)
 				{
-					current_frame.left = 90.f;
+					current_frame.left = 70.f;
 				}
 				current_frame.width = -70;
 				current_frame.top = 0;
@@ -224,7 +229,7 @@ void chubacabra::update_animation()
 			if (looks_to_the_right)
 			{
 				current_frame.left += 70;
-				if (current_frame.left >= 630.f)
+				if (current_frame.left >= 140.f)
 				{
 					current_frame.left = 0.f;
 				}
@@ -234,14 +239,13 @@ void chubacabra::update_animation()
 			else
 			{
 				current_frame.left += 70;
-				if (current_frame.left >= 700.f)
+				if (current_frame.left >= 210.f)
 				{
-					current_frame.left = 90.f;
+					current_frame.left = 70.f;
 				}
 				current_frame.width = -70;
 				current_frame.top = 0;
 			}
-
 			Enemy_S.setTextureRect(current_frame);
 			animation_timer.restart();
 		}
@@ -257,26 +261,67 @@ void chubacabra::update_animation()
 void chubacabra::shot()
 {
 	animation_state = Enemy_ANIMATION_STATES::ENEMY_SHOT;
+
+}
+
+
+// возможный анализ телепортации, хот€ может этого и не будет 
+void chubacabra::teleportBehindPlayer(sf::Sprite& enemy, const sf::FloatRect& playerBounds, float teleportDistance) {
+	
+	sf::Vector2f playerCenter(playerBounds.left + playerBounds.width / 2.0f, playerBounds.top + playerBounds.height / 2.0f);
+
+	sf::Vector2f enemyVelocity = get_position() - enemy.getOrigin();
+
+	sf::Vector2f directionVector = playerCenter - (get_position() + enemy.getOrigin());
+	
+	// Ќормализуем вектор направлени€
+	float length = std::sqrt(directionVector.x * directionVector.x + directionVector.y * directionVector.y);
+	directionVector /= length;
+
+	// ¬ычисл€ем новую позицию врага за спиной игрока
+	sf::Vector2f newPosition = playerCenter - directionVector * (teleportDistance + enemy.getOrigin().x);
+
+	// ”станавливаем новую позицию дл€ врага
+	enemy.setPosition(newPosition);
 }
 
 void chubacabra::attack()
 {
 	animation_state = Enemy_ANIMATION_STATES::ENEMY_ATTENTION;
-	if (player_contact())
+	if (sting())
 	{
 		shot();
 		displacement.x = 0;
-		if (count_jump == 0) {
-			jump(1.f);
-			count_jump++;
-		}
-
 		displacement_max = 1.f;
+		FloatRect en = get_global_bounds();
+		FloatRect pl = sandbox->get_player_glob_bound();
+		if (pl.left < en.left)
+		{
+			if (looks_to_the_right)
+			{
+				looks_to_the_right = false;
+				looks_to_the_left = true;
+			}
+		}
+		else if (pl.left > en.left)
+		{
+			if (looks_to_the_left)
+			{
+				looks_to_the_right = true;
+				looks_to_the_left = false;
+			}
+		}
+	}
+
+
+	if (player_contact())
+	{
+		//float intersectionRadius = 50.0f;
+		//teleportBehindPlayer(Enemy_S, sandbox->get_player_glob_bound(), intersectionRadius);
 	}
 	else
 	{
-		if (jump_tile || !on_ground)displacement_max = 1.f;
-		else displacement_max = 5.f;
+		
 		if (player_l_r[0] && displacement.x > 0)
 		{
 			displacement.x = 0;
@@ -305,7 +350,7 @@ void chubacabra::attack()
 			looks_to_the_right = true;
 			looks_to_the_left = false;
 		}
-		displacement.x += 10 * moving * acceleration;
+		//displacement.x += 10 * moving * acceleration;
 	}
 	if (!player_contact())
 	{
@@ -345,7 +390,7 @@ bool chubacabra::search_for_enemies()
 
 	for (int i = centerY - 1; i <= centerY + 1; i++)
 	{
-		for (int j = centerX + 1; j <= centerX + 10; j++)
+		for (int j = centerX + 1; j <= centerX + 15; j++)
 		{
 			if (i >= 0 && i < 40 && j >= 0 && j < 200)
 			{
@@ -362,7 +407,7 @@ bool chubacabra::search_for_enemies()
 
 	for (int i = centerY - 1; i <= centerY + 1; i++)
 	{
-		for (int j = centerX - 10; j <= centerX; j++)
+		for (int j = centerX - 15; j <= centerX; j++)
 		{
 			if (i >= 0 && i < 40 && j >= 0 && j < 200)
 			{
@@ -387,4 +432,3 @@ void chubacabra::reset_attention()
 	displacement.x += moving * acceleration;
 	count_jump = 0;
 }
-

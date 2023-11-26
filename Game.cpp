@@ -12,6 +12,7 @@ Game::Game(double screenWidth_, double screenHeight_)
 	initEvilBall();
 	init_Kusaka();
 	init_chubacabra();
+	init_Wolf_boss();
 }
 
 Game::~Game()
@@ -21,6 +22,7 @@ Game::~Game()
 	evil_ball_vector.clear();
 	Kusaka_vector.clear();
 	chubacabras_vector_.clear();
+	boss_vector.clear();
 }
 
 void Game::initWindow()
@@ -57,6 +59,15 @@ void Game::init_chubacabra()
 	}
 }
 
+void Game::init_Wolf_boss()
+{
+	for (int i = 0; i < num_of_enemy_; i++)
+	{
+		Wolf_Boss* enemy = new Wolf_Boss(sandbox);
+		boss_vector.push_back(enemy);
+	}
+}
+
 void Game::updateEvilBall()
 {
 	for (int i = 0; i < num_of_enemy_; i++)
@@ -79,6 +90,14 @@ void Game::update_chubacabra()
 	for (int i = 0; i < num_of_enemy_; i++)
 	{
 		chubacabras_vector_[i]->update();
+	}
+}
+
+void Game::update_Wolf_boss()
+{
+	for (int i = 0; i < num_of_enemy_; i++)
+	{
+		boss_vector[i]->update();
 	}
 }
 
@@ -143,6 +162,7 @@ void Game::update()
 	updateView();
 	updateCollision();
 	update_chubacabra();
+	update_Wolf_boss();
 
 	//updateCollisionMap();
 }
@@ -207,6 +227,7 @@ void Game::render()
 	render_Kusaka();
 	render_chubacabra();
 	render_shot();
+	render_Wolf_boss();
 
 	window.setView(myView.view);
 	window.display();
@@ -235,6 +256,14 @@ void Game::render_chubacabra()
 	for (int i = 0; i < num_of_enemy_; i++)
 	{
 		chubacabras_vector_[i]->render(window);
+	}
+}
+
+void Game::render_Wolf_boss()
+{
+	for (int i = 0; i < num_of_enemy_; i++)
+	{
+		boss_vector[i]->render(window);
 	}
 }
 

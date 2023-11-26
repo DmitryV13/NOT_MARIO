@@ -63,6 +63,9 @@
     <ClCompile Include="chubacabra.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
+    <ClCompile Include="Wolf_Boss.cpp">
+      <Filter>Source Files\ServiceClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -108,6 +111,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="chubacabra.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Wolf_Boss.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

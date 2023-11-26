@@ -5,6 +5,7 @@
 #include "Eye_evil.h"
 #include "kusaka.h"
 #include "chubacabra.h"
+#include "Wolf_Boss.h"
 
 class Game
 {
@@ -20,6 +21,7 @@ private:
 	vector<Eye_evil*> evil_ball_vector;
 	vector<kusaka*> Kusaka_vector;
 	vector<chubacabra*> chubacabras_vector_;
+	vector<Wolf_Boss*> boss_vector;
 	int num_of_enemy_{ 10 };
 
 
@@ -32,6 +34,7 @@ private:
 	void initEvilBall();
 	void init_Kusaka();
 	void init_chubacabra();
+	void init_Wolf_boss();
 public:
 	Game(double screenWidth_, double screenHeight_);
 	~Game();
@@ -45,12 +48,14 @@ public:
 	void updateEvilBall();
 	void update_Kusaka();
 	void update_chubacabra();
+	void update_Wolf_boss();
 	void renderPLayer();
 	void renderMap();
 	void render();
 	void renderEvilBall();
 	void render_Kusaka();
 	void render_chubacabra();
+	void render_Wolf_boss();
 	void render_shot();
 };
 

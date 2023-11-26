@@ -167,7 +167,7 @@ void Enemy::walk(const float dir_x)
 		displacement.x = displacement_max * ((displacement.x > 0.f) ? 1.f : -1.f);
 	}
 	if (animation_counter_think > 2 && animation_state != Enemy_ANIMATION_STATES::ENEMY_ATTENTION)
-	{
+	{ 
 		displacement.x = 0;
 		animation_state = Enemy_ANIMATION_STATES::ENEMY_IDLE;
 	}
@@ -214,8 +214,8 @@ bool Enemy::player_contact()
 	int centerX = get_position().x / 60;
 	int centerY = get_position().y / 60;
 	int l = 2;
-
-	for (int i = centerY - 1; i <= centerY + 1; i++)
+	if(looks_to_the_right)
+	for (int i = centerY - 5; i <= centerY + 5; i++)
 	{
 		for (int j = centerX; j <= centerX + l; j++)
 		{
@@ -229,10 +229,10 @@ bool Enemy::player_contact()
 		}
 	}
 
-
-	for (int i = centerY - 1; i <= centerY + 1; i++)
+	else
+	for (int i = centerY - 5; i <= centerY + 5; i++)
 	{
-		for (int j = centerX ; j <= centerX+l; j++)
+		for (int j = centerX - l-1 ; j <= centerX; j++)
 		{
 			if (i >= 0 && i < 40 && j >= 0 && j < 200)
 			{
@@ -384,4 +384,11 @@ bool Enemy::update_collision_y()
 
 	set_position(newPosition.x, newPosition.y);
 	return wasCollision;
+}
+
+bool Enemy::sting()
+{
+	FloatRect en = get_global_bounds();
+	FloatRect pl = sandbox->get_player_glob_bound();
+	return en.intersects(pl);
 }

@@ -81,6 +81,7 @@ public:
 	void walk(const float dir_x);
 	void jump(const float dir_y);
 	bool player_contact();
+	auto sting() -> bool;
 
 
 	//virtual
