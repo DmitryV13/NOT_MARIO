@@ -97,6 +97,8 @@
 	}
 
 	void Game::renderMap(){
+
+		sandbox.background_render(window, myView.getCurrentViewCords());
 		sandbox.first_render(window, myView.getCurrentViewCords());
 	}
 	

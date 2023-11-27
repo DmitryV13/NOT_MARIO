@@ -5,17 +5,14 @@
 class TileFactory {
 private:
 
-    
     float template_W;
     float template_H;
     void generation_map(std::vector<std::vector<char>>& map);
     
-
 public:
     
     TileFactory(float temp_W, float temp_H);
     std::vector<std::vector<char>> generation_template;
-    std::string template_test_1[35];
     std::string a[35] = {
 
     "                                                                                                    ",
@@ -53,7 +50,9 @@ public:
     "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBD  sLlBBBBBBBBSSSSSSwwwwwwwwwwwwwwwSSSSSSBBBBBBBBBBBBBBBBBBBBDbbCBBBBBB",
     "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBDWWLlBBBBBBBBBSSSSSSSSSSSSSSSSSSSSSSSSSSSBBBBBBBBBBBBBBBBBBBBrAAlBBBBBB",
     "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBrAAlBBBBBBBBBBSSSSSSSSSSSSSSSSSSSSSSSSSSSBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-    };
-    char give_letter(int i, int j);
+    }; 
+    std::vector<std::vector<std::vector<char>>> temlate_1;
+    char give_letter(int i, int j, int k);
+    char give_generation_letter(int i, int j);
 };
 

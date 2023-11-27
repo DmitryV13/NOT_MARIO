@@ -3,7 +3,7 @@
 
 class TileAnim : public Tile
 {
-private:
+protected:
 
 	short int animation_factor;
 	short int animation_quantity;

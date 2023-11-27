@@ -24,6 +24,8 @@ public:
 	sf::Sprite render_tile(int i, int j);	
 	bool give_player_info();
 	short int get_interaction();
+	char give_tile_association();
 	virtual void tile_animation();
+	virtual void open_box();
 	
 };

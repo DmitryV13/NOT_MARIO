@@ -21,7 +21,7 @@
         this->texture_size_H = texture_size_h;
         this->interaction = inter;
         this->player = false;
-        this->association = ' ';
+        this->association = ass;
 
         init_texture(Name);
 
@@ -50,9 +50,15 @@
 
     void Tile::tile_animation() {}
 
+    void Tile::open_box() {}
+
     short int Tile::get_interaction()
     {
         return interaction;
+    }
+
+    char Tile::give_tile_association() {
+        return association;
     }
 
 
