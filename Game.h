@@ -22,7 +22,7 @@ private:
 	vector<kusaka*> Kusaka_vector;
 	vector<chubacabra*> chubacabras_vector_;
 	vector<Wolf_Boss*> boss_vector;
-	int num_of_enemy_{ 10 };
+	int num_of_enemy_{ 1 };
 
 
 	double screenWidth;

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "chubacabra.h"
 
-chubacabra::chubacabra(TileMap& map) : Enemy(map)
+chubacabra::chubacabra(TileMap& map, Player& pl) :Enemy(map, pl)
 {
 	{
 		chubacabra::init_texture();

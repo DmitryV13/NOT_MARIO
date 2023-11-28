@@ -2,6 +2,7 @@
 #include "Map.h"
 #include "TileMap.h"
 #include "laser_weapon.h"
+#include "Player.h"
 
 using sf::Sprite;
 using sf::RenderWindow;
@@ -29,6 +30,7 @@ class Enemy
 {
 protected:
 	TileMap* sandbox;
+	Player* player_;
 	Texture Enemy_T;
 	Sprite Enemy_S;
 	IntRect current_frame;
@@ -54,7 +56,7 @@ protected:
 	float jump_velocity;
 	bool on_ground;
 	//enemy
-	void init_physics();
+	virtual void init_physics();
 	void init_animation();
 	void init_variables();
 	//virtual
@@ -66,7 +68,7 @@ public:
 	bool looks_to_the_left;
 	bool looks_to_the_right;
 	sf::Vector2f generate_random_start_position(int mapWidth, int mapHeight);
-	Enemy(TileMap& map);
+	Enemy(TileMap& map, Player&);
 	const bool& get_animation_switch();
 	sf::Vector2f get_position() const;
 	const FloatRect get_global_bounds() const;
@@ -78,11 +80,13 @@ public:
 	bool update_collision_x_jump();
 	bool update_collision_y();
 	void reset_animation_timer();
-	void walk(const float dir_x);
-	void jump(const float dir_y);
+	virtual void walk(const float dir_x);
+	virtual void jump(const float dir_y);
 	bool player_contact();
 	auto sting() -> bool;
 
+
+	virtual void jump_towards_player();
 
 	//virtual
 	virtual void reset_attention() = 0;
@@ -91,7 +95,7 @@ public:
 	virtual void clear_shot() = 0;
 	virtual void attack() = 0;
 	virtual bool search_for_enemies() = 0;
-	void update_physics();
+	virtual void update_physics();
 	virtual void update_movement() = 0;
 	virtual void update_animation() = 0;
 };

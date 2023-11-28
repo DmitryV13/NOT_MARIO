@@ -9,9 +9,9 @@ Game::Game(double screenWidth_, double screenHeight_)
 {
 	initWindow();
 	initPlayer();
-	initEvilBall();
+	//initEvilBall();
 	init_Kusaka();
-	init_chubacabra();
+	//init_chubacabra();
 	init_Wolf_boss();
 }
 
@@ -30,22 +30,26 @@ void Game::initWindow()
 	window.create(sf::VideoMode(screenWidth, screenHeight), "NOT_MARIO", sf::Style::Close | sf::Style::Fullscreen);
 	window.setFramerateLimit(144);
 }
+void Game::initPlayer()
+{
+	player = new Player(sandbox);
+}
 
 void Game::initEvilBall()
 {
 	for (int i = 0; i < num_of_enemy_; i++)
 	{
-		Eye_evil* enemy = new Eye_evil(sandbox);
+		Eye_evil* enemy = new Eye_evil(sandbox,*player);
 		evil_ball_vector.push_back(enemy);
 	}
-	evil_Ball = new Eye_evil(sandbox);
+	evil_Ball = new Eye_evil(sandbox,*player);
 }
 
 void Game::init_Kusaka()
 {
 	for (int i = 0; i < num_of_enemy_; i++)
 	{
-		kusaka* enemy = new kusaka(sandbox);
+		kusaka* enemy = new kusaka(sandbox,*player);
 		Kusaka_vector.push_back(enemy);
 	}
 }
@@ -54,7 +58,7 @@ void Game::init_chubacabra()
 {
 	for (int i = 0; i < num_of_enemy_; i++)
 	{
-		chubacabra* enemy = new chubacabra(sandbox);
+		chubacabra* enemy = new chubacabra(sandbox,*player);
 		chubacabras_vector_.push_back(enemy);
 	}
 }
@@ -63,7 +67,7 @@ void Game::init_Wolf_boss()
 {
 	for (int i = 0; i < num_of_enemy_; i++)
 	{
-		Wolf_Boss* enemy = new Wolf_Boss(sandbox);
+		Wolf_Boss* enemy = new Wolf_Boss(sandbox,*player);
 		boss_vector.push_back(enemy);
 	}
 }
@@ -101,10 +105,7 @@ void Game::update_Wolf_boss()
 	}
 }
 
-void Game::initPlayer()
-{
-	player = new Player(sandbox);
-}
+
 
 void Game::initView()
 {
@@ -157,11 +158,11 @@ void Game::update()
 	
 	updatePlayer();
 	sandbox.set_player_glob_bound(player->getGlobalBounds());
-	updateEvilBall();
+	//updateEvilBall();
 	update_Kusaka();
 	updateView();
 	updateCollision();
-	update_chubacabra();
+	//update_chubacabra();
 	update_Wolf_boss();
 
 	//updateCollisionMap();
@@ -223,10 +224,10 @@ void Game::render()
 
 	renderMap();
 	renderPLayer();
-	renderEvilBall();
+	//renderEvilBall();
 	render_Kusaka();
-	render_chubacabra();
-	render_shot();
+	//render_chubacabra();
+	//render_shot();
 	render_Wolf_boss();
 
 	window.setView(myView.view);

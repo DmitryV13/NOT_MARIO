@@ -2,7 +2,7 @@
 #include "Eye_evil.h"
 
 
-Eye_evil::Eye_evil(TileMap& map) :Enemy(map)
+Eye_evil::Eye_evil(TileMap& map,Player& pl) :Enemy(map,pl)
 {
 	{
 		Eye_evil::init_texture();

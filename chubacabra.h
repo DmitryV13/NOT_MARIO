@@ -16,7 +16,7 @@ private:
 public:
 	void teleportBehindPlayer(sf::Sprite& , const sf::FloatRect&, float );
 
-	explicit chubacabra(TileMap& map);
+	explicit chubacabra(TileMap& map, Player&);
 	~chubacabra() override = default;
 	void update_movement() override;
 	void update_animation() override;

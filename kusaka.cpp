@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "kusaka.h"
 
-kusaka::kusaka(TileMap& map) : Enemy(map)
+kusaka::kusaka(TileMap& map, Player& pl) :Enemy(map, pl)
 {
 	{
 		kusaka::init_texture();
@@ -274,8 +274,8 @@ void kusaka::attack()
 	if(player_contact())
 	{
 		if (count_jump == 0) {
-			jump(1.f);
-			
+			//jump(1.f);
+			jump_towards_player();
 			count_jump++;
 		}
 	}

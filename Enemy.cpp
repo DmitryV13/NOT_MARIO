@@ -56,16 +56,17 @@ void Enemy::init_variables()
 	animation_state = Enemy_ANIMATION_STATES::ENEMY_IDLE;
 }
 
-Enemy::Enemy(TileMap& map)
+Enemy::Enemy(TileMap& map, Player& pl)
 {
+	player_ = &pl;
 	sandbox = &map;
 	init_variables();
 	init_animation();
 	init_physics();
-	start_position = generate_random_start_position(sandbox->getMapWidth(), sandbox->getMapHeight());
-	set_position(start_position.x, start_position.y);
+	//start_position = generate_random_start_position(sandbox->getMapWidth(), sandbox->getMapHeight());
+	//set_position(start_position.x, start_position.y);
 
-	//	set_position(60,60);
+		set_position(1300,600);
 }
 
 sf::Vector2f Enemy::get_position() const
@@ -232,7 +233,7 @@ bool Enemy::player_contact()
 	else
 	for (int i = centerY - 5; i <= centerY + 5; i++)
 	{
-		for (int j = centerX - l-1 ; j <= centerX; j++)
+		for (int j = centerX - l+1 ; j <= centerX; j++)
 		{
 			if (i >= 0 && i < 40 && j >= 0 && j < 200)
 			{
@@ -263,7 +264,7 @@ void Enemy::update_physics()
 	{
 		displacement.y -= jump_velocity;
 		//jumping onto a block
-		displacement.x += moving * acceleration;
+		displacement.x +=  moving * acceleration;
 		//jump deceleratin
 		jump_velocity *= 0.96;
 	}
@@ -273,7 +274,7 @@ void Enemy::update_physics()
 	// limits
 	if (jump_tile&& search_for_enemies())
 	{
-		displacement.x = moving * displacement_max;
+		displacement.x = 2* moving * displacement_max;
 	}
 	if (update_collision_x())
 	{
@@ -288,7 +289,7 @@ void Enemy::update_physics()
 		step_right++;
 	if (displacement.x < 0 && displacement_max == 1.f)
 		step_left++;
-	if (player_contact())displacement.x *= 1.3f;
+	//if (player_contact())displacement.x *= 1.3f;
 	Enemy_S.move(displacement);
 }
 
@@ -392,3 +393,15 @@ bool Enemy::sting()
 	FloatRect pl = sandbox->get_player_glob_bound();
 	return en.intersects(pl);
 }
+
+void Enemy::jump_towards_player()
+{
+
+	float distance = std::abs(player_->getPosition().x - get_position().x);
+	float jump_Height = std::min(1.0f, distance / 300.0f) * 2.0f; 
+	float max_jump_height = 2.0f; 
+	jump_Height = std::min(jump_Height, max_jump_height);
+	
+	jump(jump_Height);
+}
+
