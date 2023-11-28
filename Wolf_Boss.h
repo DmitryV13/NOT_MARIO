@@ -1,6 +1,6 @@
 #pragma once
 #include "Enemy.h"
-enum class Boss_STATE { SLEEP, IDLE, MOVING, JUMPING, ATTACKING, RETREATING };
+enum class Boss_STATE { SLEEP, IDLE, MOVING, JUMPING, ATTACKING, RETREATING, HOWL};
 
 enum class PL_Side
 {
@@ -19,6 +19,8 @@ class Wolf_Boss :
 	int max_retreat_duration;
 	bool awakening;
 	bool pl_contact;
+	bool pl_cont_jump;
+	int rand_;
 	
 
 
@@ -39,6 +41,7 @@ public:
 	void walk(const float dir_x) override;
 	void update_physics() override;
 	void jump(const float dir_y) override;
+	void shot_HOWL();
 
 	PL_Side getPlayerSide(float playerX, float enemyX);
 	void look(float direction);

@@ -4,20 +4,19 @@
 
 Wolf_Boss::Wolf_Boss(TileMap& map, Player& pl) : Enemy(map, pl)
 {
-	
-		Wolf_Boss::init_texture();
-		Wolf_Boss::init_sprite();
-		Wolf_Boss::init_physics();
-	
+	Wolf_Boss::init_texture();
+	Wolf_Boss::init_sprite();
+	Wolf_Boss::init_physics();
 }
 
 void Wolf_Boss::init_physics()
 {
+	rand_ = 0;
 	awakening = false;
 	retreat_counter = 0;
 	max_retreat_duration = 100;
 	boss_state = Boss_STATE::SLEEP;
-	displacement_max = 2.f;
+	displacement_max = 3.f;
 	attention_counter = 3;
 	displacement_min = 0.3f;
 	acceleration = 0.4f;
@@ -38,6 +37,7 @@ void Wolf_Boss::init_physics()
 	animation_counter_think = 0;
 	max_step = 500;
 	pl_contact = false;
+	pl_cont_jump = false;
 }
 
 void Wolf_Boss::init_texture()
@@ -252,10 +252,7 @@ PL_Side Wolf_Boss::getPlayerSide(float playerX, float enemyX)
 
 void Wolf_Boss::update_movement()
 {
-	
-	
-	
-	if(!awakening)
+	if (!awakening)
 	{
 		if (search_for_enemies())
 		{
@@ -375,52 +372,55 @@ void Wolf_Boss::update_movement()
 					break;
 				}*/
 				walk(moving);
-				if (std::abs(player_->getPosition().x - get_position().x)<4*60)
+				if (std::abs(player_->getPosition().x - get_position().x) < 8 * 60)
 				{
 					//jump_towardsS_player();
-					if (count_anger == 0)
+					count_anger++;
+					if (count_anger == 10)
 					{
-						jump(1.2);
+						if ((player_->getPosition().x - get_position().x) > 0)jump(1.4);
+						else jump(1.5);
 						std::cout << "jump\n";
 						//jump(1);
 						count_anger++;
-						pl_contact = true;
+						pl_cont_jump = true;
 					}
-					if(pl_contact && on_ground)
+					if (pl_cont_jump && on_ground && count_anger == 100)
 					{
-						moving *= -1.f;
-						walk(moving);
-						pl_contact = false;
+						shot();
+						Enemy_S.setPosition(get_position().x - 3 * (player_->getPosition().x - get_position().x),
+						                    get_position().y);
+						pl_cont_jump = false;
 						count_anger++;
 					}
-					/*if (count_anger == 1 && on_ground)
-					{
-						jump_towardsS_player();
-						moving *= -1.f;
-						walk(moving);
-						count_anger++;
-					}*/
-					if (!pl_contact && count_anger == 2)
+
+
+					if (!pl_cont_jump && count_anger == 150)
 					{
 						count_anger = 0;
 						boss_state = Boss_STATE::RETREATING;
 					}
-					
-
-					
 				}
 				break;
 			}
 
 		case Boss_STATE::ATTACKING:
 			{
-				if (rand() % 2 == 0)
+			
+				if (rand_ == 0)
 				{
+					rand_++;
 					boss_state = Boss_STATE::JUMPING;
+				}
+				else if(rand_ == 1)
+				{
+					rand_++;
+					boss_state = Boss_STATE::MOVING;
 				}
 				else
 				{
-					boss_state = Boss_STATE::MOVING;
+					rand_ = 0;
+					boss_state = Boss_STATE::HOWL;
 				}
 				break;
 			}
@@ -439,11 +439,36 @@ void Wolf_Boss::update_movement()
 				}
 				break;
 			}
-			
-
+		case Boss_STATE::HOWL:
+			{
+			PL_Side playerSide = getPlayerSide(player_->getPosition().x, get_position().x);
+			if (playerSide == PL_Side::LEFT)
+			{
+				looks_to_the_left = true;
+				looks_to_the_right = false;
+				if (moving > 0)moving *= -1.f;
+			}
+			else
+			{
+				looks_to_the_left = false;
+				looks_to_the_right = true;
+				if (moving < 0)moving *= -1.f;
+			}
+				animation_state = Enemy_ANIMATION_STATES::ENEMY_SHOT;
+				retreat_counter++;
+				displacement.x = 0;
+				std::cout << "HOWL\n";
+				if(retreat_counter>100)
+				{
+					shot_HOWL();
+					retreat_counter = 0;
+					boss_state = Boss_STATE::RETREATING;
+				}
+				break;
+			}
 		}
 	}
-	if(!search_for_enemies() && awakening)
+	if (!search_for_enemies() && awakening)
 	{
 		if (on_ground)
 		{
@@ -464,7 +489,7 @@ void Wolf_Boss::update_movement()
 			step_left = 0;
 		}
 
-		if (moving>0)
+		if (moving > 0)
 		{
 			looks_to_the_left = true;
 			looks_to_the_right = false;
@@ -474,7 +499,7 @@ void Wolf_Boss::update_movement()
 			looks_to_the_left = false;
 			looks_to_the_right = true;
 		}
-		
+
 		walk(moving);
 	}
 
@@ -503,15 +528,15 @@ void Wolf_Boss::update_movement()
 
 void Wolf_Boss::look(float direction)
 {
-	if(direction>0)
+	if (direction > 0)
 	{
 		looks_to_the_right = true;
 		looks_to_the_left = false;
-	}else
+	}
+	else
 	{
 		looks_to_the_right = false;
 		looks_to_the_left = true;
-		
 	}
 }
 
@@ -526,41 +551,38 @@ void Wolf_Boss::attack()
 	animation_state = Enemy_ANIMATION_STATES::ENEMY_ATTENTION;
 	//jump_towards_player();
 
-	if (player_contact())
-	{
-		displacement_max = 10.f;
-		if (sting())shot(); //attack description
-	}else displacement_max = 5.f;
-	
-		//if (player_l_r[0] && displacement.x > 0)
-		//{
-		//	displacement.x = 0;
-		//	moving = -1.f;
-		//	looks_to_the_right = false;
-		//	looks_to_the_left = true;
-		//}
-		//else if (player_l_r[0] && displacement.x < 0)
-		//{
-		//	displacement.x = 0;
-		//	//moving= 1.f;
-		//	looks_to_the_right = false;
-		//	looks_to_the_left = true;
-		//}
-		//else if (player_l_r[1] && displacement.x > 0)
-		//{
-		//	displacement.x = 0;
-		//	looks_to_the_right = true;
-		//	looks_to_the_left = false;
-		//	//moving = 1.f;
-		//}
-		//else
-		//{
-		//	displacement.x = 0;
-		//	moving = 1.f;
-		//	looks_to_the_right = true;
-		//	looks_to_the_left = false;
-		//}
-	
+	displacement_max = 10.f;
+	displacement.x += moving * displacement_max;
+
+	//if (player_l_r[0] && displacement.x > 0)
+	//{
+	//	displacement.x = 0;
+	//	moving = -1.f;
+	//	looks_to_the_right = false;
+	//	looks_to_the_left = true;
+	//}
+	//else if (player_l_r[0] && displacement.x < 0)
+	//{
+	//	displacement.x = 0;
+	//	//moving= 1.f;
+	//	looks_to_the_right = false;
+	//	looks_to_the_left = true;
+	//}
+	//else if (player_l_r[1] && displacement.x > 0)
+	//{
+	//	displacement.x = 0;
+	//	looks_to_the_right = true;
+	//	looks_to_the_left = false;
+	//	//moving = 1.f;
+	//}
+	//else
+	//{
+	//	displacement.x = 0;
+	//	moving = 1.f;
+	//	looks_to_the_right = true;
+	//	looks_to_the_left = false;
+	//}
+
 
 	//displacement.x += 10 * moving * acceleration;
 
@@ -646,14 +668,12 @@ bool Wolf_Boss::search_for_enemies()
 
 void Wolf_Boss::reset_attention()
 {
-	displacement_max = 2.f;
+	displacement_max = 3.f;
 	displacement.x += moving * acceleration;
-	
 }
 
 void Wolf_Boss::walk(const float dir_x)
 {
-	
 	/*if (dir_x > 0)
 	{
 		looks_to_the_right = true;
@@ -713,10 +733,10 @@ void Wolf_Boss::update_physics()
 
 	if (jump_tile)
 	{
-		
 		displacement.y -= jump_velocity;
 		//jumping onto a block
-		displacement.x += moving *4 * acceleration;
+
+		displacement.x = 2 * moving * displacement_max;
 		//jump deceleratin
 		jump_velocity *= 0.96;
 	}
@@ -724,10 +744,7 @@ void Wolf_Boss::update_physics()
 	displacement *= deceleration;
 
 	// limits
-	if (jump_tile && search_for_enemies() )
-	{
-		displacement.x = 2 * moving * displacement_max;
-	}
+
 	if (update_collision_x())
 	{
 		displacement.x = 0.f;
@@ -737,9 +754,9 @@ void Wolf_Boss::update_physics()
 		displacement.y = 0.f;
 	}
 	//step counter
-	if (displacement.x > 0 && pl_contact )
+	if (displacement.x > 0 && pl_contact)
 		step_right++;
-	if (displacement.x < 0 && pl_contact )
+	if (displacement.x < 0 && pl_contact)
 		step_left++;
 	//if (player_contact())displacement.x *= 1.3f;
 	Enemy_S.move(displacement);
@@ -754,4 +771,10 @@ void Wolf_Boss::jump(const float dir_y)
 		jump_tile = true;
 		jump_velocity = dir_y * 5.5f;
 	}
+}
+
+void Wolf_Boss::shot_HOWL()
+{
+
+
 }
