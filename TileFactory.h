@@ -4,37 +4,37 @@
 class coord;
 class TileFactory {
 public:
-    //Tile tile_map_inFactory[40][200];
-    TileFactory(short n, short m);
+    Tile tile_map_inFactory[40][200];
+    TileFactory(int n, int m);
 
     const int n;
     const int m;
 private:
     sf::IntRect initRect_tile(char tile);
-    void generation_map(char map[40][200]);
+    void generation_map(vector<vector<char>>& map);
 
-    void generate_solid_surface(int x[200], int y[200], char map[40][200]);
+    void generate_solid_surface(vector<int>& x, vector<int>& y, vector<vector<char>>& map);
     coord* generate_landscape();
     coord* generationF1();
     coord* generationF2();
     coord* generationF3();
     coord* generationF4();
     
-    std::vector<std::pair<int, int>>  lakes_generation(int x[200], int y[200], char map[40][200]);
-    void fill_lakes(int x[200], int y[200], vector<pair<int, int>> coords_for_water, char map[40][200]);
-    void fill_lake(int& water_level, int pos_x, int pos_y, char map[40][200]);
+    std::vector<std::pair<int, int>>  lakes_generation(vector<int>& x, vector<int>& y, vector<vector<char>>& map);
+    void fill_lakes(vector<int>& x, vector<int>& y, vector<pair<int, int>> coords_for_water, vector<vector<char>>& map);
+    void fill_lake(int& water_level, int pos_x, int pos_y, vector<vector<char>>& map);
 
-    void tunnels_generation(int y[200], char map[40][200]);
-    void one_tunnel_generation(int pos_x, int pos_y, int height, char map[40][200]);
-    void left_zigzag(int pos_x, int pos_y, char map[40][200]);
-    void right_zigzag(int pos_x, int pos_y, char map[40][200]);
-    void upward(int pos_x, int pos_y, char map[40][200]);
+    void tunnels_generation(vector<int>& y, vector<vector<char>>& map);
+    void one_tunnel_generation(int pos_x, int pos_y, int height, vector<vector<char>>& map);
+    void left_zigzag(int pos_x, int pos_y, vector<vector<char>>& map);
+    void right_zigzag(int pos_x, int pos_y, vector<vector<char>>& map);
+    void upward(int pos_x, int pos_y, vector<vector<char>>& map);
 
-    void generate_platforms(int x[200], int y[200], char map[40][200]);
-    void generate_platform(int pos_x, int pos_y, int width, int height, char map[40][200]);
-    void platform_filter_y(int pos_x, int pos_y, int y[200], int width, int height, char map[40][200]);
+    void generate_platforms(vector<int>& x, vector<int>& y, vector<vector<char>>& map);
+    void generate_platform(int pos_x, int pos_y, int width, int height, vector<vector<char>>& map);
+    void platform_filter_y(int pos_x, int pos_y, vector<int>& y, int width, int height, vector<vector<char>>& map);
 
-    void texture_arrangement(char map[40][200]);
+    void texture_arrangement(vector<vector<char>>& map);
 };
 
 //#pragma once
