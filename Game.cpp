@@ -11,7 +11,7 @@ Game::Game(double screenWidth_, double screenHeight_)
 	initPlayer();
 	//initEvilBall();
 	init_Kusaka();
-	//init_chubacabra();
+	init_chubacabra();
 	init_Wolf_boss();
 }
 
@@ -162,7 +162,7 @@ void Game::update()
 	update_Kusaka();
 	updateView();
 	updateCollision();
-	//update_chubacabra();
+	update_chubacabra();
 	update_Wolf_boss();
 
 	//updateCollisionMap();
@@ -226,7 +226,7 @@ void Game::render()
 	renderPLayer();
 	//renderEvilBall();
 	render_Kusaka();
-	//render_chubacabra();
+	render_chubacabra();
 	//render_shot();
 	render_Wolf_boss();
 

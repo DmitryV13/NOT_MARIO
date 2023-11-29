@@ -18,23 +18,23 @@ sf::IntRect TileFactory::initRect_tile(char tile_C)
 TileFactory::TileFactory()
 {
 	char template_1[n][m];
-	for (int i = 0; i < n/2; ++i) {
-		for (int j = 0; j < m; ++j) {
-			template_1[i][j] = ' ';
-		}
-	}
+	//for (int i = 0; i < n/2; ++i) {
+	//	for (int j = 0; j < m; ++j) {
+	//		template_1[i][j] = ' ';
+	//	}
+	//}
 
-	// Заполняем оставшиеся 20 строк символами 'B'
-	for (int i = n/2; i < n; ++i) {
-		for (int j = 0; j < m; ++j) {
-			template_1[i][j] = 'B';
-		}
-	}
+	//// Заполняем оставшиеся 20 строк символами 'B'
+	//for (int i = n/2; i < n; ++i) {
+	//	for (int j = 0; j < m; ++j) {
+	//		template_1[i][j] = 'B';
+	//	}
+	//}
 
 
 	
 
-	/*for (int i = 0; i < n; i++)
+	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < m; j++)
 		{
@@ -49,7 +49,7 @@ TileFactory::TileFactory()
 			std::cout << template_1[i][j];
 		}
 		std::cout << std::endl;
-	}*/
+	}
 	filter_map(template_1);
 	filter_map(template_1);
 	for (int i = 0; i < n; i++)

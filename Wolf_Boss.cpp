@@ -16,7 +16,7 @@ void Wolf_Boss::init_physics()
 	retreat_counter = 0;
 	max_retreat_duration = 100;
 	boss_state = Boss_STATE::SLEEP;
-	displacement_max = 3.f;
+	displacement_max = 2.5f;
 	attention_counter = 3;
 	displacement_min = 0.3f;
 	acceleration = 0.4f;
@@ -35,7 +35,7 @@ void Wolf_Boss::init_physics()
 	looks_to_the_left = false;
 	looks_to_the_right = true;
 	animation_counter_think = 0;
-	max_step = 500;
+	max_step = 1000;
 	pl_contact = false;
 	pl_cont_jump = false;
 }
@@ -300,6 +300,8 @@ void Wolf_Boss::update_movement()
 
 		case Boss_STATE::MOVING:
 			{
+			std::cout << "Moving\n";
+
 				if (on_ground)
 				{
 					if (update_collision_x())
@@ -310,21 +312,19 @@ void Wolf_Boss::update_movement()
 				}
 				if (step_right == max_step)
 				{
-					pl_contact = false;
 					looks_to_the_left = true;
 					looks_to_the_right = false;
 					moving *= -1.f;
-					step_right = 0;
 					boss_state = Boss_STATE::RETREATING;
+					reset_step();
 				}
 				if (step_left == max_step)
 				{
-					pl_contact = false;
 					looks_to_the_left = false;
 					looks_to_the_right = true;
 					moving *= -1.f;
-					step_left = 0;
 					boss_state = Boss_STATE::RETREATING;
+					reset_step();
 				}
 				if (player_contact())
 				{
@@ -357,14 +357,14 @@ void Wolf_Boss::update_movement()
 					looks_to_the_left = true;
 					looks_to_the_right = false;
 					moving *= -1.f;
-					step_right = 0;
+					reset_step();
 				}
 				if (step_left == max_step)
 				{
 					looks_to_the_left = false;
 					looks_to_the_right = true;
 					moving *= -1.f;
-					step_left = 0;
+					reset_step();
 				}
 				/*if (distanceToPlayer > 10 * 60)
 				{
@@ -372,13 +372,26 @@ void Wolf_Boss::update_movement()
 					break;
 				}*/
 				walk(moving);
-				if (std::abs(player_->getPosition().x - get_position().x) < 8 * 60)
+
+				
+				if (!pl_cont_jump && count_anger >99)
 				{
+					count_anger = 0;
+					reset_step();
+					boss_state = Boss_STATE::RETREATING;
+				}
+				
+				if ((std::abs(player_->getPosition().x - get_position().x) < 7 * 60) && (std::abs(player_->getPosition().x - get_position().x) > 3 * 60)
+					&& ((getPlayerSide(player_->getPosition().x, get_position().x) == PL_Side::LEFT && looks_to_the_left) ||
+						(getPlayerSide(player_->getPosition().x, get_position().x) == PL_Side::RIGHT && looks_to_the_right)) || pl_cont_jump)
+				{
+					if (!pl_cont_jump)distance = (player_->getPosition().x - get_position().x);
+
 					//jump_towardsS_player();
 					count_anger++;
 					if (count_anger == 10)
 					{
-						if ((player_->getPosition().x - get_position().x) > 0)jump(1.4);
+						if ((distance) > 0)jump(1.4);
 						else jump(1.5);
 						std::cout << "jump\n";
 						//jump(1);
@@ -388,19 +401,15 @@ void Wolf_Boss::update_movement()
 					if (pl_cont_jump && on_ground && count_anger == 100)
 					{
 						shot();
-						Enemy_S.setPosition(get_position().x - 3 * (player_->getPosition().x - get_position().x),
-						                    get_position().y);
+
+						Enemy_S.setPosition(get_position().x - (distance),
+							get_position().y);
 						pl_cont_jump = false;
 						count_anger++;
 					}
 
-
-					if (!pl_cont_jump && count_anger == 150)
-					{
-						count_anger = 0;
-						boss_state = Boss_STATE::RETREATING;
-					}
 				}
+				else pl_contact = true;
 				break;
 			}
 
@@ -417,11 +426,17 @@ void Wolf_Boss::update_movement()
 					rand_++;
 					boss_state = Boss_STATE::MOVING;
 				}
-				else
+				else if(rand_ == 2)
+				{
+					rand_ ++;
+					boss_state = Boss_STATE::HOWL;
+				}else
 				{
 					rand_ = 0;
-					boss_state = Boss_STATE::HOWL;
+					boss_state = Boss_STATE::TORMENT;
 				}
+
+				//добавить еше укус 
 				break;
 			}
 
@@ -466,10 +481,66 @@ void Wolf_Boss::update_movement()
 				}
 				break;
 			}
+		case Boss_STATE::TORMENT:
+			std::cout << "TORMENT";
+			{
+			PL_Side playerSide = getPlayerSide(player_->getPosition().x, get_position().x);
+			if (!sting() && retreat_counter == 0) {
+				if (playerSide == PL_Side::LEFT)
+				{
+					looks_to_the_left = true;
+					looks_to_the_right = false;
+					if (moving > 0)moving *= -1.f;
+					
+					attack();
+					walk(moving);
+				}
+				else
+				{
+					looks_to_the_left = false;
+					looks_to_the_right = true;
+					if (moving < 0)moving *= -1.f;
+					attack();
+					walk(moving);
+				}
+			}
+
+				if(sting() && retreat_counter < 50)
+				{
+					retreat_counter++;
+					displacement.x = 0;
+					bite();
+				}
+				if(retreat_counter == 50)
+				{
+					retreat_counter++;
+					moving *= -1.f;
+					walk(moving);
+				}
+				if(retreat_counter>50 && retreat_counter<300)
+				{
+					retreat_counter++;
+					walk(moving);
+
+				}
+				if(retreat_counter > 299)
+				{
+					retreat_counter = 0;
+					boss_state = Boss_STATE::RETREATING;
+					reset_attention();
+
+				}
+
+
+			break;
+			}
 		}
 	}
 	if (!search_for_enemies() && awakening)
+
 	{
+		std::cout << "pppppppppp";
+
 		if (on_ground)
 		{
 			if (update_collision_x())
@@ -481,12 +552,12 @@ void Wolf_Boss::update_movement()
 		if (step_right == max_step)
 		{
 			moving *= -1.f;
-			step_right = 0;
+			reset_step();
 		}
 		if (step_left == max_step)
 		{
 			moving *= -1.f;
-			step_left = 0;
+			reset_step();
 		}
 
 		if (moving > 0)
@@ -538,6 +609,18 @@ void Wolf_Boss::look(float direction)
 		looks_to_the_right = false;
 		looks_to_the_left = true;
 	}
+}
+void Wolf_Boss::bite()
+{
+	animation_state = Enemy_ANIMATION_STATES::ENEMY_BITE;
+
+}
+
+void Wolf_Boss::reset_step()
+{
+	step_left = 0;
+	step_right = 0;
+	pl_contact = false;
 }
 
 
@@ -625,19 +708,17 @@ bool Wolf_Boss::search_for_enemies()
 {
 	int centerX = get_position().x / 60;
 	int centerY = get_position().y / 60;
-	int dist = 15;
+	int dist = 30;
 
 
 	for (int i = centerY - 10; i <= centerY + 10; i++)
 	{
-		for (int j = centerX + 1; j <= centerX + dist; j++)
+		for (int j = centerX - dist; j <= centerX + dist; j++)
 		{
 			if (i >= 0 && i < 40 && j >= 0 && j < 200)
 			{
 				if (sandbox->isOccupied(i, j))
 				{
-					player_l_r[1] = true;
-					player_l_r[0] = false;
 					return true;
 				}
 			}
@@ -645,30 +726,12 @@ bool Wolf_Boss::search_for_enemies()
 	}
 
 
-	for (int i = centerY - 10; i <= centerY + 10; i++)
-	{
-		for (int j = centerX - dist; j <= centerX; j++)
-		{
-			if (i >= 0 && i < 40 && j >= 0 && j < 200)
-			{
-				if (sandbox->isOccupied(i, j))
-				{
-					player_l_r[0] = true;
-					player_l_r[1] = false;
-					return true;
-				}
-			}
-		}
-	}
-
-	player_l_r[0] = false;
-	player_l_r[1] = false;
 	return false;
 }
 
 void Wolf_Boss::reset_attention()
 {
-	displacement_max = 3.f;
+	displacement_max = 2.5f;
 	displacement.x += moving * acceleration;
 }
 
@@ -754,9 +817,9 @@ void Wolf_Boss::update_physics()
 		displacement.y = 0.f;
 	}
 	//step counter
-	if (displacement.x > 0 && pl_contact)
+	if ((displacement.x > 0 && pl_contact) || !pl_cont_jump)
 		step_right++;
-	if (displacement.x < 0 && pl_contact)
+	if ((displacement.x < 0 && pl_contact )|| !pl_cont_jump)
 		step_left++;
 	//if (player_contact())displacement.x *= 1.3f;
 	Enemy_S.move(displacement);

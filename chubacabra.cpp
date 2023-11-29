@@ -20,7 +20,7 @@ void chubacabra::init_texture()
 void chubacabra::init_sprite()
 {
 	Enemy_S.setTexture(chubacabra_t_);
-	current_frame = IntRect(0, 0, 70, 90);
+	current_frame = IntRect(0, 0, 64, 90);
 	Enemy_S.setTextureRect(current_frame);
 }
 
@@ -78,26 +78,26 @@ void chubacabra::update_animation()
 {
 	if (animation_state == Enemy_ANIMATION_STATES::ENEMY_MOVING)
 	{
-		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
+		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 70;
-				if (current_frame.left >= 140.f)
+				current_frame.left += 64;
+				if (current_frame.left >= 704.f)
 				{
 					current_frame.left = 0.f;
 				}
-				current_frame.width = 70;
+				current_frame.width = 64;
 				current_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 70;
-				if (current_frame.left >= 210.f)
+				current_frame.left += 64;
+				if (current_frame.left >= 768.f)
 				{
-					current_frame.left = 70.f;
+					current_frame.left = 64.f;
 				}
-				current_frame.width = -70;
+				current_frame.width = -64;
 				current_frame.top = 0;
 			}
 
@@ -111,24 +111,25 @@ void chubacabra::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 70;
-				if (current_frame.left >= 140.f)
+				current_frame.left += 64;
+				if (current_frame.left >= 704.f)
 				{
 					current_frame.left = 0.f;
 				}
-				current_frame.width = 70;
+				current_frame.width = 64;
 				current_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 70;
-				if (current_frame.left >= 210.f)
+				current_frame.left += 64;
+				if (current_frame.left >= 768.f)
 				{
-					current_frame.left = 70.f;
+					current_frame.left = 64.f;
 				}
-				current_frame.width = -70;
+				current_frame.width = -64;
 				current_frame.top = 0;
 			}
+
 
 			Enemy_S.setTextureRect(current_frame);
 			animation_timer.restart();
@@ -136,26 +137,27 @@ void chubacabra::update_animation()
 	}
 	else if (animation_state == Enemy_ANIMATION_STATES::ENEMY_ATTENTION)
 	{
-		if (animation_timer.getElapsedTime().asSeconds() >= 0.05f || get_animation_switch())
+		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
+			count_atack++;
 			if (looks_to_the_right)
 			{
-				current_frame.left += 70;
-				if (current_frame.left >= 140.f)
+				current_frame.left += 64;
+				if (current_frame.left >= 704.f)
 				{
 					current_frame.left = 0.f;
 				}
-				current_frame.width = 70;
+				current_frame.width = 64;
 				current_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 70;
-				if (current_frame.left >= 210.f)
+				current_frame.left += 64;
+				if (current_frame.left >= 768.f)
 				{
-					current_frame.left = 70.f;
+					current_frame.left = 64.f;
 				}
-				current_frame.width = -70;
+				current_frame.width = -64;
 				current_frame.top = 0;
 			}
 
@@ -170,24 +172,25 @@ void chubacabra::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 70;
-				if (current_frame.left >= 140.f)
+				current_frame.left += 64;
+				if (current_frame.left >= 704.f)
 				{
 					current_frame.left = 0.f;
 				}
-				current_frame.width = 70;
+				current_frame.width = 64;
 				current_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 70;
-				if (current_frame.left >= 210.f)
+				current_frame.left += 64;
+				if (current_frame.left >= 768.f)
 				{
-					current_frame.left = 70.f;
+					current_frame.left = 64.f;
 				}
-				current_frame.width = -70;
+				current_frame.width = -64;
 				current_frame.top = 0;
 			}
+
 
 			Enemy_S.setTextureRect(current_frame);
 			animation_timer.restart();
@@ -199,22 +202,22 @@ void chubacabra::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 70;
-				if (current_frame.left >= 140.f)
+				current_frame.left += 64;
+				if (current_frame.left >= 704.f)
 				{
 					current_frame.left = 0.f;
 				}
-				current_frame.width = 70;
+				current_frame.width = 64;
 				current_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 70;
-				if (current_frame.left >= 210.f)
+				current_frame.left += 64;
+				if (current_frame.left >= 768.f)
 				{
-					current_frame.left = 70.f;
+					current_frame.left = 64.f;
 				}
-				current_frame.width = -70;
+				current_frame.width = -64;
 				current_frame.top = 0;
 			}
 
@@ -228,23 +231,24 @@ void chubacabra::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 70;
-				if (current_frame.left >= 140.f)
+				current_frame.left += 64;
+				if (current_frame.left >= 704.f)
 				{
 					current_frame.left = 0.f;
 				}
-				current_frame.width = 70;
+				current_frame.width = 64;
 				current_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 70;
-				if (current_frame.left >= 210.f)
+				current_frame.left += 64;
+				if (current_frame.left >= 768.f)
 				{
-					current_frame.left = 70.f;
+					current_frame.left = 64.f;
 				}
-				current_frame.width = -70;
+				current_frame.width = -64;
 				current_frame.top = 0;
+			
 			}
 			Enemy_S.setTextureRect(current_frame);
 			animation_timer.restart();
@@ -265,25 +269,7 @@ void chubacabra::shot()
 }
 
 
-// возможный анализ телепортации, хотя может этого и не будет 
-void chubacabra::teleportBehindPlayer(sf::Sprite& enemy, const sf::FloatRect& playerBounds, float teleportDistance) {
-	
-	sf::Vector2f playerCenter(playerBounds.left + playerBounds.width / 2.0f, playerBounds.top + playerBounds.height / 2.0f);
 
-	sf::Vector2f enemyVelocity = get_position() - enemy.getOrigin();
-
-	sf::Vector2f directionVector = playerCenter - (get_position() + enemy.getOrigin());
-	
-	// Нормализуем вектор направления
-	float length = std::sqrt(directionVector.x * directionVector.x + directionVector.y * directionVector.y);
-	directionVector /= length;
-
-	// Вычисляем новую позицию врага за спиной игрока
-	sf::Vector2f newPosition = playerCenter - directionVector * (teleportDistance + enemy.getOrigin().x);
-
-	// Устанавливаем новую позицию для врага
-	enemy.setPosition(newPosition);
-}
 
 void chubacabra::attack()
 {
@@ -311,6 +297,14 @@ void chubacabra::attack()
 				looks_to_the_left = false;
 			}
 		}
+		if(count_atack > 10)//Зависит от количества кадров атаки
+		{
+			count_atack = 0;
+			sf::Vector2f tmp = calculateRandomPosition(get_global_bounds(), 5);
+			set_position(tmp.x, tmp.y);
+			
+		}
+
 	}
 
 
@@ -358,6 +352,46 @@ void chubacabra::attack()
 	}
 	// displacement.x = 0;
 }
+sf::Vector2f chubacabra::calculateRandomPosition(const sf::FloatRect& playerBounds, int jumpDistance)
+{
+	int maxAttempts = 100000;
+
+	for (int i = 0; i < maxAttempts; ++i)
+	{
+		// Randomly select left or right direction
+		int direction = (rand() % 2 == 0) ? -1 : 1;
+
+		// Calculate the new position
+		float newX = playerBounds.left + direction * jumpDistance * sandbox->getSizeTexture();
+		float newY = playerBounds.top;
+
+		// Check if the new position is within the map boundaries
+		if (newX >= 0 && newX < sandbox->getMapWidth() && newY >= 0 && newY < sandbox->getMapHeight())
+		{
+			// Check if the new position is valid
+			if (!sandbox->isBlock(newY / sandbox->getSizeTexture(), newX / sandbox->getSizeTexture()))
+			{
+				return sf::Vector2f(newX, newY);
+			}
+		}
+
+		// If there's no available space in the selected direction, try one block higher
+		newY -= sandbox->getSizeTexture();
+		if (newX >= 0 && newX < sandbox->getMapWidth() && newY >= 0 && newY < sandbox->getMapHeight())
+		{
+			// Check if the new position is valid
+			if (!sandbox->isBlock(newY / sandbox->getSizeTexture(), newX / sandbox->getSizeTexture()))
+			{
+				return sf::Vector2f(newX, newY);
+			}
+		}
+	}
+
+	// If no valid position is found, return the current position
+	return get_position();
+}
+
+
 
 void chubacabra::clear_shot()
 {

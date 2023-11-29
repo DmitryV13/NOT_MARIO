@@ -1,6 +1,7 @@
 #pragma once
 #include "Enemy.h"
-enum class Boss_STATE { SLEEP, IDLE, MOVING, JUMPING, ATTACKING, RETREATING, HOWL};
+enum class Boss_STATE { SLEEP, IDLE, MOVING, JUMPING, ATTACKING, RETREATING, HOWL, TORMENT
+};
 
 enum class PL_Side
 {
@@ -21,6 +22,7 @@ class Wolf_Boss :
 	bool pl_contact;
 	bool pl_cont_jump;
 	int rand_;
+	float distance;
 	
 
 
@@ -45,4 +47,6 @@ public:
 
 	PL_Side getPlayerSide(float playerX, float enemyX);
 	void look(float direction);
+	void bite();
+	void reset_step();
 };

@@ -8,14 +8,16 @@ private:
 	Texture chubacabra_t_;
 	bool player_l_r[2]{ false };
 	int count_jump = 0;
+	int count_atack = 0;
 	void init_texture() override;
 	void init_sprite() override;
 
 
 
-public:
-	void teleportBehindPlayer(sf::Sprite& , const sf::FloatRect&, float );
 
+public:
+	
+	sf::Vector2f calculateRandomPosition(const sf::FloatRect& playerBounds, int radius);
 	explicit chubacabra(TileMap& map, Player&);
 	~chubacabra() override = default;
 	void update_movement() override;
