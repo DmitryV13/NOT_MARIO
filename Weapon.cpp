@@ -13,5 +13,5 @@
 	void Weapon::renderProjectiles(RenderTarget& target){
 	}
 
-	void Weapon::attack(short side_attack, Vector2f mouse_pos, FloatRect view_cord){
+	void Weapon::attack(short side_attack, Vector2f mouse_pos, FloatRect view_cord, bool is_btn_pressed){
 	}

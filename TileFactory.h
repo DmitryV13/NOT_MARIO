@@ -4,11 +4,11 @@
 class coord;
 class TileFactory {
 public:
-    Tile tile_map_inFactory[40][200];
-    TileFactory();
+    //Tile tile_map_inFactory[40][200];
+    TileFactory(short n, short m);
 
-    static const int n = 40;
-    static const int m = 200;
+    const int n;
+    const int m;
 private:
     sf::IntRect initRect_tile(char tile);
     void generation_map(char map[40][200]);

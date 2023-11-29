@@ -2,7 +2,7 @@
 
 #include "PLAYER_ANIMATION_SATES.h"
 #include "Weapon.h"
-#include "Bullet.h"
+#include "Projectile.h"
 
 using namespace::sf;
 
@@ -16,7 +16,7 @@ private:
 	IntRect currentFrame;
 	Clock animationTimer;
 
-	vector<Bullet*> bullets;
+	vector<Projectile*> projectiles;
 
 	short animationState;
 	bool animationSwitch;
@@ -40,6 +40,6 @@ public:
 	void render(RenderTarget& target) override;
 	void renderProjectiles(RenderTarget& target) override;
 
-	void attack(short side_attack, Vector2f mouse_pos, FloatRect view_cords);
+	void attack(short side_attack, Vector2f mouse_pos, FloatRect view_cords, bool is_btn_pressed) override;
 };
 

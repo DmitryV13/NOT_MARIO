@@ -32,6 +32,7 @@
 
     void Player::initWeapon() {
         weapons.push_back(new Fist());
+        weapons.push_back(new Bow(player_S.getPosition(), player_S.getGlobalBounds(), sandbox));
         weapons.push_back(new Sword(player_S.getPosition(), player_S.getGlobalBounds()));
         weapons.push_back(new CombatStaff(player_S.getPosition(), player_S.getGlobalBounds(), sandbox));
     }
@@ -201,7 +202,10 @@
             jump(-20.0f);
         }
         if (Mouse::isButtonPressed(Mouse::Left)) {
-            weapons[chosen_weapon]->attack(movingDirection, Vector2f(Mouse::getPosition(*window)), view_cords);
+            weapons[chosen_weapon]->attack(movingDirection, Vector2f(Mouse::getPosition(*window)), view_cords, true);
+        }
+        if (!Mouse::isButtonPressed(Mouse::Left)) {
+            weapons[chosen_weapon]->attack(movingDirection, Vector2f(Mouse::getPosition(*window)), view_cords, false);
         }
     }
 
@@ -209,9 +213,9 @@
         if (animationState == PLAYER_ANIMATION_STATES::IDLE_LEFT) {
             if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
                 currentFrame.top = 80;
-                currentFrame.left -= 48;
-                if (currentFrame.left <= 0.f) {
-                    currentFrame.left = 288.f;
+                currentFrame.left += 48;
+                if (currentFrame.left >= 336.f) {
+                    currentFrame.left = 48.f;
                 }
                 currentFrame.width = -48;
                 animationTimer.restart();

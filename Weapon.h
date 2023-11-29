@@ -10,6 +10,6 @@ public:
 	virtual void render(RenderTarget& target);
 	virtual void renderProjectiles(RenderTarget& target);
 
-	virtual void attack(short side_attack, Vector2f mouse_pos, FloatRect view_cord);
+	virtual void attack(short side_attack, Vector2f mouse_pos, FloatRect view_cord, bool is_btn_pressed);
 };
 

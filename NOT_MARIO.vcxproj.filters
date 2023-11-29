@@ -91,6 +91,9 @@
     <Filter Include="Source Files\GameObjects\Artificial\Weapons\BareHands">
       <UniqueIdentifier>{27f26f5e-9a05-411b-a35e-ff50894a5a41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\GameObjects\Artificial\Weapons\BareHands">
+      <UniqueIdentifier>{25eb6e62-918e-40ad-84d9-392399232a65}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyView.cpp">
@@ -159,7 +162,7 @@
     <ClCompile Include="Bow.cpp">
       <Filter>Source Files\GameObjects\Artificial\Weapons\RangedWeapon</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
+    <ClCompile Include="Projectile.cpp">
       <Filter>Source Files\GameObjects\Artificial\Weapons\RangedWeapon</Filter>
     </ClCompile>
     <ClCompile Include="Fist.cpp">
@@ -167,6 +170,9 @@
     </ClCompile>
     <ClCompile Include="Weapon.cpp">
       <Filter>Source Files\GameObjects\Artificial\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Arrow.cpp">
+      <Filter>Source Files\GameObjects\Artificial\Weapons\RangedWeapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -239,17 +245,23 @@
     <ClInclude Include="CombatStaff.h">
       <Filter>Header Files\GameObjects\Artificial\Weapons\RangedWeapons</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
+    <ClInclude Include="Projectile.h">
       <Filter>Header Files\GameObjects\Artificial\Weapons\RangedWeapons</Filter>
     </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>Header Files\GUI\Items</Filter>
     </ClInclude>
-    <ClInclude Include="Weapon.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Fist.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\GameObjects\Artificial\Weapons\BareHands</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Header Files\GameObjects\Artificial\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Arrow.h">
+      <Filter>Header Files\GameObjects\Artificial\Weapons\RangedWeapons</Filter>
+    </ClInclude>
+    <ClInclude Include="ORIENTATION.h">
+      <Filter>Header Files\Enums</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

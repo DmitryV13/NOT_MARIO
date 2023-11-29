@@ -10,7 +10,7 @@
     }
     
     void Sword::initTexture() {
-        if (!sword_T.loadFromFile("Textures/Weapons/sword.png")) {
+        if (!sword_T.loadFromFile("Textures/Weapons/sword1.png")) {
             std::cout << "Error -> Sword -> couldn't load sword texture" << std::endl;
         }
     }
@@ -104,10 +104,12 @@
         }
     }
     
-    void Sword::attack(short side_attack, Vector2f mouse_pos, FloatRect view_cord) {
+    void Sword::attack(short side_attack, Vector2f mouse_pos, FloatRect view_cord, bool is_btn_pressed) {
         //3 - right
         //2 - left
-        this->side_of_attack = side_attack;
-        attack_activation = true;
+        if (is_btn_pressed) {
+            this->side_of_attack = side_attack;
+            attack_activation = true;
+        }
     }
     

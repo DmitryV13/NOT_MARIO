@@ -5,6 +5,7 @@
 #include "Fist.h"
 #include "Sword.h"
 #include "CombatStaff.h"
+#include "Bow.h"
 
 
 using namespace::sf;

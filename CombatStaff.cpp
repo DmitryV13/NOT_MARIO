@@ -8,7 +8,7 @@
     }
 
     void CombatStaff::initTexture(){
-        if (!staff_T.loadFromFile("Textures/Weapons/staff.png")) {
+        if (!staff_T.loadFromFile("Textures/Weapons/staff1.png")) {
             std::cout << "Error -> Sword -> couldn't load staff texture" << std::endl;
         }
     }
@@ -36,7 +36,7 @@
     }
 
     void CombatStaff::renderProjectiles(RenderTarget& target){
-        for (auto& i : bullets) {
+        for (auto& i : projectiles) {
             i->render(target);
         }
     }
@@ -72,7 +72,7 @@
     
     void CombatStaff::updateAnimation(){
         if (attack_activation) {
-            if (side_of_attack == 3) {
+            if (side_of_attack == PLAYER_ANIMATION_STATES::MOVING_RIGHT) {
                 if (animationTimer.getElapsedTime().asSeconds() >= 0.04f) {
                     currentFrame.top = 0;
                     currentFrame.left += 18;
@@ -86,7 +86,7 @@
                     staff_S.setTextureRect(currentFrame);
                 }
             }
-            else if (side_of_attack == 2) {
+            else if (side_of_attack == PLAYER_ANIMATION_STATES::MOVING_LEFT) {
                 if (animationTimer.getElapsedTime().asSeconds() >= 0.04f) {
                     currentFrame.top = 0;
                     currentFrame.left += 18;
@@ -103,25 +103,27 @@
     }
 
     void CombatStaff::updateProjectiles(){
-        for (int i = 0; i < bullets.size(); i++) {
-            bullets[i]->update();
-            if (bullets[i]->updateCollision()) {
-                delete *(bullets.begin()+i);
-                bullets.erase(bullets.begin() + i);
+        for (int i = 0; i < projectiles.size(); i++) {
+            projectiles[i]->update();
+            if (projectiles[i]->updateCollision()) {
+                delete *(projectiles.begin()+i);
+                projectiles.erase(projectiles.begin() + i);
             }
         }
     }
     
-    void CombatStaff::attack(short side_attack, Vector2f mouse_pos, FloatRect view_cords){
-        this->side_of_attack = side_attack;
-        attack_activation = true;
-        if (animationTimer.getElapsedTime().asSeconds() >= 0.04f) {
-            if (bullets.size() > 30) {
-                delete bullets[0];
-                bullets.erase(bullets.begin());
-            }
-            bullets.push_back(new Bullet(staff_S.getPosition(), Vector2f(mouse_pos.x + (view_cords.left - view_cords.width / 2), mouse_pos.y + (view_cords.top - view_cords.height / 2)), sandbox));
+    void CombatStaff::attack(short side_attack, Vector2f mouse_pos, FloatRect view_cords, bool is_btn_pressed){
+        if (is_btn_pressed) {
+            this->side_of_attack = side_attack;
+            attack_activation = true;
+            if (animationTimer.getElapsedTime().asSeconds() >= 0.04f) {
+                if (projectiles.size() > 30) {
+                    delete projectiles[0];
+                    projectiles.erase(projectiles.begin());
+                }
+                projectiles.push_back(new Projectile(staff_S.getPosition(), Vector2f(mouse_pos.x + (view_cords.left - view_cords.width / 2), mouse_pos.y + (view_cords.top - view_cords.height / 2)), sandbox));
 
+            }
         }
     }
     

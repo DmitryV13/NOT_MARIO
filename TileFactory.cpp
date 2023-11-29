@@ -522,12 +522,13 @@
         }
     }
     
-    TileFactory::TileFactory() {
+    TileFactory::TileFactory(short n_, short m_) : n(n_), m(m_){
         srand(static_cast<unsigned int>(time(nullptr)));
-        char map[40][200];
+        vector<vector<char>> map(n, vector<char>(m));
+        //char map[n][m];
 
-        for (int i = 0; i < 40; ++i) {
-            for (int j = 0; j < 200; ++j) {
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
                 map[i][j] = ' ';
             }
         }
@@ -542,23 +543,23 @@
             std::cout << std::endl;
         }
     
-        Tile tile_A(initRect_tile('A'), 'A', 'A');
-        Tile tile_B(initRect_tile('B'), 'B', 'B');
-        Tile tile_C(initRect_tile('C'), 'C', 'C');
-        Tile tile_c(initRect_tile('c'), 'c', 'c');
-        Tile tile_D(initRect_tile('D'), 'D', 'D');
-        Tile tile_L(initRect_tile('L'), 'L', 'L');
-        Tile tile_P(initRect_tile('P'), 'P', 'P');
-    
-        for (int i = 0; i < 40; i++) {
-            for (int j = 0; j < 200; j++) {
-                if (map[i][j] == 'A') { tile_map_inFactory[i][j] = tile_A; }
-                if (map[i][j] == 'B') { tile_map_inFactory[i][j] = tile_B; }
-                if (map[i][j] == 'C') { tile_map_inFactory[i][j] = tile_C; }
-                if (map[i][j] == 'c') { tile_map_inFactory[i][j] = tile_c; }
-                if (map[i][j] == 'D') { tile_map_inFactory[i][j] = tile_D; }
-                if (map[i][j] == 'L') { tile_map_inFactory[i][j] = tile_L; }
-                if (map[i][j] == 'P') { tile_map_inFactory[i][j] = tile_P; }
-            }
-        }
+        //Tile tile_A(initRect_tile('A'), 'A', 'A');
+        //Tile tile_B(initRect_tile('B'), 'B', 'B');
+        //Tile tile_C(initRect_tile('C'), 'C', 'C');
+        //Tile tile_c(initRect_tile('c'), 'c', 'c');
+        //Tile tile_D(initRect_tile('D'), 'D', 'D');
+        //Tile tile_L(initRect_tile('L'), 'L', 'L');
+        //Tile tile_P(initRect_tile('P'), 'P', 'P');
+        //
+        //for (int i = 0; i < 40; i++) {
+        //    for (int j = 0; j < 200; j++) {
+        //        if (map[i][j] == 'A') { tile_map_inFactory[i][j] = tile_A; }
+        //        if (map[i][j] == 'B') { tile_map_inFactory[i][j] = tile_B; }
+        //        if (map[i][j] == 'C') { tile_map_inFactory[i][j] = tile_C; }
+        //        if (map[i][j] == 'c') { tile_map_inFactory[i][j] = tile_c; }
+        //        if (map[i][j] == 'D') { tile_map_inFactory[i][j] = tile_D; }
+        //        if (map[i][j] == 'L') { tile_map_inFactory[i][j] = tile_L; }
+        //        if (map[i][j] == 'P') { tile_map_inFactory[i][j] = tile_P; }
+        //    }
+        //}
     }

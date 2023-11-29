@@ -137,8 +137,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="Bow.cpp" />
-    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CombatStaff.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -167,8 +168,10 @@
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Arrow.h" />
     <ClInclude Include="Bow.h" />
-    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="ORIENTATION.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="CombatStaff.h" />
     <ClInclude Include="Enemy.h" />
