@@ -304,7 +304,7 @@ bool Enemy::update_collision_x()
 		for (int j = (Enemy_S.getPosition().x + displacement.x) / 60; j < (Enemy_S.getPosition().x + displacement.x +
 			     Enemy_S.getGlobalBounds().width) / 60; j++)
 		{
-			if (sandbox->isBlock(i, j) || j <= 0 || j >= TileFactory::m)
+			if (sandbox->isBlock(i, j) || j <= 0 || j >= 200)
 			{
 				wasCollision = true;
 				if (displacement.x >= 0)
@@ -333,7 +333,7 @@ bool Enemy::update_collision_x_jump()
 		for (int j = (Enemy_S.getPosition().x + displacement.x) / 60; j < (Enemy_S.getPosition().x + displacement.x +
 			     Enemy_S.getGlobalBounds().width) / 60; j++)
 		{
-			if (sandbox->isBlock(i - 1, j) || j <= 0 || j >= TileFactory::m)
+			if (sandbox->isBlock(i - 1, j) || j <= 0 || j >= 200)
 			{
 				wasCollision = true;
 				if (displacement.x >= 0)

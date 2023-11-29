@@ -7,7 +7,7 @@ TileMap::TileMap()
 	, mapH(200) {
 
 	init_texture();
-	TileFactory factory;
+	TileFactory factory(40,200);
 	for (int i = 0; i < 40; i++) {
 		for (int j = 0; j < 200; j++) {
 			tilemap[i][j] = factory.tile_map_inFactory[i][j];

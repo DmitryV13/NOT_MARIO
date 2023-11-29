@@ -12,56 +12,36 @@ sf::IntRect TileFactory::initRect_tile(char tile_C)
 	if (tile_C == 'L') { return sf::IntRect(258, 2, 60, 60); }
 	if (tile_C == 'P') { return sf::IntRect(322, 2, 60, 60); }
 	if (tile_C == 'Q') { return sf::IntRect(514, 2, 60, 60); }
+	return {};
 }
 
 
-TileFactory::TileFactory()
+TileFactory::TileFactory(int n, int m)
 {
-	char template_1[n][m];
-	for (int i = 0; i < n/2; ++i) {
-		for (int j = 0; j < m; ++j) {
-			template_1[i][j] = ' ';
-		}
-	}
+	vector<vector<char>> template_1(n, vector<char>(m, 'N'));
+	//for (int i = 0; i < n/2; ++i) {
+	//	for (int j = 0; j < m; ++j) {
+	//		template_1[i][j] = ' ';
+	//	}
+	//}
 
-	// Заполняем оставшиеся 20 строк символами 'B'
-	for (int i = n/2; i < n; ++i) {
-		for (int j = 0; j < m; ++j) {
-			template_1[i][j] = 'B';
-		}
-	}
+	//// Заполняем оставшиеся 20 строк символами 'B'
+	//for (int i = n/2; i < n; ++i) {
+	//	for (int j = 0; j < m; ++j) {
+	//		template_1[i][j] = 'B';
+	//	}
+	//}
 
-
+	map_generation(template_1);
 	
+	filter_map(template_1);
 
-	/*for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < m; j++)
-		{
-			template_1[i][j] = 'N';
-		}
-	}
-	map_generation(template_1);*/
-	for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < m; j++)
-		{
-			std::cout << template_1[i][j];
-		}
-		std::cout << std::endl;
-	}
 	filter_map(template_1);
-	filter_map(template_1);
-	for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < m; j++)
-		{
-			std::cout << template_1[i][j];
-		}
-		std::cout << std::endl;
-	}
+	
 	filter_map1(template_1);
+	
 	artist_method(template_1);
+	
 	fill_lakes_with_ground(template_1);
 	for (int i = 0; i < n; i++)
 	{
@@ -113,7 +93,7 @@ bool TileFactory::getPosPlayer(int i, int j)
 }
 
 
-void TileFactory::map_generation(char template_2[n][m])
+void TileFactory::map_generation(vector<vector<char>>& template_2)
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
@@ -122,7 +102,7 @@ void TileFactory::map_generation(char template_2[n][m])
 }
 
 
-void TileFactory::start_of_map_generation_(char map[n][m], int& i, int& j, std::mt19937 gen)
+void TileFactory::start_of_map_generation_(vector<vector<char>>& map, int& i, int& j, std::mt19937 gen)
 {
 	std::uniform_int_distribution<int> cofShift(3, 5);
 
@@ -157,7 +137,7 @@ void TileFactory::start_of_map_generation_(char map[n][m], int& i, int& j, std::
 	cavern(map, i, j, SHIFT, gen);
 }
 
-void TileFactory::flatland(char (*map)[m], int& i, int& j, int shift, std::mt19937 gen)
+void TileFactory::flatland(vector<vector<char>>& map, int& i, int& j, int shift, std::mt19937 gen)
 {
 	std::uniform_int_distribution<int> distribution(-1, 1);
 	int count = 0;
@@ -194,7 +174,7 @@ void TileFactory::flatland(char (*map)[m], int& i, int& j, int shift, std::mt199
 	}
 }
 
-void TileFactory::mountainous_terrain(char (*map)[m], int& i, int& j, int& shift, std::mt19937 gen)
+void TileFactory::mountainous_terrain(vector<vector<char>>& map, int& i, int& j, int& shift, std::mt19937 gen)
 {
 	std::uniform_int_distribution<int> distribution(-1, 1);
 	int bool_tap = distribution(gen);
@@ -234,7 +214,7 @@ void TileFactory::mountainous_terrain(char (*map)[m], int& i, int& j, int& shift
 	}
 }
 
-void TileFactory::water_bodies(char (*map)[m], int& i, int& j, int shift, std::mt19937 gen)
+void TileFactory::water_bodies(vector<vector<char>>& map, int& i, int& j, int shift, std::mt19937 gen)
 {
 	std::uniform_int_distribution<int> distribution(-1, 1);
 	int bool_tap = 1;
@@ -277,7 +257,7 @@ void TileFactory::water_bodies(char (*map)[m], int& i, int& j, int shift, std::m
 	}
 }
 
-void TileFactory::tunnel(char (*map)[200], int& i, int& j, int shift, std::mt19937 gen)
+void TileFactory::tunnel(vector<vector<char>>& map, int& i, int& j, int shift, std::mt19937 gen)
 {
 	std::uniform_int_distribution<int> distribution(-1, 1);
 	std::uniform_int_distribution<int> emptiness(3, 5);
@@ -307,7 +287,7 @@ void TileFactory::tunnel(char (*map)[200], int& i, int& j, int shift, std::mt199
 	j = right;
 }
 
-void TileFactory::wormhole(char (*map)[200], int& i, int& j, int shift, std::mt19937 gen)
+void TileFactory::wormhole(vector<vector<char>>& map, int& i, int& j, int shift, std::mt19937 gen)
 {
 	std::uniform_int_distribution<int> distribution(-1, 1);
 	int bool_tap = 1;
@@ -381,7 +361,7 @@ void TileFactory::wormhole(char (*map)[200], int& i, int& j, int shift, std::mt1
 	i = stat_i;
 }
 
-void TileFactory::cavern(char (*map)[200], int& i, int& j, int shift, std::mt19937 gen)
+void TileFactory::cavern(vector<vector<char>>& map, int& i, int& j, int shift, std::mt19937 gen)
 {
 	std::uniform_int_distribution<int> distribution(-1, 1);
 	std::uniform_int_distribution<int> cavern_rand(26, 35);
@@ -406,28 +386,32 @@ void TileFactory::cavern(char (*map)[200], int& i, int& j, int shift, std::mt199
 
 
 //stripping blocks 
-void TileFactory::filter_map(char map[n][m])
+void TileFactory::filter_map(vector<vector<char>>& map)
 {
+	int emptyNeighbors;
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < m; j++)
 		{
+
+
 			if (map[i][j] != ' ')
 			{
-				int emptyNeighbors = count_empty_neighbors(map, i, j);
-
-
+				 emptyNeighbors = count_empty_neighbors(map, i, j);
+				
 				if (emptyNeighbors > 4)
 				{
 					map[i][j] = ' ';
+					
 				}
 			}
 		}
+
 	}
 }
 
 
-void TileFactory::filter_map1(char map[n][m])
+void TileFactory::filter_map1(vector<vector<char>>& map)
 {
 	for (int i = 0; i < n; i++)
 	{
@@ -444,7 +428,7 @@ void TileFactory::filter_map1(char map[n][m])
 	}
 }
 
-bool TileFactory::has_blocks_on_both_sides(char map[n][m], int i, int j)
+bool TileFactory::has_blocks_on_both_sides(vector<vector<char>>& map, int i, int j)
 {
 	if ((i > 0 && map[i - 1][j] != ' ') && (i < n - 1 && map[i + 1][j] != ' '))
 	{
@@ -459,22 +443,22 @@ bool TileFactory::has_blocks_on_both_sides(char map[n][m], int i, int j)
 	return false;
 }
 
-int TileFactory::count_empty_neighbors(char map[n][m], int i, int j)
+int TileFactory::count_empty_neighbors(vector<vector<char>>& map, int i, int j)
 {
 	int emptyNeighbors = 0;
 	if (i > 0 && map[i - 1][j] == ' ') emptyNeighbors++;
 	if (i > 0 && j > 0 && map[i - 1][j - 1] == ' ') emptyNeighbors++;
-	if (i > 0 && j < m && map[i - 1][j + 1] == ' ')emptyNeighbors++;
-	if (i < n && j > 0 && map[i + 1][j - 1] == ' ')emptyNeighbors++;
-	if (i < n && j < m && map[i + 1][j + 1] == ' ')emptyNeighbors++;
-	if (i < n && map[i + 1][j] == ' ') emptyNeighbors++;
+	if (i > 0 && j+1 < m && map[i - 1][j + 1] == ' ')emptyNeighbors++;
+	if (i+1 < n && j > 0 && map[i + 1][j - 1] == ' ')emptyNeighbors++;
+	if (i+1 < n && j+1 < m && map[i + 1][j + 1] == ' ')emptyNeighbors++;
+	if (i+1 < n && map[i + 1][j] == ' ') emptyNeighbors++;
 	if (j > 0 && map[i][j - 1] == ' ') emptyNeighbors++;
-	if (j < m && map[i][j + 1] == ' ') emptyNeighbors++;
+	if (j+1 < m && map[i][j + 1] == ' ') emptyNeighbors++;
 
 	return emptyNeighbors;
 }
 
-void TileFactory::artist_method(char map[n][m])
+void TileFactory::artist_method(vector<vector<char>>& map)
 {
 	for (int i = 0; i < n - 1; i++)
 	{
@@ -525,7 +509,7 @@ void TileFactory::artist_method(char map[n][m])
 }
 
 //fix bug with soaring water
-void TileFactory::fill_lakes_with_ground(char map[n][m])
+void TileFactory::fill_lakes_with_ground(vector<vector<char>>& map)
 {
 	for (int i = 0; i < n - 1; i++)
 	{

@@ -168,7 +168,7 @@ bool laser_weapon::update_collision_x(float x)
 	/*for (int j = (laser_S.getPosition().x + x) / 60; j < (laser_S.getPosition().x + x +
 		     laser_S.getGlobalBounds().width) / 60; j++)
 	{*/
-	if (sandbox->isBlock(i, j) || j <= 0 || j >= TileFactory::m)
+	if (sandbox->isBlock(i, j) || j <= 0 || j >= 200)
 	{
 		wasCollision = true;
 		if (x >= 0)
@@ -195,7 +195,7 @@ sf::Vector2f laser_weapon::calculateEndPosition(float x)
 	else j = (laser_S.getPosition().x + x) / 60;
 	
 	int g = 0;
-	while (!sandbox->isBlock(i, j) && j > 0 && j < TileFactory::m && g < 60)
+	while (!sandbox->isBlock(i, j) && j > 0 && j < 200 && g < 60)
 	{
 		g++;
 		newPosition.x += x/2;
