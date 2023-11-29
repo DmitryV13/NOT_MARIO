@@ -27,6 +27,7 @@ private:
 	float coefficient_Y = 1;
 
 	void init_background();
+	void init_coeff(sf::IntRect pos);
 
 	void init_generation_tilemap(float mapW, float mapH);
 	void init_tilemap(float mapW, float mapH);

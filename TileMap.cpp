@@ -77,11 +77,19 @@
 
 	void TileMap::init_background()
 	{
-		if (!background_T.loadFromFile("Textures/Textures_map/background_test.png"))
+		if (!background_T.loadFromFile("Textures/Textures_map/background_1.png"))
 		{
 			std::cout << "Error -> background -> couldn't load texture";
 		}
 		backround_S.setTexture(background_T);
+		init_coeff(backround_S.getTextureRect());
+		
+	}
+
+	void TileMap::init_coeff(sf::IntRect pos)
+	{
+		coefficient_X = static_cast < float> (1600) / static_cast<float> (pos.width);
+		coefficient_Y = static_cast <float> (900) / static_cast<float> (pos.height);
 	}
 
 	void TileMap::init_generation_tilemap(float mapW, float mapH)
@@ -207,11 +215,9 @@
 
 	void TileMap::background_render(sf::RenderTarget& target, sf::FloatRect view_cords)
 	{
-		int x, y;
+		float x, y;
 		y = (view_cords.top - (view_cords.height / 2));
 		x = (view_cords.left - (view_cords.width / 2));
-
-
 		backround_S.setPosition(x * coefficient_X, y * coefficient_Y);
 		target.draw(backround_S);
 
