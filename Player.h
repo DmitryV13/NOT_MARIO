@@ -18,8 +18,8 @@ private:
     Texture player_T;
     Sprite player_S;
 
-    vector<Weapon*> weapons;
-    short chosen_weapon;
+    //vector<Weapon*> weapons;
+    //short chosen_weapon;
 
     IntRect currentFrame;
     Clock animationTimer;
@@ -71,11 +71,11 @@ public:
     void jump(const float dir_y);
     void fly(const float dir_y);
 
-    void update(RenderWindow* window, FloatRect view_cords);
+    void update();
     void updatePhysics();
-    void updateMovement(RenderWindow* window, FloatRect view_cords);
+    void updateMovement();
     void updateAnimation();
-    void updateWeapon(RenderWindow* window, FloatRect view_cords);
+    //void updateWeapon(RenderWindow* window, FloatRect view_cords);
     void updateProjectiles();
     bool updateCollisionX();
     bool updateCollisionY();

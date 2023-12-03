@@ -4,36 +4,30 @@
 
 
 
-	TileMap::TileMap() : sizeTexture(64), mapW(35), mapH(100)
+	TileMap::TileMap() : sizeTexture(64), mapH(50), mapW(1000)
 	{
 		init_background();
 		init_tile_list();
 		init_tile_list_back();
 		init_tile_list_front();
-		//имеем како нибудь параметр отвечающий за то какую карту будем делать, если генерация, то 0. Если один из уровней то 1.
-		//принимаю параметр уровня, для генерации есть 3 уровня. 1 мой, 2 Димы и 3 для Сереженого. Для статик карт уровни так же даем от 1 и выше.
-		int a = 1;
+		init_tilemap(mapH, mapW);
+
+		int a = 0;
 		int b = 1;
 		
 		if (a) {
-			init_tilemap(mapW, mapH);
-
-			//передаем параметры возращаем что нужно.
-			TileFactory factory(mapW, mapH);
+			TileFactory factory(mapH, mapW, a, b);
 
 			char tmp_letter;
-
-			for (int i = 0; i < mapW; i++)
+			for (int i = 0; i < mapH; i++)
 			{
-				for (int j = 0; j < mapH; j++)
+				for (int j = 0; j < mapW; j++)
 				{
 					for (int k = 0; k < 3; k++)
 					{
 						tmp_letter = factory.give_letter(i, j, k);
-
 						if (tmp_letter == '[' || tmp_letter == ']') {
 							tilemap[i][j][1] = init_tile_box(tmp_letter);
-							std::cout << i << ' ' << j << std::endl;
 							continue;
 						}
 						if (k == 0) {
@@ -48,27 +42,38 @@
 							tilemap[i][j][k] = give_tile_front(tmp_letter);
 							continue;
 						}
-						if (tmp_letter == '[' || tmp_letter == ']') {
-							tilemap[i][j][1] = init_tile_box(tmp_letter);
-							std::cout << i << ' ' << j << std::endl;
-							continue;
-						}
 					}
 				}
 			}
 		}
 		else 
 		{
-			init_generation_tilemap(mapW, mapH);
+			TileFactory factory(mapH, mapW, a, b);
 
-			//передаем параметрый возвращаем что нужно.
-			TileFactory factory(mapW, mapH);
-
-			for (int i = 0; i < mapW; i++) 
+			char tmp_letter;
+			for (int i = 0; i < mapH; i++) 
 			{
-				for (int j = 0; j < mapH; j++) 
+				for (int j = 0; j < mapW; j++) 
 				{
-					generation_tilemap[i][j] = give_tile(factory.give_generation_letter(i, j));
+					tmp_letter = factory.give_generation_letter(i, j);
+					if (tmp_letter != 'W' && tmp_letter != 'w') {
+						tilemap[i][j][0] = give_tile_back(' ');
+						tilemap[i][j][1] = give_tile(tmp_letter);
+						tilemap[i][j][2] = give_tile_front(' ');
+						continue;
+					}
+					if (tmp_letter == 'W') {
+						tilemap[i][j][0] = give_tile_back(tmp_letter);
+						tilemap[i][j][1] = give_tile(' ');
+						tilemap[i][j][2] = give_tile_front(tmp_letter);
+						continue;
+					}
+					if (tmp_letter == 'w') {
+						tilemap[i][j][0] = give_tile_back(tmp_letter);
+						tilemap[i][j][1] = give_tile(' ');
+						tilemap[i][j][2] = give_tile_front(tmp_letter);
+						continue;
+					}
 				}
 			}
 
@@ -83,27 +88,19 @@
 		}
 		backround_S.setTexture(background_T);
 		init_coeff(backround_S.getTextureRect());
-		
 	}
 
 	void TileMap::init_coeff(sf::IntRect pos)
 	{
-		coefficient_X = static_cast < float> (1600) / static_cast<float> (pos.width);
-		coefficient_Y = static_cast <float> (900) / static_cast<float> (pos.height);
+		coefficient_X = static_cast <float> (sizeTexture * mapW) / (static_cast<float> (pos.width) - 1600);
+		coefficient_Y = static_cast <float> (sizeTexture * mapH) / (static_cast<float> (pos.height) - 900);
 	}
 
-	void TileMap::init_generation_tilemap(float mapW, float mapH)
+	void TileMap::init_tilemap(float mapH, float mapW)
 	{
-		generation_tilemap.resize(mapW);
-		for (auto& innerVector : generation_tilemap)
-			innerVector.resize(mapH);
-	}
-
-	void TileMap::init_tilemap(float mapW, float mapH)
-	{
-		tilemap.resize(mapW);
+		tilemap.resize(mapH);
 		for (auto& innerVector_1 : tilemap) {
-			innerVector_1.resize(mapH);
+			innerVector_1.resize(mapW);
 			for (auto& innerVector_2 : innerVector_1) {
 				innerVector_2.resize(3);
 			}
@@ -177,7 +174,6 @@
 		tile_list_front['o'] = new Tile("bush", 0, sizeTexture, sizeTexture, 'o');
 	}
 
-
 	Tile* TileMap::init_tile_box(char letter)
 	{
 		std::string name = "chest";
@@ -215,10 +211,14 @@
 
 	void TileMap::background_render(sf::RenderTarget& target, sf::FloatRect view_cords)
 	{
-		float x, y;
-		y = (view_cords.top - (view_cords.height / 2));
-		x = (view_cords.left - (view_cords.width / 2));
-		backround_S.setPosition(x * coefficient_X, y * coefficient_Y);
+		float x, y, l, k;
+		l = (view_cords.left - (view_cords.width / 2));
+		k = (view_cords.top - (view_cords.height / 2));
+		x = l / coefficient_X;
+		y = k / coefficient_Y;
+		l = l - x;
+		k = k - y;
+		backround_S.setPosition(l, k);
 		target.draw(backround_S);
 
 	}
@@ -227,18 +227,23 @@
 	{
 		int start_i, start_j, finish_i, finish_j;
 
-		//start_i = (view_cords.top - ( view_cords.height/2)) / sizeTexture;
+		start_i = (view_cords.top - ( view_cords.height/2)) / sizeTexture;
 		start_j = (view_cords.left - (view_cords.width/2)) / sizeTexture;
 		finish_i = (view_cords.top + (view_cords.height/2)) / sizeTexture;
 		finish_j = (view_cords.left + (view_cords.width/2)) / sizeTexture;
 
-		//if(start_i > 1) start_i = start_i - 2;
+		if (start_i > 0) start_i = start_i - 1;
+		if (start_j > 0) start_j = start_j - 1;
+		if (finish_i < mapH ) finish_i = finish_i + 1;
+		if (finish_j < mapW ) finish_j = finish_j + 1;
+
+		if(start_i > 1) start_i = start_i - 2;
 		if(start_j > 1) start_j = start_j - 2;
-		if(finish_i < mapW - 1) finish_i = finish_i + 2;
-		if(finish_j < mapH - 1) finish_j = finish_j + 2;
+		if(finish_i < mapH - 1) finish_i = finish_i + 2;
+		if(finish_j < mapW - 1) finish_j = finish_j + 2;
 
 		
-		for (int i = 0; i < mapW; i++) {
+		for (int i = start_i; i < finish_i; i++) {
 			for (int j = start_j; j < finish_j; j++) {
 				for (int k = 0; k < 2; k++) {
 					target.draw(tilemap[i][j][k]->render_tile(i, j));
@@ -251,17 +256,22 @@
 	{
 		int start_i, start_j, finish_i, finish_j;
 	
-		//start_i = (view_cords.top - (view_cords.height / 2)) / sizeTexture;
+		start_i = (view_cords.top - (view_cords.height / 2)) / sizeTexture;
 		start_j = (view_cords.left - (view_cords.width / 2)) / sizeTexture;
 		finish_i = (view_cords.top + (view_cords.height / 2)) / sizeTexture;
 		finish_j = (view_cords.left + (view_cords.width / 2)) / sizeTexture;
+
+		if (start_i > 0) start_i = start_i - 1;
+		if (start_j > 0) start_j = start_j - 1;
+		if (finish_i < mapH) finish_i = finish_i + 1;
+		if (finish_j < mapW) finish_j = finish_j + 1;
 	
-		//if (start_i > 1) start_i = start_i - 2;
+		if (start_i > 1) start_i = start_i - 2;
 		if (start_j > 1) start_j = start_j - 2;
-		if (finish_i < mapW - 1) finish_i = finish_i + 2;
-		if (finish_j < mapH - 1) finish_j = finish_j + 2;
+		if (finish_i < mapH - 1) finish_i = finish_i + 2;
+		if (finish_j < mapW - 1) finish_j = finish_j + 2;
 	
-		for (int i = 0; i < mapW; i++)
+		for (int i = start_i; i < finish_i; i++)
 		{
 			for (int j = start_j; j < finish_j; j++)
 			{			
@@ -281,18 +291,17 @@
 		for (auto& it : tile_list_front) {
 			it.second->tile_animation();
 		}
-
 	}
 
 
 	float TileMap::getMapWidth()
 	{
-		return mapH * sizeTexture;
+		return mapW * sizeTexture;
 	}
 
 	float TileMap::getMapHeight()
 	{
-		return mapW * sizeTexture;
+		return mapH * sizeTexture;
 	}
 
 	float TileMap::getSizeTexture()
@@ -305,7 +314,6 @@
 			return true;
 		return false;
 	}
-
 
 	void TileMap::add_tile(int i, int j, char association)
 	{

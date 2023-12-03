@@ -12,8 +12,8 @@ protected:
 	short int texture_size_W;
 	short int texture_size_H;
 	short int interaction;
-	bool player;
 	char association;
+	bool player;
 
 	void init_texture(std::string Name);
 

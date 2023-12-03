@@ -12,7 +12,6 @@ private:
 	sf::Texture background_T;
 	sf::Sprite backround_S;
 
-	std::vector <std::vector<Tile*>> generation_tilemap;
 	std::vector<std::vector<std::vector<Tile*>>> tilemap;
 
 	std::unordered_map<char, Tile*> tile_list;
@@ -29,7 +28,6 @@ private:
 	void init_background();
 	void init_coeff(sf::IntRect pos);
 
-	void init_generation_tilemap(float mapW, float mapH);
 	void init_tilemap(float mapW, float mapH);
 	
 	void init_tile_list();

@@ -6,14 +6,14 @@
         initVariables();
         initTexture();
         initSprite();
-        initWeapon();
+       // initWeapon();
         initAnimation();
         initPhysics();
     }
 
     void Player::initVariables(){
         animationState = PLAYER_ANIMATION_STATES::IDLE_RIGHT;
-        chosen_weapon = 0;
+       // chosen_weapon = 0;
     }
 
     void Player::initTexture(){
@@ -30,12 +30,12 @@
         //player_S.setPosition(67, 78);
     }
 
-    void Player::initWeapon() {
-        weapons.push_back(new Fist());
-        weapons.push_back(new Bow(player_S.getPosition(), player_S.getGlobalBounds(), sandbox));
-        weapons.push_back(new Sword(player_S.getPosition(), player_S.getGlobalBounds()));
-        weapons.push_back(new CombatStaff(player_S.getPosition(), player_S.getGlobalBounds(), sandbox));
-    }
+   // void Player::initWeapon() {
+   //    // weapons.push_back(new Fist());
+   //     weapons.push_back(new Bow(player_S.getPosition(), player_S.getGlobalBounds(), sandbox));
+   //     weapons.push_back(new Sword(player_S.getPosition(), player_S.getGlobalBounds()));
+   //     weapons.push_back(new CombatStaff(player_S.getPosition(), player_S.getGlobalBounds(), sandbox));
+   // }
 
     void Player::initAnimation(){
         animationSwitch = true;
@@ -43,8 +43,8 @@
     }
 
     void Player::initPhysics(){
-<<<<<<<<< Temporary merge branch 1
-        velocityMax = 4.f;
+    
+        velocityMax = 14.f;
         velocityMin = 0.5f;
         acceleration = 1.7f;
         deceleration = 0.77f;//0.77
@@ -66,15 +66,15 @@
 
     void Player::render(RenderTarget& target){
         target.draw(player_S);
-        weapons[chosen_weapon]->render(target);
-        renderProjectiles(target);
+       // weapons[chosen_weapon]->render(target);
+       // renderProjectiles(target);
     }
 
-    void Player::renderProjectiles(RenderTarget& target){
-        for (int i = 0; i < weapons.size(); i++) {
-            weapons[i]->renderProjectiles(target);
-        }
-    }
+   // void Player::renderProjectiles(RenderTarget& target){
+   //     for (int i = 0; i < weapons.size(); i++) {
+   //         weapons[i]->renderProjectiles(target);
+   //     }
+   // }
 
     void Player::resetJumpAccess(){
         onGround = true;
@@ -117,13 +117,13 @@
         flyVelocity = dir_y * gravity;
     }
 
-    void Player::update(RenderWindow* window, FloatRect view_cords){
-        updateMovement(window, view_cords);
+    void Player::update(){
+        updateMovement();
         updateAnimation();
         updatePhysics();
-        updateWeapon(window, view_cords);
-        updateProjectiles();
-        updatePresence();
+        //updateWeapon(window, view_cords);
+        //updateProjectiles();
+        //updatePresence();
     }
 
     void Player::updatePhysics(){
@@ -152,7 +152,7 @@
         else {
             flyVelocity = 0.f;
         }
-        std::cout << flyVelocity << std::endl;
+        //std::cout << flyVelocity << std::endl;
         // deceleration
         velocity *= deceleration;
        // std::cout << "x - " << getPosition().x << ", y - " << getPosition().y << std::endl;
@@ -168,7 +168,7 @@
         player_S.move(velocity);
     }
 
-    void Player::updateMovement(RenderWindow* window, FloatRect view_cords) {
+    void Player::updateMovement() {
         if (movingDirection== PLAYER_ANIMATION_STATES::MOVING_RIGHT) {
             animationState = PLAYER_ANIMATION_STATES::IDLE_RIGHT;
         }
@@ -177,18 +177,18 @@
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            walk(1.f);
+            walk(4.f);
             animationState = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-            walk(-1.f);
+            walk(-4.f);
             animationState = PLAYER_ANIMATION_STATES::MOVING_LEFT;
         }
 
         if (Keyboard::isKeyPressed(Keyboard::W)) {
             onGround = false;
             isJumping = false;
-            fly(-1.4f);
+            fly(-2.4f);
             animationState = PLAYER_ANIMATION_STATES::MOVING_UP;
         }
         else if (Keyboard::isKeyPressed(Keyboard::S)) {
@@ -200,12 +200,12 @@
         if (Keyboard::isKeyPressed(Keyboard::Space)) {
             jump(-20.0f);
         }
-        if (Mouse::isButtonPressed(Mouse::Left)) {
-            weapons[chosen_weapon]->attack(movingDirection, Vector2f(Mouse::getPosition(*window)), view_cords, true);
-        }
-        if (!Mouse::isButtonPressed(Mouse::Left)) {
-            weapons[chosen_weapon]->attack(movingDirection, Vector2f(Mouse::getPosition(*window)), view_cords, false);
-        }
+     //if (Mouse::isButtonPressed(Mouse::Left)) {
+     //    weapons[chosen_weapon]->attack(movingDirection, Vector2f(Mouse::getPosition(*window)), view_cords, true);
+     //}
+     //if (!Mouse::isButtonPressed(Mouse::Left)) {
+     //    weapons[chosen_weapon]->attack(movingDirection, Vector2f(Mouse::getPosition(*window)), view_cords, false);
+     //}
     }
 
     void Player::updateAnimation(){
@@ -326,37 +326,37 @@
         }
     }
 
-    void Player::updateWeapon(RenderWindow* window, FloatRect view_cords){
-        weapons[chosen_weapon]->update(player_S.getPosition(), movingDirection, window, view_cords);
-    }
+   // void Player::updateWeapon(RenderWindow* window, FloatRect view_cords){
+   //     weapons[chosen_weapon]->update(player_S.getPosition(), movingDirection, window, view_cords);
+   // }
 
-    void Player::updateProjectiles(){
-        for (int i = 0; i < weapons.size(); i++){
-            weapons[i]->updateProjectiles();
-        }
-    }
+   // void Player::updateProjectiles(){
+   //     for (int i = 0; i < weapons.size(); i++){
+   //         weapons[i]->updateProjectiles();
+   //     }
+   // }
 
     void Player::resetAnimationTimer(){
         animationTimer.restart();
         animationSwitch = true;
     }
 
-    void Player::change_weapon(short count){
-        chosen_weapon+=count;
-        if (chosen_weapon >= static_cast<short>(weapons.size())) {
-            chosen_weapon = 0;
-        }
-        if (chosen_weapon < 0) {
-            chosen_weapon = weapons.size() - 1;
-        }
-    }
+   // void Player::change_weapon(short count){
+   //     chosen_weapon+=count;
+   //     if (chosen_weapon >= static_cast<short>(weapons.size())) {
+   //         chosen_weapon = 0;
+   //     }
+   //     if (chosen_weapon < 0) {
+   //         chosen_weapon = weapons.size() - 1;
+   //     }
+   // }
 
     bool Player::updateCollisionX(){
         bool wasCollision = false;
         sf::Vector2f newPosition(getPosition().x, getPosition().y);
-        for (int i = player_S.getPosition().y / 73; i < (player_S.getPosition().y + player_S.getGlobalBounds().height) / 73; i++) {
-            for (int j = (player_S.getPosition().x + velocity.x) / 73; j < (player_S.getPosition().x + velocity.x + player_S.getGlobalBounds().width) / 73; j++) {
-                if (sandbox.isBlock(i, j)) {
+        for (int i = player_S.getPosition().y / 64; i < (player_S.getPosition().y + player_S.getGlobalBounds().height) / 64; i++) {
+            for (int j = (player_S.getPosition().x + velocity.x) / 64; j < (player_S.getPosition().x + velocity.x + player_S.getGlobalBounds().width) / 64; j++) {
+                if (sandbox->isBlock(i, j)) {
                     if (velocity.x > 0) {
                         wasCollision = true;
                         newPosition.x = j * sandbox->getSizeTexture() - player_S.getGlobalBounds().width;
@@ -376,9 +376,9 @@
         bool wasCollision = false;
         Vector2f newPosition(player_S.getPosition().x, player_S.getPosition().y);
 
-        for (int i = (player_S.getPosition().y + velocity.y) / 73; i < (player_S.getPosition().y + velocity.y + player_S.getGlobalBounds().height) / 73; i++) {
-            for (int j = player_S.getPosition().x / 73; j < (player_S.getPosition().x + player_S.getGlobalBounds().width) / 73; j++) {
-                if (sandbox.isBlock(i, j)) {
+        for (int i = (player_S.getPosition().y + velocity.y) / 64; i < (player_S.getPosition().y + velocity.y + player_S.getGlobalBounds().height) / 64; i++) {
+            for (int j = player_S.getPosition().x / 64; j < (player_S.getPosition().x + player_S.getGlobalBounds().width) / 64; j++) {
+                if (sandbox->isBlock(i, j)) {
                     if (velocity.y > 0) {
                         wasCollision = true;
                         newPosition.y = (i * sandbox->getSizeTexture() - player_S.getGlobalBounds().height);
@@ -410,7 +410,7 @@
                 indexJ[j1++] = j;
             }
         }
-        sandbox->updatePlayerPresence(indexI, indexJ);
+        //sandbox->updatePlayerPresence(indexI, indexJ);
     }
 
     void Player::resetNTHJump(){
