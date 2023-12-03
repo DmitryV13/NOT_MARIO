@@ -60,10 +60,10 @@
     <ClCompile Include="kusaka.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
-    <ClCompile Include="chubacabra.cpp">
+    <ClCompile Include="RedMutant.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
-    <ClCompile Include="Wolf_Boss.cpp">
+    <ClCompile Include="WolfBoss.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
   </ItemGroup>
@@ -110,10 +110,10 @@
     <ClInclude Include="kusaka.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="chubacabra.h">
+    <ClInclude Include="RedMutant.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Wolf_Boss.h">
+    <ClInclude Include="WolfBoss.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

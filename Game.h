@@ -4,8 +4,8 @@
 #include "MyView.h"
 #include "Eye_evil.h"
 #include "kusaka.h"
-#include "chubacabra.h"
-#include "Wolf_Boss.h"
+#include "RedMutant.h"
+#include "WolfBoss.h"
 
 class Game
 {
@@ -20,8 +20,8 @@ private:
 	Eye_evil* evil_Ball;
 	vector<Eye_evil*> evil_ball_vector;
 	vector<kusaka*> Kusaka_vector;
-	vector<chubacabra*> chubacabras_vector_;
-	vector<Wolf_Boss*> boss_vector;
+	vector<RedMutant*> chubacabras_vector_;
+	vector<WolfBoss*> boss_vector;
 	int num_of_enemy_{ 1 };
 
 

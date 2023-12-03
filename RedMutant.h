@@ -1,7 +1,7 @@
 #pragma once
 #include "Enemy.h"
 
-class chubacabra: public Enemy
+class RedMutant: public Enemy
 
 {
 private:
@@ -18,8 +18,8 @@ private:
 public:
 	
 	sf::Vector2f calculateRandomPosition(const sf::FloatRect& playerBounds, int radius);
-	explicit chubacabra(TileMap& map, Player&);
-	~chubacabra() override = default;
+	explicit RedMutant(TileMap& map, Player&);
+	~RedMutant() override = default;
 	void update_movement() override;
 	void update_animation() override;
 	void clear_shot() override;

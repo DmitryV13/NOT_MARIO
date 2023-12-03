@@ -12,7 +12,7 @@ using sf::Texture;
 using sf::IntRect;
 using sf::Clock;
 
-enum Enemy_ANIMATION_STATES
+enum ENEMY_ANIMATION_STATES
 {
 	ENEMY_IDLE = 0,
 	ENEMY_MOVING,

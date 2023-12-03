@@ -53,7 +53,7 @@ sf::Vector2f Enemy::generate_random_start_position(int mapWidth, int mapHeight)
 
 void Enemy::init_variables()
 {
-	animation_state = Enemy_ANIMATION_STATES::ENEMY_IDLE;
+	animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
 }
 
 Enemy::Enemy(TileMap& map, Player& pl)
@@ -167,14 +167,14 @@ void Enemy::walk(const float dir_x)
 	{
 		displacement.x = displacement_max * ((displacement.x > 0.f) ? 1.f : -1.f);
 	}
-	if (animation_counter_think > 2 && animation_state != Enemy_ANIMATION_STATES::ENEMY_ATTENTION)
+	if (animation_counter_think > 2 && animation_state != ENEMY_ANIMATION_STATES::ENEMY_ATTENTION)
 	{ 
 		displacement.x = 0;
-		animation_state = Enemy_ANIMATION_STATES::ENEMY_IDLE;
+		animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
 	}
-	else if (displacement.y >= gravity)animation_state = Enemy_ANIMATION_STATES::ENEMY_MOVING_DOWN;
-	else if (jump_tile)animation_state = Enemy_ANIMATION_STATES::ENEMY_JUMPING;
-	else animation_state = Enemy_ANIMATION_STATES::ENEMY_MOVING;
+	else if (displacement.y >= gravity)animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING_DOWN;
+	else if (jump_tile)animation_state = ENEMY_ANIMATION_STATES::ENEMY_JUMPING;
+	else animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;
 	
 
 	//logic when exposing a player

@@ -1,18 +1,18 @@
 #pragma once
 #include "Enemy.h"
-enum class Boss_STATE { SLEEP, IDLE, MOVING, JUMPING, ATTACKING, RETREATING, HOWL, TORMENT
+enum class BOSS_STATE { SLEEP, IDLE, MOVING, JUMPING, ATTACKING, RETREATING, HOWL, TORMENT
 };
 
-enum class PL_Side
+enum class PL_SIDE
 {
 	LEFT,
 	RIGHT
 };
 
-class Wolf_Boss :
+class WolfBoss :
 	public Enemy
 {
-	Boss_STATE boss_state;
+	BOSS_STATE boss_state;
 	Texture Wolf_Boss_t_;
 	bool player_l_r[2]{false};
 	int count_anger = 0;
@@ -31,8 +31,8 @@ class Wolf_Boss :
 	void init_physics() override;
 
 public:
-	explicit Wolf_Boss(TileMap& map, Player&);
-	~Wolf_Boss() override = default;
+	explicit WolfBoss(TileMap& map, Player&);
+	~WolfBoss() override = default;
 	void update_movement() override;
 	void update_animation() override;
 	void clear_shot() override;
@@ -45,7 +45,7 @@ public:
 	void jump(const float dir_y) override;
 	void shot_HOWL();
 
-	PL_Side getPlayerSide(float playerX, float enemyX);
+	PL_SIDE getPlayerSide(float playerX, float enemyX);
 	void look(float direction);
 	void bite();
 	void reset_step();

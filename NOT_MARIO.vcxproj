@@ -137,7 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="chubacabra.cpp" />
+    <ClCompile Include="RedMutant.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Eye_evil.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -155,10 +155,10 @@
     <ClCompile Include="TextureFactory.cpp" />
     <ClCompile Include="TileFactory.cpp" />
     <ClCompile Include="TileMap.cpp" />
-    <ClCompile Include="Wolf_Boss.cpp" />
+    <ClCompile Include="WolfBoss.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="chubacabra.h" />
+    <ClInclude Include="RedMutant.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Eye_evil.h" />
     <ClInclude Include="Game.h" />
@@ -173,7 +173,7 @@
     <ClInclude Include="TextureFactory.h" />
     <ClInclude Include="TileFactory.h" />
     <ClInclude Include="TileMap.h" />
-    <ClInclude Include="Wolf_Boss.h" />
+    <ClInclude Include="WolfBoss.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NOT_MARIO.rc" />

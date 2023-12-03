@@ -1,30 +1,30 @@
 #include "stdafx.h"
-#include "chubacabra.h"
+#include "RedMutant.h"
 
-chubacabra::chubacabra(TileMap& map, Player& pl) :Enemy(map, pl)
+RedMutant::RedMutant(TileMap& map, Player& pl) :Enemy(map, pl)
 {
 	{
-		chubacabra::init_texture();
-		chubacabra::init_sprite();
+		RedMutant::init_texture();
+		RedMutant::init_sprite();
 	}
 }
 
-void chubacabra::init_texture()
+void RedMutant::init_texture()
 {
-	if (!chubacabra_t_.loadFromFile("Textures/chubacabra.png"))
+	if (!chubacabra_t_.loadFromFile("Textures/RedMutant.png"))
 	{
 		std::cout << "Error -> Enemy_chubacabra -> couldn't load enemy_chubacabra texture" << std::endl;
 	}
 }
 
-void chubacabra::init_sprite()
+void RedMutant::init_sprite()
 {
 	Enemy_S.setTexture(chubacabra_t_);
 	current_frame = IntRect(0, 0, 64, 90);
 	Enemy_S.setTextureRect(current_frame);
 }
 
-void chubacabra::update_movement()
+void RedMutant::update_movement()
 {
 	//decision explorer
 	if (on_ground)
@@ -74,9 +74,9 @@ void chubacabra::update_movement()
 	walk(moving);
 }
 
-void chubacabra::update_animation()
+void RedMutant::update_animation()
 {
-	if (animation_state == Enemy_ANIMATION_STATES::ENEMY_MOVING)
+	if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_MOVING)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
@@ -105,7 +105,7 @@ void chubacabra::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == Enemy_ANIMATION_STATES::ENEMY_IDLE)
+	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_IDLE)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
@@ -135,7 +135,7 @@ void chubacabra::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == Enemy_ANIMATION_STATES::ENEMY_ATTENTION)
+	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_ATTENTION)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
@@ -166,7 +166,7 @@ void chubacabra::update_animation()
 		}
 	}
 
-	else if (animation_state == Enemy_ANIMATION_STATES::ENEMY_MOVING_DOWN)
+	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_MOVING_DOWN)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
@@ -196,7 +196,7 @@ void chubacabra::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == Enemy_ANIMATION_STATES::ENEMY_SHOT)
+	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_SHOT)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
@@ -225,7 +225,7 @@ void chubacabra::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == Enemy_ANIMATION_STATES::ENEMY_SLEEP)
+	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_SLEEP)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
@@ -262,18 +262,18 @@ void chubacabra::update_animation()
 	}
 }
 
-void chubacabra::shot()
+void RedMutant::shot()
 {
-	animation_state = Enemy_ANIMATION_STATES::ENEMY_SHOT;
+	animation_state = ENEMY_ANIMATION_STATES::ENEMY_SHOT;
 
 }
 
 
 
 
-void chubacabra::attack()
+void RedMutant::attack()
 {
-	animation_state = Enemy_ANIMATION_STATES::ENEMY_ATTENTION;
+	animation_state = ENEMY_ANIMATION_STATES::ENEMY_ATTENTION;
 	if (sting())
 	{
 		shot();
@@ -352,7 +352,7 @@ void chubacabra::attack()
 	}
 	// displacement.x = 0;
 }
-sf::Vector2f chubacabra::calculateRandomPosition(const sf::FloatRect& playerBounds, int jumpDistance)
+sf::Vector2f RedMutant::calculateRandomPosition(const sf::FloatRect& playerBounds, int jumpDistance)
 {
 	int maxAttempts = 100000;
 
@@ -393,11 +393,11 @@ sf::Vector2f chubacabra::calculateRandomPosition(const sf::FloatRect& playerBoun
 
 
 
-void chubacabra::clear_shot()
+void RedMutant::clear_shot()
 {
 }
 
-bool chubacabra::search_for_enemies()
+bool RedMutant::search_for_enemies()
 {
 	// int centerX = get_position().x / 60;
 	// int centerY = get_position().y / 60;
@@ -460,7 +460,7 @@ bool chubacabra::search_for_enemies()
 	return false;
 }
 
-void chubacabra::reset_attention()
+void RedMutant::reset_attention()
 {
 	displacement_max = 1.f;
 	displacement.x += moving * acceleration;

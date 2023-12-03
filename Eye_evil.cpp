@@ -79,7 +79,7 @@ void Eye_evil::update_movement()
 void Eye_evil::update_animation()
 {
 
-	if (animation_state == Enemy_ANIMATION_STATES::ENEMY_MOVING)
+	if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_MOVING)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
@@ -110,7 +110,7 @@ void Eye_evil::update_animation()
 
 		}
 	}
-	else if (animation_state == Enemy_ANIMATION_STATES::ENEMY_IDLE)
+	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_IDLE)
 	{
 
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
@@ -142,7 +142,7 @@ void Eye_evil::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == Enemy_ANIMATION_STATES::ENEMY_ATTENTION)
+	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_ATTENTION)
 	{
 
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
@@ -183,7 +183,7 @@ void Eye_evil::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == Enemy_ANIMATION_STATES::ENEMY_JUMPING)
+	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_JUMPING)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
@@ -214,7 +214,7 @@ void Eye_evil::update_animation()
 		}
 	}
 
-	else if (animation_state == Enemy_ANIMATION_STATES::ENEMY_MOVING_DOWN)
+	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_MOVING_DOWN)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
@@ -293,7 +293,7 @@ void Eye_evil::attack()
 		shot();
 	}
 
-	animation_state = Enemy_ANIMATION_STATES::ENEMY_ATTENTION;
+	animation_state = ENEMY_ANIMATION_STATES::ENEMY_ATTENTION;
 	
 	if (laser_existence()) {
 		laser->update();

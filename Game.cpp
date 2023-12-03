@@ -58,7 +58,7 @@ void Game::init_chubacabra()
 {
 	for (int i = 0; i < num_of_enemy_; i++)
 	{
-		chubacabra* enemy = new chubacabra(sandbox,*player);
+		RedMutant* enemy = new RedMutant(sandbox,*player);
 		chubacabras_vector_.push_back(enemy);
 	}
 }
@@ -67,7 +67,7 @@ void Game::init_Wolf_boss()
 {
 	for (int i = 0; i < num_of_enemy_; i++)
 	{
-		Wolf_Boss* enemy = new Wolf_Boss(sandbox,*player);
+		WolfBoss* enemy = new WolfBoss(sandbox,*player);
 		boss_vector.push_back(enemy);
 	}
 }
