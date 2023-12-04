@@ -163,6 +163,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="TileAnim.cpp" />
     <ClCompile Include="TileFactory.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="Weapon.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Sword.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="TileAnim.h" />
     <ClInclude Include="TileFactory.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="Weapon.h" />
