@@ -1,18 +1,45 @@
 #pragma once
 #include "Tile.h"
+#include "TileBox.h"
+#include "TileAnim.h"
 #include "TileFactory.h"
+#include <vector>
+
 
 class TileMap {
 private:
 
-	sf::Texture block_T[2];
-	sf::Sprite block_S[2];
 	sf::Texture background_T;
-	sf::Sprite background_S;
-	Tile tilemap[40][201];
+	sf::Sprite backround_S;
+
+	std::vector<std::vector<std::vector<Tile*>>> tilemap;
+
+	std::unordered_map<char, Tile*> tile_list;
+	std::unordered_map<char, Tile*> tile_list_back;
+	std::unordered_map<char, Tile*> tile_list_front;
+	std::vector<Tile*> tilebox;
+
 	float sizeTexture;
 	float mapW;
 	float mapH;
+
+	float coefficient_X = 1;
+	float coefficient_Y = 1;
+
+	void init_background();
+	void init_coeff(sf::IntRect pos);
+
+	void init_tilemap(float mapW, float mapH);
+
+	void init_tile_list();
+	void init_tile_list_back();
+	void init_tile_list_front();
+
+	Tile* give_tile(char letter);
+	Tile* give_tile_back(char letter);
+	Tile* give_tile_front(char letter);
+	Tile* init_tile_box(char letter);
+
 public:
 	TileMap();
 
@@ -21,14 +48,12 @@ public:
 	float getSizeTexture();
 	bool isBlock(int i, int j);
 
-	void updatePlayerPresence(int indexI[], int indexJ[]);
+	void add_tile(int i, int j, char association);
+	void delete_tile(int i, int j, char association);
 
-	void init_texture();
-	void render(sf::RenderTarget& target);
-
-
-	Tile& getTile();
-	Tile& setPosTile(int i, int j);
-	bool isOccupied(int i, int j);
+	void background_render(sf::RenderTarget& target, sf::FloatRect view_cords);
+	void first_render(sf::RenderTarget& target, sf::FloatRect view_cords);
+	void second_render(sf::RenderTarget& target, sf::FloatRect view_cords);
+	void update(sf::RenderTarget& target, sf::FloatRect view_cords);
 };
 
