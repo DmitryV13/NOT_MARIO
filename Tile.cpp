@@ -50,7 +50,7 @@
 
     void Tile::tile_animation() {}
 
-    void Tile::open_box() {}
+    void Tile::box_animation() {}
 
     short int Tile::get_interaction()
     {

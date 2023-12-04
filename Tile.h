@@ -26,6 +26,6 @@ public:
 	short int get_interaction();
 	char give_tile_association();
 	virtual void tile_animation();
-	virtual void open_box();
+	virtual void box_animation();
 	
 };

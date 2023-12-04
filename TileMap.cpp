@@ -4,7 +4,7 @@
 
 
 
-	TileMap::TileMap() : sizeTexture(64), mapH(50), mapW(1000)
+	TileMap::TileMap() : sizeTexture(64), mapH(500), mapW(5000)
 	{
 		init_background();
 		init_tile_list();
@@ -178,7 +178,8 @@
 	{
 		std::string name = "chest";
 		name += letter;
-		return new TileBox(name, 0, sizeTexture, sizeTexture, letter, 64, 4, 0.3);
+		tilebox.push_back(new TileBox(name, 0, sizeTexture, sizeTexture, letter, 64, 4, 0.3));
+		return *tilebox.cbegin();
 	}
 
 	Tile* TileMap::give_tile(char letter)
@@ -290,6 +291,9 @@
 		}
 		for (auto& it : tile_list_front) {
 			it.second->tile_animation();
+		}
+		for (auto& it : tilebox) {
+			it->box_animation();
 		}
 	}
 

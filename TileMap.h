@@ -17,6 +17,7 @@ private:
 	std::unordered_map<char, Tile*> tile_list;
 	std::unordered_map<char, Tile*> tile_list_back;
 	std::unordered_map<char, Tile*> tile_list_front;
+	std::vector<Tile*> tilebox;
 	
 	float sizeTexture;
 	float mapW;

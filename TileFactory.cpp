@@ -15,6 +15,12 @@ TileFactory::TileFactory(float temp_W, float temp_H, short int type_map, short i
     if (!type_template) {
         if (level == 1) {
             generation_map_Boev(generation_template);
+           //for (int i = 0; i < template_W; ++i) {
+           //    for (int j = 0; j < template_H; ++j) {
+           //        std::cout<< generation_template[i][j];
+           //    }
+           //    std::cout << std::endl;
+           //}
         }
         else if (level == 2) {
             for (int i = 0; i < template_W; ++i) {
@@ -146,7 +152,7 @@ void TileFactory::generation_map_Boev(std::vector<std::vector<char>>& map)
     {
         random_number = dist(gen);
         
-        if (random_number <= probability / 2 && i < (template_W - 10) && j >= 3)
+        if (random_number <= probability / 2 && i < (template_W - template_W / 3) && j >= 3)
         {
             i++;
             map[i][j] = 'A';
@@ -188,7 +194,7 @@ void TileFactory::generation_map_Boev(std::vector<std::vector<char>>& map)
             continue;
         }
         
-        if (random_number > probability / 2 && random_number <= probability && i > 10 && j >= 3)
+        if (random_number > probability / 2 && random_number <= probability && i > template_W / 3 && j >= 3)
         {
             i--;
             map[i][j] = 'L';
@@ -214,7 +220,7 @@ void TileFactory::generation_map_Boev(std::vector<std::vector<char>>& map)
             continue;
         }
         
-        if (random_number > probability && random_number <= 0.4 && i <= template_W - 10 && i >= 10 && j >= 3)
+        if (random_number > probability && random_number <= 0.4 && i <= template_W - (template_W / 3) && i > template_W / 3 && j >= 3)
         {
             
             if (random_number <= 0.335)
@@ -461,191 +467,87 @@ void TileFactory::generation_map_Boev(std::vector<std::vector<char>>& map)
 
 
 
-   probability = 0.70;
-   std::uniform_real_distribution<float> dist_j(20, 180);
-   int h = 5;
-   int l = dist_j(gen);
-//
-//
-// for (int ch = h; ch < 35; ch++)
-// {
-//     random_number = dist(gen);
-//
-//     if (random_number <= probability / 2 && l <= 180)
-//     {
-//         l++;
-//         for (int i = ch + 1; i >= ch - 1; i--)
-//         {
-//             for (int j = l - 1; j <= l + 1; j++)
-//             {
-//                 if (map[i][j] != 'W' && map[i][j] != 'w')
-//                 {
-//                     map[i][j] = ' ';
-//                     continue;
-//                 }
-//                 ch--;
-//             }
-//         }
-//         continue;
-//     }
-//     
-//     if (random_number > probability / 2 && random_number <= probability && l >= 20)
-//     {
-//         l--;
-//         for (int i = ch + 1; i >= ch - 1; i--)
-//         {
-//             for (int j = l - 1; j <= l + 1; j++)
-//             {
-//                 if (map[i][j] != 'W' && map[i][j] != 'w')
-//                 {
-//                     map[i][j] = ' ';
-//                     continue;
-//                 }
-//                 ch--;
-//             }
-//         }
-//         continue;
-//     }
-//     
-//     if (true)
-//     {
-//         for (int i = ch + 1; i >= ch - 1; i--)
-//         {
-//             for (int j = l - 1; j <= l + 1; j++)
-//             {
-//                 if (map[i][j] != 'W' && map[i][j] != 'w')
-//                 {
-//                     map[i][j] = ' ';
-//                     continue;
-//                 }
-//                 ch--;
-//             }
-//         }
-//         continue;
-//     }
-// }
-//
-// 
-// probability = 0.70;
-// h = 33;
-// 
-// for (int ch = l; ch >= 10; ch--)
-// {
-//     random_number = dist(gen);
-//     
-//     if (random_number <= probability / 2 && h >= 25)
-//     {
-//         h = h - 1;
-//         for (int i = h - 2; i <= h + 2; i++)
-//         {
-//             for (int j = ch - 2; j <= ch + 2; j++)
-//             {
-//                 if (map[i][j] == 'G')
-//                 {
-//                     map[i][j] = ' ';
-//                     continue;
-//                 }
-//             }
-//         }
-//         continue;
-//     }
-//     
-//     if (random_number > probability / 2 && random_number <= probability && h <= 35)
-//     {
-//         h = h + 1;
-//         for (int i = h - 2; i <= h + 2; i++)
-//         {
-//             for (int j = ch - 2; j <= ch + 2; j++)
-//             {
-//                 if (map[i][j] == 'G')
-//                 {
-//                     map[i][j] = ' ';
-//                     continue;
-//                 }
-//             }
-//         }
-//         continue;
-//     }
-//     
-//     if (true)
-//     {
-//         for (int i = h - 2; i <= h + 2; i++)
-//         {
-//             for (int j = ch - 2; j <= ch + 2; j++)
-//             {
-//                 if (map[i][j] == 'G')
-//                 {
-//                     map[i][j] = ' ';
-//                     continue;
-//                 }
-//             }
-//         }
-//         continue;
-//     }
-// }
-//
-// h = 33;
-// for (int ch = l; ch <= 190; ch++)
-// {
-//     random_number = dist(gen);
-//     
-//     if (random_number <= probability / 2 && h >= 25)
-//     {
-//         h = h - 1;
-//         for (int i = h - 2; i <= h + 2; i++)
-//         {
-//             for (int j = ch - 2; j <= ch + 2; j++)
-//             {
-//                 if (map[i][j] == 'G')
-//                 {
-//                     map[i][j] = ' ';
-//                     continue;
-//                 }
-//             }
-//         }
-//         continue;
-//     }
-//     
-//     if (random_number > probability / 2 && random_number <= probability && h <= 35)
-//     {
-//         h = h + 1;
-//         for (int i = h - 2; i <= h + 2; i++)
-//         {
-//             for (int j = ch - 2; j <= ch + 2; j++)
-//             {
-//                 if (map[i][j] == 'G')
-//                 {
-//                     map[i][j] = ' ';
-//                     continue;
-//                 }
-//             }
-//         }
-//         continue;
-//     }
-//     
-//     if (true)
-//     {
-//         for (int i = h - 2; i <= h + 2; i++)
-//         {
-//             for (int j = ch - 2; j <= ch + 2; j++)
-//             {
-//                 if (map[i][j] == 'G')
-//                 {
-//                     map[i][j] = ' ';
-//                     continue;
-//                 }
-//             }
-//         }
-//         continue;
-//     }
-// }
+   probability = 0.75;
+   std::uniform_real_distribution<float> dist_L(template_H - (template_H - 20), (template_H - 20));
+   std::uniform_real_distribution<float> dist_count(template_H / 12 , template_H / 10);
+   std::uniform_real_distribution<float> dist_H (template_W - (template_W / 4), template_W - (template_W / 5));
+   std::uniform_real_distribution<float> dist_count_dig(20, 150);
+   int h = template_W - template_W / 5;
+   int tmp_h;
+   int l;
+   int count = dist_count(gen);
+   int count_dig;
+
+   for (int curr = 0; curr <= count; curr++)
+   {
+       tmp_h = dist_H(gen);
+       l = dist_L(gen);
+       count_dig = dist_count_dig(gen);
+
+       while (count_dig > 0)
+       {
+           for (int i = tmp_h - 1; i <= tmp_h + 1; i++)
+           {
+               for (int j = l - 1; j <= l + 1; j++)
+               {
+                   if (map[i][j] == 'G')
+                       map[i][j] = ' ';
+               }
+           }
+           random_number = dist(gen);
+           if (random_number <= probability / 2 && tmp_h <= template_W - 6) tmp_h = tmp_h + 1;
+           else if (random_number <= probability && random_number > probability / 2 && tmp_h >= template_W / 2) tmp_h = tmp_h - 1;
+           else {}
+
+           if (l <= template_H - 10) l = l + 2;
+           else { break; }
+           count_dig--;
+       }
+   }
+
+   probability = 0.90;
+   count = template_H / 100;
+   int flag;
+   for (int curr = 0; curr <= count; curr++) 
+   {
+       tmp_h = template_W / 3;
+       l = dist_L(gen);
+       flag = 1;
+
+       while (tmp_h < h) 
+       {
+           for (int i = tmp_h - 2; i <= tmp_h + 2; i++)
+           {
+               for (int j = l - 2; j <= l + 2; j++)
+               {
+                   if (map[i][j] == 'W' || map[i][j] == 'w') flag *= 0; 
+               }
+           }
+           if (!flag) break;
+
+           for (int i = tmp_h - 1; i <= tmp_h + 1; i++)
+           {
+               for (int j = l - 1; j <= l + 1; j++)
+               {
+                       map[i][j] = ' ';
+               }
+           }
+           random_number = dist(gen);
+           if (random_number <= probability / 2 && l < template_H - 10) l = l + 1;
+           else if (random_number <= probability && random_number > probability / 2 && l > 10) l = l - 1;
+           else { }
+
+           tmp_h++;
+       }
+   }
 
 
-    std::uniform_real_distribution<float> dist_quantity(template_H - template_H / 2, template_H - template_H / 4);
-    std::uniform_real_distribution<double> dist_island_width(3, 15);
-    std::uniform_real_distribution<double> dist_island_deep(1, 3);
+
+    std::uniform_real_distribution<float> dist_quantity(template_H - template_H / 1.5, template_H - template_H / 3);
+    std::uniform_real_distribution<double> dist_island_width(3, 20);
+    std::uniform_real_distribution<double> dist_island_deep(1, 4);
     std::uniform_real_distribution<float> dist_h(3, template_W / 2.5);
-    std::uniform_real_distribution<float> dist_l(5, template_H - 20);
+    std::uniform_real_distribution<float> dist_l(5, template_H - 40);
     probability = 30;
     int quantity = dist_quantity(gen);
     for (int ch = 0; ch <= quantity; ch++) 
@@ -688,7 +590,6 @@ void TileFactory::generation_map_Boev(std::vector<std::vector<char>>& map)
         }
         else continue;
     }
-
 }
 
 
