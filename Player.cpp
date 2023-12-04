@@ -410,7 +410,7 @@
                 indexJ[j1++] = j;
             }
         }
-        sandbox->updatePlayerPresence(indexI, indexJ);
+        //sandbox->updatePlayerPresence(indexI, indexJ);
     }
 
     void Player::resetNTHJump(){

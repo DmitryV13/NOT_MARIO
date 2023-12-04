@@ -55,5 +55,8 @@ public:
 	void first_render(sf::RenderTarget& target, sf::FloatRect view_cords);
 	void second_render(sf::RenderTarget& target, sf::FloatRect view_cords);
 	void update(sf::RenderTarget& target, sf::FloatRect view_cords);
+
+	bool isOccupied(int i, int j);
+	void updatePlayerPresence(int indexI[], int indexJ[]);
 };
 
