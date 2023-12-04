@@ -151,7 +151,8 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_)
 	}
 
 	void Level::renderMap(){
-		sandbox.render(*window);
+		sandbox.background_render(*window, myView.getCurrentViewCords());
+		sandbox.first_render(*window, myView.getCurrentViewCords());
 	}
 
 	void Level::renderCursor(){
