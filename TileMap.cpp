@@ -10,7 +10,7 @@
 		init_tilemap(mapH, mapW);
 
 		int a = 0;
-		int b = 3;
+		int b = 2;
 
 		if (a) {
 			TileFactory factory(mapH, mapW, a, b);
