@@ -10,7 +10,7 @@
 		init_tilemap(mapH, mapW);
 
 		int a = 0;
-		int b = 2;
+		int b = 1;
 
 		if (a) {
 			TileFactory factory(mapH, mapW, a, b);
@@ -344,7 +344,6 @@
 			}
 		}
 		for (int i = 0; i < 6 && indexI[i] != -1 && indexJ[i] != -1; i++) {
-			//std::cout << " " << indexI[i] << " " << indexJ[i] << std::endl;
 			tilemap[indexI[i]][indexJ[i]][1]->setTilePresence(true);
 		}
 	}

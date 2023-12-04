@@ -118,11 +118,11 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_)
 	}
 
 	void Level::updateCollision(){
-		if ((player->getPosition().y + player->getGlobalBounds().height) > 2400.f) {
+		if ((player->getPosition().y + player->getGlobalBounds().height) > sandbox.getMapHeight()) {
 			player->resetVelocityY();
 			player->setPosition(
 				player->getPosition().x,
-				2400.f - player->getGlobalBounds().height);
+				sandbox.getMapHeight() - player->getGlobalBounds().height);
 			player->resetJumpAccess();
 		}
 		if (player->getPosition().y < 0.f) {
@@ -130,9 +130,9 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_)
 				player->getPosition().x,
 				0);
 		}
-		if ((player->getPosition().x + player->getGlobalBounds().width) > 12000.f) {
+		if ((player->getPosition().x + player->getGlobalBounds().width) > sandbox.getMapWidth()) {
 			player->setPosition(
-				12000.f - player->getGlobalBounds().width,
+				sandbox.getMapWidth() - player->getGlobalBounds().width,
 				player->getPosition().y);
 		}
 		if (player->getPosition().x < 0) {
@@ -168,6 +168,7 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_)
 	
 		renderMap();
 		renderPLayer();
+		sandbox.second_render(*window, myView.getCurrentViewCords());
 		//renderEvilBall();
 		//renderCursor();
 		window->setView(myView.view);
