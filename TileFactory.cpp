@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "TileFactory.h"
+#include <chrono>
     
     class coord {
     public:
@@ -464,7 +465,7 @@
             }
         }
     }
-    if (map[pos_y+3][pos_x] == ' ' && map[pos_y+3][pos_x + 1]) return;
+    if (map[pos_y+3][pos_x] == ' ' && map[pos_y+3][pos_x + 1]==' ') return;
 
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 4; j++) {
@@ -482,7 +483,7 @@
             }
         }
     }
-    if (map[pos_y+3][pos_x] == ' ' && map[pos_y+3][pos_x + 1]) return;
+    if (map[pos_y + 3][pos_x] == ' ' && map[pos_y + 3][pos_x + 1] == ' ') return;
 
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 4; j++) {
@@ -495,7 +496,7 @@
     void TileFactory::tunnels_generation(vector<int>& y, vector<vector<char>>& map) {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> distributionCount(3, 7);
+    std::uniform_int_distribution<int> distributionCount(3, 10);
     std::uniform_int_distribution<int> distributionX(2, m-4);
     int number_of_tunnels = distributionCount(gen);
 
@@ -527,6 +528,7 @@
     
     TileFactory::TileFactory(int n_, int m_) : n(n_), m(m_){
         srand(static_cast<unsigned int>(time(nullptr)));
+        auto start = std::chrono::high_resolution_clock::now();
         vector<vector<char>> map(n, vector<char>(m));
         //char map[n][m];
 
@@ -565,4 +567,7 @@
                 if (map[i][j] == 'P') { tile_map_inFactory[i][j] = tile_P; }
             }
         }
+        auto end = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> duration = end - start;
+        std::cout << "Time taken by function: " << duration.count() << " seconds" << std::endl;
     }
