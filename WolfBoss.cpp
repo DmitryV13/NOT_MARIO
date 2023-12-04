@@ -51,7 +51,7 @@ void WolfBoss::init_texture()
 void WolfBoss::init_sprite()
 {
 	Enemy_S.setTexture(Wolf_Boss_t_);
-	current_frame = IntRect(0, 0, 200, 180);
+	current_frame = IntRect(0, 0, 128, 128);
 	Enemy_S.setTextureRect(current_frame);
 }
 
@@ -63,22 +63,22 @@ void WolfBoss::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 200;
-				if (current_frame.left >= 200.f)
+				current_frame.left += 128;
+				if (current_frame.left >= 384.f)
 				{
 					current_frame.left = 0.f;
 				}
-				current_frame.width = 240;
+				current_frame.width = 128;
 				current_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 200;
-				if (current_frame.left >= 400.f)
+				current_frame.left += 128;
+				if (current_frame.left >= 512.f)
 				{
-					current_frame.left = 200.f;
+					current_frame.left = 128.f;
 				}
-				current_frame.width = -200;
+				current_frame.width = -128;
 				current_frame.top = 0;
 			}
 
@@ -92,22 +92,22 @@ void WolfBoss::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 200;
-				if (current_frame.left >= 200.f)
+				current_frame.left += 128;
+				if (current_frame.left >= 384.f)
 				{
 					current_frame.left = 0.f;
 				}
-				current_frame.width = 200;
+				current_frame.width = 128;
 				current_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 200;
-				if (current_frame.left >= 200.f)
+				current_frame.left += 128;
+				if (current_frame.left >= 512.f)
 				{
-					current_frame.left = 200.f;
+					current_frame.left = 128.f;
 				}
-				current_frame.width = -200;
+				current_frame.width = -128;
 				current_frame.top = 0;
 			}
 
@@ -121,22 +121,22 @@ void WolfBoss::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 200;
-				if (current_frame.left >= 200.f)
+				current_frame.left += 128;
+				if (current_frame.left >= 384.f)
 				{
 					current_frame.left = 0.f;
 				}
-				current_frame.width = 200;
+				current_frame.width = 128;
 				current_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 200;
-				if (current_frame.left >= 200.f)
+				current_frame.left += 128;
+				if (current_frame.left >= 512.f)
 				{
-					current_frame.left = 200.f;
+					current_frame.left = 128.f;
 				}
-				current_frame.width = -200;
+				current_frame.width = -128;
 				current_frame.top = 0;
 			}
 			Enemy_S.setTextureRect(current_frame);

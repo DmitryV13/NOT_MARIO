@@ -11,7 +11,7 @@ RedMutant::RedMutant(TileMap& map, Player& pl) :Enemy(map, pl)
 
 void RedMutant::init_texture()
 {
-	if (!chubacabra_t_.loadFromFile("Textures/RedMutant.png"))
+	if (!chubacabra_t_.loadFromFile("Textures/chubacabra.png"))
 	{
 		std::cout << "Error -> Enemy_chubacabra -> couldn't load enemy_chubacabra texture" << std::endl;
 	}
@@ -20,7 +20,7 @@ void RedMutant::init_texture()
 void RedMutant::init_sprite()
 {
 	Enemy_S.setTexture(chubacabra_t_);
-	current_frame = IntRect(0, 0, 64, 90);
+	current_frame = IntRect(0, 0, 60, 95);
 	Enemy_S.setTextureRect(current_frame);
 }
 
@@ -82,22 +82,22 @@ void RedMutant::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 64;
-				if (current_frame.left >= 704.f)
+				current_frame.left += 60;
+				if (current_frame.left >= 600.f)
 				{
 					current_frame.left = 0.f;
 				}
-				current_frame.width = 64;
+				current_frame.width = 60;
 				current_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 64;
-				if (current_frame.left >= 768.f)
+				current_frame.left += 60;
+				if (current_frame.left >= 660.f)
 				{
-					current_frame.left = 64.f;
+					current_frame.left = 60.f;
 				}
-				current_frame.width = -64;
+				current_frame.width = -60;
 				current_frame.top = 0;
 			}
 
@@ -111,22 +111,22 @@ void RedMutant::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 64;
-				if (current_frame.left >= 704.f)
+				current_frame.left += 60;
+				if (current_frame.left >= 600.f)
 				{
 					current_frame.left = 0.f;
 				}
-				current_frame.width = 64;
+				current_frame.width = 60;
 				current_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 64;
-				if (current_frame.left >= 768.f)
+				current_frame.left += 60;
+				if (current_frame.left >= 660.f)
 				{
-					current_frame.left = 64.f;
+					current_frame.left = 60.f;
 				}
-				current_frame.width = -64;
+				current_frame.width = -60;
 				current_frame.top = 0;
 			}
 
@@ -142,22 +142,22 @@ void RedMutant::update_animation()
 			count_atack++;
 			if (looks_to_the_right)
 			{
-				current_frame.left += 64;
-				if (current_frame.left >= 704.f)
+				current_frame.left += 60;
+				if (current_frame.left >= 600.f)
 				{
 					current_frame.left = 0.f;
 				}
-				current_frame.width = 64;
+				current_frame.width = 60;
 				current_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 64;
-				if (current_frame.left >= 768.f)
+				current_frame.left += 60;
+				if (current_frame.left >= 660.f)
 				{
-					current_frame.left = 64.f;
+					current_frame.left = 60.f;
 				}
-				current_frame.width = -64;
+				current_frame.width = -60;
 				current_frame.top = 0;
 			}
 
@@ -172,22 +172,22 @@ void RedMutant::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 64;
-				if (current_frame.left >= 704.f)
+				current_frame.left += 60;
+				if (current_frame.left >= 600.f)
 				{
 					current_frame.left = 0.f;
 				}
-				current_frame.width = 64;
+				current_frame.width = 60;
 				current_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 64;
-				if (current_frame.left >= 768.f)
+				current_frame.left += 60;
+				if (current_frame.left >= 660.f)
 				{
-					current_frame.left = 64.f;
+					current_frame.left = 60.f;
 				}
-				current_frame.width = -64;
+				current_frame.width = -60;
 				current_frame.top = 0;
 			}
 
@@ -202,22 +202,22 @@ void RedMutant::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 64;
-				if (current_frame.left >= 704.f)
+				current_frame.left += 60;
+				if (current_frame.left >= 600.f)
 				{
 					current_frame.left = 0.f;
 				}
-				current_frame.width = 64;
+				current_frame.width = 60;
 				current_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 64;
-				if (current_frame.left >= 768.f)
+				current_frame.left += 60;
+				if (current_frame.left >= 660.f)
 				{
-					current_frame.left = 64.f;
+					current_frame.left = 60.f;
 				}
-				current_frame.width = -64;
+				current_frame.width = -60;
 				current_frame.top = 0;
 			}
 
@@ -231,24 +231,23 @@ void RedMutant::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 64;
-				if (current_frame.left >= 704.f)
+				current_frame.left += 60;
+				if (current_frame.left >= 600.f)
 				{
 					current_frame.left = 0.f;
 				}
-				current_frame.width = 64;
+				current_frame.width = 60;
 				current_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 64;
-				if (current_frame.left >= 768.f)
+				current_frame.left += 60;
+				if (current_frame.left >= 660.f)
 				{
-					current_frame.left = 64.f;
+					current_frame.left = 60.f;
 				}
-				current_frame.width = -64;
+				current_frame.width = -60;
 				current_frame.top = 0;
-			
 			}
 			Enemy_S.setTextureRect(current_frame);
 			animation_timer.restart();
@@ -297,7 +296,7 @@ void RedMutant::attack()
 				looks_to_the_left = false;
 			}
 		}
-		if(count_atack > 10)//Зависит от количества кадров атаки
+		if(count_atack > 5)//Зависит от количества кадров атаки
 		{
 			count_atack = 0;
 			sf::Vector2f tmp = calculateRandomPosition(get_global_bounds(), 5);
