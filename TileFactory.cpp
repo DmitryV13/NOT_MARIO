@@ -15,12 +15,12 @@ TileFactory::TileFactory(float temp_W, float temp_H, short int type_map, short i
     if (!type_template) {
         if (level == 1) {
             generation_map_Boev(generation_template);
-           //for (int i = 0; i < template_W; ++i) {
-           //    for (int j = 0; j < template_H; ++j) {
-           //        std::cout<< generation_template[i][j];
-           //    }
-           //    std::cout << std::endl;
-           //}
+          //for (int i = 0; i < template_W; ++i) {
+          //    for (int j = 0; j < template_H; ++j) {
+          //        std::cout<< generation_template[i][j];
+          //    }
+          //    std::cout << std::endl;
+          //}
         }
         else if (level == 2) {
             for (int i = 0; i < template_W; ++i) {
@@ -48,6 +48,12 @@ TileFactory::TileFactory(float temp_W, float temp_H, short int type_map, short i
             artist_method(generation_template);
 
             fill_lakes_with_ground(generation_template);
+            for (int i = 0; i < template_W; ++i) {
+            for (int j = 0; j < template_H; ++j) {
+                std::cout<< generation_template[i][j];
+            }
+            std::cout << std::endl;
+        }
         }
         else {
             std::cout << "The generated map was not found. Map number 1 is being build." << std::endl;
@@ -1097,7 +1103,7 @@ void TileFactory::map_generation(vector<vector<char>>& template_2)
 
 void TileFactory::start_of_map_generation_(vector<vector<char>>& map, int& i, int& j, std::mt19937 gen)
 {
-    std::uniform_int_distribution<int> cofShift(3, 5);
+    std::uniform_int_distribution<int> cofShift(template_W*0.08, template_W*0.15);
 
     int min = 1;
     int max = 5;
@@ -1128,6 +1134,11 @@ void TileFactory::start_of_map_generation_(vector<vector<char>>& map, int& i, in
         else flatland(map, i, j, SHIFT, gen);
     }
     cavern(map, i, j, SHIFT, gen);
+    cavern(map, i, j, SHIFT, gen);
+    cavern(map, i, j, SHIFT, gen);
+
+
+
 }
 
 void TileFactory::flatland(vector<vector<char>>& map, int& i, int& j, int shift, std::mt19937 gen)
@@ -1138,13 +1149,13 @@ void TileFactory::flatland(vector<vector<char>>& map, int& i, int& j, int shift,
     for (int top = 0; top < shift && top < template_W; top++)
     {
         int right = j;
-        for (; right < j + shift && right < template_H; right++)
+        for (; right < j + shift &&right > 0 && right < template_H; right++)
         {
-            for (int down = i; down < template_W; down++) // ÇÀÏÎËÍÈÌ ÂÍÈÇ ÂÑÅ ÏÓÑÒÎÒÛ
+            for (int down = i; down > 0 && down < template_W; down++) // ÇÀÏÎËÍÈÌ ÂÍÈÇ ÂÑÅ ÏÓÑÒÎÒÛ
             {
                 if (map[down][right] == 'N')map[down][right] = 'B';
             }
-            for (int up = i - 1; up >= 0; up--) // ÇÀÏÎËÍÈÌ ÂÍÈÇ ÂÑÅ ââåðõ
+            for (int up = i - 1; up >= 0 && up < template_W; up--) // ÇÀÏÎËÍÈÌ ÂÍÈÇ ÂÑÅ ââåðõ
             {
                 if (map[up][right] == 'N')map[up][right] = ' ';
             }
@@ -1176,9 +1187,9 @@ void TileFactory::mountainous_terrain(vector<vector<char>>& map, int& i, int& j,
     for (int STEP = 0; STEP < shift; STEP++)
     {
         int right = j;
-        for (; right < j + shift && right < template_H; right++)
+        for (; right < j + shift && right >= 0 && right < template_H; right++)
         {
-            for (int down = i; down < template_W && down>0; down++) // ÇÀÏÎËÍÈÌ ÂÍÈÇ ÂÑÅ ÏÓÑÒÎÒÛ
+            for (int down = i; down < template_W && down>=0; down++) // ÇÀÏÎËÍÈÌ ÂÍÈÇ ÂÑÅ ÏÓÑÒÎÒÛ
             {
                 if (map[down][right] == 'N')map[down][right] = 'B';
             }
@@ -1189,13 +1200,13 @@ void TileFactory::mountainous_terrain(vector<vector<char>>& map, int& i, int& j,
             i += bool_tap;
         }
         j = right;
-        for (; right < j + shift / 2 && right < template_H; right++)
+        for (; right < j + shift / 2 && right >= 0 && right < template_H; right++)
         {
-            for (int down = i; down < template_W; down++) // ÇÀÏÎËÍÈÌ ÂÍÈÇ ÂÑÅ ÏÓÑÒÎÒÛ
+            for (int down = i; down >= 0 && down < template_W; down++) // ÇÀÏÎËÍÈÌ ÂÍÈÇ ÂÑÅ ÏÓÑÒÎÒÛ
             {
                 if (map[down][right] == 'N')map[down][right] = 'B';
             }
-            for (int up = i - 1; up >= 0; up--) // ÇÀÏÎËÍÈÌ ÂÍÈÇ ÂÑÅ ââåðõ
+            for (int up = i - 1; up < template_W && up >= 0; up--) // ÇÀÏÎËÍÈÌ ÂÍÈÇ ÂÑÅ ââåðõ
             {
                 if (map[up][right] == 'N')map[up][right] = ' ';
             }
@@ -1216,13 +1227,13 @@ void TileFactory::water_bodies(vector<vector<char>>& map, int& i, int& j, int sh
     for (int STEP = 0; STEP < 2; STEP++)
     {
         int right = j;
-        for (; right < j + shift && right < template_H; right++)
+        for (; right < j + shift && right >= 0 && right < template_H; right++)
         {
-            for (int down = i;  down > 0 && down < template_W; down++)
+            for (int down = i;  down >= 0 && down < template_W; down++)
             {
                 if (map[down][right] == 'N')map[down][right] = 'B'; 
             }
-            for (int up = i - 1; up >= 0; up--) 
+            for (int up = i - 1; up < template_W && up >= 0; up--)
 
             {
                 if (up == stat_i)map[up][right] = 'W';
@@ -1232,9 +1243,9 @@ void TileFactory::water_bodies(vector<vector<char>>& map, int& i, int& j, int sh
             i += bool_tap;
         }
         j = right;
-        for (; right < j + shift && right < template_H; right++)
+        for (; right < j + shift && right >= 0 && right < template_H; right++)
         {
-            for (int down = i;   down > 0 && down < template_W; down++)
+            for (int down = i;   down >= 0 && down < template_W; down++)
             {
                 if (map[down][right] == 'N')map[down][right] = 'B'; 
             }
@@ -1262,16 +1273,16 @@ void TileFactory::tunnel(vector<vector<char>>& map, int& i, int& j, int shift, s
 
     int right = j;
 
-    for (; right < j + shift * 3 && right < template_H; right++)
+    for (; right < j + shift * 3 && right >= 0 && right < template_H; right++)
     {
-        for (int down = i; down < template_W; down++) // ÇÀÏÎËÍÈÌ ÂÍÈÇ ÂÑÅ ÏÓÑÒÎÒÛ
+        for (int down = i; down >= 0 && down < template_W; down++) // ÇÀÏÎËÍÈÌ ÂÍÈÇ ÂÑÅ ÏÓÑÒÎÒÛ
         {
             if (map[down][right] == 'N')map[down][right] = 'B'; //ÁËÎÊ ÄËß ÇÅÌËÈ
         }
         count_emptiness = emptiness(gen);
         count_block = emptiness(gen);
 
-        for (int up = i - 1; up >= 0; up--) // ÇÀÏÎËÍÈÌ ÂÑÅ ââåðõ
+        for (int up = i - 1; up < template_W && up >= 0; up--) // ÇÀÏÎËÍÈÌ ÂÑÅ ââåðõ
         {
             map[up][right] = ' '; //ÁËÎÊ ïóñòîòû
         }
@@ -1287,27 +1298,28 @@ void TileFactory::wormhole(vector<vector<char>>& map, int& i, int& j, int shift,
     int stat_i = i;
     int stat_j = j;
 
-    if (i > 30)return;
+    if (i > template_W * 0.75)return;
     int right = j;
     int top = 0;
     int count = shift + 3;
 
 
-    for (; right < j + 4 && right < template_H; right++)
+    for (; right < j + 4 && right >= 0 && right < template_H; right++)
     {
         top = i;
 
-        for (int down = i + 1; down < template_W; down++) // ÇÀÏÎËÍÈÌ ÂÍÈÇ ÂÑÅ ÏÓÑÒÎÒÛ
+        for (int down = i + 1; down >= 0 && down < template_W; down++) // ÇÀÏÎËÍÈÌ ÂÍÈÇ ÂÑÅ ÏÓÑÒÎÒÛ
         {
             if (map[down][right] == 'N')map[down][right] = 'B'; //ÁËÎÊ ÄËß ÇÅÌËÈ
         }
-        for (; top < i + 5 && top < template_W; top++)
+        for (; top < i + 5 && top >= 0&& top < template_W; top++)
         {
             map[top][right] = ' ';
         }
-        for (int up = i - 1; up >= 0; up--) // ÇÀÏÎËÍÈÌ ÂÑÅ ââåðõ
+        for (int up = i - 1; up < template_W && up >= 0; up--) // ÇÀÏÎËÍÈÌ ÂÑÅ ââåðõ
 
         {
+
             if (map[up][right] == 'N')map[up][right] = ' '; //ÁËÎÊ ïóñòîòû
         }
     }
@@ -1317,10 +1329,10 @@ void TileFactory::wormhole(vector<vector<char>>& map, int& i, int& j, int shift,
         std::uniform_int_distribution<int> stp_d(3, 4);
         int stp = stp_d(gen);
         right = j;
-        for (; right > j - shift * 4 && right >= 0; right--)
+        for (; right > j - shift * 10 && right < template_H && right >= 0; right--)
         {
             top = i + 1;
-            for (; top < i + 7 && top < template_W - 1; top++)
+            for (; top < i + 7 && top >= 0 && top < template_W - 1; top++)
             {
                 map[top][right] = ' ';
             }
@@ -1336,10 +1348,10 @@ void TileFactory::wormhole(vector<vector<char>>& map, int& i, int& j, int shift,
         std::uniform_int_distribution<int> stp_d(3, 4);
         int stp = stp_d(gen);
         right = j;
-        for (; right < j + shift * 4 && right < template_H; right++)
+        for (; right < j + shift * 4 && right >= 0 && right < template_H; right++)
         {
             top = i + 1;
-            for (; top < i + 7 && top < template_W - 1; top++)
+            for (; top < i + 7 && top >= 0 && top < template_W - 1; top++)
             {
                 map[top][right] = ' ';
             }
@@ -1358,17 +1370,16 @@ void TileFactory::cavern(vector<vector<char>>& map, int& i, int& j, int shift, s
 {
     std::uniform_int_distribution<int> distribution(-1, 1);
     std::uniform_int_distribution<int> cavern_rand(template_W/2, 87 * template_W / 100);
-    std::uniform_int_distribution<int> cavern_rand_step(4, 6);
+    std::uniform_int_distribution<int> cavern_rand_step(template_W*0.1, template_W*0.15);
     int right = 0;
     int top = cavern_rand(gen);
     int step = cavern_rand_step(gen);
     i = top;
-    for (; right < template_H-1; right++)
+    for (; right < template_H-1 && right >= 0 ; right++)
     {
         step = cavern_rand_step(gen);
-        for (; top < i + step && top < template_W - 1 && top > 0; top++)
+        for (; top < i + step && top < template_W - 1 && top >= 0; top++)
         {
-            
             map[top][right] = ' ';
         }
         top = i;
@@ -1422,12 +1433,12 @@ void TileFactory::filter_map1(vector<vector<char>>& map)
 
 bool TileFactory::has_blocks_on_both_sides(vector<vector<char>>& map, int i, int j)
 {
-    if ((i > 0 && map[i - 1][j] != ' ') && (i < template_W - 1 && map[i + 1][j] != ' '))
+    if ((i  > 0 && map[i - 1][j] != ' ') && (i < template_W - 1 && map[i + 1][j] != ' '))
     {
         return true; //emptiness in one block vertically
     }
 
-    if ((j > 0 && map[i][j - 1] != ' ') && (j < template_H - 1 && map[i][j + 1] != ' '))
+    if ((j-1 > 0 && map[i][j - 1] != ' ') && (j < template_H - 1 && map[i][j + 1] != ' '))
     {
         return true; //voids in one block horizontally
     }

@@ -4,7 +4,7 @@
 
 
 
-	TileMap::TileMap() : sizeTexture(64), mapH(500), mapW(5000)
+	TileMap::TileMap() : sizeTexture(64), mapH(100), mapW(1000)
 	{
 		init_background();
 		init_tile_list();
@@ -13,7 +13,7 @@
 		init_tilemap(mapH, mapW);
 
 		int a = 0;
-		int b = 1;
+		int b = 3;
 		
 		if (a) {
 			TileFactory factory(mapH, mapW, a, b);
