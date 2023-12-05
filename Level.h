@@ -44,10 +44,10 @@ public:
 	void updatePlayer();
 	void updateView();
 	void updateCursor();
-	void updateCollision();
 	void updateEvilBall();
 	void updateGameMenu();
 	void updateGameState();
+	void updateMap();
 
 	void renderGameMenu();
 	void renderPLayer();

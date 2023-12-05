@@ -43,7 +43,7 @@
     }
 
     void Player::initPhysics(){
-        velocityMax = 14.f;
+        velocityMax = 34.f;
         velocityMin = 0.5f;
         acceleration = 1.7f;
         deceleration = 0.77f;//0.77
@@ -156,6 +156,9 @@
         velocity *= deceleration;
        // std::cout << "x - " << getPosition().x << ", y - " << getPosition().y << std::endl;
         // limits
+
+        updateCollision();
+
         if (std::abs(velocity.x) < velocityMin || updateCollisionX()) {
             velocity.x = 0.f;
         }
@@ -177,12 +180,12 @@
 
         if (Keyboard::isKeyPressed(Keyboard::D)) {
             movingDirection = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
-            walk(4.f);
+            walk(14.f);
             animationState = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
         }
         else if (Keyboard::isKeyPressed(Keyboard::A)) {
             movingDirection = PLAYER_ANIMATION_STATES::MOVING_LEFT;
-            walk(-4.f);
+            walk(-14.f);
             animationState = PLAYER_ANIMATION_STATES::MOVING_LEFT;
         }
 
@@ -394,6 +397,35 @@
         }
         setPosition(newPosition.x, newPosition.y);
         return wasCollision;
+    }
+
+    void Player::updateCollision() {
+        if ((getPosition().y + velocity.y + getGlobalBounds().height) > sandbox->getMapHeight()) {
+            resetVelocityY();
+            setPosition(
+                getPosition().x,
+                sandbox->getMapHeight() - getGlobalBounds().height);
+            velocity.y = 0;
+            resetJumpAccess();
+        }
+        if (getPosition().y + velocity.y < 0.f) {
+            setPosition(
+                getPosition().x,
+                0);
+            velocity.y = 0;
+        }
+        if ((getPosition().x + velocity.x + getGlobalBounds().width) > sandbox->getMapWidth()) {
+            setPosition(
+                sandbox->getMapWidth() - getGlobalBounds().width,
+                getPosition().y);
+            velocity.x = 0;
+        }
+        if (getPosition().x + velocity.x < 0) {
+            setPosition(
+                0,
+                getPosition().y);
+            velocity.x = 0;
+        }
     }
 
     void Player::updatePresence(){

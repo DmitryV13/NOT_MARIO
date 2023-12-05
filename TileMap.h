@@ -47,6 +47,7 @@ public:
 	float getMapHeight();
 	float getSizeTexture();
 	bool isBlock(int i, int j);
+	bool outOfMap(int i, int j);
 
 	void add_tile(int i, int j, char association);
 	void delete_tile(int i, int j, char association);

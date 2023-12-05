@@ -79,6 +79,7 @@ public:
     void updateProjectiles();
     bool updateCollisionX();
     bool updateCollisionY();
+    void updateCollision();
     void updatePresence();
 
     void render(RenderTarget& target);

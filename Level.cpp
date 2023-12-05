@@ -57,6 +57,10 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_)
 			}
 		}
 	}
+
+	void Level::updateMap(){
+		sandbox.update(*window, myView.getCurrentViewCords());
+	}
 	
 	void Level::initPlayer(){
 		player = new Player(sandbox);
@@ -70,8 +74,8 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_)
 		updatePlayer();
 		//updateEvilBall();
 		updateView();
-		updateCollision();
 		updateCursor();
+		updateMap();
 	}
 
 	void Level::updateEvents(){
@@ -115,31 +119,6 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_)
 		//sf::Vector2f p(sf::Mouse::getPosition(window));
 		//cursor->update(sf::Vector2f(sf::Mouse::getPosition(window)));
 		//std::cout << p.x << "  " << p.y<< std::endl;
-	}
-
-	void Level::updateCollision(){
-		if ((player->getPosition().y + player->getGlobalBounds().height) > sandbox.getMapHeight()) {
-			player->resetVelocityY();
-			player->setPosition(
-				player->getPosition().x,
-				sandbox.getMapHeight() - player->getGlobalBounds().height);
-			player->resetJumpAccess();
-		}
-		if (player->getPosition().y < 0.f) {
-			player->setPosition(
-				player->getPosition().x,
-				0);
-		}
-		if ((player->getPosition().x + player->getGlobalBounds().width) > sandbox.getMapWidth()) {
-			player->setPosition(
-				sandbox.getMapWidth() - player->getGlobalBounds().width,
-				player->getPosition().y);
-		}
-		if (player->getPosition().x < 0) {
-			player->setPosition(
-				0,
-				player->getPosition().y);
-		}
 	}
 	
 	void Level::renderGameMenu(){

@@ -124,6 +124,7 @@
 		}
 		updateCursor();
 		updateSelected();
+		
 	}
 
 	void Game::updateCursor(){

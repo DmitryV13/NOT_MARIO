@@ -48,12 +48,12 @@ TileFactory::TileFactory(float temp_W, float temp_H, short int type_map, short i
             artist_method(generation_template);
 
             fill_lakes_with_ground(generation_template);
-            for (int i = 0; i < template_W; ++i) {
-                for (int j = 0; j < template_H; ++j) {
-                    std::cout << generation_template[i][j];
-                }
-                std::cout << std::endl;
-            }
+            //for (int i = 0; i < template_W; ++i) {
+            //    for (int j = 0; j < template_H; ++j) {
+            //        std::cout << generation_template[i][j];
+            //    }
+            //    std::cout << std::endl;
+            //}
         }
         else {
             std::cout << "The generated map was not found. Map number 1 is being build." << std::endl;
@@ -1060,7 +1060,7 @@ void TileFactory::right_zigzag(int pos_x, int pos_y, vector<vector<char>>& map) 
 void TileFactory::tunnels_generation(vector<int>& y, vector<vector<char>>& map) {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> distributionCount(3, 7);
+    std::uniform_int_distribution<int> distributionCount(3, 27);
     std::uniform_int_distribution<int> distributionX(2, template_H - 4);
     int number_of_tunnels = distributionCount(gen);
 
@@ -1097,7 +1097,7 @@ void TileFactory::map_generation(vector<vector<char>>& template_2)
 {
     std::random_device rd;
     std::mt19937 gen(rd());
-    int i = rand() % 10 + 15, j = 0;
+    int i = rand() % (int)(template_W * 0.25) + (int)(template_W * 0.38), j = 0;
     start_of_map_generation_(template_2, i, j, gen);
 }
 
@@ -1212,8 +1212,8 @@ void TileFactory::mountainous_terrain(vector<vector<char>>& map, int& i, int& j,
             }
         }
         j = right;
-        if (i >= 10 && i <= 25) bool_tap = distribution(gen);
-        else if (i >= 25) bool_tap = -1;
+        if (i >= template_W * 0.25 && i <= template_W*0.65) bool_tap = distribution(gen);
+        else if (i >= template_W * 0.65) bool_tap = -1;
         else bool_tap = 1;
     }
 }
@@ -1264,7 +1264,7 @@ void TileFactory::water_bodies(vector<vector<char>>& map, int& i, int& j, int sh
 void TileFactory::tunnel(vector<vector<char>>& map, int& i, int& j, int shift, std::mt19937 gen)
 {
     std::uniform_int_distribution<int> distribution(-1, 1);
-    std::uniform_int_distribution<int> emptiness(3, 5);
+    std::uniform_int_distribution<int> emptiness(template_W*0.08, template_W*0.15);
     int bool_tap = 1;
     int stat_i = i;
     i += bool_tap;

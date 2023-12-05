@@ -32,11 +32,11 @@
 	}
 
 	bool Projectile::updateCollision(){
-		for (int i = (projectile_S.getPosition().y-4) / 60; i < (projectile_S.getPosition().y + 3) / 60; i++) {
-			for (int j = (projectile_S.getPosition().x-4) / 60; j < (projectile_S.getPosition().x + 3) / 60; j++) {
-				if (sandbox->isBlock(i, j)) {
+		for (int i = (projectile_S.getPosition().y-4) / 64; i < (projectile_S.getPosition().y + 3) / 64; i++) {
+			for (int j = (projectile_S.getPosition().x-4) / 64; j < (projectile_S.getPosition().x + 3) / 64; j++) {
+				if (sandbox->outOfMap(i, j) && sandbox->isBlock(i, j)) {
 					FloatRect bul = projectile_S.getGlobalBounds();
-					FloatRect til(j*60, i*60, 60, 60);
+					FloatRect til(j*64, i*64, 64, 64);
 					if (bul.intersects(til)) {
 						return true;
 					}

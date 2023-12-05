@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "TileMap.h"
 
-	TileMap::TileMap() : sizeTexture(64), mapH(100), mapW(1000)
+	TileMap::TileMap() : sizeTexture(64), mapH(100), mapW(100)
 	{
 		init_background();
 		init_tile_list();
@@ -10,7 +10,7 @@
 		init_tilemap(mapH, mapW);
 
 		int a = 0;
-		int b = 1;
+		int b = 2;
 
 		if (a) {
 			TileFactory factory(mapH, mapW, a, b);
@@ -108,8 +108,8 @@
 	{
 		//Основные блоки
 		tile_list['A'] = new Tile("grass_tile", 1, sizeTexture, sizeTexture, 'A');
-		tile_list['C'] = new Tile("gass_tile_on_the_left", 1, sizeTexture, sizeTexture, 'C');
-		tile_list['D'] = new Tile("gass_tile_on_the_right", 1, sizeTexture, sizeTexture, 'D');
+		tile_list['C'] = new Tile("grass_tile_on_the_left", 1, sizeTexture, sizeTexture, 'C');
+		tile_list['D'] = new Tile("grass_tile_on_the_right", 1, sizeTexture, sizeTexture, 'D');
 		tile_list['L'] = new Tile("grass_tile_in_corner_left", 1, sizeTexture, sizeTexture, 'L');
 		tile_list['P'] = new Tile("grass_tile_in_corner_right", 1, sizeTexture, sizeTexture, 'P');
 		tile_list['B'] = new Tile("earth", 1, sizeTexture, sizeTexture, 'B');
@@ -149,8 +149,8 @@
 	{
 		//Блоки заднего фона, отображаемые при разрушение блока, либо расположенные разработчиком в местах где они необходимы(пещеры, ямы и другое)
 		tile_list_back['A'] = new Tile("grass_tile_back", 0, sizeTexture, sizeTexture, 'A');
-		tile_list_back['C'] = new Tile("gass_tile_on_the_left_back", 0, sizeTexture, sizeTexture, 'C');
-		tile_list_back['D'] = new Tile("gass_tile_on_the_right_back", 0, sizeTexture, sizeTexture, 'D');
+		tile_list_back['C'] = new Tile("grass_tile_on_the_left_back", 0, sizeTexture, sizeTexture, 'C');
+		tile_list_back['D'] = new Tile("grass_tile_on_the_right_back", 0, sizeTexture, sizeTexture, 'D');
 		tile_list_back['L'] = new Tile("grass_tile_in_corner_left_back", 0, sizeTexture, sizeTexture, 'L');
 		tile_list_back['P'] = new Tile("grass_tile_in_corner_right_back", 0, sizeTexture, sizeTexture, 'P');
 		tile_list_back['B'] = new Tile("earth_back", 0, sizeTexture, sizeTexture, 'B');
@@ -314,6 +314,16 @@
 		if (tilemap[i][j][1]->get_interaction() == 1)
 			return true;
 		return false;
+	}
+
+	bool TileMap::outOfMap(int i, int j){
+		std::cout << 6 << std::endl;
+		if (i<0 || j>=mapH || j<0 || i>=mapW) {
+			std::cout << 5 << std::endl;
+			return false;
+		}
+		
+		return true;
 	}
 
 	void TileMap::add_tile(int i, int j, char association)
