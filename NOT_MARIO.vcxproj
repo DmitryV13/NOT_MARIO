@@ -172,6 +172,7 @@
   <ItemGroup>
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="Bow.h" />
+    <ClInclude Include="MENU_STATE.h" />
     <ClInclude Include="ORIENTATION.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Button.h" />

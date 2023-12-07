@@ -2,7 +2,7 @@
 #include "Projectile.h"
 
 	Projectile::Projectile(Vector2f init_pos, Vector2f dest_pos_, TileMap* sandbox_) : dest_pos(dest_pos_), speed(10), sandbox(sandbox_){
-		std::cout << init_pos.x << "  " << init_pos.y << std::endl;
+		//std::cout << init_pos.x << "  " << init_pos.y << std::endl;
 		initTexture();
 		initSprite(init_pos);
 		initVariables();

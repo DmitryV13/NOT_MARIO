@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #include "Level.h"
 
-Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_)
+Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level)
 	:window(window_)
 	,screenWidth(screenWidth_)
 	,screenHeight(screenHeight_)
 	,myView(sandbox, screenWidth_, screenHeight_)
-	,sandbox()
+	,sandbox(level)
 	,game_state(GAME_STATE::FINISHED) {
 	game_menu = new GameMenu(window, sandbox.getMapWidth(), sandbox.getMapHeight(), &game_state);
 		initPlayer();

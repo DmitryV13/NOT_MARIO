@@ -29,6 +29,12 @@ TileFactory::TileFactory(float temp_W, float temp_H, short int type_map, short i
                 }
             }
             generation_map_Voicu(generation_template);
+            for (int i = 0; i < template_W; ++i) {
+                for (int j = 0; j < template_H; ++j) {
+                    std::cout<< generation_template[i][j];
+                }
+                std::cout << std::endl;
+            }
         }
         else if (level == 3) {
             for (int i = 0; i < template_W; i++) {
@@ -48,12 +54,6 @@ TileFactory::TileFactory(float temp_W, float temp_H, short int type_map, short i
             artist_method(generation_template);
 
             fill_lakes_with_ground(generation_template);
-            //for (int i = 0; i < template_W; ++i) {
-            //    for (int j = 0; j < template_H; ++j) {
-            //        std::cout << generation_template[i][j];
-            //    }
-            //    std::cout << std::endl;
-            //}
         }
         else {
             std::cout << "The generated map was not found. Map number 1 is being build." << std::endl;
@@ -1022,14 +1022,14 @@ void TileFactory::upward(int pos_x, int pos_y, vector<vector<char>>& map) {
 }
 
 void TileFactory::left_zigzag(int pos_x, int pos_y, vector<vector<char>>& map) {
-    for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < 4; j++) {
-            if (pos_x + i <= 1) {
+    //for (int i = 0; i < 2; i++) {
+        //for (int j = 0; j < 4; j++) {
+            if (pos_x + 1 <= 2) {//i
                 return right_zigzag(pos_x + 2, pos_y - 2, map);
             }
-        }
-    }
-    if (map[pos_y + 3][pos_x] == ' ' && map[pos_y + 3][pos_x + 1]) return;
+        //}
+    //}
+    if (map[pos_y + 3][pos_x] == ' ' && map[pos_y + 3][pos_x + 1] == ' ') return;
 
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 4; j++) {
@@ -1040,14 +1040,14 @@ void TileFactory::left_zigzag(int pos_x, int pos_y, vector<vector<char>>& map) {
 }
 
 void TileFactory::right_zigzag(int pos_x, int pos_y, vector<vector<char>>& map) {
-    for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < 4; j++) {
-            if (pos_x + i > template_H - 2) {
+    //for (int i = 0; i < 2; i++) {
+        //for (int j = 0; j < 4; j++) {
+            if (pos_x + 2 > template_H - 3) {//i
                 return left_zigzag(pos_x - 2, pos_y - 2, map);
             }
-        }
-    }
-    if (map[pos_y + 3][pos_x] == ' ' && map[pos_y + 3][pos_x + 1]) return;
+        //}
+    //}
+    if (map[pos_y + 3][pos_x] == ' ' && map[pos_y + 3][pos_x + 1] == ' ') return;
 
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 4; j++) {

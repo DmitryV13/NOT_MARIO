@@ -34,7 +34,7 @@ private:
 	void initView();
 	void initEvilBall();
 public:
-	Level(RenderWindow* window_, double screenWidth_, double screenHeight_);
+	Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level);
 	~Level();
 
 

@@ -41,7 +41,7 @@ private:
 	Tile* init_tile_box(char letter);
 
 public:
-	TileMap();
+	TileMap(short level);
 
 	float getMapWidth();
 	float getMapHeight();

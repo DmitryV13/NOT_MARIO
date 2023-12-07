@@ -94,6 +94,9 @@
     <Filter Include="Header Files\GameObjects\Artificial\Weapons\BareHands">
       <UniqueIdentifier>{25eb6e62-918e-40ad-84d9-392399232a65}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Map\Tile">
+      <UniqueIdentifier>{983eef85-28b5-4606-bc52-d28ddf7815e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyView.cpp">
@@ -127,9 +130,6 @@
       <Filter>Source Files\Map</Filter>
     </ClCompile>
     <ClCompile Include="TileMap.cpp">
-      <Filter>Source Files\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="Tile.cpp">
       <Filter>Source Files\Map</Filter>
     </ClCompile>
     <ClCompile Include="GameMenu.cpp">
@@ -173,6 +173,15 @@
     </ClCompile>
     <ClCompile Include="Arrow.cpp">
       <Filter>Source Files\GameObjects\Artificial\Weapons\RangedWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="TileBox.cpp">
+      <Filter>Source Files\Map\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Source Files\Map\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="TileAnim.cpp">
+      <Filter>Source Files\Map\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -261,6 +270,15 @@
       <Filter>Header Files\GameObjects\Artificial\Weapons\RangedWeapons</Filter>
     </ClInclude>
     <ClInclude Include="ORIENTATION.h">
+      <Filter>Header Files\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="TileAnim.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TileBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MENU_STATE.h">
       <Filter>Header Files\Enums</Filter>
     </ClInclude>
   </ItemGroup>

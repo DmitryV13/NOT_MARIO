@@ -104,7 +104,6 @@
 					if (currentFrame.left == 180) {
   						bow_pulled = true;
 					}
-					std::cout << arrows.size() << std::endl;
 					currentFrame.width = -36;
 					animationTimer.restart();
 					bow_S.setTextureRect(currentFrame);

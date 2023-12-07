@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "TileMap.h"
 
-	TileMap::TileMap() : sizeTexture(64), mapH(100), mapW(100)
+	TileMap::TileMap(short level) : sizeTexture(64), mapH(80), mapW(200)
 	{
 		init_background();
 		init_tile_list();
@@ -10,7 +10,7 @@
 		init_tilemap(mapH, mapW);
 
 		int a = 0;
-		int b = 2;
+		int b = level;
 
 		if (a) {
 			TileFactory factory(mapH, mapW, a, b);
@@ -89,8 +89,8 @@
 
 	void TileMap::init_coeff(sf::IntRect pos)
 	{
-		coefficient_X = static_cast <float> (sizeTexture * mapW) / (static_cast<float> (pos.width) - 1600);
-		coefficient_Y = static_cast <float> (sizeTexture * mapH) / (static_cast<float> (pos.height) - 900);
+		coefficient_X = static_cast <float> (sizeTexture * mapW) / (static_cast<float> (pos.width) - 1920);
+		coefficient_Y = static_cast <float> (sizeTexture * mapH) / (static_cast<float> (pos.height) - 1080);
 	}
 
 	void TileMap::init_tilemap(float mapH, float mapW)
@@ -317,9 +317,7 @@
 	}
 
 	bool TileMap::outOfMap(int i, int j){
-		std::cout << 6 << std::endl;
-		if (i<0 || j>=mapH || j<0 || i>=mapW) {
-			std::cout << 5 << std::endl;
+		if (i<0 || i>=mapH || j<0 || j>=mapW) {
 			return false;
 		}
 		
