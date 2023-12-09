@@ -29,12 +29,12 @@ TileFactory::TileFactory(float temp_W, float temp_H, short int type_map, short i
                 }
             }
             generation_map_Voicu(generation_template);
-            for (int i = 0; i < template_W; ++i) {
-                for (int j = 0; j < template_H; ++j) {
-                    std::cout<< generation_template[i][j];
-                }
-                std::cout << std::endl;
-            }
+            //for (int i = 0; i < template_W; ++i) {
+            //    for (int j = 0; j < template_H; ++j) {
+            //        std::cout<< generation_template[i][j];
+            //    }
+            //    std::cout << std::endl;
+            //}
         }
         else if (level == 3) {
             for (int i = 0; i < template_W; i++) {
