@@ -381,7 +381,7 @@ void WolfBoss::update_movement()
 					boss_state = BOSS_STATE::RETREATING;
 				}
 				
-				if ((std::abs(player_->getPosition().x - get_position().x) < 7 * 60) && (std::abs(player_->getPosition().x - get_position().x) > 3 * 60)
+				if ((std::abs(player_->getPosition().x - get_position().x) < 7 * 64) && (std::abs(player_->getPosition().x - get_position().x) > 3 * 64)
 					&& ((getPlayerSide(player_->getPosition().x, get_position().x) == PL_SIDE::LEFT && looks_to_the_left) ||
 						(getPlayerSide(player_->getPosition().x, get_position().x) == PL_SIDE::RIGHT && looks_to_the_right)) || pl_cont_jump)
 				{
@@ -539,7 +539,7 @@ void WolfBoss::update_movement()
 	if (!search_for_enemies() && awakening)
 
 	{
-		std::cout << "pppppppppp";
+		//std::cout << "pppppppppp";
 
 		if (on_ground)
 		{
@@ -706,8 +706,8 @@ void WolfBoss::clear_shot()
 
 bool WolfBoss::search_for_enemies()
 {
-	int centerX = get_position().x / 60;
-	int centerY = get_position().y / 60;
+	int centerX = get_position().x / 64;
+	int centerY = get_position().y / 64;
 	int dist = 30;
 
 

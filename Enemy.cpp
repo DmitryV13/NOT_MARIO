@@ -12,11 +12,11 @@ sf::Vector2f Enemy::generate_random_start_position(int mapWidth, int mapHeight)
 
 	for (int i = 0; i < maxAttempts; i++)
 	{
-		int x = 60 + rand() % (mapWidth - 60 * 2 + 1);
-		int y = 60 + rand() % (mapHeight - 60 * 2 + 1);
+		int x = 64 + rand() % (mapWidth - 64 * 2 + 1);
+		int y = 64 + rand() % (mapHeight - 64 * 2 + 1);
 
-		int centerX = (x + 60) / 60;
-		int centerY = (y + 60) / 60;
+		int centerX = (x + 64) / 64;
+		int centerY = (y + 64) / 64;
 
 		bool collisionDetected = false;
 		if (sandbox->isBlock(centerY, centerX))
@@ -29,8 +29,8 @@ sf::Vector2f Enemy::generate_random_start_position(int mapWidth, int mapHeight)
 			{
 				for (int dy = -3; dy <= 3; dy++)
 				{
-					int blockX = (x + dx) / 60;
-					int blockY = (y + dy) / 60;
+					int blockX = (x + dx) / 64;
+					int blockY = (y + dy) / 64;
 					if (sandbox->isBlock(blockY, blockX))
 					{
 						collisionDetected = true;
@@ -212,8 +212,8 @@ void Enemy::jump(const float dir_y)
 
 bool Enemy::player_contact()
 {
-	int centerX = get_position().x / 60;
-	int centerY = get_position().y / 60;
+	int centerX = get_position().x / 64;
+	int centerY = get_position().y / 64;
 	int l = 2;
 	if(looks_to_the_right)
 	for (int i = centerY - 5; i <= centerY + 5; i++)
@@ -298,11 +298,11 @@ bool Enemy::update_collision_x()
 {
 	bool wasCollision = false;
 	sf::Vector2f newPosition(get_position().x, get_position().y);
-	for (int i = Enemy_S.getPosition().y / 60; i < (Enemy_S.getPosition().y + Enemy_S.getGlobalBounds().height) / 60; i
+	for (int i = Enemy_S.getPosition().y / 64; i < (Enemy_S.getPosition().y + Enemy_S.getGlobalBounds().height) / 64; i
 	     ++)
 	{
-		for (int j = (Enemy_S.getPosition().x + displacement.x) / 60; j < (Enemy_S.getPosition().x + displacement.x +
-			     Enemy_S.getGlobalBounds().width) / 60; j++)
+		for (int j = (Enemy_S.getPosition().x + displacement.x) / 64; j < (Enemy_S.getPosition().x + displacement.x +
+			     Enemy_S.getGlobalBounds().width) / 64; j++)
 		{
 			if (sandbox->isBlock(i, j) || j <= 0 || j >= 200)
 			{
@@ -327,11 +327,11 @@ bool Enemy::update_collision_x_jump()
 {
 	bool wasCollision = false;
 	sf::Vector2f newPosition(get_position().x, get_position().y);
-	for (int i = Enemy_S.getPosition().y / 60; i < (Enemy_S.getPosition().y + Enemy_S.getGlobalBounds().height) / 60; i
+	for (int i = Enemy_S.getPosition().y / 64; i < (Enemy_S.getPosition().y + Enemy_S.getGlobalBounds().height) / 64; i
 	     ++)
 	{
-		for (int j = (Enemy_S.getPosition().x + displacement.x) / 60; j < (Enemy_S.getPosition().x + displacement.x +
-			     Enemy_S.getGlobalBounds().width) / 60; j++)
+		for (int j = (Enemy_S.getPosition().x + displacement.x) / 64; j < (Enemy_S.getPosition().x + displacement.x +
+			     Enemy_S.getGlobalBounds().width) / 64; j++)
 		{
 			if (sandbox->isBlock(i - 1, j) || j <= 0 || j >= 200)
 			{
@@ -359,10 +359,10 @@ bool Enemy::update_collision_y()
 
 	sf::Vector2f newPosition(Enemy_S.getPosition().x, Enemy_S.getPosition().y);
 
-	for (int i = (Enemy_S.getPosition().y + displacement.y) / 60; i < (Enemy_S.getPosition().y + displacement.y +
-		     Enemy_S.getGlobalBounds().height) / 60; i++)
+	for (int i = (Enemy_S.getPosition().y + displacement.y) / 64; i < (Enemy_S.getPosition().y + displacement.y +
+		     Enemy_S.getGlobalBounds().height) / 64; i++)
 	{
-		for (int j = Enemy_S.getPosition().x / 60; j < (Enemy_S.getPosition().x + Enemy_S.getGlobalBounds().width) / 60;
+		for (int j = Enemy_S.getPosition().x / 64; j < (Enemy_S.getPosition().x + Enemy_S.getGlobalBounds().width) / 64;
 		     j++)
 		{
 			if (sandbox->isBlock(i, j))

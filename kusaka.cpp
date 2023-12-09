@@ -370,8 +370,8 @@ bool kusaka::search_for_enemies()
 	// }
 	//
 	// return false;
-	int centerX = get_position().x / 60;
-	int centerY = get_position().y / 60;
+	int centerX = get_position().x / 64;
+	int centerY = get_position().y / 64;
 
 
 	for (int i = centerY - 1; i <= centerY + 1; i++)

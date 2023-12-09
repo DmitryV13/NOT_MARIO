@@ -257,7 +257,7 @@ void Eye_evil::shot()
 	if (looks_to_the_right)
 	{
 		laserFL = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x, Enemy_S.getPosition().y, looks_to_the_right);
-		laser = new laser_weapon(*sandbox, 2, Enemy_S.getPosition().x + 60, Enemy_S.getPosition().y, looks_to_the_right);
+		laser = new laser_weapon(*sandbox, 2, Enemy_S.getPosition().x + 64, Enemy_S.getPosition().y, looks_to_the_right);
 		//laser_weapon* shot_las = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x, Enemy_S.getPosition().y, looks_to_the_right);
 		/*laser.push_back(*shot_las);
 
@@ -272,7 +272,7 @@ void Eye_evil::shot()
 	else
 	{
 		laserFL = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x, Enemy_S.getPosition().y, looks_to_the_right);
-		laser = new laser_weapon(*sandbox, 2, Enemy_S.getPosition().x - 60, Enemy_S.getPosition().y, looks_to_the_right);
+		laser = new laser_weapon(*sandbox, 2, Enemy_S.getPosition().x - 64, Enemy_S.getPosition().y, looks_to_the_right);
 		//laser_weapon* shot_las = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x - 60, Enemy_S.getPosition().y, looks_to_the_right);
 		/*laser.push_back(*shot_las);
 		for (int j = (Enemy_S.getPosition().x / 60); j > 0 && j > j - 5 &&
@@ -334,8 +334,8 @@ void Eye_evil::reset_attention()
 }
 bool Eye_evil::search_for_enemies()
 {
-	int centerX = get_position().x / 60;
-	int centerY = get_position().y / 60;
+	int centerX = get_position().x / 64;
+	int centerY = get_position().y / 64;
 
 	if (looks_to_the_right)
 	{

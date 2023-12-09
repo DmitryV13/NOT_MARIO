@@ -183,7 +183,6 @@
     <ClInclude Include="CombatStaff.h" />
     <ClInclude Include="RedMutant.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EvilBall.h" />
     <ClInclude Include="Exit.h" />
     <ClInclude Include="Fist.h" />
     <ClInclude Include="GAME_STATE.h" />
