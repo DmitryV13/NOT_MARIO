@@ -1,4 +1,6 @@
 #pragma once
+#include <random>
+
 #include "Tile.h"
 #include "random"
 class coord;

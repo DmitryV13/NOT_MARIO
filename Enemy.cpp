@@ -1,21 +1,12 @@
 ﻿#include "stdafx.h"
 #include "Enemy.h"
+
+#include "laser_weapon.h"
 #include "TileMap.h"
 
 
-sf::Vector2f Enemy::generateRandomStartPosition(int mapWidth, int mapHeight)
+sf::Vector2f Enemy::generate_random_start_position(int mapWidth, int mapHeight)
 {
-	//positional distribution
-	//sf::Vector2f startPos;
-	// int x = rand() % 6;
-	//// return sf::Vector2f(8 * 73, 73 * 7);
-	// 
-	// if(x == 1)return sf::Vector2f(73, mapHeight - 73 * 4);
-	// if(x == 2) return sf::Vector2f(mapWidth - 73 * 50, mapHeight - 73 * 4);
-	// if (x == 3)return sf::Vector2f(mapWidth - 73 * 80, mapHeight - 73 * 4);
-	// if (x == 4) return sf::Vector2f(8 * 73, 73 * 7);
-	// if (x == 5) return sf::Vector2f(32 * 73, 73 * 6);
-
 	//  randomized distribution
 	int maxAttempts = 100000;
 
@@ -28,7 +19,6 @@ sf::Vector2f Enemy::generateRandomStartPosition(int mapWidth, int mapHeight)
 		int centerY = (y + 60) / 60;
 
 		bool collisionDetected = false;
-
 		if (sandbox->isBlock(centerY, centerX))
 		{
 			collisionDetected = true;
@@ -53,44 +43,45 @@ sf::Vector2f Enemy::generateRandomStartPosition(int mapWidth, int mapHeight)
 				}
 			}
 		}
-
 		if (!collisionDetected)
 		{
 			return sf::Vector2f(x, y);
 		}
 	}
-
 	return sf::Vector2f(0, 0);
 }
 
 void Enemy::init_variables()
 {
-	animationState = Enemy_ANIMATION_STATES::ENEMY_IDLE;
+	animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
 }
 
-Enemy::Enemy(TileMap& map)
+Enemy::Enemy(TileMap& map, Player& pl)
 {
+	player_ = &pl;
 	sandbox = &map;
-	//pos_Player[TileFactory::n][TileFactory::m] = sandbox.getTile();
 	init_variables();
 	init_animation();
 	init_physics();
-	startPosition = generateRandomStartPosition(sandbox->getMapWidth(), sandbox->getMapHeight());
-	setPosition(startPosition.x, startPosition.y);
+	//start_position = generate_random_start_position(sandbox->getMapWidth(), sandbox->getMapHeight());
+	//set_position(start_position.x, start_position.y);
 
+		set_position(1300,600);
 }
 
-sf::Vector2f Enemy::getPosition() const
+sf::Vector2f Enemy::get_position() const
 {
 	return Enemy_S.getPosition();
 }
 
-const FloatRect Enemy::getGlobalBounds() const
+const FloatRect Enemy::get_global_bounds() const
 {
 	return Enemy_S.getGlobalBounds();
 }
 
-void Enemy::setPosition(const float x, const float y)
+
+
+void Enemy::set_position(const float x, const float y)
 {
 	Enemy_S.setPosition(x, y);
 }
@@ -102,390 +93,218 @@ void Enemy::render(sf::RenderTarget* target)
 
 void Enemy::update()
 {
-	updateMovement();
-	//search_for_enemies();
-	updateAnimation();
-	updatePhysics();
+	update_movement();
+	update_animation();
+	update_physics();
 }
 
-void Enemy::resetAnimationTimer()
+void Enemy::reset_animation_timer()
 {
-	animationTimer.restart();
-	animationSwitch = true;
+	animation_timer.restart();
+	animation_switch = true;
 }
 
-bool Enemy::search_for_enemies(){
-	if (getPosition().y / 60 > 0 && getPosition().y / 60 < 40 && getPosition().x / 60 > 0 && getPosition().y / 60 < 200) {
-		int i = getPosition().y / 60;
-		int j = getPosition().x / 60;
-		if (sandbox->isOccupied(i, j)) {
-			animationState = Enemy_ANIMATION_STATES::ENEMY_ATTENTION;
-			return true;
-		}
-	}
-	//if (getPosition().y / 60 > 5){
-	//	for (int i = getPosition().y / 60; i < getPosition().y / 60 - 5; i++)
-	//	{
-	//		if (sandbox->getMapWidth() - 10 > getPosition().x)
-	//			for (int j = getPosition().x / 60; j < getPosition().x / 60 + 10; j++)
-	//			{
-	//				if (sandbox->isOccupied(i, j))
-	//				{
-	//					animationState = Enemy_ANIMATION_STATES::ENEMY_ATTENTION;
-	//					return true;
-	//				}
-	//			}
-	//		if (60 < getPosition().x)
-	//			for (int j = getPosition().x / 60 - 10; j < getPosition().x / 60; j++)
-	//			{
-	//				if (sandbox->isOccupied(i, j))
-	//				{
-	//					animationState = Enemy_ANIMATION_STATES::ENEMY_ATTENTION;
-	//					return true;
-	//				}
-	//			}
-	//	}
-	//}
-	return false;
-}
-
-
-void Enemy::updateAnimation()
-{
-	if (animationState == Enemy_ANIMATION_STATES::ENEMY_MOVING_RIGHT)
-	{
-		if (animationTimer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
-		{
-			currentFrame.left += 60;
-			if (currentFrame.left >= 360.f)
-			{
-				currentFrame.left = 0.f;
-			}
-			currentFrame.width = 60;
-			currentFrame.top = 0;
-			Enemy_S.setTextureRect(currentFrame);
-			animationTimer.restart();
-		}
-	}
-	else if (animationState == Enemy_ANIMATION_STATES::ENEMY_ATTENTION)
-	{
-		if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
-		{
-			currentFrame.top = 0;
-			currentFrame.left = 0;
-			currentFrame.width = 60;
-
-			
-			Enemy_S.setTextureRect(currentFrame);
-			animationTimer.restart();
-		}
-	}
-	else if (animationState == Enemy_ANIMATION_STATES::ENEMY_MOVING_LEFT)
-	{
-		if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
-		{
-			currentFrame.left -= 60;
-			if (currentFrame.left <= 0.f)
-			{
-				currentFrame.left = 360.f;
-			}
-			currentFrame.width = -60;
-			currentFrame.top = 0;
-			Enemy_S.setTextureRect(currentFrame);
-			animationTimer.restart();
-		}
-	}
-
-	else
-	{
-		animationTimer.restart();
-	}
-}
 
 void Enemy::init_animation()
 {
-	animationSwitch = true;
-	animationTimer.restart();
+	animation_switch = true;
+	animation_timer.restart();
 }
 
 const bool& Enemy::get_animation_switch()
 {
-	bool tmpSwitch = animationSwitch;
-	if (animationSwitch)
+	bool tmpSwitch = animation_switch;
+	if (animation_switch)
 	{
-		animationSwitch = false;
+		animation_switch = false;
 	}
 	return tmpSwitch;
 }
 
 void Enemy::init_physics()
 {
-	displacementMax = 1.f;
-	displacementMin = 0.3f;
-	acceleration = 0.4f; //óñêîðåíèå
-	deceleration = 0.77f; //0.77 çàìåäëåíèå 
+	displacement_max = 1.f;
+	attention_counter = 3;
+	displacement_min = 0.3f;
+	acceleration = 0.4f;
+	deceleration = 0.77f;
 	gravity = 2.5f;
-	velocityMaxY = 15.f;
-
-	onGround = false;
-	onWall = false;
-	jumpVelocity = 7.f;
-
+	velocity_max_y = 15.f;
+	on_ground = false;
+	jump_velocity = 7.f;
 	moving = 1.f;
-
-	stepLeft = 0;
-	stepRight = 0;
-	jumpTile = false;
-	displacement.x = 0.f; //ïåðåìåùåíèå 
+	step_left = 0;
+	step_right = 0;
+	jump_tile = false;
+	displacement.x = 0.f;
 	displacement.y = 0.f;
+	attention_counter = 3;
+	looks_to_the_left = false;
+	looks_to_the_right = true;
+	animation_counter_think = 0;
 }
 
 void Enemy::walk(const float dir_x)
 {
 	if (dir_x > 0)
-		stepRight++;
-	if (dir_x < 0)
-		stepLeft++;
-	if (onWall)
 	{
-		displacement.x += dir_x * acceleration;
-
+		looks_to_the_right = true;
+		looks_to_the_left = false;
 	}
-
-	if (onGround)
+	else
+	{
+		looks_to_the_right = false;
+		looks_to_the_left = true;
+	}
+	//movement on the ground
+	if (on_ground)
 	{
 		displacement.x += dir_x * acceleration;
 	}
-	/*else if (jumpTile)
-	{
-		displacement.x += dir_x * acceleration;
-		displacement.y += 1.f * gravity * 2;
-	}*/
 
 	// limits
-	if (std::abs(displacement.x) > displacementMax)
+	if (std::abs(displacement.x) > displacement_max)
 	{
-		displacement.x = displacementMax * ((displacement.x > 0.f) ? 1.f : -1.f);
+		displacement.x = displacement_max * ((displacement.x > 0.f) ? 1.f : -1.f);
 	}
-	if (dir_x > 0.f) animationState = Enemy_ANIMATION_STATES::ENEMY_MOVING_RIGHT;
-	else animationState = Enemy_ANIMATION_STATES::ENEMY_MOVING_LEFT;
-
-	if (search_for_enemies())
-	{
+	if (animation_counter_think > 2 && animation_state != ENEMY_ANIMATION_STATES::ENEMY_ATTENTION)
+	{ 
 		displacement.x = 0;
+		animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
+	}
+	else if (displacement.y >= gravity)animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING_DOWN;
+	else if (jump_tile)animation_state = ENEMY_ANIMATION_STATES::ENEMY_JUMPING;
+	else animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;
+	
 
+	//logic when exposing a player
+	if (search_for_enemies() && ((on_ground) || (jump_tile)) )
+	{
+		attack();
+	}
+	else
+	{
+		reset_attention();
+		clear_shot();
 	}
 }
 
-void Enemy::updateMovement()
-{
 
-
-	if (onGround)
-	{
-
-
-		if (updateCollisionX())
-		{
-
-			if (!updateCollisionXJump())
-			{
-				onWall = true;
-				jump(-65);
-				onGround = false;
-			}
-			else moving *= -1.f;
-
-		}
-		if (Enemy_S.getPosition().x <= 0)
-		{
-
-			displacement.x = 0;
-		}
-
-		if (Enemy_S.getPosition().x + Enemy_S.getGlobalBounds().width > sandbox->getMapWidth())
-		{
-
-			displacement.x = 0;
-		}
-
-		//if (block.intersects(currentFrame))moving += -1.f;
-		//if (updateCollisionXJump())moving *= -1.f;
-
-
-
-		//if (!updateCollisionX())jumpTile = false;
-
-	}
-	/*if (stepRight == maxStep)
-	{
-		iterationStart = 0;
-		moving *= -1.f;
-		stepRight = 0;
-	}
-	if (stepLeft == maxStep)
-	{
-		moving *= -1.f;
-		stepLeft = 0;
-		iterationStart = 0;
-	}*/
-	if (Enemy_S.getPosition().x <= 0.1f || Enemy_S.getPosition().x + Enemy_S.getGlobalBounds().width > sandbox->getMapWidth())
-	{
-
-		moving *= -1.f;
-	}
-
-	walk(moving);
-
-	/*if (!onGround)iterationStart = 0;
-	if (displacement.x == 0.f && displacement.x == 0.f && !onGround)
-	{
-		iterationStart++;
-		walk(-1.f);
-		walk(1.f);
-	}
-	animationState = Enemy_ANIMATION_STATES::ENEMY_IDLE;
-	if (updateCollisionY())
-		onGround = true;
-	if (updateCollisionX())
-		jump(-20.0f);
-	if (displacement.x == 0.f && iterationStart > iterationEnd)
-	{
-		moving *= -1.f;
-		iterationStart = 0;
-	}
-	else iterationStart++;
-	if (stepRight == maxStep)
-	{
-		iterationStart = 0;
-		moving *= -1.f;
-		stepRight = 0;
-	}
-	if (stepLeft == maxStep)
-	{
-		moving *= -1.f;
-		stepLeft = 0;
-		iterationStart = 0;
-	}
-	if (moving > 0.f) animationState = Enemy_ANIMATION_STATES::ENEMY_MOVING_RIGHT;
-	else animationState = Enemy_ANIMATION_STATES::ENEMY_MOVING_LEFT;
-	walk(moving);*/
-}
-
-
-void Enemy::resetVelocityY()
+//ground contact
+void Enemy::reset_jump_access()
 {
 	displacement.y = 0.f;
+	on_ground = true;
+	jump_tile = false;
 }
 
 
-void Enemy::resetJumpAccess()
-{
-	resetVelocityY();
-	onGround = true;
-	onWall = false;
-	jumpTile = false;
-}
-
-
+//jump handling
 void Enemy::jump(const float dir_y)
 {
-
-	if (onGround)
+	if (on_ground)
 	{
-		onGround = false;
-		jumpTile = true;
-
-		jumpVelocity = 5.5f;
+		on_ground = false;
+		jump_tile = true;
+		jump_velocity = dir_y * 5.5f;
 	}
 }
 
+bool Enemy::player_contact()
+{
+	int centerX = get_position().x / 60;
+	int centerY = get_position().y / 60;
+	int l = 2;
+	if(looks_to_the_right)
+	for (int i = centerY - 5; i <= centerY + 5; i++)
+	{
+		for (int j = centerX; j <= centerX + l; j++)
+		{
+			if (i >= 0 && i < 40 && j >= 0 && j < 200)
+			{
+				if (sandbox->isOccupied(i, j))
+				{
+					return true;
+				}
+			}
+		}
+	}
 
-void Enemy::updatePhysics()
+	else
+	for (int i = centerY - 5; i <= centerY + 5; i++)
+	{
+		for (int j = centerX - l+1 ; j <= centerX; j++)
+		{
+			if (i >= 0 && i < 40 && j >= 0 && j < 200)
+			{
+				if (sandbox->isOccupied(i, j))
+				{
+				
+					return true;
+				}
+			}
+		}
+	}
+
+	
+	return false;
+}
+
+
+void Enemy::update_physics()
 {
 	// gravity
 	displacement.y += 1.f * gravity;
-
-	if (std::abs(displacement.y) > velocityMaxY)
+	if (std::abs(displacement.y) > velocity_max_y)
 	{
-		displacement.y = velocityMaxY * ((displacement.y > 0.f) ? 1.f : -1.f);
+		displacement.y = velocity_max_y * ((displacement.y > 0.f) ? 1.f : -1.f);
 	}
-
 	//jumping
-	if (jumpTile)
+	if (jump_tile)
 	{
-		displacement.y -= jumpVelocity;
-		displacement.x += moving * acceleration;
+		displacement.y -= jump_velocity;
+		//jumping onto a block
+		displacement.x +=  moving * acceleration;
 		//jump deceleratin
-		jumpVelocity *= 0.96;
+		jump_velocity *= 0.96;
 	}
-
 	// deceleration
 	displacement *= deceleration;
 
 	// limits
-	if (std::abs(displacement.x) < displacementMin || updateCollisionX())
+	if (jump_tile&& search_for_enemies())
+	{
+		displacement.x = 2* moving * displacement_max;
+	}
+	if (update_collision_x())
 	{
 		displacement.x = 0.f;
 	}
-	if (std::abs(displacement.y) < displacementMin || updateCollisionY())
+	if (update_collision_y())
 	{
 		displacement.y = 0.f;
 	}
-
-
+	//step counter
+	if (displacement.x > 0 && displacement_max == 1.f)
+		step_right++;
+	if (displacement.x < 0 && displacement_max == 1.f)
+		step_left++;
+	//if (player_contact())displacement.x *= 1.3f;
 	Enemy_S.move(displacement);
 }
 
-
-bool Enemy::updateCollisionX()
+// collision x
+bool Enemy::update_collision_x()
 {
 	bool wasCollision = false;
-
-	sf::Vector2f newPosition(getPosition().x, getPosition().y);
-	if (jumpTile)currentBlockX = getPosition().x / 60;
+	sf::Vector2f newPosition(get_position().x, get_position().y);
 	for (int i = Enemy_S.getPosition().y / 60; i < (Enemy_S.getPosition().y + Enemy_S.getGlobalBounds().height) / 60; i
-		++)
+	     ++)
 	{
 		for (int j = (Enemy_S.getPosition().x + displacement.x) / 60; j < (Enemy_S.getPosition().x + displacement.x +
-			Enemy_S.getGlobalBounds().width) / 60; j++)
+			     Enemy_S.getGlobalBounds().width) / 60; j++)
 		{
-			if (sandbox->isBlock(i, j))
-			{
-				block.top = (i - 1) * 60;
-				block.height = 60;
-				block.left = (j + 1) * 60;
-				block.width = 60;
-				wasCollision = true;
-				if (displacement.x >= 0)
-				{
-					newPosition.x = j * sandbox->getSizeTexture() - Enemy_S.getGlobalBounds().width;
-				}
-				if (displacement.x < 0)
-				{
-					newPosition.x = j * sandbox->getSizeTexture() + sandbox->getSizeTexture();
-				}
-			}
-		}
-	}
-
-	//Enemy_S.setPosition(newPosition.x, newPosition.y);
-	return wasCollision;
-}
-
-bool Enemy::updateCollisionXJump()
-{
-	bool wasCollision = false;
-
-	sf::Vector2f newPosition(getPosition().x, getPosition().y);
-	if (jumpTile)currentBlockX = getPosition().x / 60;
-	for (int i = Enemy_S.getPosition().y / 60; i < (Enemy_S.getPosition().y + Enemy_S.getGlobalBounds().height) / 60; i
-		++)
-	{
-		for (int j = (Enemy_S.getPosition().x + displacement.x) / 60; j < (Enemy_S.getPosition().x + displacement.x +
-			Enemy_S.getGlobalBounds().width) / 60; j++)
-		{
-			if (sandbox->isBlock(i - 1, j))
+			if (sandbox->isBlock(i, j) || j <= 0 || j >= 200)
 			{
 				wasCollision = true;
 				if (displacement.x >= 0)
@@ -499,41 +318,90 @@ bool Enemy::updateCollisionXJump()
 			}
 		}
 	}
-
-	//Enemy_S.setPosition(newPosition.x, newPosition.y);
+	Enemy_S.setPosition(newPosition.x, newPosition.y);
 	return wasCollision;
 }
 
-bool Enemy::updateCollisionY()
+//resolving jump collision
+bool Enemy::update_collision_x_jump()
 {
+	bool wasCollision = false;
+	sf::Vector2f newPosition(get_position().x, get_position().y);
+	for (int i = Enemy_S.getPosition().y / 60; i < (Enemy_S.getPosition().y + Enemy_S.getGlobalBounds().height) / 60; i
+	     ++)
+	{
+		for (int j = (Enemy_S.getPosition().x + displacement.x) / 60; j < (Enemy_S.getPosition().x + displacement.x +
+			     Enemy_S.getGlobalBounds().width) / 60; j++)
+		{
+			if (sandbox->isBlock(i - 1, j) || j <= 0 || j >= 200)
+			{
+				wasCollision = true;
+				if (displacement.x >= 0)
+				{
+					newPosition.x = j * sandbox->getSizeTexture() - Enemy_S.getGlobalBounds().width;
+				}
+				if (displacement.x < 0)
+				{
+					newPosition.x = j * sandbox->getSizeTexture() + sandbox->getSizeTexture();
+				}
+			}
+		}
+	}
+	Enemy_S.setPosition(newPosition.x, newPosition.y);
+	return wasCollision;
+}
+
+//collision y
+bool Enemy::update_collision_y()
+{
+	
 	bool wasCollision = false;
 
 	sf::Vector2f newPosition(Enemy_S.getPosition().x, Enemy_S.getPosition().y);
 
 	for (int i = (Enemy_S.getPosition().y + displacement.y) / 60; i < (Enemy_S.getPosition().y + displacement.y +
-		Enemy_S.getGlobalBounds().height) / 60; i++)
+		     Enemy_S.getGlobalBounds().height) / 60; i++)
 	{
 		for (int j = Enemy_S.getPosition().x / 60; j < (Enemy_S.getPosition().x + Enemy_S.getGlobalBounds().width) / 60;
-			j++)
+		     j++)
 		{
 			if (sandbox->isBlock(i, j))
 			{
-				//onGround = true;
 				wasCollision = true;
+				reset_jump_access();
 				if (displacement.y > 0)
 				{
-					resetJumpAccess();
+					reset_jump_access();
 					newPosition.y = (i * sandbox->getSizeTexture() - Enemy_S.getGlobalBounds().height);
 				}
 				if (displacement.y < 0)
 				{
-					resetJumpAccess();
+					reset_jump_access();
 					newPosition.y = i * sandbox->getSizeTexture() + sandbox->getSizeTexture();
 				}
 			}
 		}
 	}
-	//if (dobcoll)displacement.y = 0.f;
-		//setPosition(newPosition.x, newPosition.y);
+
+	set_position(newPosition.x, newPosition.y);
 	return wasCollision;
 }
+
+bool Enemy::sting()
+{
+	FloatRect en = get_global_bounds();
+	FloatRect pl = sandbox->get_player_glob_bound();
+	return en.intersects(pl);
+}
+
+void Enemy::jump_towards_player()
+{
+
+	float distance = std::abs(player_->getPosition().x - get_position().x);
+	float jump_Height = std::min(1.0f, distance / 300.0f) * 2.0f; 
+	float max_jump_height = 2.0f; 
+	jump_Height = std::min(jump_Height, max_jump_height);
+	
+	jump(jump_Height);
+}
+

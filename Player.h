@@ -53,7 +53,7 @@ private:
     void initPhysics();
 public:
     Player(TileMap& map);
-
+    IntRect get_pl_frame();
     // accessors
     const bool& getAnimationSwitch();
     const Vector2f getPosition() const;

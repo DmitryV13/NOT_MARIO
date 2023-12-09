@@ -628,15 +628,21 @@ coord* TileFactory::generationF1() {
     float y[20];
     float x[20];
 
-    float shift = 20 + rand() % (30 - 20 + 1);
-    float incline = 0.0 + (1.0 - 0.0) * (static_cast<double>(rand()) / RAND_MAX);
-    float waveSize = 0.1 + (0.5 - 0.1) * (static_cast<double>(rand()) / RAND_MAX);
-    //{0,1} - incline
-    //{20,30} - shift
+TileFactory::TileFactory(int n, int m)
+{
+	vector<vector<char>> template_1(n, vector<char>(m, 'N'));
+	//for (int i = 0; i < n/2; ++i) {
+	//	for (int j = 0; j < m; ++j) {
+	//		template_1[i][j] = ' ';
+	//	}
+	//}
 
-    for (float i = 0, j = 0; j < 20; i += 0.2, j++) {
-        x[(int)j] = i * 3.1415;
-    }
+	//// ��������� ���������� 20 ����� ��������� 'B'
+	//for (int i = n/2; i < n; ++i) {
+	//	for (int j = 0; j < m; ++j) {
+	//		template_1[i][j] = 'B';
+	//	}
+	//}
 
     for (int i = 0; i < 20; i++) {
         y[i] = sin((x[i] * waveSize) / 0.7 + shift) - cos(x[i] + 3) + incline * x[i];
@@ -673,17 +679,45 @@ coord* TileFactory::generationF2() {
         x[(int)j] = i * 3.1415;
     }
 
-    for (int i = 0; i < 20; i++) {
-        y[i] = cos(x[i] + shift) * waveSize + incline * x[i] + halfMaxHeight;
-    }
+	Tile tile_A(initRect_tile('A'), 'A', 'A');
+	Tile tile_B(initRect_tile('B'), 'B', 'B');
+	Tile tile_C(initRect_tile('C'), 'C', 'C');
+	Tile tile_c(initRect_tile('c'), 'c', 'c');
+	Tile tile_D(initRect_tile('D'), 'D', 'D');
+	Tile tile_U(initRect_tile('U'), 'U', 'U');
+	Tile tile_L(initRect_tile('L'), 'L', 'L');
+	Tile tile_P(initRect_tile('P'), 'P', 'P');
+	Tile tile_Q(initRect_tile('Q'), 'Q', 'Q');
 
-    for (int i = 0; i < 20; ++i) {
-        x[i] = (int)(x[i] * 1.67);
-        y[i] = (int)(y[i] * 1 + (8 + startCoef));
-    }
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < m; j++)
+		{
+			if (template_1[i][j] == 'A') { tile_map_inFactory[i][j] = tile_A; }
+			if (template_1[i][j] == 'B') { tile_map_inFactory[i][j] = tile_B; }
+			if (template_1[i][j] == 'C') { tile_map_inFactory[i][j] = tile_C; }
+			if (template_1[i][j] == 'c') { tile_map_inFactory[i][j] = tile_c; }
+			if (template_1[i][j] == 'U') { tile_map_inFactory[i][j] = tile_U; }
+			if (template_1[i][j] == 'D') { tile_map_inFactory[i][j] = tile_D; }
+			if (template_1[i][j] == 'L') { tile_map_inFactory[i][j] = tile_L; }
+			if (template_1[i][j] == 'P') { tile_map_inFactory[i][j] = tile_P; }
+			if (template_1[i][j] == 'Q') { tile_map_inFactory[i][j] = tile_Q; }
+		}
+	}
+}
 
-    coord* res = new coord(x, y, 20);
-    return res;
+bool TileFactory::getPosPlayer(int i, int j)
+{
+	return tile_map_inFactory[i][j].give_player_info();
+}
+
+
+void TileFactory::map_generation(vector<vector<char>>& template_2)
+{
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	int i = rand() % 10 + 15, j = 0;
+	start_of_map_generation_(template_2, i, j, gen);
 }
 
 coord* TileFactory::generationF3() {
@@ -691,26 +725,76 @@ coord* TileFactory::generationF3() {
     std::vector<float> y(size);
     std::vector<float> x(size);
 
-    //{2, 10} incline
+void TileFactory::start_of_map_generation_(vector<vector<char>>& map, int& i, int& j, std::mt19937 gen)
+{
+	std::uniform_int_distribution<int> cofShift(3, 5);
 
-    for (int i = 0; i < size; i++) {
-        x[i] = i;
-    }
+	int min = 1;
+	int max = 5;
+	std::uniform_int_distribution<int> distribution(min, max);
+	int choice = distribution(gen);
+	bool wormhole_b = true;
+	int coutn = 5;
+	int SHIFT;
+	while (j < m)
+	{
+		SHIFT = cofShift(gen);
+		int choice = distribution(gen);
+		if (choice == 1 && i > 35)
+			flatland(map, i, j, SHIFT, gen);
+		else if (choice == 2)
+			mountainous_terrain(map, i, j, SHIFT, gen);
+		else if (choice == 3)
+			water_bodies(map, i, j, SHIFT, gen);
+		else if (choice == 4)
+			tunnel(map, i, j, SHIFT, gen);
 
-    float startPointRange = 25 - x[size - 1] / 2;
-    int startCoef = rand() % ((int)startPointRange + 1);
-    int incline = 2 + rand() % (10 - 2 + 1);
+		else if (choice == 5 && wormhole_b)
+		{
+			wormhole(map, i, j, SHIFT, gen);
+			coutn--;
+			if (coutn <= 0) wormhole_b = false;
+		}
+		else flatland(map, i, j, SHIFT, gen);
+	}
+	cavern(map, i, j, SHIFT, gen);
+}
 
-    for (int i = 0; i < size; i++) {
-        y[i] = x[i] / incline;
-    }
+void TileFactory::flatland(vector<vector<char>>& map, int& i, int& j, int shift, std::mt19937 gen)
+{
+	std::uniform_int_distribution<int> distribution(-1, 1);
+	int count = 0;
+	int bool_tap = 0;
+	for (int top = 0; top < shift; top++)
+	{
+		int right = j;
+		for (; right < j + shift && right < m; right++)
+		{
+			for (int down = i; down < n; down++) // �������� ���� ��� �������
+			{
+				if (map[down][right] == 'N')map[down][right] = 'B';
+			}
+			for (int up = i - 1; up >= 0; up--) // �������� ���� ��� �����
+			{
+				if (map[up][right] == 'N')map[up][right] = ' ';
+			}
+		}
 
-    for (int i = 0; i < size; ++i) {
-        y[i] = (int)(y[i] * 1 + (8 + startCoef));
-    }
-
-    coord* res = new coord(x, y, size);
-    return res;
+		j = right;
+		bool_tap = distribution(gen);
+		if (bool_tap != 0)count = 1;
+		if (i >= 15 && i <= 25)i += bool_tap;
+		else if (i >= 25)
+		{
+			i += -1;
+			bool_tap = -1;
+		}
+		else
+		{
+			i += 1;
+			bool_tap = 1;
+		}
+	}
 }
 
 coord* TileFactory::generationF4() {
@@ -719,15 +803,57 @@ coord* TileFactory::generationF4() {
     std::vector<float> y(size);
     std::vector<float> x(size);
 
-    int startCoef = 7 + rand() % ((int)32 - 7 + 1);
 
-    for (int i = 0; i < size; i++) {
-        x[i] = i;
-    }
+	for (int STEP = 0; STEP < shift; STEP++)
+	{
+		int right = j;
+		for (; right < j + shift && right < m; right++)
+		{
+			for (int down = i; down < n; down++) // �������� ���� ��� �������
+			{
+				if (map[down][right] == 'N')map[down][right] = 'B';
+			}
+			for (int up = i - 1; up >= 0; up--) // �������� ���� ��� �����
+			{
+				if (map[up][right] == 'N')map[up][right] = ' ';
+			}
+			i += bool_tap;
+		}
+		j = right;
+		for (; right < j + shift / 2 && right < m; right++)
+		{
+			for (int down = i; down < n; down++) // �������� ���� ��� �������
+			{
+				if (map[down][right] == 'N')map[down][right] = 'B';
+			}
+			for (int up = i - 1; up >= 0; up--) // �������� ���� ��� �����
+			{
+				if (map[up][right] == 'N')map[up][right] = ' ';
+			}
+		}
+		j = right;
+		if (i >= 10 && i <= 25) bool_tap = distribution(gen);
+		else if (i >= 25) bool_tap = -1;
+		else bool_tap = 1;
+	}
+}
 
-    for (int i = 0; i < size; ++i) {
-        y[i] = startCoef;
-    }
+void TileFactory::water_bodies(vector<vector<char>>& map, int& i, int& j, int shift, std::mt19937 gen)
+{
+	std::uniform_int_distribution<int> distribution(-1, 1);
+	int bool_tap = 1;
+	int stat_i = i;
+
+	for (int STEP = 0; STEP < 2; STEP++)
+	{
+		int right = j;
+		for (; right < j + shift && right < m; right++)
+		{
+			for (int down = i; down < n; down++) // �������� ���� ��� �������
+			{
+				if (map[down][right] == 'N')map[down][right] = 'B'; //���� ��� �����
+			}
+			for (int up = i - 1; up >= 0; up--) // �������� ��� �����
 
     coord* res = new coord(x, y, size);
     return res;

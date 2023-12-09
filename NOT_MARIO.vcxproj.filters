@@ -183,6 +183,24 @@
     <ClCompile Include="TileAnim.cpp">
       <Filter>Source Files\Map\Tile</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\ServiceClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Eye_evil.cpp">
+      <Filter>Source Files\ServiceClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="laser_weapon.cpp">
+      <Filter>Source Files\ServiceClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="kusaka.cpp">
+      <Filter>Source Files\ServiceClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="RedMutant.cpp">
+      <Filter>Source Files\ServiceClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="WolfBoss.cpp">
+      <Filter>Source Files\ServiceClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemy.h">
@@ -280,6 +298,24 @@
     </ClInclude>
     <ClInclude Include="MENU_STATE.h">
       <Filter>Header Files\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Eye_evil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="laser_weapon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="kusaka.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RedMutant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WolfBoss.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -142,6 +142,7 @@
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CombatStaff.cpp" />
+    <ClCompile Include="RedMutant.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EvilBall.cpp" />
     <ClCompile Include="Exit.cpp" />
@@ -149,10 +150,13 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="GameMenu.cpp" />
     <ClCompile Include="RoadMap.cpp" />
+    <ClCompile Include="Eye_evil.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="MainMenuOption.cpp" />
     <ClCompile Include="MenuItem.cpp" />
     <ClCompile Include="Setting.cpp" />
+    <ClCompile Include="kusaka.cpp" />
+    <ClCompile Include="laser_weapon.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -168,6 +172,7 @@
     <ClCompile Include="TileFactory.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="WolfBoss.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Arrow.h" />
@@ -177,6 +182,7 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="CombatStaff.h" />
+    <ClInclude Include="RedMutant.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EvilBall.h" />
     <ClInclude Include="Exit.h" />
@@ -186,9 +192,12 @@
     <ClInclude Include="GameMenu.h" />
     <ClInclude Include="PLAYER_ANIMATION_SATES.h" />
     <ClInclude Include="RoadMap.h" />
+    <ClInclude Include="Eye_evil.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="MainMenuOption.h" />
     <ClInclude Include="MenuItem.h" />
+    <ClInclude Include="kusaka.h" />
+    <ClInclude Include="laser_weapon.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Setting.h" />
     <ClInclude Include="stdafx.h" />
@@ -202,6 +211,7 @@
     <ClInclude Include="TileFactory.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WolfBoss.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NOT_MARIO.rc" />
