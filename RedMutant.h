@@ -12,9 +12,6 @@ private:
 	void init_texture() override;
 	void init_sprite() override;
 
-
-
-
 public:
 	
 	sf::Vector2f calculateRandomPosition(const sf::FloatRect& playerBounds, int radius);

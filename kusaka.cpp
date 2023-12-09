@@ -286,7 +286,7 @@ void kusaka::attack()
 		displacement.x = 0;
 		displacement_max = 1.f;
 		FloatRect en = get_global_bounds();
-		FloatRect pl = sandbox->get_player_glob_bound();
+		FloatRect pl = player_->getGlobalBounds();
 		if (pl.left < en.left)
 		{
 			if (looks_to_the_right)

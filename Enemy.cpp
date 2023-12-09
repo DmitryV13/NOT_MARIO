@@ -86,9 +86,9 @@ void Enemy::set_position(const float x, const float y)
 	Enemy_S.setPosition(x, y);
 }
 
-void Enemy::render(sf::RenderTarget* target)
+void Enemy::render(sf::RenderTarget& target)
 {
-	target->draw(Enemy_S);
+	target.draw(Enemy_S);
 }
 
 void Enemy::update()
@@ -387,10 +387,9 @@ bool Enemy::update_collision_y()
 	return wasCollision;
 }
 
-bool Enemy::sting()
-{
+bool Enemy::sting(){
 	FloatRect en = get_global_bounds();
-	FloatRect pl = sandbox->get_player_glob_bound();
+	FloatRect pl = player_->getGlobalBounds();
 	return en.intersects(pl);
 }
 

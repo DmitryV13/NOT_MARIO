@@ -144,7 +144,6 @@
     <ClCompile Include="CombatStaff.cpp" />
     <ClCompile Include="RedMutant.cpp" />
     <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="EvilBall.cpp" />
     <ClCompile Include="Exit.cpp" />
     <ClCompile Include="Fist.cpp" />
     <ClCompile Include="Level.cpp" />

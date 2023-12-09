@@ -59,7 +59,7 @@
 		background_S.setScale(static_cast<float>(window.getSize().y) / background_S.getLocalBounds().height, static_cast<float>(window.getSize().y) / background_S.getLocalBounds().height);
 		background_S.setPosition((static_cast<float>(window.getSize().x) - background_S.getGlobalBounds().width) / 2, 0);
 	}
-}
+
 
 	void Game::initOptions(){
 		options = new MainMenuOption*[options_number];
