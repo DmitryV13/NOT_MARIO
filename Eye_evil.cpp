@@ -2,29 +2,31 @@
 #include "Eye_evil.h"
 
 
-Eye_evil::Eye_evil(TileMap& map, Player& pl) :Enemy(map, pl)
+Eye_evil::Eye_evil(TileMap& map, Player& pl) : Enemy(map, pl)
 {
 	{
 		Eye_evil::init_texture();
 		Eye_evil::init_sprite();
 		Eye_evil::setAt(20);
 		Eye_evil::setHP(100);
+		
 	}
 }
 
 
 void Eye_evil::init_texture()
 {
-	
 	if (!Enemy_T.loadFromFile("Textures/eye.png"))
 	{
 		std::cout << "Error -> Enemy -> couldn't load enemy texture" << std::endl;
 	}
-
 }
+
 void Eye_evil::init_sprite()
 {
-	//Enemy_T = init_texture();
+	current_area = IntRect(0, 0, 640, 128);
+	observation_area.setTextureRect(current_area);
+
 	Enemy_S.setTexture(Enemy_T);
 	current_frame = IntRect(0, 0, 60, 55.5);
 	Enemy_S.setTextureRect(current_frame);
@@ -55,7 +57,6 @@ void Eye_evil::update_movement()
 			}
 			else moving *= -1.f;
 		}
-		
 	}
 	//step limits
 	if (step_right == max_step)
@@ -63,19 +64,17 @@ void Eye_evil::update_movement()
 		moving *= -1.f;
 		step_right = 0;
 		animation_counter_think = 12;
-
 	}
 	if (step_left == max_step)
 	{
 		animation_counter_think = 12;
 		moving *= -1.f;
 		step_left = 0;
-
 	}
 
 
 	//turning when approaching the map boundaries
-	
+
 
 	//in case of random map generation
 	// std::random_device rd;
@@ -89,9 +88,9 @@ void Eye_evil::update_movement()
 	// }
 	walk(moving);
 }
+
 void Eye_evil::update_animation()
 {
-
 	if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_MOVING)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
@@ -105,7 +104,6 @@ void Eye_evil::update_animation()
 				}
 				current_frame.width = 60;
 				current_frame.top = 0;
-
 			}
 			else
 			{
@@ -120,12 +118,10 @@ void Eye_evil::update_animation()
 
 			Enemy_S.setTextureRect(current_frame);
 			animation_timer.restart();
-
 		}
 	}
 	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_IDLE)
 	{
-
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
 			animation_counter_think--;
@@ -157,7 +153,6 @@ void Eye_evil::update_animation()
 	}
 	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_ATTENTION)
 	{
-
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
 			if (looks_to_the_right)
@@ -264,13 +259,14 @@ void Eye_evil::update_animation()
 		animation_timer.restart();
 	}
 }
+
 void Eye_evil::shot()
 {
-
 	if (looks_to_the_right)
 	{
 		laserFL = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x, Enemy_S.getPosition().y, looks_to_the_right);
-		laser = new laser_weapon(*sandbox, 2, Enemy_S.getPosition().x + 64, Enemy_S.getPosition().y, looks_to_the_right);
+		laser = new laser_weapon(*sandbox, 2, Enemy_S.getPosition().x + 64, Enemy_S.getPosition().y,
+		                         looks_to_the_right);
 		//laser_weapon* shot_las = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x, Enemy_S.getPosition().y, looks_to_the_right);
 		/*laser.push_back(*shot_las);
 
@@ -285,7 +281,8 @@ void Eye_evil::shot()
 	else
 	{
 		laserFL = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x, Enemy_S.getPosition().y, looks_to_the_right);
-		laser = new laser_weapon(*sandbox, 2, Enemy_S.getPosition().x - 64, Enemy_S.getPosition().y, looks_to_the_right);
+		laser = new laser_weapon(*sandbox, 2, Enemy_S.getPosition().x - 64, Enemy_S.getPosition().y,
+		                         looks_to_the_right);
 		//laser_weapon* shot_las = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x - 60, Enemy_S.getPosition().y, looks_to_the_right);
 		/*laser.push_back(*shot_las);
 		for (int j = (Enemy_S.getPosition().x / 60); j > 0 && j > j - 5 &&
@@ -296,23 +293,30 @@ void Eye_evil::shot()
 
 		}*/
 	}
-
 }
+
 
 void Eye_evil::attack()
 {
-	if (attention_counter == 1 ) {
-		attention_counter--;
-		shot();
-	}
+	PL_SIDE playerSide = getPlayerSide(player_->getPosition().x, get_position().x);
+	if ((playerSide == PL_SIDE::LEFT && looks_to_the_left) || (playerSide == PL_SIDE::RIGHT && looks_to_the_right))
+	{
+		if (attention_counter == 1)
+		{
+			attention_counter--;
+			shot();
+		}
 
-	animation_state = ENEMY_ANIMATION_STATES::ENEMY_ATTENTION;
-	
-	if (laser_existence()) {
-		laser->update();
-		laserFL->update();
+		animation_state = ENEMY_ANIMATION_STATES::ENEMY_ATTENTION;
+
+		if (laser_existence())
+		{
+			laser->update();
+			laserFL->update();
+		}
+		displacement.x = 0;
 	}
-	displacement.x = 0;
+	else clear_shot();
 }
 
 void Eye_evil::clear_shot()
@@ -345,9 +349,15 @@ void Eye_evil::reset_attention()
 {
 	attention_counter = 3;
 }
+
+
 bool Eye_evil::search_for_enemies()
 {
-	int centerX = get_position().x / 64;
+	FloatRect en = observation_area.getGlobalBounds();
+	FloatRect pl = player_->getGlobalBounds();
+	return en.intersects(pl);
+
+	/*int centerX = get_position().x / 64;
 	int centerY = get_position().y / 64;
 
 	if (looks_to_the_right)
@@ -383,5 +393,5 @@ bool Eye_evil::search_for_enemies()
 		}
 	}
 
-	return false;
+	return false;*/
 }

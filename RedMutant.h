@@ -16,7 +16,9 @@ public:
 	
 	sf::Vector2f calculateRandomPosition(const sf::FloatRect& playerBounds, int radius);
 	explicit RedMutant(TileMap& map, Player&);
+
 	~RedMutant() override = default;
+
 	void update_movement() override;
 	void update_animation() override;
 	void clear_shot() override;

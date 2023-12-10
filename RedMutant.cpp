@@ -19,6 +19,10 @@ void RedMutant::init_texture()
 
 void RedMutant::init_sprite()
 {
+
+	current_area = IntRect(0, 0, 1280, 256);
+	observation_area.setTextureRect(current_area);
+
 	Enemy_S.setTexture(chubacabra_t_);
 	current_frame = IntRect(0, 0, 60, 95);
 	Enemy_S.setTextureRect(current_frame);
@@ -273,13 +277,24 @@ void RedMutant::shot()
 void RedMutant::attack()
 {
 	animation_state = ENEMY_ANIMATION_STATES::ENEMY_ATTENTION;
+	FloatRect en = get_global_bounds();
+	FloatRect pl = player_->getGlobalBounds();
+	if (displacement.x != 0.f && en.intersects(pl) && !player_->stan() )
+	{
+		sf::Vector2f tmp = calculateRandomPosition(get_global_bounds(), 10);
+		std::cout << tmp.x / 64 << " " << tmp.y / 64 << "\n";
+		if (tmp.x / 64 == 0)tmp.x = 64;
+		if (tmp.x / 64 == sandbox->getMapWidth() / 64)tmp.x = sandbox->getMapWidth() - 64;
+		if (!sandbox->isBlock(tmp.x / 64, tmp.y / 64))set_position(tmp.x, tmp.y);
+		else set_position(get_position().x, get_position().y);
+
+	}
 	if (sting())
 	{
 		shot();
 		displacement.x = 0;
 		displacement_max = 1.f;
-		FloatRect en = get_global_bounds();
-		FloatRect pl = player_->getGlobalBounds();
+		
 		if (pl.left < en.left)
 		{
 			if (looks_to_the_right)
@@ -296,25 +311,23 @@ void RedMutant::attack()
 				looks_to_the_left = false;
 			}
 		}
-		if(count_atack > 5)//Зависит от количества кадров атаки
+		if (en.intersects(pl))count_atack++;
+		
+		if(count_atack > 100)//Зависит от количества кадров атаки
 		{
 			count_atack = 0;
-			sf::Vector2f tmp = calculateRandomPosition(get_global_bounds(), 5);
-			set_position(tmp.x, tmp.y);
+			sf::Vector2f tmp = calculateRandomPosition(get_global_bounds(), 10);
+			std::cout << tmp.x / 64 << " " << tmp.y / 64 << "\n";
+			if (tmp.x / 64 == 0)tmp.x = 64;
+			if (tmp.x / 64 == sandbox->getMapWidth() / 64)tmp.x = sandbox->getMapWidth() - 64;
+			if (!sandbox->isBlock(tmp.x / 64, tmp.y / 64))set_position(tmp.x, tmp.y);
+			else set_position(get_position().x,get_position().y);
 			
 		}
 
 	}
-
-
-	if (player_contact())
-	{
-		//float intersectionRadius = 50.0f;
-		//teleportBehindPlayer(Enemy_S, sandbox->get_player_glob_bound(), intersectionRadius);
-	}
 	else
 	{
-		
 		if (player_l_r[0] && displacement.x > 0)
 		{
 			displacement.x = 0;
@@ -343,52 +356,81 @@ void RedMutant::attack()
 			looks_to_the_right = true;
 			looks_to_the_left = false;
 		}
+		displacement.x += 5 * moving * acceleration;
 		//displacement.x += 10 * moving * acceleration;
 	}
-	if (!player_contact())
+	
+
+
+	if (!isPlayerInRadius(observation_area.getGlobalBounds(), player_->getGlobalBounds(),128))
 	{
 		reset_attention();
+		//float intersectionRadius = 50.0f;
+		//teleportBehindPlayer(Enemy_S, sandbox->get_player_glob_bound(), intersectionRadius);
 	}
+	
 	// displacement.x = 0;
 }
+//sf::Vector2f RedMutant::calculateRandomPosition(const sf::FloatRect& playerBounds, int jumpDistance)
+//{
+//	int maxAttempts = 1000000;
+//
+//	for (int i = 0; i < maxAttempts; ++i)
+//	{
+//		
+//		int direction = (rand() % 2 == 0) ? -1 : 1;
+//
+//		float newX = playerBounds.left + direction * jumpDistance * sandbox->getSizeTexture();
+//		float newY = playerBounds.top;
+//
+//		if (newX >= 0 && newX < sandbox->getMapWidth() && newY >= 0 && newY < sandbox->getMapHeight())
+//		{
+//			if (!sandbox->isBlock(newY / sandbox->getSizeTexture(), newX / sandbox->getSizeTexture()))
+//			{
+//				return sf::Vector2f(newX, newY);
+//			}
+//		}
+//		newY -= sandbox->getSizeTexture();
+//		if (newX >= 0 && newX < sandbox->getMapWidth() && newY >= 0 && newY < sandbox->getMapHeight())
+//		{
+//			if (!sandbox->isBlock(newY / sandbox->getSizeTexture(), newX / sandbox->getSizeTexture()))
+//			{
+//				return sf::Vector2f(newX, newY);
+//			}
+//		}
+//	}
+//
+//	return get_position();
+//}
 sf::Vector2f RedMutant::calculateRandomPosition(const sf::FloatRect& playerBounds, int jumpDistance)
 {
-	int maxAttempts = 100000;
-
-	for (int i = 0; i < maxAttempts; ++i)
+	int x = static_cast<int>(get_position().x / sandbox->getSizeTexture());
+	int y = static_cast<int>(get_position().y / sandbox->getSizeTexture());
+	int count = 10000;
+	int startDirection = (rand() % 2 == 0) ? 1 : -1;
+	while (true)
 	{
-		// Randomly select left or right direction
-		int direction = (rand() % 2 == 0) ? -1 : 1;
+		for (int i = startDirection * jumpDistance; i != 0; i -= startDirection) {
+			int newX = x + i;
+			int newY = y;
 
-		// Calculate the new position
-		float newX = playerBounds.left + direction * jumpDistance * sandbox->getSizeTexture();
-		float newY = playerBounds.top;
+			if (sandbox->outOfMap(newY + 1, newX) && sandbox->isBlock(newY + 1, newX)) {
+				newY += 1;
+			}
 
-		// Check if the new position is within the map boundaries
-		if (newX >= 0 && newX < sandbox->getMapWidth() && newY >= 0 && newY < sandbox->getMapHeight())
-		{
-			// Check if the new position is valid
-			if (!sandbox->isBlock(newY / sandbox->getSizeTexture(), newX / sandbox->getSizeTexture()))
-			{
-				return sf::Vector2f(newX, newY);
+			if (sandbox->outOfMap(newY, newX)) {
+				if (!sandbox->isBlock(newY, newX)) {
+					return sf::Vector2f(newX * sandbox->getSizeTexture(), newY * sandbox->getSizeTexture());
+				}
 			}
 		}
-
-		// If there's no available space in the selected direction, try one block higher
-		newY -= sandbox->getSizeTexture();
-		if (newX >= 0 && newX < sandbox->getMapWidth() && newY >= 0 && newY < sandbox->getMapHeight())
-		{
-			// Check if the new position is valid
-			if (!sandbox->isBlock(newY / sandbox->getSizeTexture(), newX / sandbox->getSizeTexture()))
-			{
-				return sf::Vector2f(newX, newY);
-			}
-		}
+		if(!count--)return get_position();
 	}
+	
 
-	// If no valid position is found, return the current position
-	return get_position();
+	
 }
+
 
 
 
@@ -398,6 +440,27 @@ void RedMutant::clear_shot()
 
 bool RedMutant::search_for_enemies()
 {
+
+	FloatRect look = observation_area.getGlobalBounds();
+	FloatRect pl = player_->getGlobalBounds();
+
+	PL_SIDE playerSide = getPlayerSide(player_->getPosition().x, get_position().x);
+	if (playerSide == PL_SIDE::RIGHT && look.intersects(pl))
+	{
+		player_l_r[1] = true;
+		player_l_r[0] = false;
+		return true;
+	}
+	else if (playerSide == PL_SIDE::LEFT && look.intersects(pl))
+	{
+		player_l_r[0] = true;
+		player_l_r[1] = false;
+		return true;
+	}
+
+	player_l_r[0] = false;
+	player_l_r[1] = false;
+	return false;
 	// int centerX = get_position().x / 60;
 	// int centerY = get_position().y / 60;
 	//

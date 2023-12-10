@@ -17,7 +17,6 @@ public:
 	void attack() override;
 	bool search_for_enemies() override;
 	void reset_attention() override;
-
 	void draw_laser(int, sf::RenderTarget&);
 	bool laser_existence();
 	//int laser_length();

@@ -13,7 +13,7 @@ public:
 	void attack() override;
 	bool search_for_enemies() override;
 	void reset_attention() override;
-	
+
 
 private:
 	Texture kusaka_t_;

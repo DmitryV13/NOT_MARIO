@@ -25,6 +25,11 @@ enum ENEMY_ANIMATION_STATES
 	ENEMY_BITE
 
 };
+enum class PL_SIDE
+{
+	LEFT,
+	RIGHT
+};
 
 
 class Enemy
@@ -34,12 +39,15 @@ protected:
 	Player* player_;
 	Texture Enemy_T;
 	Sprite Enemy_S;
+	Sprite observation_area;
 	IntRect current_frame;
+	IntRect current_area;
 	Clock animation_timer;
 	short animation_state;
 	bool animation_switch;
 	short HP;
 	short attack_;
+	short count_shot;
 
 	sf::Vector2f start_position;
 	int step_left;
@@ -87,6 +95,8 @@ public:
 	virtual void jump(const float dir_y);
 	bool player_contact();
 	auto sting() -> bool;
+	PL_SIDE getPlayerSide(float playerX, float enemyX);
+	bool isPlayerInRadius(const sf::FloatRect& observationArea, const sf::FloatRect& playerBounds, float radius);
 
 
 	virtual void jump_towards_player();
