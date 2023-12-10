@@ -311,6 +311,7 @@
 	}
 
 	bool TileMap::isBlock(int i, int j) {
+	
 		if (tilemap[i][j][1]->get_interaction() == 1)
 			return true;
 		return false;

@@ -2,11 +2,13 @@
 #include "Eye_evil.h"
 
 
-Eye_evil::Eye_evil(TileMap& map,Player& pl) :Enemy(map,pl)
+Eye_evil::Eye_evil(TileMap& map, Player& pl) :Enemy(map, pl)
 {
 	{
 		Eye_evil::init_texture();
 		Eye_evil::init_sprite();
+		Eye_evil::setAt(20);
+		Eye_evil::setHP(100);
 	}
 }
 
@@ -27,6 +29,17 @@ void Eye_evil::init_sprite()
 	current_frame = IntRect(0, 0, 60, 55.5);
 	Enemy_S.setTextureRect(current_frame);
 }
+
+void Eye_evil::setHP(short hp)
+{
+	HP = hp;
+}
+
+void Eye_evil::setAt(short at)
+{
+	attack_ = at;
+}
+
 void Eye_evil::update_movement()
 {
 	//decision explorer

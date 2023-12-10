@@ -14,7 +14,7 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		initEvilBall();
 		init_Kusaka();
 		init_chubacabra();
-		init_Wolf_boss();
+		//init_Wolf_boss();
 	}
 	
 	Level::~Level(){
@@ -77,7 +77,7 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		for (int i = 0; i < num_of_enemy_; i++)
 		{
 			Kusaka_vector[i]->update();
-		}
+ 		}
 	}
 
 	void Level::update_chubacabra()
@@ -135,9 +135,8 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		updateEvilBall();
 		update_Kusaka();
 		update_chubacabra();
-		update_Wolf_boss();
-		//std::cout << player->getGlobalBounds().left / 64 << "  " << player->getGlobalBounds().top / 64 << " " << sandbox.isOccupied(player->getGlobalBounds().top / 64, player->getGlobalBounds().left / 64) << std::endl;
-		//std::cout << sandbox.isOccupied(10, 799) << std::endl;
+		//update_Wolf_boss();
+
 		updateView();
 		updateCursor();
 		updateMap();
@@ -217,7 +216,7 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		render_Kusaka();
 		render_chubacabra();
 		render_shot();
-		render_Wolf_boss();
+		//render_Wolf_boss();
 
 		sandbox.second_render(*window, myView.getCurrentViewCords());
 		//renderCursor();
