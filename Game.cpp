@@ -29,7 +29,7 @@
 	}
 
 	void Game::initWindow(){
-		window.create(VideoMode(screen_width, screen_height), "NOT_MARIO", Style::Fullscreen);
+		window.create(VideoMode(screen_width, screen_height), "NOT_MARIO", Style::Default);
 		window.setFramerateLimit(144);
 		window.setView(view);
 		window.setFramerateLimit(144);

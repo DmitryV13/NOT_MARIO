@@ -12,9 +12,9 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		initPlayer();
 		menu_timer.restart();
 		//initEvilBall();
-		init_Kusaka();
-		init_chubacabra();
-		init_Wolf_boss();
+		//init_Kusaka();
+		//init_chubacabra();
+		//init_Wolf_boss();
 	}
 	
 	Level::~Level(){
@@ -133,9 +133,9 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		updatePlayer();
 		
 		//updateEvilBall();
-		update_Kusaka();
-		update_chubacabra();
-		update_Wolf_boss();
+		//update_Kusaka();
+		//update_chubacabra();
+		//update_Wolf_boss();
 
 		updateView();
 		updateCursor();
@@ -213,13 +213,12 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		renderPLayer();
 
 		//renderEvilBall();
-		render_Kusaka();
-		render_chubacabra();
+		//render_Kusaka();
+		//render_chubacabra();
 		//render_shot();
-		render_Wolf_boss();
+		//render_Wolf_boss();
 
 		sandbox.second_render(*window, myView.getCurrentViewCords());
-		//renderEvilBall();
 		//renderCursor();
 		window->setView(myView.view);
 

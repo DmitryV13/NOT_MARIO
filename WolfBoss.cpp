@@ -715,7 +715,7 @@ bool WolfBoss::search_for_enemies()
 	{
 		for (int j = centerX - dist; j <= centerX + dist; j++)
 		{
-			if (i >= 0 && i < 40 && j >= 0 && j < 200)
+			if (i >= 0 && i < sandbox->getMapHeight() / 64 && j >= 0 && j < sandbox->getMapWidth() / 64)
 			{
 				if (sandbox->isOccupied(i, j))
 				{

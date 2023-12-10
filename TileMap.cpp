@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "TileMap.h"
 
-	TileMap::TileMap(short level) : sizeTexture(64), mapH(80), mapW(800)
+	TileMap::TileMap(short level) : sizeTexture(64), mapH(100), mapW(800)
 	{
 		init_background();
 		init_tile_list();
@@ -348,7 +348,7 @@
 	void TileMap::updatePlayerPresence(int indexI[], int indexJ[]) {
 		for (int k = 0; k < mapW; k++) {
 			for (int l = 0; l < mapH; l++) {
-				tilemap[k][l][1]->setTilePresence(false);
+				tilemap[l][k][1]->setTilePresence(false);
 			}
 		}
 		for (int i = 0; i < 6 && indexI[i] != -1 && indexJ[i] != -1; i++) {

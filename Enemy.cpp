@@ -220,7 +220,7 @@ bool Enemy::player_contact()
 	{
 		for (int j = centerX; j <= centerX + l; j++)
 		{
-			if (i >= 0 && i < 40 && j >= 0 && j < 200)
+			if (i >= 0 && i < sandbox->getMapHeight()/64 && j >= 0 && j < sandbox->getMapWidth()/64)
 			{
 				if (sandbox->isOccupied(i, j))
 				{
@@ -235,7 +235,7 @@ bool Enemy::player_contact()
 	{
 		for (int j = centerX - l+1 ; j <= centerX; j++)
 		{
-			if (i >= 0 && i < 40 && j >= 0 && j < 200)
+			if (i >= 0 && i < sandbox->getMapHeight() / 64 && j >= 0 && j < sandbox->getMapWidth() / 64)
 			{
 				if (sandbox->isOccupied(i, j))
 				{
@@ -304,7 +304,7 @@ bool Enemy::update_collision_x()
 		for (int j = (Enemy_S.getPosition().x + displacement.x) / 64; j < (Enemy_S.getPosition().x + displacement.x +
 			     Enemy_S.getGlobalBounds().width) / 64; j++)
 		{
-			if (sandbox->isBlock(i, j) || j <= 0 || j >= 200)
+			if (sandbox->isBlock(i, j) || j <= 0 || j > sandbox->getMapWidth() / 64)
 			{
 				wasCollision = true;
 				if (displacement.x >= 0)
@@ -333,7 +333,7 @@ bool Enemy::update_collision_x_jump()
 		for (int j = (Enemy_S.getPosition().x + displacement.x) / 64; j < (Enemy_S.getPosition().x + displacement.x +
 			     Enemy_S.getGlobalBounds().width) / 64; j++)
 		{
-			if (sandbox->isBlock(i - 1, j) || j <= 0 || j >= 200)
+			if ((i>0 && sandbox->isBlock(i - 1, j)) || j <= 0 || j > sandbox->getMapWidth() / 64)
 			{
 				wasCollision = true;
 				if (displacement.x >= 0)

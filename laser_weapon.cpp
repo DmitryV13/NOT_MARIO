@@ -161,14 +161,14 @@ bool laser_weapon::update_collision_x(float x)
 	sf::Vector2f newPosition(get_position().x, get_position().y);
 	int i = (laser_S.getPosition().y + laser_S.getGlobalBounds().height) / 64;
 	/*for (int i = laser_S.getPosition().y / 60; i < (laser_S.getPosition().y + laser_S.getGlobalBounds().height) / 60; i
-	     ++)
+		 ++)
 	{*/
 	int j = (laser_S.getPosition().x + x +
 		laser_S.getGlobalBounds().width) / 64;
 	/*for (int j = (laser_S.getPosition().x + x) / 60; j < (laser_S.getPosition().x + x +
-		     laser_S.getGlobalBounds().width) / 60; j++)
+			 laser_S.getGlobalBounds().width) / 60; j++)
 	{*/
-	if (sandbox->isBlock(i, j) || j <= 0 || j >= 200)
+	if (sandbox->isBlock(i, j) || j <= 0 || j > sandbox->getMapWidth() / 64)
 	{
 		wasCollision = true;
 		if (x >= 0)
@@ -193,12 +193,12 @@ sf::Vector2f laser_weapon::calculateEndPosition(float x)
 	int i = (laser_S.getPosition().y) / 64;
 	if (dir_x)j = (laser_S.getPosition().x + x + laser_S.getGlobalBounds().width) / 64;
 	else j = (laser_S.getPosition().x + x) / 64;
-	
+
 	int g = 0;
-	while (!sandbox->isBlock(i, j) && j > 0 && j < 200 && g < 64)
+	while (!sandbox->isBlock(i, j) && j > 0 && j < sandbox->getMapWidth() / 64 && g < 64)
 	{
 		g++;
-		newPosition.x += x/2;
+		newPosition.x += x / 2;
 		i = (newPosition.y) / 64;
 		if (dir_x)j = (newPosition.x + laser_S.getGlobalBounds().width) / 64;
 		else j = (newPosition.x) / 64;
@@ -218,10 +218,10 @@ void laser_weapon::render_FL(sf::RenderTarget& target)
 	sf::Vector2f startPosition = get_position();
 	sf::Vector2f endPosition = calculateEndPosition(x);
 	if (startPosition == endPosition)return;
-
+	std::cout << startPosition.x/64 <<" " << startPosition.x/64 << " " << endPosition.x/64<< " "<<endPosition.y/64<<std::endl;
 	if (dir_x)
 	{
-		endPosition.x += 30;
+		endPosition.x += 32;
 		update_animation();
 		laser_S.setPosition(startPosition);
 		target.draw(laser_S);
@@ -229,13 +229,13 @@ void laser_weapon::render_FL(sf::RenderTarget& target)
 		current_frame.left = 128;
 		current_frame.width = -100;
 		laser_S.setTextureRect(current_frame);
-		if(endPosition.x>=startPosition.x)
+		if (endPosition.x >= startPosition.x)
 		{
 			laser_S.setPosition(endPosition);
 			target.draw(laser_S);
 		}
-		
-		
+
+
 		laser_S.setPosition(startPosition);
 		current_frame.width = 120;
 		current_frame.left = 0;
@@ -245,22 +245,22 @@ void laser_weapon::render_FL(sf::RenderTarget& target)
 
 	else
 	{
-		endPosition.x -= 30;
+		endPosition.x -= 32;
 		laser_S.setPosition(startPosition);
 		target.draw(laser_S);
-		
+
 		current_frame.width = 90;
 		current_frame.left = 10;
 		laser_S.setTextureRect(current_frame);
-		if (endPosition.x+60 < startPosition.x)
+		if (endPosition.x + 64 < startPosition.x)
 		{
 			laser_S.setPosition(endPosition);
 			target.draw(laser_S);
 		}
-		
+
 		laser_S.setPosition(startPosition);
-		current_frame.left = 60;
-		current_frame.width = -60;
+		current_frame.left = 64;
+		current_frame.width = -64;
 		laser_S.setTextureRect(current_frame);
 	}
 
@@ -268,23 +268,23 @@ void laser_weapon::render_FL(sf::RenderTarget& target)
 void laser_weapon::render(sf::RenderTarget& target)
 {
 	float x = dir_x ? 64.0f : -64.0f;
-	
+
 	sf::Vector2f startPosition = get_position();
 	sf::Vector2f currentPosition = startPosition;
 	sf::Vector2f endPosition = calculateEndPosition(x);
-	
+
 	if (startPosition == endPosition)return;
 	if (dir_x)
 	{
-		
-		endPosition.x += 30;
-		
+
+		endPosition.x += 32;
+
 		while (currentPosition.x <= endPosition.x)
 		{
-			
+
 			laser_S.setPosition(currentPosition);
 			target.draw(laser_S);
-			
+
 			currentPosition.x += 64.0f;
 		}
 		laser_S.setPosition(startPosition);
@@ -297,7 +297,7 @@ void laser_weapon::render(sf::RenderTarget& target)
 		{
 			laser_S.setPosition(currentPosition);
 			target.draw(laser_S);
-			
+
 
 			currentPosition.x -= 64.0f;
 		}
