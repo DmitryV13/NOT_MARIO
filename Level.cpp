@@ -1,14 +1,15 @@
 #include "stdafx.h"
 #include "Level.h"
 
-Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level)
+Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level, Color menuColor)
 	:window(window_)
 	,screenWidth(screenWidth_)
 	,screenHeight(screenHeight_)
 	,myView(sandbox, screenWidth_, screenHeight_)
 	,sandbox(level)
 	,game_state(GAME_STATE::FINISHED) {
-	game_menu = new GameMenu(window, sandbox.getMapWidth(), sandbox.getMapHeight(), &game_state);
+	game_menu = new GameMenu(window, sandbox.getMapWidth(), sandbox.getMapHeight(), &game_state, menuColor);
+	life_bar = new ScaleParametrBar();
 		initPlayer();
 		menu_timer.restart();
 		initEvilBall();
@@ -19,10 +20,24 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 	
 	Level::~Level(){
 		delete player;
+		delete game_menu;
+		delete life_bar;
 		delete evil_Ball;
+		for (auto& enemy : evil_ball_vector) {
+			delete enemy;
+		}
 		evil_ball_vector.clear();
+		for (auto& enemy : Kusaka_vector) {
+			delete enemy;
+		}
 		Kusaka_vector.clear();
+		for (auto& enemy : chubacabras_vector_) {
+			delete enemy;
+		}
 		chubacabras_vector_.clear();
+		for (auto& enemy : boss_vector) {
+			delete enemy;
+		}
 		boss_vector.clear();
 	}
 
@@ -120,6 +135,11 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 	void Level::updateMap(){
 		sandbox.update(*window, myView.getCurrentViewCords());
 	}
+
+	void Level::updateLifeBar(){
+		life_bar->updateScaleWidth(player->getHP());
+		life_bar->update(myView.getCurrentViewCords(), screenWidth, screenHeight);
+	}
 	
 	void Level::initPlayer(){
 		player = new Player(sandbox);
@@ -140,6 +160,7 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		updateView();
 		updateCursor();
 		updateMap();
+		updateLifeBar();
 	}
 
 	void Level::updateEvents(){
@@ -167,6 +188,7 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 			if (event.type == sf::Event::MouseWheelScrolled) {
 				if (event.mouseWheelScroll.delta > 0) {
 					player->change_weapon(1);
+					player->changeHP(-1);
 				}
 				else {
 					player->change_weapon(-1);
@@ -216,6 +238,7 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		render_Kusaka();
 		render_chubacabra();
 		render_shot();
+		
 		//render_Wolf_boss();
 
 		sandbox.second_render(*window, myView.getCurrentViewCords());
@@ -226,7 +249,7 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 			updateGameMenu();
 			renderGameMenu();
 		}
-
+		renderLifeBar();
 		window->display();
 	}
 
@@ -281,6 +304,10 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 
 			}
 		}
+	}
+
+	void Level::renderLifeBar(){
+		life_bar->render(window);
 	}
 
 	void Level::start(){

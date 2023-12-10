@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "Button.h"
 
-	Button::Button(float x, float y, float width, float height, short text_size, sf::Font* font_, string text_){
+	Button::Button(float x, float y, float width, float height, short text_size, sf::Font* font_, string text_, Color menuColor)
+	:hover_color(menuColor){
 		button_state = BUTTON_STATE::BTN_IDLE;
 
 		shape.setPosition(sf::Vector2f(x, y));
@@ -26,7 +27,8 @@
 		//shape.setFillColor(idle_color);
 	}
 
-	Button::Button(float x, float y, short text_size, sf::Font* font_, string text_){
+	Button::Button(float x, float y, short text_size, sf::Font* font_, string text_, Color menuColor)
+	:hover_color(menuColor) {
 		button_state = BUTTON_STATE::BTN_IDLE;
 
 		shape.setPosition(sf::Vector2f(x, y));
@@ -94,14 +96,14 @@
 
 			case BTN_HOVERED:
 				text.setOutlineColor(sf::Color(0, 0, 0, 255));
-				text.setFillColor(sf::Color(231, 71, 57, 255));
+				text.setFillColor(hover_color);
 				//text.setFillColor(sf::Color(191,42,62,255));
 				//shape.setFillColor(hover_color);
 				break;
 
 			case BTN_ACTIVE:
 				text.setOutlineColor(sf::Color(0, 0, 0, 0));
-				text.setFillColor(sf::Color(231,71,57,255));
+				text.setFillColor(hover_color);
 				//shape.setFillColor(active_color);
 				break;
 

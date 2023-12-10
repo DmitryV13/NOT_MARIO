@@ -97,6 +97,12 @@
     <Filter Include="Source Files\Map\Tile">
       <UniqueIdentifier>{983eef85-28b5-4606-bc52-d28ddf7815e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GameObjects\Alive\Enemies">
+      <UniqueIdentifier>{e2cd4eb6-7a1c-432e-b0ed-ae01620e362b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjects\Alive\Player">
+      <UniqueIdentifier>{5e20e6ea-00f7-4130-8852-f0301757ebe5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyView.cpp">
@@ -141,15 +147,6 @@
     <ClCompile Include="MenuItem.cpp">
       <Filter>Source Files\GUI\Items</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Source Files\GameObjects\Alive</Filter>
-    </ClCompile>
-    <ClCompile Include="EvilBall.cpp">
-      <Filter>Source Files\GameObjects\Alive</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files\GameObjects\Alive</Filter>
-    </ClCompile>
     <ClCompile Include="Sword.cpp">
       <Filter>Source Files\GameObjects\Artificial\Weapons\MeleeWeapon</Filter>
     </ClCompile>
@@ -186,33 +183,33 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\GameObjects\Alive\Player</Filter>
+    </ClCompile>
     <ClCompile Include="Eye_evil.cpp">
-      <Filter>Source Files\ServiceClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="laser_weapon.cpp">
-      <Filter>Source Files\ServiceClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="kusaka.cpp">
-      <Filter>Source Files\ServiceClasses</Filter>
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="RedMutant.cpp">
-      <Filter>Source Files\ServiceClasses</Filter>
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="laser_weapon.cpp">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="kusaka.cpp">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="WolfBoss.cpp">
-      <Filter>Source Files\ServiceClasses</Filter>
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Source Files\ServiceClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="EvilBall.cpp">
-      <Filter>Source Files\ServiceClasses</Filter>
+    <ClCompile Include="ScaleParametrBar.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemy.h">
-      <Filter>Header Files\GameObjects\Alive</Filter>
-    </ClInclude>
-    <ClInclude Include="EvilBall.h">
       <Filter>Header Files\GameObjects\Alive</Filter>
     </ClInclude>
     <ClInclude Include="Exit.h">
@@ -244,9 +241,6 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Header Files\GameObjects\Alive</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files\ServiceClasses</Filter>
@@ -326,7 +320,7 @@
     <ClInclude Include="WolfBoss.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EvilBall.h">
+    <ClInclude Include="ScaleParametrBar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -12,9 +12,12 @@ private:
 	double screen_width;
 	double screen_height;
 
+	short menuGUIS;
+
 	Event event;
 	View view;
 	RenderWindow window;
+	unordered_map<short, Color> menuMainColor;
 	Texture menu_T;
 	Texture background_T;
 	Sprite menu_S;

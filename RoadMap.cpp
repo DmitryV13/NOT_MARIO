@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "RoadMap.h"
 
-	RoadMap::RoadMap(RenderWindow* window_, double screen_w, double screen_h): window(window_), screen_height(screen_h), screen_width(screen_w){
+	RoadMap::RoadMap(RenderWindow* window_, double screen_w, double screen_h, Color menuColor_): window(window_), screen_height(screen_h), screen_width(screen_w), menuColor(menuColor_){
 		state = MENU_STATE::CLOSED;
 		initFont();
 		initBackground();
@@ -13,9 +13,9 @@
 	void RoadMap::initButtons() {
 		space_between_buttons = 52;
 		buttons_size = 82;
-		buttons["1"] = new Button(300, 300, buttons_size, font, "1");
-		buttons["2"] = new Button(300, 600, buttons_size, font, "2");
-		buttons["3"] = new Button(300, 600, buttons_size, font, "3");
+		buttons["1"] = new Button(300, 300, buttons_size, font, "1", menuColor);
+		buttons["2"] = new Button(300, 600, buttons_size, font, "2", menuColor);
+		buttons["3"] = new Button(300, 600, buttons_size, font, "3", menuColor);
 	}
 
 	void RoadMap::setButtonsPosition(){
@@ -60,18 +60,21 @@
 		}
 
 		if (buttons["1"]->isPressed()) {
-			Level* level = new Level(window, screen_width, screen_height, 1);
+			Level* level = new Level(window, screen_width, screen_height, 1, menuColor);
 			level->start();
+			delete level;
 			menu_timer.restart();
 		}
 		if (buttons["2"]->isPressed()) {
-			Level* level = new Level(window, screen_width, screen_height, 2);
+			Level* level = new Level(window, screen_width, screen_height, 2, menuColor);
 			level->start();
+			delete level;
 			menu_timer.restart();
 		}
 		if (buttons["3"]->isPressed()) {
-			Level* level = new Level(window, screen_width, screen_height, 3);
+			Level* level = new Level(window, screen_width, screen_height, 3, menuColor);
 			level->start();
+			delete level;
 			menu_timer.restart();
 		}
 		window->setView(View(FloatRect(0, 0, screen_width, screen_height)));

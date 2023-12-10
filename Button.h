@@ -12,12 +12,12 @@ private:
 	sf::Text text;
 
 	//sf::Color idle_color;
-	//sf::Color hover_color;
+	sf::Color hover_color;
 	//sf::Color active_color;
 
 public:
-	Button(float x, float y, float width, float height, short text_size, sf::Font* font_, string text_);
-	Button(float x, float y, short text_size, sf::Font* font_, string text_);
+	Button(float x, float y, float width, float height, short text_size, sf::Font* font_, string text_, Color menuColor);
+	Button(float x, float y, short text_size, sf::Font* font_, string text_, Color menuColor);
 	~Button();
 
 	float getHeight();

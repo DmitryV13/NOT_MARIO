@@ -2,12 +2,18 @@
 #include "GameMenu.h"
 
 
-	GameMenu::GameMenu(sf::RenderWindow* window_, float map_w, float map_h, short* game_state_)
+	GameMenu::GameMenu(sf::RenderWindow* window_, float map_w, float map_h, short* game_state_, Color menuColor)
 		:game_state(game_state_){
 		this->window = window_;
 		initBackground(map_w, map_h);
 		initFont();
-		initButtons();
+		initButtons(menuColor);
+	}
+
+	GameMenu::~GameMenu(){
+		for (auto i : buttons) {
+			delete i.second;
+		}
 	}
 	
 	void GameMenu::initFont(){
@@ -30,11 +36,11 @@
 
 	}
 	
-	void GameMenu::initButtons(){
+	void GameMenu::initButtons(Color menuColor){
 		space_between_buttons = 32;
 		buttons_size = 32;
-		buttons["CONTINUE"] = new Button(300, 300, buttons_size, font, "CONTINUE");
-		buttons["RETURN TO ROAD MAP"] = new Button(300, 600, buttons_size, font, "RETURN TO ROAD MAP");
+		buttons["CONTINUE"] = new Button(300, 300, buttons_size, font, "CONTINUE", menuColor);
+		buttons["RETURN TO ROAD MAP"] = new Button(300, 600, buttons_size, font, "RETURN TO ROAD MAP", menuColor);
 	}
 	
 	void GameMenu::initNecessaryInfo(){

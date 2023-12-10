@@ -38,7 +38,16 @@
 	}
 
 	void Game::initMenuTexture(){
-		if (!menu_T.loadFromFile("Textures/Menu/menu2.png")) {
+		std::random_device rd;
+		std::mt19937 gen(rd());
+		std::uniform_int_distribution<int> menuDist(0, 2);
+		menuGUIS = menuDist(gen);
+
+		menuMainColor[0] = Color(231, 71, 57, 255);
+		menuMainColor[1] = Color(170, 57, 231, 255);
+		menuMainColor[2] = Color(146, 168, 56, 255);
+
+		if (!menu_T.loadFromFile("Textures/GUI/menu1.png")) {
 			std::cout << "Error -> Menu -> couldn't load menu texture" << std::endl;
 		}
 	}
@@ -49,7 +58,7 @@
 	}
 
 	void Game::initBackgroundTexture(){
-		if (!background_T.loadFromFile("Textures/Menu/background.png")) {
+		if (!background_T.loadFromFile("Textures/GUI/background" + std::to_string(menuGUIS)+ ".png")) {
 			std::cout << "Error -> Menu -> couldn't load background texture" << std::endl;
 		}
 	}
@@ -63,7 +72,7 @@
 
 	void Game::initOptions(){
 		options = new MainMenuOption*[options_number];
-		options[0] = new RoadMap(&window, screen_width, screen_height);
+		options[0] = new RoadMap(&window, screen_width, screen_height, menuMainColor[menuGUIS]);
 		options[1] = new Setting();
 		options[2] = new Exit();
 
@@ -72,11 +81,11 @@
 			options_indexes[i] = i;
 		}
 
-		options_cords[0] = IntRect(0, 0, 70, 20);
-		options_cords[1] = IntRect(0, 20, 112, 20);
-		options_cords[2] = IntRect(0, 40, 56, 20);
+		options_cords[0] = IntRect(0, menuGUIS*71+0, 70, 20);
+		options_cords[1] = IntRect(0, menuGUIS * 71 + 20, 112, 20);
+		options_cords[2] = IntRect(0, menuGUIS * 71 + 40, 56, 20);
 
-		selected_cords = IntRect(0, 60, 25, 19);
+		selected_cords = IntRect(0, menuGUIS * 71 + 60, 11, 11);
 
 		options_position[0] = Vector2f((screen_width / 2) - (options_cords[0].width / 2 * menu_S.getScale().x), 300);
 		options_position[1] = Vector2f((screen_width / 2) - (options_cords[1].width / 2 * menu_S.getScale().x), options_position[0].y + 30 * menu_S.getScale().y);
