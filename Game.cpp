@@ -1,150 +1,196 @@
 #include "stdafx.h"
 #include "Game.h"
 
-	Game::Game(double screenWidth_, double screenHeight_)
-		:screenWidth(screenWidth_)
-		,screenHeight(screenHeight_)
-		,myView(sandbox, screenWidth_, screenHeight_)
-		,sandbox(){
+	Game::Game(double screen_w, double screen_h)
+		: screen_width(screen_w)
+		, screen_height(screen_h)
+		, options_number(3)
+		, option_selected(MENU_OPTION::MENU_PLAY) {
+		view.reset(FloatRect(0, 0, screen_width, screen_height));
+		initMenuTexture();
+		initMenuSprite();
+		initOptions();
 		initWindow();
-		initPlayer();
-		initEvilBall();
 	}
-	
-	Game::~Game(){
-		delete player;
-		delete evilBall;
-		evilball.clear();
-		
+
+		Game::Game()
+		: options_number(3)
+		, option_selected(MENU_OPTION::MENU_PLAY) {
+		VideoMode desktop = VideoMode::getDesktopMode();
+		screen_width = desktop.width;
+		screen_height = desktop.height;
+		view.reset(FloatRect(0, 0, screen_width, screen_height));
+		initMenuTexture();
+		initMenuSprite();
+		initOptions();
+		initWindow();
+		initBackgroundTexture();
+		initBackgroundSprite();
 	}
-	
+
 	void Game::initWindow(){
-		window.create(sf::VideoMode(screenWidth, screenHeight), "NOT_MARIO", sf::Style::Close | sf::Style::Titlebar);
+		window.create(VideoMode(screen_width, screen_height), "NOT_MARIO", Style::Default);
 		window.setFramerateLimit(144);
-	}
-	
-	void Game::initPlayer(){
-		player = new Player(sandbox);
-	}
-
-	void Game::initEvilBall()
-	{
-		for (int i = 0; i < numOfEnemy; i++) {
-			EvilBall enemy(sandbox);
-			evilball.push_back(enemy);
-		}
-		evilBall = new EvilBall(sandbox);
+		window.setView(view);
+		window.setFramerateLimit(144);
+		//window.setMouseCursorVisible(false);
+		//cursor = new Cursor();
 	}
 
-	const sf::RenderWindow& Game::getWindow() const{
-			return window;
+	void Game::initMenuTexture(){
+		if (!menu_T.loadFromFile("Textures/Menu/menu2.png")) {
+			std::cout << "Error -> Menu -> couldn't load menu texture" << std::endl;
 		}
-	
+	}
+
+	void Game::initMenuSprite() {
+		menu_S.setTexture(menu_T);
+		menu_S.setScale(4.0f,4.0f);
+	}
+
+	void Game::initBackgroundTexture(){
+		if (!background_T.loadFromFile("Textures/Menu/background.png")) {
+			std::cout << "Error -> Menu -> couldn't load background texture" << std::endl;
+		}
+	}
+
+	void Game::initBackgroundSprite(){\
+		background_S.setTexture(background_T);
+		background_S.setScale(static_cast<float>(window.getSize().y) / background_S.getLocalBounds().height, static_cast<float>(window.getSize().y) / background_S.getLocalBounds().height);
+		background_S.setPosition((static_cast<float>(window.getSize().x) - background_S.getGlobalBounds().width) / 2, 0);
+	}
+
+
+	void Game::initOptions(){
+		options = new MainMenuOption*[options_number];
+		options[0] = new RoadMap(&window, screen_width, screen_height);
+		options[1] = new Setting();
+		options[2] = new Exit();
+
+		options_indexes = new short[options_number];
+		for (int i = 0; i < options_number; i++) {
+			options_indexes[i] = i;
+		}
+
+		options_cords[0] = IntRect(0, 0, 70, 20);
+		options_cords[1] = IntRect(0, 20, 112, 20);
+		options_cords[2] = IntRect(0, 40, 56, 20);
+
+		selected_cords = IntRect(0, 60, 25, 19);
+
+		options_position[0] = Vector2f((screen_width / 2) - (options_cords[0].width / 2 * menu_S.getScale().x), 300);
+		options_position[1] = Vector2f((screen_width / 2) - (options_cords[1].width / 2 * menu_S.getScale().x), options_position[0].y + 30 * menu_S.getScale().y);
+		options_position[2] = Vector2f((screen_width / 2) - (options_cords[2].width / 2 * menu_S.getScale().x), options_position[1].y + 30 * menu_S.getScale().y);
+
+		selected_position = Vector2f(options_position[0].x+options_cords[0].width*menu_S.getScale().x + 15* menu_S.getScale().x, options_position[0].y + (options_cords[0].height- selected_cords.height) * menu_S.getScale().x/2);
+	}
+
 	void Game::update(){
+		window.setView(view);
 		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::Closed) {
+			if (event.type == Event::Closed) {
 				window.close();
 			}
-			else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-				window.close();
-			}
-			if (event.type == sf::Event::KeyReleased) {
-				if (event.key.code == sf::Keyboard::D) {
-					player->resetAnimationTimer();
+			else if (event.type == Event::KeyPressed) {
+				if (event.key.code == Keyboard::Escape) {
+					window.close();
 				}
-				if (event.key.code == sf::Keyboard::A) {
-					player->resetAnimationTimer();
+				if (event.key.code == Keyboard::Up) {
+					//true -> up
+					moveSelected(true);
 				}
-				if (event.key.code == sf::Keyboard::W) {
-					player->resetAnimationTimer();
-					player->resetIsFlying();
+				else if (event.key.code == Keyboard::Down) {
+					//false -> down
+					moveSelected(false);
 				}
-				if (event.key.code == sf::Keyboard::S) {
-					player->resetAnimationTimer();
-				}
-				if (event.key.code == sf::Keyboard::Space) {
-					player->resetAnimationTimer();
-					player->resetNTHJump();
+				if (event.key.code == Keyboard::Enter) {
+					options[option_selected]->enter(&window);
 				}
 			}
+			else if (event.type == Event::MouseButtonPressed) {
+				if (event.mouseButton.button == Mouse::Left) {
+					Vector2f cursor_position(Mouse::getPosition(window));
+					if (isOptionHovered(cursor_position, option_selected)) {
+						options[option_selected]->enter(&window);
+					}
+				}
+				//if (event.mouseButton.button == sf::Mouse::Left) {
+				//
+				//}
+			}
+			//event.type == sf::Event::KeyReleased) {
+			//if (event.key.code == sf::Keyboard::D) {
+			//	player->resetAnimationTimer();
+			//}
 		}
-		
-		updatePlayer();
-		updateEvilBall();
-		updateView();
-		updateCollision();
-		
-		//updateCollisionMap();
-	}
-
-	void Game::updateView(){
-		myView.updateView(player->getGlobalBounds());
-		
-	}
-
-	void Game::updateCollision(){
-		if ((player->getPosition().y + player->getGlobalBounds().height) > 2400.f) {
-			player->resetVelocityY();
-			player->setPosition(
-				player->getPosition().x,
-				2400.f - player->getGlobalBounds().height);
-			player->resetJumpAccess();
-		}
-		if (player->getPosition().y < 0.f) {
-			player->setPosition(
-				player->getPosition().x,
-				0);
-		}
-		if ((player->getPosition().x + player->getGlobalBounds().width) > 12000.f) {
-			player->setPosition(
-				12000.f - player->getGlobalBounds().width,
-				player->getPosition().y);
-		}
-		if (player->getPosition().x < 0) {
-			player->setPosition(
-				0,
-				player->getPosition().y);
-		}
-
-
-
+		updateCursor();
+		updateSelected();
 		
 	}
 
-void Game::renderEvilBall()
-{
-	for (int i = 0; i < numOfEnemy; i++) {
-		evilball[i].render(window);
-	}
-	evilBall->render(window);
-}
-
-void Game::renderPLayer(){
-		player->render(window);
+	void Game::updateCursor(){
+		Vector2f cursor_position(Mouse::getPosition(window));
+		//std::cout << cursor_position.x << "  " << cursor_position.y << std::endl;
+		for (int i = 0; i < options_number; i++){
+			if (isOptionHovered(cursor_position, i)) {
+				option_selected = i;
+			}
+		}
 	}
 
-	void Game::renderMap(){
-		sandbox.render(window);
-	}
-	
-	void Game::updatePlayer(){
-		player->update();
+	void Game::updateSelected(){
+		selected_position = Vector2f(options_position[option_selected].x + options_cords[option_selected].width * menu_S.getScale().x + 15 * menu_S.getScale().x, options_position[option_selected].y + (options_cords[option_selected].height - selected_cords.height) * menu_S.getScale().x / 2);
 	}
 
-void Game::updateEvilBall()
-{
-	for (int i = 0; i < numOfEnemy; i++) {
-		evilball[i].update();
-	}
-	evilBall->update();
-}
-
-void Game::render(){
-		window.clear(sf::Color::White);
-	
-		renderMap();
-		renderPLayer();
-		renderEvilBall();
-		window.setView(myView.view);
+	void Game::render(){
+		window.clear(Color::Black);
+		renderBackground();
+		renderOptions();
+		renderSelected();
 		window.display();
+	}
+
+	void Game::renderBackground(){
+		window.draw(background_S);
+	}
+
+	void Game::renderOptions(){
+		for (int i = 0; i < options_number; i++) {
+			menu_S.setTextureRect(options_cords[i]);
+			menu_S.setPosition(options_position[i]);
+			window.draw(menu_S);
+		}
+	}
+
+	void Game::renderSelected(){
+		menu_S.setTextureRect(selected_cords);
+		menu_S.setPosition(selected_position);
+		window.draw(menu_S);
+	}
+
+	void Game::renderCursor(){
+	}
+
+	void Game::moveSelected(bool up){
+		if (up) 
+			option_selected = option_selected - 1 < 0 ? options_number - 1 : option_selected - 1;
+		else
+			option_selected = option_selected + 1 >= options_number ? 0 : option_selected + 1;
+	}
+
+	bool Game::isOptionHovered(Vector2f cursor_pos, short option_index){
+		if (cursor_pos.x >= options_position[option_index].x
+			&& cursor_pos.x <= options_position[option_index].x + options_cords[option_index].width * menu_S.getScale().x
+			&& cursor_pos.y >= options_position[option_index].y
+			&& cursor_pos.y <= options_position[option_index].y + options_cords[option_index].height * menu_S.getScale().y) {
+			return true;
+		}
+		return false;
+	}
+
+	void Game::start(){
+		while (window.isOpen()) {
+			update();
+			render();
+		}
 	}

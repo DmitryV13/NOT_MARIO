@@ -1,32 +1,32 @@
 #pragma once
+#include "PLAYER_ANIMATION_SATES.h"
 #include "Map.h"
 #include "TileMap.h"
-
-using sf::Sprite;
-using sf::RenderWindow;
-using sf::FloatRect;
-using sf::View;
-using sf::Texture;
-using sf::IntRect;
-using sf::Clock;
+#include "Fist.h"
+#include "Sword.h"
+#include "CombatStaff.h"
+#include "Bow.h"
 
 
-enum PLAYER_ANIMATION_STATES{IDLE=0, MOVING_LEFT, MOVING_RIGHT, MOVING_DOWN, MOVING_UP, JUMPING, FALLING};
+using namespace::sf;
 
 
 class Player {
 private:
-    TileMap sandbox;
+    TileMap* sandbox;
 
     Texture player_T;
     Sprite player_S;
+
+    vector<Weapon*> weapons;
+    short chosen_weapon;
 
     IntRect currentFrame;
     Clock animationTimer;
     short animationState;
     bool animationSwitch;
 
-    sf::Vector2f velocity;
+    Vector2f velocity;
     float velocityMax;
     float velocityMin;
     float acceleration;
@@ -43,29 +43,22 @@ private:
     bool isFlying;
     float flyVelocity;
 
-    bool movingDirection;
-    //FloatRect coordinates;
-    //double speedX;
-    //double speedY;
-    //double acceleration = 0.0009;
-    //double heightCoeficient = 2;
-    //bool onGround;
-    //double currentFrame;
+    short movingDirection;
+
     void initVariables();
     void initTexture();
     void initSprite();
+    void initWeapon();
     void initAnimation();
     void initPhysics();
-
 public:
-    //Player(Texture& texture, RenderWindow& window_, Map& levelMap_);
     Player(TileMap& map);
-
+    IntRect get_pl_frame();
     // accessors
     const bool& getAnimationSwitch();
-    const sf::Vector2f getPosition() const;
+    const Vector2f getPosition() const;
     const FloatRect getGlobalBounds() const;
-    const sf::Vector2f getVelocity() const;
+    const Vector2f getVelocity() const;
 
     //modifiers
     void resetVelocityY();
@@ -74,24 +67,24 @@ public:
     void resetNTHJump();
     void resetIsFlying();
     
-    //void updateMovement(double time, RenderWindow& window);
-    void render(sf::RenderTarget& target);
     void walk(const float dir_x);
     void jump(const float dir_y);
     void fly(const float dir_y);
-    void update();
+
+    void update(RenderWindow* window, FloatRect view_cords);
     void updatePhysics();
-    void updateMovement();
+    void updateMovement(RenderWindow* window, FloatRect view_cords);
     void updateAnimation();
+    void updateWeapon(RenderWindow* window, FloatRect view_cords);
+    void updateProjectiles();
     bool updateCollisionX();
     bool updateCollisionY();
+    void updateCollision();
     void updatePresence();
+
+    void render(RenderTarget& target);
+    void renderProjectiles(RenderTarget& target);
+
     void resetAnimationTimer();
-    
-    //void checkCollisionX();;
-    //void checkCollisionY();
-    //void fallingTest();
-    //void changeFrames(double& time);
-    //void checkingBordersX();
-    //void checkingBordersY();
+    void change_weapon(short count);
 };

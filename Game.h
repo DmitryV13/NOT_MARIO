@@ -1,40 +1,60 @@
 #pragma once
-#include "Player.h"
-#include "TileMap.h"
-#include "MyView.h"
-#include "EvilBall.h"
+#include "RoadMap.h"
+#include "Setting.h"
+#include "Exit.h"
 
-class Game
-{
+using namespace sf;
+
+enum MENU_OPTION{MENU_PLAY=0, MENU_SETTINGS, MENU_EXIT};
+
+class Game{
 private:
-	sf::RenderWindow window;
-	sf::Event event;
-	Player* player;
-	EvilBall* evilBall;
-	vector<EvilBall> evilball;
-	TileMap sandbox;
-	MyView myView;
+	double screen_width;
+	double screen_height;
 
-	int numOfEnemy{60};
-	double screenWidth;
-	double screenHeight;
+	Event event;
+	View view;
+	RenderWindow window;
+	Texture menu_T;
+	Texture background_T;
+	Sprite menu_S;
+	Sprite background_S;
+
+	IntRect selected_cords;
+	Vector2f selected_position;
+
+	short option_selected;
+	IntRect options_cords[3];
+	Vector2f options_position[3];
+	short options_number;
+	short* options_indexes;
+
+	MainMenuOption** options;
 
 	void initWindow();
-	void initPlayer();
-	void initEvilBall();
-public:
-	Game(double screenWidth_, double screenHeight_);
-	~Game();
+	void initMenuTexture();
+	void initMenuSprite();
+	void initBackgroundTexture();
+	void initBackgroundSprite();
+	void initOptions();
 
-	const sf::RenderWindow& getWindow() const;
-	void updatePlayer();
-	void updateEvilBall();
+public:
+	Game(double screen_w, double screen_h);
+	Game();
+
 	void update();
-	void updateView();
-	void updateCollision();
-	void renderEvilBall();
-	void renderPLayer();
-	void renderMap();
+	void updateCursor();
+	void updateSelected();
+
 	void render();
+	void renderBackground();
+	void renderOptions();
+	void renderSelected();
+	void renderCursor();
+
+	void moveSelected(bool up);
+	bool isOptionHovered(Vector2f cursor_pos, short option_index);
+
+	void start();
 };
 
