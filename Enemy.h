@@ -38,6 +38,8 @@ protected:
 	Clock animation_timer;
 	short animation_state;
 	bool animation_switch;
+	short HP;
+	short attack_;
 
 	sf::Vector2f start_position;
 	int step_left;
@@ -88,6 +90,7 @@ public:
 
 
 	virtual void jump_towards_player();
+	virtual void changeHP(short);
 
 	//virtual
 	virtual void reset_attention() = 0;

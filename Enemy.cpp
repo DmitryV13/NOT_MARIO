@@ -19,7 +19,7 @@ sf::Vector2f Enemy::generate_random_start_position(int mapWidth, int mapHeight)
 		int centerY = (y + 64) / 64;
 
 		bool collisionDetected = false;
-		if (sandbox->isBlock(centerY, centerX))
+		if (sandbox->outOfMap(centerX,centerY) && sandbox->isBlock(centerY, centerX))
 		{
 			collisionDetected = true;
 		}
@@ -31,7 +31,7 @@ sf::Vector2f Enemy::generate_random_start_position(int mapWidth, int mapHeight)
 				{
 					int blockX = (x + dx) / 64;
 					int blockY = (y + dy) / 64;
-					if (sandbox->isBlock(blockY, blockX))
+					if (sandbox->outOfMap(blockX, blockY) && sandbox->isBlock(blockY, blockX))
 					{
 						collisionDetected = true;
 						break;
@@ -63,10 +63,10 @@ Enemy::Enemy(TileMap& map, Player& pl)
 	init_variables();
 	init_animation();
 	init_physics();
-	//start_position = generate_random_start_position(sandbox->getMapWidth(), sandbox->getMapHeight());
-	//set_position(start_position.x, start_position.y);
+	start_position = generate_random_start_position(sandbox->getMapWidth(), sandbox->getMapHeight());
+	set_position(start_position.x, start_position.y);
 
-		set_position(1300,600);
+		//set_position(1300,600);
 }
 
 sf::Vector2f Enemy::get_position() const
@@ -220,7 +220,7 @@ bool Enemy::player_contact()
 	{
 		for (int j = centerX; j <= centerX + l; j++)
 		{
-			if (i >= 0 && i < sandbox->getMapHeight()/64 && j >= 0 && j < sandbox->getMapWidth()/64)
+			if (i >= 0 && i < (sandbox->getMapHeight()/64) && j >= 0 && j < (sandbox->getMapWidth()/64))
 			{
 				if (sandbox->isOccupied(i, j))
 				{
@@ -235,11 +235,10 @@ bool Enemy::player_contact()
 	{
 		for (int j = centerX - l+1 ; j <= centerX; j++)
 		{
-			if (i >= 0 && i < sandbox->getMapHeight() / 64 && j >= 0 && j < sandbox->getMapWidth() / 64)
+			if (i >= 0 && i < (sandbox->getMapHeight() / 64) && j >= 0 && j < (sandbox->getMapWidth() / 64))
 			{
 				if (sandbox->isOccupied(i, j))
 				{
-				
 					return true;
 				}
 			}
@@ -304,7 +303,7 @@ bool Enemy::update_collision_x()
 		for (int j = (Enemy_S.getPosition().x + displacement.x) / 64; j < (Enemy_S.getPosition().x + displacement.x +
 			     Enemy_S.getGlobalBounds().width) / 64; j++)
 		{
-			if (sandbox->isBlock(i, j) || j <= 0 || j > sandbox->getMapWidth() / 64)
+			if (sandbox->outOfMap(i, j) && sandbox->isBlock(i, j) || j <= 0 || j > sandbox->getMapWidth() / 64)
 			{
 				wasCollision = true;
 				if (displacement.x >= 0)
@@ -333,7 +332,7 @@ bool Enemy::update_collision_x_jump()
 		for (int j = (Enemy_S.getPosition().x + displacement.x) / 64; j < (Enemy_S.getPosition().x + displacement.x +
 			     Enemy_S.getGlobalBounds().width) / 64; j++)
 		{
-			if ((i>0 && sandbox->isBlock(i - 1, j)) || j <= 0 || j > sandbox->getMapWidth() / 64)
+			if (sandbox->outOfMap(i, j) && (i>0 && sandbox->isBlock(i - 1, j)) || j <= 0 || j > sandbox->getMapWidth() / 64)
 			{
 				wasCollision = true;
 				if (displacement.x >= 0)
@@ -365,7 +364,7 @@ bool Enemy::update_collision_y()
 		for (int j = Enemy_S.getPosition().x / 64; j < (Enemy_S.getPosition().x + Enemy_S.getGlobalBounds().width) / 64;
 		     j++)
 		{
-			if (sandbox->isBlock(i, j))
+			if (sandbox->outOfMap(i, j) && sandbox->isBlock(i, j))
 			{
 				wasCollision = true;
 				reset_jump_access();
@@ -402,5 +401,10 @@ void Enemy::jump_towards_player()
 	jump_Height = std::min(jump_Height, max_jump_height);
 	
 	jump(jump_Height);
+}
+
+void Enemy::changeHP(short attackPl)
+{
+	HP -= attackPl;
 }
 

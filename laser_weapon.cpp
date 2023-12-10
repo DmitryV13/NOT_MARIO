@@ -168,6 +168,7 @@ bool laser_weapon::update_collision_x(float x)
 	/*for (int j = (laser_S.getPosition().x + x) / 60; j < (laser_S.getPosition().x + x +
 			 laser_S.getGlobalBounds().width) / 60; j++)
 	{*/
+	if (i >= 0 && i < sandbox->getMapHeight() / 64 && j >= 0 && j < sandbox->getMapWidth() / 64)return wasCollision;
 	if (sandbox->isBlock(i, j) || j <= 0 || j > sandbox->getMapWidth() / 64)
 	{
 		wasCollision = true;
@@ -195,7 +196,8 @@ sf::Vector2f laser_weapon::calculateEndPosition(float x)
 	else j = (laser_S.getPosition().x + x) / 64;
 
 	int g = 0;
-	while (!sandbox->isBlock(i, j) && j > 0 && j < sandbox->getMapWidth() / 64 && g < 64)
+	
+	while (sandbox->outOfMap(i, j) && !sandbox->isBlock(i, j) && g < 64)
 	{
 		g++;
 		newPosition.x += x / 2;
@@ -217,6 +219,8 @@ void laser_weapon::render_FL(sf::RenderTarget& target)
 
 	sf::Vector2f startPosition = get_position();
 	sf::Vector2f endPosition = calculateEndPosition(x);
+	if (endPosition.x / 64, endPosition.y / 64)return;;
+
 	if (startPosition == endPosition)return;
 	std::cout << startPosition.x/64 <<" " << startPosition.x/64 << " " << endPosition.x/64<< " "<<endPosition.y/64<<std::endl;
 	if (dir_x)

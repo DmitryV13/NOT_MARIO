@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "TileMap.h"
 
-	TileMap::TileMap(short level) : sizeTexture(64), mapH(100), mapW(800)
+	TileMap::TileMap(short level) : sizeTexture(64), mapH(100), mapW(200)
 	{
 		init_background();
 		init_tile_list();
@@ -311,6 +311,7 @@
 	}
 
 	bool TileMap::isBlock(int i, int j) {
+	
 		if (tilemap[i][j][1]->get_interaction() == 1)
 			return true;
 		return false;

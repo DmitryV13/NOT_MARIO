@@ -11,9 +11,9 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 	game_menu = new GameMenu(window, sandbox.getMapWidth(), sandbox.getMapHeight(), &game_state);
 		initPlayer();
 		menu_timer.restart();
-		//initEvilBall();
-		//init_Kusaka();
-		//init_chubacabra();
+		initEvilBall();
+		init_Kusaka();
+		init_chubacabra();
 		//init_Wolf_boss();
 	}
 	
@@ -77,7 +77,7 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		for (int i = 0; i < num_of_enemy_; i++)
 		{
 			Kusaka_vector[i]->update();
-		}
+ 		}
 	}
 
 	void Level::update_chubacabra()
@@ -132,9 +132,9 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 	void Level::update(){
 		updatePlayer();
 		
-		//updateEvilBall();
-		//update_Kusaka();
-		//update_chubacabra();
+		updateEvilBall();
+		update_Kusaka();
+		update_chubacabra();
 		//update_Wolf_boss();
 
 		updateView();
@@ -212,10 +212,10 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		renderMap();
 		renderPLayer();
 
-		//renderEvilBall();
-		//render_Kusaka();
-		//render_chubacabra();
-		//render_shot();
+		renderEvilBall();
+		render_Kusaka();
+		render_chubacabra();
+		render_shot();
 		//render_Wolf_boss();
 
 		sandbox.second_render(*window, myView.getCurrentViewCords());
