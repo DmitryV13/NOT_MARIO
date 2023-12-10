@@ -20,9 +20,21 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 	Level::~Level(){
 		delete player;
 		delete evil_Ball;
+		for (auto& enemy : evil_ball_vector) {
+			delete enemy;
+		}
 		evil_ball_vector.clear();
+		for (auto& enemy : Kusaka_vector) {
+			delete enemy;
+		}
 		Kusaka_vector.clear();
+		for (auto& enemy : chubacabras_vector_) {
+			delete enemy;
+		}
 		chubacabras_vector_.clear();
+		for (auto& enemy : boss_vector) {
+			delete enemy;
+		}
 		boss_vector.clear();
 	}
 

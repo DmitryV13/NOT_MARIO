@@ -19,7 +19,7 @@ sf::Vector2f Enemy::generate_random_start_position(int mapWidth, int mapHeight)
 		int centerY = (y + 64) / 64;
 
 		bool collisionDetected = false;
-		if (sandbox->outOfMap(centerX,centerY) && sandbox->isBlock(centerY, centerX))
+		if (sandbox->outOfMap(centerY,centerX) && sandbox->isBlock(centerY, centerX))
 		{
 			collisionDetected = true;
 		}
@@ -31,7 +31,7 @@ sf::Vector2f Enemy::generate_random_start_position(int mapWidth, int mapHeight)
 				{
 					int blockX = (x + dx) / 64;
 					int blockY = (y + dy) / 64;
-					if (sandbox->outOfMap(blockX, blockY) && sandbox->isBlock(blockY, blockX))
+					if (sandbox->outOfMap(blockY, blockX) && sandbox->isBlock(blockY, blockX))
 					{
 						collisionDetected = true;
 						break;
@@ -80,10 +80,24 @@ const FloatRect Enemy::get_global_bounds() const
 }
 
 
+PL_SIDE Enemy::getPlayerSide(float playerX, float enemyX)
+{
+	if (playerX < enemyX)
+	{
+		return PL_SIDE::LEFT;
+	}
+	else
+	{
+		return PL_SIDE::RIGHT;
+	}
+}
 
 void Enemy::set_position(const float x, const float y)
 {
+	observation_area.setPosition(x-(observation_area.getGlobalBounds().width - (observation_area.getGlobalBounds().width/2)-(Enemy_S.getGlobalBounds().width/2)),
+		(y - (observation_area.getGlobalBounds().height - Enemy_S.getGlobalBounds().height)));
 	Enemy_S.setPosition(x, y);
+
 }
 
 void Enemy::render(sf::RenderTarget& target)
@@ -142,6 +156,7 @@ void Enemy::init_physics()
 	looks_to_the_left = false;
 	looks_to_the_right = true;
 	animation_counter_think = 0;
+	count_shot = 0;
 }
 
 void Enemy::walk(const float dir_x)
@@ -189,7 +204,33 @@ void Enemy::walk(const float dir_x)
 	}
 }
 
+bool Enemy::isPlayerInRadius(const sf::FloatRect& observationArea, const sf::FloatRect& playerBounds, float radius)
+{
 
+
+	if (observationArea.intersects(playerBounds)) {
+		sf::Vector2f observationCenter = {
+			observationArea.left + observationArea.width / 2,
+			observationArea.top + observationArea.height / 2
+		};
+
+		sf::Vector2f playerCenter = {
+			playerBounds.left + playerBounds.width / 2,
+			playerBounds.top + playerBounds.height / 2
+		};
+
+		float distance = std::sqrt(
+			std::pow(observationCenter.x - playerCenter.x, 2) +
+			std::pow(observationCenter.y - playerCenter.y, 2)
+		);
+
+
+		return distance <= radius;
+	}
+
+	return false;
+
+}
 //ground contact
 void Enemy::reset_jump_access()
 {
@@ -289,7 +330,9 @@ void Enemy::update_physics()
 	if (displacement.x < 0 && displacement_max == 1.f)
 		step_left++;
 	//if (player_contact())displacement.x *= 1.3f;
+
 	Enemy_S.move(displacement);
+	observation_area.move(displacement);
 }
 
 // collision x

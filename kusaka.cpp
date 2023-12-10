@@ -20,6 +20,9 @@ void kusaka::init_texture()
 
 void kusaka::init_sprite()
 {
+
+	current_area = IntRect(0, 0, 1280, 192);
+	observation_area.setTextureRect(current_area);
 	//Enemy_T = init_texture();
 	Enemy_S.setTexture(kusaka_t_);
 	current_frame = IntRect(0, 0, 90, 55);
@@ -199,8 +202,15 @@ void kusaka::update_animation()
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
+			if(count_shot == 0)
+			{
+				current_frame.left = 0.f;
+			}
+			count_shot++;
+			
 			if (looks_to_the_right)
 			{
+				
 				current_frame.left += 90;
 				if (current_frame.left >= 810.f)
 				{
@@ -268,10 +278,11 @@ void kusaka::shot()
 	animation_state = ENEMY_ANIMATION_STATES::ENEMY_SHOT;
 }
 
+
 void kusaka::attack()
 {
-	animation_state = ENEMY_ANIMATION_STATES::ENEMY_ATTENTION;
-	if(player_contact())
+	if(animation_state != ENEMY_ANIMATION_STATES::ENEMY_SHOT)animation_state = ENEMY_ANIMATION_STATES::ENEMY_ATTENTION;
+	if (isPlayerInRadius(observation_area.getGlobalBounds(), player_->getGlobalBounds(), 192))
 	{
 		if (count_jump == 0) {
 			//jump(1.f);
@@ -279,10 +290,12 @@ void kusaka::attack()
 			count_jump++;
 		}
 	}
+	else reset_attention();
 	if (sting())
 	{
-		
-		shot();
+		animation_state = ENEMY_ANIMATION_STATES::ENEMY_SHOT;
+		if(count_shot == 8)shot();
+		if (count_shot == 10) clear_shot();
 		displacement.x = 0;
 		displacement_max = 1.f;
 		FloatRect en = get_global_bounds();
@@ -338,19 +351,40 @@ void kusaka::attack()
 		}
 		displacement.x += 10 * moving * acceleration;
 	}
-	if(!player_contact())
-	{
-		reset_attention();
-	}
+	
 	// displacement.x = 0;
 }
 
 void kusaka::clear_shot()
 {
+	count_shot = 0;
+	animation_state = ENEMY_ANIMATION_STATES::ENEMY_ATTENTION;
 }
 
 bool kusaka::search_for_enemies()
 {
+	FloatRect look = observation_area.getGlobalBounds();
+	FloatRect pl = player_->getGlobalBounds();
+
+	PL_SIDE playerSide = getPlayerSide(player_->getPosition().x, get_position().x);
+	if (playerSide == PL_SIDE::RIGHT && look.intersects(pl))
+	{
+		player_l_r[1] = true;
+		player_l_r[0] = false;
+		return true;
+	}
+	else if(playerSide == PL_SIDE::LEFT && look.intersects(pl))
+	{
+		player_l_r[0] = true;
+		player_l_r[1] = false;
+		return true;
+	}
+
+	player_l_r[0] = false;
+	player_l_r[1] = false;
+	return false;
+
+
 	// int centerX = get_position().x / 60;
 	// int centerY = get_position().y / 60;
 	//
@@ -370,7 +404,10 @@ bool kusaka::search_for_enemies()
 	// }
 	//
 	// return false;
-	int centerX = get_position().x / 64;
+
+
+
+	/*int centerX = get_position().x / 64;
 	int centerY = get_position().y / 64;
 
 
@@ -409,15 +446,18 @@ bool kusaka::search_for_enemies()
 
 	player_l_r[0] = false;
 	player_l_r[1] = false;
-	return false;
+	return false;*/
 }
 
 void kusaka::reset_attention()
 {
+	count_shot = 0;
 	displacement_max = 1.f;
 	displacement.x += moving * acceleration;
 	count_jump = 0;
 }
+
+
 
 
 

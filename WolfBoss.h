@@ -3,11 +3,7 @@
 enum class BOSS_STATE { SLEEP, IDLE, MOVING, JUMPING, ATTACKING, RETREATING, HOWL, TORMENT
 };
 
-enum class PL_SIDE
-{
-	LEFT,
-	RIGHT
-};
+
 
 class WolfBoss :
 	public Enemy
