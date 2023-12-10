@@ -151,7 +151,6 @@
     <ClCompile Include="TileBox.cpp" />
     <ClCompile Include="TileFactory.cpp" />
     <ClCompile Include="TileMap.cpp" />
-    <ClCompile Include="TileStruct.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -166,7 +165,6 @@
     <ClInclude Include="TileBox.h" />
     <ClInclude Include="TileFactory.h" />
     <ClInclude Include="TileMap.h" />
-    <ClInclude Include="TileStruct.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NOT_MARIO.rc" />

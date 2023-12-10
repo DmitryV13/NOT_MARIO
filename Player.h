@@ -2,10 +2,10 @@
 #include "PLAYER_ANIMATION_SATES.h"
 #include "Map.h"
 #include "TileMap.h"
-#include "Fist.h"
-#include "Sword.h"
-#include "CombatStaff.h"
-#include "Bow.h"
+//#include "Fist.h"
+//#include "Sword.h"
+//#include "CombatStaff.h"
+//#include "Bow.h"
 
 
 using namespace::sf;

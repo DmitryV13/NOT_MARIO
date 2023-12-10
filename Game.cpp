@@ -68,11 +68,11 @@
 	}
 
 	void Game::updateCollision(){
-		if ((player->getPosition().y + player->getGlobalBounds().height) > 2560.f) {
+		if ((player->getPosition().y + player->getGlobalBounds().height) > 10000.f) {
 			player->resetVelocityY();
 			player->setPosition(
 				player->getPosition().x,
-				2560.f - player->getGlobalBounds().height);
+				10000.f - player->getGlobalBounds().height);
 			player->resetJumpAccess();
 		}
 		if (player->getPosition().y < 0.f) {
@@ -109,10 +109,12 @@
 	void Game::updateMap()
 	{
 		sandbox.update(window, myView.getCurrentViewCords());
+		
 	}
 	
 	void Game::render(){
 
+		
 		window.clear(sf::Color::White);
 		renderMap();
 		renderPLayer();

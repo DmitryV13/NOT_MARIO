@@ -14,10 +14,10 @@ private:
 
 	std::vector<std::vector<std::vector<Tile*>>> tilemap;
 
-	std::unordered_map<char, Tile*> tile_list;
-	std::unordered_map<char, Tile*> tile_list_back;
-	std::unordered_map<char, Tile*> tile_list_front;
-	std::vector<Tile*> tilebox;
+	std::unordered_map<char, std::unique_ptr<Tile>> tile_list;
+	std::unordered_map<char, std::unique_ptr<Tile>> tile_list_back;
+	std::unordered_map<char, std::unique_ptr<Tile>> tile_list_front;
+	std::vector<std::unique_ptr<Tile>> tilebox;
 	
 	float sizeTexture;
 	float mapW;
@@ -40,8 +40,11 @@ private:
 	Tile* give_tile_front(char letter);
 	Tile* init_tile_box(char letter);
 
+	void free_memory();
+
 public:
 	TileMap();
+	~TileMap();
 
 	float getMapWidth();
 	float getMapHeight();

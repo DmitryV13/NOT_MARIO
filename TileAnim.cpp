@@ -9,6 +9,11 @@ TileAnim::TileAnim() : Tile()
 
 }
 
+TileAnim::~TileAnim()
+{
+
+}
+
 TileAnim::TileAnim(std::string Name, short int inter, short int texture_size_w, short int texture_size_h, char ass, short int anim_f, short int anim_q, float time)
 	: Tile(Name, inter, texture_size_w, texture_size_h, ass)
 {
