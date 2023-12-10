@@ -11,10 +11,10 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 	game_menu = new GameMenu(window, sandbox.getMapWidth(), sandbox.getMapHeight(), &game_state);
 		initPlayer();
 		menu_timer.restart();
-		//initEvilBall();
-		//init_Kusaka();
-		//init_chubacabra();
-		//init_Wolf_boss();
+		initEvilBall();
+		init_Kusaka();
+		init_chubacabra();
+		init_Wolf_boss();
 	}
 	
 	Level::~Level(){
@@ -132,11 +132,12 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 	void Level::update(){
 		updatePlayer();
 		
-		//updateEvilBall();
-		//update_Kusaka();
-		//update_chubacabra();
-		//update_Wolf_boss();
-
+		updateEvilBall();
+		update_Kusaka();
+		update_chubacabra();
+		update_Wolf_boss();
+		//std::cout << player->getGlobalBounds().left / 64 << "  " << player->getGlobalBounds().top / 64 << " " << sandbox.isOccupied(player->getGlobalBounds().top / 64, player->getGlobalBounds().left / 64) << std::endl;
+		//std::cout << sandbox.isOccupied(10, 799) << std::endl;
 		updateView();
 		updateCursor();
 		updateMap();
@@ -212,11 +213,11 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		renderMap();
 		renderPLayer();
 
-		//renderEvilBall();
-		//render_Kusaka();
-		//render_chubacabra();
-		//render_shot();
-		//render_Wolf_boss();
+		renderEvilBall();
+		render_Kusaka();
+		render_chubacabra();
+		render_shot();
+		render_Wolf_boss();
 
 		sandbox.second_render(*window, myView.getCurrentViewCords());
 		//renderCursor();

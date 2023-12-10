@@ -300,7 +300,7 @@ void WolfBoss::update_movement()
 
 		case BOSS_STATE::MOVING:
 			{
-			std::cout << "Moving\n";
+			//std::cout << "Moving\n";
 
 				if (on_ground)
 				{
@@ -393,7 +393,7 @@ void WolfBoss::update_movement()
 					{
 						if ((distance) > 0)jump(1.4);
 						else jump(1.5);
-						std::cout << "jump\n";
+						//std::cout << "jump\n";
 						//jump(1);
 						count_anger++;
 						pl_cont_jump = true;
@@ -472,7 +472,7 @@ void WolfBoss::update_movement()
 				animation_state = ENEMY_ANIMATION_STATES::ENEMY_SHOT;
 				retreat_counter++;
 				displacement.x = 0;
-				std::cout << "HOWL\n";
+				//std::cout << "HOWL\n";
 				if(retreat_counter>100)
 				{
 					shot_HOWL();
@@ -482,7 +482,7 @@ void WolfBoss::update_movement()
 				break;
 			}
 		case BOSS_STATE::TORMENT:
-			std::cout << "TORMENT";
+			//std::cout << "TORMENT";
 			{
 			PL_SIDE playerSide = getPlayerSide(player_->getPosition().x, get_position().x);
 			if (!sting() && retreat_counter == 0) {

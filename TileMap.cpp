@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "TileMap.h"
 
-	TileMap::TileMap(short level) : sizeTexture(64), mapH(100), mapW(800)
+	TileMap::TileMap(short level) : sizeTexture(64), mapH(40), mapW(200)
 	{
 		init_background();
 		init_tile_list();
@@ -206,7 +206,6 @@
 		return tile_list[' '];
 	}
 
-
 	void TileMap::background_render(sf::RenderTarget& target, sf::FloatRect view_cords)
 	{
 		float x, y, l, k;
@@ -280,6 +279,7 @@
 
 	void TileMap::update(sf::RenderTarget& target, sf::FloatRect view_cords)
 	{
+		
 		for (auto& it : tile_list_back) {
 			it.second->tile_animation();
 		}
@@ -351,8 +351,24 @@
 				tilemap[l][k][1]->setTilePresence(false);
 			}
 		}
-		for (int i = 0; i < 6 && indexI[i] != -1 && indexJ[i] != -1; i++) {
-			tilemap[indexI[i]][indexJ[i]][1]->setTilePresence(true);
+		std::cout << std::endl;
+		for (int k = 0; k < mapH; k++) {
+			for (int l = 0; l < mapW; l++) {
+				std::cout << tilemap[k][l][1]->give_player_info();
+			}
+			std::cout << std::endl;
+		}
+		std::cout << std::endl;
+		//for (int i = 0; i < 6 && indexI[i] != -1 && indexJ[i] != -1; i++) {
+			//tilemap[indexI[i]][indexJ[i]][1]->setTilePresence(true);
+			tilemap[0][0][1]->setTilePresence(true);
+			//std::cout << 3;
+		//}
+		for (int k = 0; k < mapH; k++) {
+			for (int l = 0; l < mapW; l++) {
+				std::cout << tilemap[k][l][1]->give_player_info();
+			}
+			std::cout << std::endl;
 		}
 	}
 
