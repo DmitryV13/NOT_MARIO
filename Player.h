@@ -71,6 +71,8 @@ public:
     void jump(const float dir_y);
     void fly(const float dir_y);
 
+    bool stan();
+
     void update(RenderWindow* window, FloatRect view_cords);
     void updatePhysics();
     void updateMovement(RenderWindow* window, FloatRect view_cords);

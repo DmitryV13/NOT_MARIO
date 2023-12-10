@@ -279,12 +279,15 @@ void RedMutant::attack()
 	animation_state = ENEMY_ANIMATION_STATES::ENEMY_ATTENTION;
 	FloatRect en = get_global_bounds();
 	FloatRect pl = player_->getGlobalBounds();
-	if (displacement.x != 0.f && en.intersects(pl))
+	if (displacement.x != 0.f && en.intersects(pl) && !player_->stan() )
 	{
 		sf::Vector2f tmp = calculateRandomPosition(get_global_bounds(), 10);
-
+		std::cout << tmp.x / 64 << " " << tmp.y / 64 << "\n";
+		if (tmp.x / 64 == 0)tmp.x = 64;
+		if (tmp.x / 64 == sandbox->getMapWidth() / 64)tmp.x = sandbox->getMapWidth() - 64;
 		if (!sandbox->isBlock(tmp.x / 64, tmp.y / 64))set_position(tmp.x, tmp.y);
 		else set_position(get_position().x, get_position().y);
+
 	}
 	if (sting())
 	{
@@ -310,11 +313,13 @@ void RedMutant::attack()
 		}
 		if (en.intersects(pl))count_atack++;
 		
-		if(count_atack > 20)//Зависит от количества кадров атаки
+		if(count_atack > 100)//Зависит от количества кадров атаки
 		{
 			count_atack = 0;
 			sf::Vector2f tmp = calculateRandomPosition(get_global_bounds(), 10);
-
+			std::cout << tmp.x / 64 << " " << tmp.y / 64 << "\n";
+			if (tmp.x / 64 == 0)tmp.x = 64;
+			if (tmp.x / 64 == sandbox->getMapWidth() / 64)tmp.x = sandbox->getMapWidth() - 64;
 			if (!sandbox->isBlock(tmp.x / 64, tmp.y / 64))set_position(tmp.x, tmp.y);
 			else set_position(get_position().x,get_position().y);
 			
@@ -351,9 +356,10 @@ void RedMutant::attack()
 			looks_to_the_right = true;
 			looks_to_the_left = false;
 		}
-		displacement.x += 10 * moving * acceleration;
+		displacement.x += 5 * moving * acceleration;
 		//displacement.x += 10 * moving * acceleration;
 	}
+	
 
 
 	if (!isPlayerInRadius(observation_area.getGlobalBounds(), player_->getGlobalBounds(),128))
@@ -422,7 +428,6 @@ sf::Vector2f RedMutant::calculateRandomPosition(const sf::FloatRect& playerBound
 	}
 	
 
-	// If no free position is found, return the current position
 	
 }
 

@@ -48,7 +48,7 @@ void Player::initVariables(){
     }
 
     void Player::initPhysics(){
-        velocityMax = 28.f;
+        velocityMax = 10.f;
         velocityMin = 0.5f;
         acceleration = 1.7f;
         deceleration = 0.77f;//0.77
@@ -121,7 +121,13 @@ void Player::initVariables(){
         flyVelocity = dir_y * gravity;
     }
 
-    void Player::update(RenderWindow* window, FloatRect view_cords){
+bool Player::stan()
+{
+    if (velocity.x != 0.f)return false;
+    else return true;
+}
+
+void Player::update(RenderWindow* window, FloatRect view_cords){
         updateMovement(window, view_cords);
         updateAnimation();
         updatePhysics();
