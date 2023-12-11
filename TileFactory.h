@@ -1,4 +1,6 @@
 #pragma once
+#include <random>
+
 #include "Tile.h"
 #include "random"
 class coord;
@@ -14,7 +16,7 @@ private:
 
     //Max
     void generation_map_Boev(vector<vector<char>>& map);
-    
+
 
     //Dimon
     void generation_map_Voicu(std::vector<std::vector<char>>& map);
@@ -36,7 +38,7 @@ private:
     void generate_platform(int pos_x, int pos_y, int width, int height, vector<vector<char>>& map);
     void platform_filter_y(int pos_x, int pos_y, vector<int>& y, int width, int height, vector<vector<char>>& map);
     void texture_arrangement(vector<vector<char>>& map);
- 
+
 
     //Richard
     void map_generation(vector<vector<char>>&);
@@ -54,7 +56,7 @@ private:
     bool has_blocks_on_both_sides(vector<vector<char>>&, int i, int j);
     void artist_method(vector<vector<char>>&);
     void fill_lakes_with_ground(vector<vector<char>>&);
-    
+
 public:
 
     TileFactory(float temp_W, float temp_H, short int type_map, short int level);

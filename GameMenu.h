@@ -28,13 +28,14 @@ private:
 	void initBackground(float map_w, float map_h);
 	void initActiveItems();
 	void initPassiveItems();
-	void initButtons();
+	void initButtons(Color menuColor);
 	void initNecessaryInfo();
 	void initHiddenInventory();
 	void initDisplayedInventory();
 
 public:
-	GameMenu(sf::RenderWindow* window_, float map_w, float map_h, short* game_state_);
+	GameMenu(sf::RenderWindow* window_, float map_w, float map_h, short* game_state_, Color menuColor);
+	~GameMenu();
 
 	void update(FloatRect view_cords) ;
 	void render();

@@ -2,10 +2,10 @@
 #include "PLAYER_ANIMATION_SATES.h"
 #include "Map.h"
 #include "TileMap.h"
-//#include "Fist.h"
-//#include "Sword.h"
-//#include "CombatStaff.h"
-//#include "Bow.h"
+#include "Fist.h"
+#include "Sword.h"
+#include "CombatStaff.h"
+#include "Bow.h"
 
 
 using namespace::sf;
@@ -18,13 +18,15 @@ private:
     Texture player_T;
     Sprite player_S;
 
-    //vector<Weapon*> weapons;
-    //short chosen_weapon;
+    vector<Weapon*> weapons;
+    short chosen_weapon;
 
     IntRect currentFrame;
     Clock animationTimer;
     short animationState;
     bool animationSwitch;
+
+    short HP;
 
     Vector2f velocity;
     float velocityMax;
@@ -53,12 +55,13 @@ private:
     void initPhysics();
 public:
     Player(TileMap& map);
-
+    IntRect get_pl_frame();
     // accessors
     const bool& getAnimationSwitch();
     const Vector2f getPosition() const;
     const FloatRect getGlobalBounds() const;
     const Vector2f getVelocity() const;
+    const short getHP() const;
 
     //modifiers
     void resetVelocityY();
@@ -66,24 +69,27 @@ public:
     void resetJumpAccess();
     void resetNTHJump();
     void resetIsFlying();
+    void resetAnimationTimer();
     
     void walk(const float dir_x);
     void jump(const float dir_y);
     void fly(const float dir_y);
 
-    void update();
+    bool stan();
+
+    void update(RenderWindow* window, FloatRect view_cords);
     void updatePhysics();
-    void updateMovement();
+    void updateMovement(RenderWindow* window, FloatRect view_cords);
     void updateAnimation();
-    //void updateWeapon(RenderWindow* window, FloatRect view_cords);
+    void updateWeapon(RenderWindow* window, FloatRect view_cords);
     void updateProjectiles();
     bool updateCollisionX();
     bool updateCollisionY();
-    void updatePresence();
+    void updateCollision();
 
     void render(RenderTarget& target);
     void renderProjectiles(RenderTarget& target);
 
-    void resetAnimationTimer();
     void change_weapon(short count);
+    void changeHP(short z);
 };

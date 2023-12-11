@@ -94,6 +94,15 @@
     <Filter Include="Header Files\GameObjects\Artificial\Weapons\BareHands">
       <UniqueIdentifier>{25eb6e62-918e-40ad-84d9-392399232a65}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Map\Tile">
+      <UniqueIdentifier>{983eef85-28b5-4606-bc52-d28ddf7815e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjects\Alive\Enemies">
+      <UniqueIdentifier>{e2cd4eb6-7a1c-432e-b0ed-ae01620e362b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjects\Alive\Player">
+      <UniqueIdentifier>{5e20e6ea-00f7-4130-8852-f0301757ebe5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyView.cpp">
@@ -102,8 +111,23 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files\ServiceClasses</Filter>
+    </ClCompile>
     <ClCompile Include="NOT_MARIO.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Exit.cpp">
+      <Filter>Source Files\GUI\Tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuOption.cpp">
+      <Filter>Source Files\GUI\Tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="Setting.cpp">
+      <Filter>Source Files\GUI\Tabs</Filter>
+    </ClCompile>
+    <ClCompile Include="RoadMap.cpp">
+      <Filter>Source Files\GUI\Tabs</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>Source Files\Map</Filter>
@@ -114,31 +138,106 @@
     <ClCompile Include="TileMap.cpp">
       <Filter>Source Files\Map</Filter>
     </ClCompile>
-    <ClCompile Include="Tile.cpp">
-      <Filter>Source Files\Map</Filter>
+    <ClCompile Include="GameMenu.cpp">
+      <Filter>Source Files\GUI\Menu</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files\GUI\Menu</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files\GameObjects\Alive</Filter>
+    <ClCompile Include="MenuItem.cpp">
+      <Filter>Source Files\GUI\Items</Filter>
     </ClCompile>
-    <ClCompile Include="TileAnim.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Sword.cpp">
+      <Filter>Source Files\GameObjects\Artificial\Weapons\MeleeWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files\GUI\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="CombatStaff.cpp">
+      <Filter>Source Files\GameObjects\Artificial\Weapons\RangedWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Bow.cpp">
+      <Filter>Source Files\GameObjects\Artificial\Weapons\RangedWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Source Files\GameObjects\Artificial\Weapons\RangedWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Fist.cpp">
+      <Filter>Source Files\GameObjects\Artificial\Weapons\BareHands</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Source Files\GameObjects\Artificial\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Arrow.cpp">
+      <Filter>Source Files\GameObjects\Artificial\Weapons\RangedWeapon</Filter>
     </ClCompile>
     <ClCompile Include="TileBox.cpp">
+      <Filter>Source Files\Map\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Source Files\Map\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="TileAnim.cpp">
+      <Filter>Source Files\Map\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\ServiceClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\GameObjects\Alive\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Eye_evil.cpp">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="RedMutant.cpp">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="laser_weapon.cpp">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="kusaka.cpp">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="WolfBoss.cpp">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="ScaleParametrBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\GameObjects\Alive</Filter>
+    </ClInclude>
+    <ClInclude Include="Exit.h">
+      <Filter>Header Files\GUI\Tabs</Filter>
+    </ClInclude>
+    <ClInclude Include="RoadMap.h">
+      <Filter>Header Files\GUI\Tabs</Filter>
+    </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>Header Files\Map</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files\GUI\Menu</Filter>
     </ClInclude>
+    <ClInclude Include="GameMenu.h">
+      <Filter>Header Files\GUI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Header Files\ServiceClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuItem.h">
+      <Filter>Header Files\GUI\Items</Filter>
+    </ClInclude>
     <ClInclude Include="MyView.h">
       <Filter>Header Files\ServiceClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuOption.h">
+      <Filter>Header Files\GUI\Tabs</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Header Files\GameObjects\Alive</Filter>
@@ -149,6 +248,9 @@
     <ClInclude Include="stdafx.h">
       <Filter>Header Files\ServiceClasses</Filter>
     </ClInclude>
+    <ClInclude Include="Setting.h">
+      <Filter>Header Files\GUI\Tabs</Filter>
+    </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>Header Files\Map</Filter>
     </ClInclude>
@@ -158,13 +260,67 @@
     <ClInclude Include="TileMap.h">
       <Filter>Header Files\Map</Filter>
     </ClInclude>
+    <ClInclude Include="GAME_STATE.h">
+      <Filter>Header Files\Enums</Filter>
+    </ClInclude>
     <ClInclude Include="PLAYER_ANIMATION_SATES.h">
+      <Filter>Header Files\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="Sword.h">
+      <Filter>Header Files\GameObjects\Artificial\Weapons\MeleeWeapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Bow.h">
+      <Filter>Header Files\GameObjects\Artificial\Weapons\RangedWeapons</Filter>
+    </ClInclude>
+    <ClInclude Include="CombatStaff.h">
+      <Filter>Header Files\GameObjects\Artificial\Weapons\RangedWeapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Header Files\GameObjects\Artificial\Weapons\RangedWeapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Header Files\GUI\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Fist.h">
+      <Filter>Header Files\GameObjects\Artificial\Weapons\BareHands</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Header Files\GameObjects\Artificial\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Arrow.h">
+      <Filter>Header Files\GameObjects\Artificial\Weapons\RangedWeapons</Filter>
+    </ClInclude>
+    <ClInclude Include="ORIENTATION.h">
       <Filter>Header Files\Enums</Filter>
     </ClInclude>
     <ClInclude Include="TileAnim.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TileBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MENU_STATE.h">
+      <Filter>Header Files\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Eye_evil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="laser_weapon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="kusaka.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RedMutant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WolfBoss.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScaleParametrBar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

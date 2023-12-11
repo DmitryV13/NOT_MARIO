@@ -1,11 +1,7 @@
 #include "stdafx.h"
 #include "TileMap.h"
-#include <memory>
 
-
-
-
-	TileMap::TileMap() : sizeTexture(64), mapH(35), mapW(100)
+	TileMap::TileMap(short level) : sizeTexture(64), mapH(40), mapW(200)
 	{
 		init_background();
 		init_tile_list();
@@ -14,8 +10,8 @@
 		init_tilemap(mapH, mapW);
 
 		int a = 0;
-		int b = 1;
-		
+		int b = level;
+
 		if (a) {
 			TileFactory factory(mapH, mapW, a, b);
 
@@ -47,22 +43,16 @@
 				}
 			}
 		}
-		else 
+		else
 		{
 			TileFactory factory(mapH, mapW, a, b);
 
 			char tmp_letter;
-			for (int i = 0; i < mapH; i++) 
+			for (int i = 0; i < mapH; i++)
 			{
-				for (int j = 0; j < mapW; j++) 
+				for (int j = 0; j < mapW; j++)
 				{
 					tmp_letter = factory.give_generation_letter(i, j);
-					if (tmp_letter == '&') {
-						tilemap[i][j][0] = give_tile_back('G');
-						tilemap[i][j][1] = give_tile(' ');
-						tilemap[i][j][2] = give_tile_front(' ');
-						continue;
-					}
 					if (tmp_letter != 'W' && tmp_letter != 'w') {
 						tilemap[i][j][0] = give_tile_back(' ');
 						tilemap[i][j][1] = give_tile(tmp_letter);
@@ -81,7 +71,6 @@
 						tilemap[i][j][2] = give_tile_front(tmp_letter);
 						continue;
 					}
-
 				}
 			}
 
@@ -91,6 +80,14 @@
 	TileMap::~TileMap()
 	{
 		free_memory();
+	}
+
+	void TileMap::free_memory()
+	{
+		for (auto& it : tile_list) delete it.second;
+		for (auto& it : tile_list_front) delete it.second;
+		for (auto& it : tile_list_back) delete it.second;
+		for (auto& it : tilebox) delete it;
 	}
 
 	void TileMap::init_background()
@@ -105,8 +102,8 @@
 
 	void TileMap::init_coeff(sf::IntRect pos)
 	{
-		coefficient_X = static_cast <float> (sizeTexture * mapW) / (static_cast<float> (pos.width) - 1600);
-		coefficient_Y = static_cast <float> (sizeTexture * mapH) / (static_cast<float> (pos.height) - 900);
+		coefficient_X = static_cast <float> (sizeTexture * mapW) / (static_cast<float> (pos.width) - 1920);
+		coefficient_Y = static_cast <float> (sizeTexture * mapH) / (static_cast<float> (pos.height) - 1080);
 	}
 
 	void TileMap::init_tilemap(float mapH, float mapW)
@@ -123,114 +120,104 @@
 	void TileMap::init_tile_list()
 	{
 		//Основные блоки
-		tile_list['A'] = std::make_unique<Tile>("grass_tile", 1, sizeTexture, sizeTexture, 'A');
-		tile_list['C'] = std::make_unique<Tile>("gass_tile_on_the_left", 1, sizeTexture, sizeTexture, 'C');
-		tile_list['D'] = std::make_unique<Tile>("gass_tile_on_the_right", 1, sizeTexture, sizeTexture, 'D');
-		tile_list['L'] = std::make_unique<Tile>("grass_tile_in_corner_left", 1, sizeTexture, sizeTexture, 'L');
-		tile_list['P'] = std::make_unique<Tile>("grass_tile_in_corner_right", 1, sizeTexture, sizeTexture, 'P');
-		tile_list['B'] = std::make_unique<Tile>("earth", 1, sizeTexture, sizeTexture, 'B');
-		tile_list['S'] = std::make_unique<Tile>("sand", 1, sizeTexture, sizeTexture, 'S');
-		tile_list['G'] = std::make_unique<Tile>("gravel", 1, sizeTexture, sizeTexture, 'G');
-		tile_list['l'] = std::make_unique<Tile>("ground8", 1, sizeTexture, sizeTexture, 'l');
-		tile_list['r'] = std::make_unique<Tile>("ground7", 1, sizeTexture, sizeTexture, 'r');
-		tile_list['W'] = std::make_unique<TileAnim>("water_top_layer", 2, sizeTexture, sizeTexture, 'W', 64, 4, 0.5);
-		tile_list['w'] = std::make_unique<TileAnim>("water_down_layer", 2, sizeTexture, sizeTexture, 'w', 64, 4, 0.5);
-		tile_list[' '] = std::make_unique<Tile>();
+		tile_list['A'] = new Tile("grass_tile", 1, sizeTexture, sizeTexture, 'A');
+		tile_list['C'] = new Tile("grass_tile_on_the_left", 1, sizeTexture, sizeTexture, 'C');
+		tile_list['D'] = new Tile("grass_tile_on_the_right", 1, sizeTexture, sizeTexture, 'D');
+		tile_list['L'] = new Tile("grass_tile_in_corner_left", 1, sizeTexture, sizeTexture, 'L');
+		tile_list['P'] = new Tile("grass_tile_in_corner_right", 1, sizeTexture, sizeTexture, 'P');
+		tile_list['B'] = new Tile("earth", 1, sizeTexture, sizeTexture, 'B');
+		tile_list['S'] = new Tile("sand", 1, sizeTexture, sizeTexture, 'S');
+		tile_list['G'] = new Tile("gravel", 1, sizeTexture, sizeTexture, 'G');
+		tile_list['l'] = new Tile("ground8", 1, sizeTexture, sizeTexture, 'l');
+		tile_list['r'] = new Tile("ground7", 1, sizeTexture, sizeTexture, 'r');
+		tile_list['W'] = new TileAnim("water_top_layer", 2, sizeTexture, sizeTexture, 'W', 64, 4, 0.5);
+		tile_list['w'] = new TileAnim("water_down_layer", 2, sizeTexture, sizeTexture, 'w', 64, 4, 0.5);
+		tile_list[' '] = new Tile();
 
 		//Функциональные и декоративыне блоки.
-		tile_list['.'] = std::make_unique<Tile>("ladder1", 0, sizeTexture, sizeTexture, '.');
-		tile_list['_'] = std::make_unique<Tile>("ladder2", 0, sizeTexture, sizeTexture, '_');
-		tile_list['-'] = std::make_unique<Tile>("ladder3", 0, sizeTexture, sizeTexture, '-');
-		tile_list['='] = std::make_unique<Tile>("ladder4", 0, sizeTexture, sizeTexture, '=');
-		tile_list['+'] = std::make_unique<Tile>("ladder5", 0, sizeTexture, sizeTexture, '+');
-		tile_list['>'] = std::make_unique<Tile>("directionSign1", 0, sizeTexture, sizeTexture, '>');
-		tile_list['<'] = std::make_unique<Tile>("directionSign2", 0, sizeTexture, sizeTexture, '<');
-		tile_list['b'] = std::make_unique<Tile>("box", 1, sizeTexture, sizeTexture, 'b');
-		tile_list['1'] = std::make_unique<Tile>("tree1", 0, 192, 256, '1');
-		tile_list['2'] = std::make_unique<Tile>("tree2", 0, 128, 256, '2');
-		tile_list['3'] = std::make_unique<Tile>("tree3", 0, 128, 256, '3');
-		tile_list['4'] = std::make_unique<Tile>("tree4", 0, 128, 192, '4');
-		tile_list['^'] = std::make_unique<TileAnim>("water_top_layer_back", 2, sizeTexture, sizeTexture, '^', 64, 4, 0.5);
-		tile_list['*'] = std::make_unique<TileAnim>("water_down_layer_back", 2, sizeTexture, sizeTexture, '*', 64, 4, 0.5);
-		
-		
+		tile_list['.'] = new Tile("ladder1", 0, sizeTexture, sizeTexture, '.');
+		tile_list['_'] = new Tile("ladder2", 0, sizeTexture, sizeTexture, '_');
+		tile_list['-'] = new Tile("ladder3", 0, sizeTexture, sizeTexture, '-');
+		tile_list['='] = new Tile("ladder4", 0, sizeTexture, sizeTexture, '=');
+		tile_list['+'] = new Tile("ladder5", 0, sizeTexture, sizeTexture, '+');
+		tile_list['>'] = new Tile("directionSign1", 0, sizeTexture, sizeTexture, '>');
+		tile_list['<'] = new Tile("directionSign2", 0, sizeTexture, sizeTexture, '<');
+		tile_list['b'] = new Tile("box", 1, sizeTexture, sizeTexture, 'b');
+		tile_list['1'] = new Tile("tree1", 0, 192, 256, '1');
+		tile_list['2'] = new Tile("tree2", 0, 128, 256, '2');
+		tile_list['3'] = new Tile("tree3", 0, 128, 256, '3');
+		tile_list['4'] = new Tile("tree4", 0, 128, 192, '4');
+		tile_list['^'] = new TileAnim("water_top_layer_back", 2, sizeTexture, sizeTexture, '^', 64, 4, 0.5);
+		tile_list['*'] = new TileAnim("water_down_layer_back", 2, sizeTexture, sizeTexture, '*', 64, 4, 0.5);
+
+
 		//Анимированные блоки
-		tile_list['s'] = std::make_unique<TileAnim>("spikes", 1, sizeTexture, sizeTexture, 's', 64, 3, 0.1);
-		tile_list['m'] = std::make_unique<TileAnim>("magma", 1, sizeTexture, sizeTexture, 'm', 64, 2, 0.5);
-		tile_list['@'] = std::make_unique<TileAnim>("health_potion", 0, 19, 39, '@', 19, 5, 0.3);
-		
+		tile_list['s'] = new TileAnim("spikes", 1, sizeTexture, sizeTexture, 's', 64, 3, 0.1);
+		tile_list['m'] = new TileAnim("magma", 1, sizeTexture, sizeTexture, 'm', 64, 2, 0.5);
+		tile_list['@'] = new TileAnim("health_potion", 0, 19, 39, '@', 19, 5, 0.3);
+
 	}
 
 	void TileMap::init_tile_list_back()
 	{
 		//Блоки заднего фона, отображаемые при разрушение блока, либо расположенные разработчиком в местах где они необходимы(пещеры, ямы и другое)
-		tile_list_back['A'] = std::make_unique<Tile>("grass_tile_back", 0, sizeTexture, sizeTexture, 'A');
-		tile_list_back['C'] = std::make_unique<Tile>("gass_tile_on_the_left_back", 0, sizeTexture, sizeTexture, 'C');
-		tile_list_back['D'] = std::make_unique<Tile>("gass_tile_on_the_right_back", 0, sizeTexture, sizeTexture, 'D');
-		tile_list_back['L'] = std::make_unique<Tile>("grass_tile_in_corner_left_back", 0, sizeTexture, sizeTexture, 'L');
-		tile_list_back['P'] = std::make_unique<Tile>("grass_tile_in_corner_right_back", 0, sizeTexture, sizeTexture, 'P');
-		tile_list_back['B'] = std::make_unique<Tile>("earth_back", 0, sizeTexture, sizeTexture, 'B');
-		tile_list_back['S'] = std::make_unique<Tile>("sand_back", 0, sizeTexture, sizeTexture, 'S');
-		tile_list_back['G'] = std::make_unique<Tile>("gravel_back", 0, sizeTexture, sizeTexture, 'G');
-		tile_list_back['l'] = std::make_unique<Tile>("ground8_back", 0, sizeTexture, sizeTexture, 'l');
-		tile_list_back['r'] = std::make_unique<Tile>("ground7_back", 0, sizeTexture, sizeTexture, 'r');
-		tile_list_back['W'] = std::make_unique<TileAnim>("water_top_layer", 2, sizeTexture, sizeTexture, 'W', 64, 4, 0.5);
-		tile_list_back['w'] = std::make_unique<TileAnim>("water_down_layer", 2, sizeTexture, sizeTexture, 'w', 64, 4, 0.5);
+		tile_list_back['A'] = new Tile("grass_tile_back", 0, sizeTexture, sizeTexture, 'A');
+		tile_list_back['C'] = new Tile("grass_tile_on_the_left_back", 0, sizeTexture, sizeTexture, 'C');
+		tile_list_back['D'] = new Tile("grass_tile_on_the_right_back", 0, sizeTexture, sizeTexture, 'D');
+		tile_list_back['L'] = new Tile("grass_tile_in_corner_left_back", 0, sizeTexture, sizeTexture, 'L');
+		tile_list_back['P'] = new Tile("grass_tile_in_corner_right_back", 0, sizeTexture, sizeTexture, 'P');
+		tile_list_back['B'] = new Tile("earth_back", 0, sizeTexture, sizeTexture, 'B');
+		tile_list_back['S'] = new Tile("sand_back", 0, sizeTexture, sizeTexture, 'S');
+		tile_list_back['G'] = new Tile("gravel_back", 0, sizeTexture, sizeTexture, 'G');
+		tile_list_back['l'] = new Tile("ground8_back", 0, sizeTexture, sizeTexture, 'l');
+		tile_list_back['r'] = new Tile("ground7_back", 0, sizeTexture, sizeTexture, 'r');
+		tile_list_back['W'] = new TileAnim("water_top_layer", 2, sizeTexture, sizeTexture, 'W', 64, 4, 0.5);
+		tile_list_back['w'] = new TileAnim("water_down_layer", 2, sizeTexture, sizeTexture, 'w', 64, 4, 0.5);
 
 	}
 
 	void TileMap::init_tile_list_front()
 	{
 		//Блоки переднего плана, служащие фильтром для погружения игрока в различные структуры на карте(вода, лава и другое)
-		tile_list_front['w'] = std::make_unique<TileAnim>("water_down_layer_back", 2, sizeTexture, sizeTexture, 'w', 64, 4, 0.5);
-		tile_list_front['W'] = std::make_unique<TileAnim>("water_top_layer_back", 2, sizeTexture, sizeTexture, 'W', 64, 4, 0.5);
-		tile_list_front['o'] = std::make_unique<Tile>("bush", 0, sizeTexture, sizeTexture, 'o');
+		tile_list_front['w'] = new TileAnim("water_down_layer_back", 2, sizeTexture, sizeTexture, 'w', 64, 4, 0.5);
+		tile_list_front['W'] = new TileAnim("water_top_layer_back", 2, sizeTexture, sizeTexture, 'W', 64, 4, 0.5);
+		tile_list_front['o'] = new Tile("bush", 0, sizeTexture, sizeTexture, 'o');
 	}
 
 	Tile* TileMap::init_tile_box(char letter)
 	{
 		std::string name = "chest";
 		name += letter;
-		tilebox.push_back(std::make_unique<TileBox>(name, 0, sizeTexture, sizeTexture, letter, 64, 4, 0.3));
-		//std::unique_ptr<Tile> tmp = tilebox[tilebox.size() - 1];
-		return;
-	}
-
-	void TileMap::free_memory()
-	{
-		//for (auto&& it : tile_list) delete it.second;
-		//for (auto& it : tile_list_front) delete it.second;
-		//for (auto& it : tile_list_back) delete it.second;
-		//for (auto& it : tilebox) delete it;
+		tilebox.push_back(new TileBox(name, 0, sizeTexture, sizeTexture, letter, 64, 4, 0.3));
+		return *tilebox.cbegin();
 	}
 
 	Tile* TileMap::give_tile(char letter)
 	{
 		auto it = tile_list.find(letter);
 		if (it != tile_list.end()) {
-			return it->second.get();
+			return it->second;
 		}
-		return tile_list[' '].get();
+		return tile_list[' '];
 	}
 
 	Tile* TileMap::give_tile_back(char letter)
 	{
 		auto it = tile_list_back.find(letter);
 		if (it != tile_list_back.end()) {
-			return it->second.get();
+			return it->second;
 		}
-		return tile_list[' '].get();
+		return tile_list[' '];
 	}
 
 	Tile* TileMap::give_tile_front(char letter)
 	{
 		auto it = tile_list_front.find(letter);
 		if (it != tile_list_front.end()) {
-			return it->second.get();
+			return it->second;
 		}
-		return tile_list[' '].get();
+		return tile_list[' '];
 	}
-
 
 	void TileMap::background_render(sf::RenderTarget& target, sf::FloatRect view_cords)
 	{
@@ -250,22 +237,22 @@
 	{
 		int start_i, start_j, finish_i, finish_j;
 
-		start_i = (view_cords.top - ( view_cords.height/2)) / sizeTexture;
-		start_j = (view_cords.left - (view_cords.width/2)) / sizeTexture;
-		finish_i = (view_cords.top + (view_cords.height/2)) / sizeTexture;
-		finish_j = (view_cords.left + (view_cords.width/2)) / sizeTexture;
+		start_i = (view_cords.top - (view_cords.height / 2)) / sizeTexture;
+		start_j = (view_cords.left - (view_cords.width / 2)) / sizeTexture;
+		finish_i = (view_cords.top + (view_cords.height / 2)) / sizeTexture;
+		finish_j = (view_cords.left + (view_cords.width / 2)) / sizeTexture;
 
 		if (start_i > 0) start_i = start_i - 1;
 		if (start_j > 0) start_j = start_j - 1;
-		if (finish_i < mapH ) finish_i = finish_i + 1;
-		if (finish_j < mapW ) finish_j = finish_j + 1;
+		if (finish_i < mapH) finish_i = finish_i + 1;
+		if (finish_j < mapW) finish_j = finish_j + 1;
 
-		if(start_i > 1) start_i = start_i - 2;
-		if(start_j > 1) start_j = start_j - 2;
-		if(finish_i < mapH - 1) finish_i = finish_i + 2;
-		if(finish_j < mapW - 1) finish_j = finish_j + 2;
+		if (start_i > 1) start_i = start_i - 2;
+		if (start_j > 1) start_j = start_j - 2;
+		if (finish_i < mapH - 1) finish_i = finish_i + 2;
+		if (finish_j < mapW - 1) finish_j = finish_j + 2;
 
-		
+
 		for (int i = start_i; i < finish_i; i++) {
 			for (int j = start_j; j < finish_j; j++) {
 				for (int k = 0; k < 2; k++) {
@@ -278,7 +265,7 @@
 	void TileMap::second_render(sf::RenderTarget& target, sf::FloatRect view_cords)
 	{
 		int start_i, start_j, finish_i, finish_j;
-	
+
 		start_i = (view_cords.top - (view_cords.height / 2)) / sizeTexture;
 		start_j = (view_cords.left - (view_cords.width / 2)) / sizeTexture;
 		finish_i = (view_cords.top + (view_cords.height / 2)) / sizeTexture;
@@ -288,23 +275,24 @@
 		if (start_j > 0) start_j = start_j - 1;
 		if (finish_i < mapH) finish_i = finish_i + 1;
 		if (finish_j < mapW) finish_j = finish_j + 1;
-	
+
 		if (start_i > 1) start_i = start_i - 2;
 		if (start_j > 1) start_j = start_j - 2;
 		if (finish_i < mapH - 1) finish_i = finish_i + 2;
 		if (finish_j < mapW - 1) finish_j = finish_j + 2;
-	
+
 		for (int i = start_i; i < finish_i; i++)
 		{
 			for (int j = start_j; j < finish_j; j++)
-			{			
-				target.draw(tilemap[i][j][2]->render_tile(i, j));	
+			{
+				target.draw(tilemap[i][j][2]->render_tile(i, j));
 			}
 		}
 	}
 
 	void TileMap::update(sf::RenderTarget& target, sf::FloatRect view_cords)
 	{
+		
 		for (auto& it : tile_list_back) {
 			it.second->tile_animation();
 		}
@@ -335,26 +323,37 @@
 		return sizeTexture;
 	}
 
-	bool TileMap::isBlock(int i, int j){
+	bool TileMap::isBlock(int i, int j) {
+	
 		if (tilemap[i][j][1]->get_interaction() == 1)
 			return true;
 		return false;
 	}
 
+	bool TileMap::outOfMap(int i, int j){
+		if (i<0 || i>=mapH || j<0 || j>=mapW) {
+			return false;
+		}
+		return true;
+	}
+
 	void TileMap::add_tile(int i, int j, char association)
 	{
-		//if (tilemap[i][j][1] == tile_list[' ']) {
-		//	tilemap[i][j][1] = tile_list[association];
-		//}
+		if (tilemap[i][j][1] == tile_list[' ']) {
+			tilemap[i][j][1] = tile_list[association];
+		}
 	}
 
 	void TileMap::delete_tile(int i, int j, char association)
 	{
-		//if (tilemap[i][j][0] != tile_list[' ']) {
-		//	tilemap[i][j][1] = tile_list[' '];
-		//	return;
-		//}
-		//tilemap[i][j][1] = tile_list[' '];
-		//tilemap[i][j][0] = give_tile_back(association);
+		if (tilemap[i][j][0] != tile_list[' ']) {
+			tilemap[i][j][1] = tile_list[' '];
+			return;
+		}
+		tilemap[i][j][1] = tile_list[' '];
+		tilemap[i][j][0] = give_tile_back(association);
 	}
 
+	bool TileMap::isOccupied(int i, int j) {
+		return tilemap[i][j][1]->give_player_info();
+	}

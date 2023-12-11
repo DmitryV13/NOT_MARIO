@@ -5,6 +5,8 @@
 #include <string>
 #include <cstdlib>
 #include <chrono>
+#include <cstdlib>
+#include <random>
 #include <cmath>
 
 using std::vector;

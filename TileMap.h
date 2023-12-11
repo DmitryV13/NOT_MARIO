@@ -14,11 +14,11 @@ private:
 
 	std::vector<std::vector<std::vector<Tile*>>> tilemap;
 
-	std::unordered_map<char, std::unique_ptr<Tile>> tile_list;
-	std::unordered_map<char, std::unique_ptr<Tile>> tile_list_back;
-	std::unordered_map<char, std::unique_ptr<Tile>> tile_list_front;
-	std::vector<std::unique_ptr<Tile>> tilebox;
-	
+	std::unordered_map<char, Tile*> tile_list;
+	std::unordered_map<char, Tile*> tile_list_back;
+	std::unordered_map<char, Tile*> tile_list_front;
+	std::vector<Tile*> tilebox;
+
 	float sizeTexture;
 	float mapW;
 	float mapH;
@@ -30,7 +30,7 @@ private:
 	void init_coeff(sf::IntRect pos);
 
 	void init_tilemap(float mapW, float mapH);
-	
+
 	void init_tile_list();
 	void init_tile_list_back();
 	void init_tile_list_front();
@@ -40,16 +40,16 @@ private:
 	Tile* give_tile_front(char letter);
 	Tile* init_tile_box(char letter);
 
-	void free_memory();
-
 public:
-	TileMap();
+	TileMap(short level);
 	~TileMap();
+	void free_memory();
 
 	float getMapWidth();
 	float getMapHeight();
 	float getSizeTexture();
 	bool isBlock(int i, int j);
+	bool outOfMap(int i, int j);
 
 	void add_tile(int i, int j, char association);
 	void delete_tile(int i, int j, char association);
@@ -58,5 +58,8 @@ public:
 	void first_render(sf::RenderTarget& target, sf::FloatRect view_cords);
 	void second_render(sf::RenderTarget& target, sf::FloatRect view_cords);
 	void update(sf::RenderTarget& target, sf::FloatRect view_cords);
+
+	bool isOccupied(int i, int j);
+	void updatePlayerPresence(int indexI[], int indexJ[]);
 };
 

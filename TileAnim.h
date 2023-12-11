@@ -13,9 +13,10 @@ protected:
 public:
 
 	TileAnim();
+	TileAnim(std::string Name, short int inter, short int texture_size_w, short int texture_size_h, char ass, short int anim_f, short int anim_q, float time);
 	~TileAnim() override;
-	TileAnim(std::string Name, short int inter, short int texture_size_w,short int texture_size_h, char ass, short int anim_f, short int anim_q, float time);
 	void tile_animation();
 
 };
+
 
