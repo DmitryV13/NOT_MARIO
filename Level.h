@@ -7,6 +7,7 @@
 #include "RedMutant.h"
 #include "WolfBoss.h"
 #include "GameMenu.h"
+#include "ScaleParametrBar.h"
 #include "GAME_STATE.h"
 
 using namespace::sf;
@@ -15,6 +16,7 @@ class Level{
 private:
 	RenderWindow* window;
 	GameMenu* game_menu;
+	ScaleParametrBar* life_bar;
 	Clock menu_timer;
 
 	Event event;
@@ -30,8 +32,6 @@ private:
 	vector<WolfBoss*> boss_vector;
 	int num_of_enemy_{ 120 };
 
-	int numOfEnemy{ 60 };
-
 	double screenWidth;
 	double screenHeight;
 
@@ -45,7 +45,7 @@ private:
 	void init_chubacabra();
 	void init_Wolf_boss();
 public:
-	Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level);
+	Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level, Color menuColor);
 	~Level();
 
 
@@ -62,6 +62,7 @@ public:
 	void updateGameMenu();
 	void updateGameState();
 	void updateMap();
+	void updateLifeBar();
 
 	void renderGameMenu();
 	void renderPLayer();
@@ -73,6 +74,7 @@ public:
 	void render_chubacabra();
 	void render_Wolf_boss();
 	void render_shot();
+	void renderLifeBar();
 
 	void start();
 };

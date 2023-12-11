@@ -282,7 +282,7 @@ void RedMutant::attack()
 	if (displacement.x != 0.f && en.intersects(pl) && !player_->stan() )
 	{
 		sf::Vector2f tmp = calculateRandomPosition(get_global_bounds(), 10);
-		std::cout << tmp.x / 64 << " " << tmp.y / 64 << "\n";
+		//std::cout << tmp.x / 64 << " " << tmp.y / 64 << "\n";
 		if (tmp.x / 64 == 0)tmp.x = 64;
 		if (tmp.x / 64 == sandbox->getMapWidth() / 64)tmp.x = sandbox->getMapWidth() - 64;
 		if (!sandbox->isBlock(tmp.y / 64, tmp.x / 64))set_position(tmp.x, tmp.y);
@@ -317,10 +317,10 @@ void RedMutant::attack()
 		{
 			count_atack = 0;
 			sf::Vector2f tmp = calculateRandomPosition(get_global_bounds(), 10);
-			std::cout << tmp.x / 64 << " " << tmp.y / 64 << "\n";
+			//std::cout << tmp.x / 64 << " " << tmp.y / 64 << "\n";
 			if (tmp.x / 64 == 0)tmp.x = 64;
 			if (tmp.x / 64 == sandbox->getMapWidth() / 64)tmp.x = sandbox->getMapWidth() - 64;
-			if (!sandbox->isBlock( tmp.y / 64, tmp.x / 64 ))set_position(tmp.x, tmp.y);
+			if (!sandbox->isBlock(tmp.y / 64, tmp.x / 64)) set_position(tmp.x, tmp.y);
 			else set_position(get_position().x,get_position().y);
 			
 		}

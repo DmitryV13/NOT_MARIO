@@ -23,6 +23,9 @@
         init_texture(Name);
     
     }
+
+    Tile::~Tile(){
+    }
     
     sf::Sprite Tile::render_tile(int i, int j){
         tile_S.setPosition(j * 64, i * 64);

@@ -77,6 +77,19 @@
 		}
 	}
 
+	TileMap::~TileMap()
+	{
+		free_memory();
+	}
+
+	void TileMap::free_memory()
+	{
+		for (auto& it : tile_list) delete it.second;
+		for (auto& it : tile_list_front) delete it.second;
+		for (auto& it : tile_list_back) delete it.second;
+		for (auto& it : tilebox) delete it;
+	}
+
 	void TileMap::init_background()
 	{
 		if (!background_T.loadFromFile("Textures/Textures_map/background_1.png"))
@@ -206,7 +219,6 @@
 		return tile_list[' '];
 	}
 
-
 	void TileMap::background_render(sf::RenderTarget& target, sf::FloatRect view_cords)
 	{
 		float x, y, l, k;
@@ -280,6 +292,7 @@
 
 	void TileMap::update(sf::RenderTarget& target, sf::FloatRect view_cords)
 	{
+		
 		for (auto& it : tile_list_back) {
 			it.second->tile_animation();
 		}
@@ -321,7 +334,6 @@
 		if (i<0 || i>=mapH || j<0 || j>=mapW) {
 			return false;
 		}
-		
 		return true;
 	}
 
@@ -345,15 +357,3 @@
 	bool TileMap::isOccupied(int i, int j) {
 		return tilemap[i][j][1]->give_player_info();
 	}
-
-	void TileMap::updatePlayerPresence(int indexI[], int indexJ[]) {
-		for (int k = 0; k < mapW; k++) {
-			for (int l = 0; l < mapH; l++) {
-				tilemap[l][k][1]->setTilePresence(false);
-			}
-		}
-		for (int i = 0; i < 6 && indexI[i] != -1 && indexJ[i] != -1; i++) {
-			tilemap[indexI[i]][indexJ[i]][1]->setTilePresence(true);
-		}
-	}
-

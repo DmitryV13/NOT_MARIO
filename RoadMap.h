@@ -19,6 +19,7 @@ private:
 	RectangleShape background;
 
 	Font* font;
+	Color menuColor;
 	Clock menu_timer;
 	short state;
 
@@ -27,7 +28,7 @@ private:
 	void initFont();
 	void initBackground();
 public:
-	RoadMap(RenderWindow* window_, double screen_w, double screen_h);
+	RoadMap(RenderWindow* window_, double screen_w, double screen_h, Color menuColor_);
 
 	void updateMenuState();
 	void updateEvents();

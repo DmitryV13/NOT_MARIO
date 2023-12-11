@@ -26,6 +26,8 @@ private:
     short animationState;
     bool animationSwitch;
 
+    short HP;
+
     Vector2f velocity;
     float velocityMax;
     float velocityMin;
@@ -59,6 +61,7 @@ public:
     const Vector2f getPosition() const;
     const FloatRect getGlobalBounds() const;
     const Vector2f getVelocity() const;
+    const short getHP() const;
 
     //modifiers
     void resetVelocityY();
@@ -66,6 +69,7 @@ public:
     void resetJumpAccess();
     void resetNTHJump();
     void resetIsFlying();
+    void resetAnimationTimer();
     
     void walk(const float dir_x);
     void jump(const float dir_y);
@@ -82,11 +86,10 @@ public:
     bool updateCollisionX();
     bool updateCollisionY();
     void updateCollision();
-    void updatePresence();
 
     void render(RenderTarget& target);
     void renderProjectiles(RenderTarget& target);
 
-    void resetAnimationTimer();
     void change_weapon(short count);
+    void changeHP(short z);
 };

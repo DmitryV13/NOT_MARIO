@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
 
-    Player::Player(TileMap& map) {
+    Player::Player(TileMap& map): HP(100) {
         sandbox = &map;
         initVariables();
         initTexture();
@@ -133,7 +133,6 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         updatePhysics();
         updateWeapon(window, view_cords);
         updateProjectiles();
-        updatePresence();
     }
 
     void Player::updatePhysics(){
@@ -365,6 +364,10 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         }
     }
 
+    void Player::changeHP(short z){
+        HP += z;
+    }
+
     bool Player::updateCollisionX(){
         bool wasCollision = false;
         Vector2f newPosition(getPosition().x, getPosition().y);
@@ -439,23 +442,6 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         }
     }
 
-    void Player::updatePresence(){
-        int indexI[6];
-        int indexJ[6];
-        for (int i = 0; i < 6; i++) {
-            indexI[i] = -1;
-            indexJ[i] = -1;
-        }  
-        int i1 = 0, j1 = 0;
-        for (int i = (player_S.getPosition().y + velocity.y) / 64; i < (player_S.getPosition().y + velocity.y + player_S.getGlobalBounds().height) / 64; i++) {
-            for (int j = player_S.getPosition().x / 64; j < (player_S.getPosition().x + player_S.getGlobalBounds().width) / 64; j++) {
-                indexI[i1++] = i;
-                indexJ[j1++] = j;
-            }
-        }
-        sandbox->updatePlayerPresence(indexI, indexJ);
-    }
-
     void Player::resetNTHJump(){
         spaceRealeased = true;
     }
@@ -482,6 +468,10 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
 
     const Vector2f Player::getVelocity() const {
         return velocity;
+    }
+
+    const short Player::getHP() const{
+        return HP;
     }
 
     void Player::setPosition(const float x, const float y) {

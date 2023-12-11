@@ -42,6 +42,8 @@ private:
 
 public:
 	TileMap(short level);
+	~TileMap();
+	void free_memory();
 
 	float getMapWidth();
 	float getMapHeight();
