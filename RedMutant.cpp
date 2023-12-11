@@ -285,7 +285,7 @@ void RedMutant::attack()
 		std::cout << tmp.x / 64 << " " << tmp.y / 64 << "\n";
 		if (tmp.x / 64 == 0)tmp.x = 64;
 		if (tmp.x / 64 == sandbox->getMapWidth() / 64)tmp.x = sandbox->getMapWidth() - 64;
-		if (!sandbox->isBlock(tmp.x / 64, tmp.y / 64))set_position(tmp.x, tmp.y);
+		if (!sandbox->isBlock(tmp.y / 64, tmp.x / 64))set_position(tmp.x, tmp.y);
 		else set_position(get_position().x, get_position().y);
 
 	}
@@ -320,7 +320,7 @@ void RedMutant::attack()
 			std::cout << tmp.x / 64 << " " << tmp.y / 64 << "\n";
 			if (tmp.x / 64 == 0)tmp.x = 64;
 			if (tmp.x / 64 == sandbox->getMapWidth() / 64)tmp.x = sandbox->getMapWidth() - 64;
-			if (!sandbox->isBlock(tmp.x / 64, tmp.y / 64))set_position(tmp.x, tmp.y);
+			if (!sandbox->isBlock( tmp.y / 64, tmp.x / 64 ))set_position(tmp.x, tmp.y);
 			else set_position(get_position().x,get_position().y);
 			
 		}

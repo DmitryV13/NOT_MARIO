@@ -28,7 +28,7 @@ private:
 	vector<kusaka*> Kusaka_vector;
 	vector<RedMutant*> chubacabras_vector_;
 	vector<WolfBoss*> boss_vector;
-	int num_of_enemy_{ 10 };
+	int num_of_enemy_{ 120 };
 
 	int numOfEnemy{ 60 };
 
