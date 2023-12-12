@@ -2,13 +2,16 @@
 #include "laser_weapon.h"
 #include "Enemy.h"
 
-laser_weapon::laser_weapon(TileMap& map, int compar, float i, float j, bool direction)
+laser_weapon::laser_weapon(TileMap& map, int compar, float i,
+	float j, bool direction, Player* pl) :attack(10)
 {
+	player = pl;
 	dir_x = direction;
 	init_physics();
 	sandbox = &map;
-	init_variables(compar);
 
+	init_variables(compar);
+	
 	init_texture();
 	init_sprite();
 	set_position(i, j);
@@ -259,6 +262,11 @@ void laser_weapon::render_FL(sf::RenderTarget& target)
 		if (endPosition.x + 64 < startPosition.x)
 		{
 			laser_S.setPosition(endPosition);
+			sf::FloatRect las = laser_S.getGlobalBounds();
+			sf::FloatRect pl = player->getGlobalBounds();
+			if (las.intersects(pl)) {
+				player->changeHP(-attack - (rand() % 5));
+			}
 			target.draw(laser_S);
 		}
 

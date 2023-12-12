@@ -58,6 +58,7 @@ void Enemy::init_variables()
 
 Enemy::Enemy(TileMap& map, Player& pl)
 {
+	blow_timer.restart();
 	player_ = &pl;
 	sandbox = &map;
 	init_variables();
@@ -449,5 +450,14 @@ void Enemy::jump_towards_player()
 void Enemy::changeHP(short attackPl)
 {
 	HP -= attackPl;
+}
+void Enemy::setHP(short hp)
+{
+	HP = hp;
+}
+
+void Enemy::setAt(short at)
+{
+	attack_ = at;
 }
 

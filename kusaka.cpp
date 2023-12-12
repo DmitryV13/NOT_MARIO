@@ -6,6 +6,8 @@ kusaka::kusaka(TileMap& map, Player& pl) :Enemy(map, pl)
 	{
 		kusaka::init_texture();
 		kusaka::init_sprite();
+		kusaka::setAt(10);
+		kusaka::setHP(100);
 	}
 }
 
@@ -275,7 +277,9 @@ void kusaka::update_animation()
 
 void kusaka::shot()
 {
+
 	animation_state = ENEMY_ANIMATION_STATES::ENEMY_SHOT;
+	player_->changeHP(-attack_-(rand()%5));
 }
 
 
@@ -294,8 +298,7 @@ void kusaka::attack()
 	if (sting())
 	{
 		animation_state = ENEMY_ANIMATION_STATES::ENEMY_SHOT;
-		if(count_shot == 8)shot();
-		if (count_shot == 10) clear_shot();
+
 		displacement.x = 0;
 		displacement_max = 1.f;
 		FloatRect en = get_global_bounds();
@@ -316,6 +319,17 @@ void kusaka::attack()
 				looks_to_the_left = false;
 			}
 		}
+
+		if (blow_timer.getElapsedTime().asSeconds() >= 0.9) {
+		animation_state = ENEMY_ANIMATION_STATES::ENEMY_SHOT;
+			shot();
+			clear_shot();
+			displacement.x = 0;
+			displacement_max = 1.f;
+			
+			blow_timer.restart();
+		}
+	
 	}
 	else
 	{

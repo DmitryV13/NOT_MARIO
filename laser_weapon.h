@@ -13,10 +13,13 @@ using sf::Clock;
 enum LASER_ANIMATION_STATES {
     LASER_FIRST = 0, LASER_NEXT
 };
+
 class laser_weapon
 {
 protected:
 	TileMap* sandbox;
+    Player* player;
+    short attack;
     Texture laser_T;
     Sprite laser_S;
     IntRect current_frame;
@@ -34,7 +37,7 @@ protected:
     void init_animation();
     void init_physics();
 public:
-    explicit laser_weapon(TileMap& map,int,float,float,bool);
+    explicit laser_weapon(TileMap& map,int,float,float,bool,Player*);
     ~laser_weapon() = default;
    
     const bool& get_animation_switch();
