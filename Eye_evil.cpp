@@ -32,15 +32,7 @@ void Eye_evil::init_sprite()
 	Enemy_S.setTextureRect(current_frame);
 }
 
-void Eye_evil::setHP(short hp)
-{
-	HP = hp;
-}
 
-void Eye_evil::setAt(short at)
-{
-	attack_ = at;
-}
 
 void Eye_evil::update_movement()
 {
@@ -264,9 +256,9 @@ void Eye_evil::shot()
 {
 	if (looks_to_the_right)
 	{
-		laserFL = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x, Enemy_S.getPosition().y, looks_to_the_right);
+		laserFL = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x, Enemy_S.getPosition().y, looks_to_the_right,player_);
 		laser = new laser_weapon(*sandbox, 2, Enemy_S.getPosition().x + 64, Enemy_S.getPosition().y,
-		                         looks_to_the_right);
+		                         looks_to_the_right,player_);
 		//laser_weapon* shot_las = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x, Enemy_S.getPosition().y, looks_to_the_right);
 		/*laser.push_back(*shot_las);
 
@@ -280,9 +272,10 @@ void Eye_evil::shot()
 	}
 	else
 	{
-		laserFL = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x, Enemy_S.getPosition().y, looks_to_the_right);
+		laserFL = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x, Enemy_S.getPosition().y, 
+			looks_to_the_right,player_);
 		laser = new laser_weapon(*sandbox, 2, Enemy_S.getPosition().x - 64, Enemy_S.getPosition().y,
-		                         looks_to_the_right);
+		                         looks_to_the_right,player_);
 		//laser_weapon* shot_las = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x - 60, Enemy_S.getPosition().y, looks_to_the_right);
 		/*laser.push_back(*shot_las);
 		for (int j = (Enemy_S.getPosition().x / 60); j > 0 && j > j - 5 &&

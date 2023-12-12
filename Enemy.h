@@ -43,6 +43,7 @@ protected:
 	IntRect current_frame;
 	IntRect current_area;
 	Clock animation_timer;
+	Clock blow_timer;
 	short animation_state;
 	bool animation_switch;
 	short HP;
@@ -73,7 +74,8 @@ protected:
 	//virtual
 	virtual void init_texture() = 0;
 	virtual void init_sprite() = 0;
-
+	void setAt(short at);
+	void setHP(short hp);
 public:
 	//Enemy
 	bool looks_to_the_left;

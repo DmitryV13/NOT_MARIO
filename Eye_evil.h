@@ -26,6 +26,5 @@ private:
 	Texture evil_ball_t_;
 	void init_texture() override;
 	void init_sprite() override;
-	void setHP(short);
-	void setAt(short);
+
 };

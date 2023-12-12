@@ -6,6 +6,8 @@ RedMutant::RedMutant(TileMap& map, Player& pl) :Enemy(map, pl)
 	{
 		RedMutant::init_texture();
 		RedMutant::init_sprite();
+		RedMutant::setAt(12);
+		RedMutant::setHP(200);
 	}
 }
 
@@ -268,6 +270,7 @@ void RedMutant::update_animation()
 void RedMutant::shot()
 {
 	animation_state = ENEMY_ANIMATION_STATES::ENEMY_SHOT;
+	player_->changeHP(-attack_-(rand()%10));
 
 }
 
@@ -291,7 +294,18 @@ void RedMutant::attack()
 	}
 	if (sting())
 	{
-		shot();
+		
+		if (blow_timer.getElapsedTime().asSeconds() >= 1.0f) {
+			shot();
+			sf::Vector2f tmp = calculateRandomPosition(get_global_bounds(), 10);
+			//std::cout << tmp.x / 64 << " " << tmp.y / 64 << "\n";
+			if (tmp.x / 64 == 0)tmp.x = 64;
+			if (tmp.x / 64 == sandbox->getMapWidth() / 64)tmp.x = sandbox->getMapWidth() - 64;
+			if (!sandbox->isBlock(tmp.y / 64, tmp.x / 64)) set_position(tmp.x, tmp.y);
+			else set_position(get_position().x, get_position().y);
+			blow_timer.restart();
+		}
+	
 		displacement.x = 0;
 		displacement_max = 1.f;
 		
@@ -311,19 +325,8 @@ void RedMutant::attack()
 				looks_to_the_left = false;
 			}
 		}
-		if (en.intersects(pl))count_atack++;
+	
 		
-		if(count_atack > 100)//Зависит от количества кадров атаки
-		{
-			count_atack = 0;
-			sf::Vector2f tmp = calculateRandomPosition(get_global_bounds(), 10);
-			//std::cout << tmp.x / 64 << " " << tmp.y / 64 << "\n";
-			if (tmp.x / 64 == 0)tmp.x = 64;
-			if (tmp.x / 64 == sandbox->getMapWidth() / 64)tmp.x = sandbox->getMapWidth() - 64;
-			if (!sandbox->isBlock(tmp.y / 64, tmp.x / 64)) set_position(tmp.x, tmp.y);
-			else set_position(get_position().x,get_position().y);
-			
-		}
 
 	}
 	else
