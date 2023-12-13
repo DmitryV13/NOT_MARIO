@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "TileMap.h"
 
-	TileMap::TileMap(short level) : sizeTexture(64), mapH(40), mapW(200)
+	TileMap::TileMap(short level) : sizeTexture(64), mapH(45), mapW(100)
 	{
 		init_background();
 		init_tile_list();
@@ -9,7 +9,7 @@
 		init_tile_list_front();
 		init_tilemap(mapH, mapW);
 
-		int a = 0;
+		int a = 1;
 		int b = level;
 
 		if (a) {
@@ -189,7 +189,7 @@
 		std::string name = "chest";
 		name += letter;
 		tilebox.push_back(new TileBox(name, 0, sizeTexture, sizeTexture, letter, 64, 4, 0.3));
-		return *tilebox.cbegin();
+		return *(--tilebox.cend());
 	}
 
 	Tile* TileMap::give_tile(char letter)

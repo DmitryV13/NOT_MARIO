@@ -204,6 +204,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="MyView.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Sword.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileAnim.h" />
     <ClInclude Include="TileBox.h" />
