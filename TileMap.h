@@ -4,6 +4,7 @@
 #include "TileAnim.h"
 #include "TileFactory.h"
 #include <vector>
+#include <stack>
 
 
 class TileMap {
@@ -26,6 +27,10 @@ private:
 	float coefficient_X = 1;
 	float coefficient_Y = 1;
 
+	std::stack<std::pair<float, float>> enemy_position;
+	void init_pos_enemy();
+
+
 	void init_background();
 	void init_coeff(sf::IntRect pos);
 
@@ -44,6 +49,9 @@ public:
 	TileMap(short level);
 	~TileMap();
 	void free_memory();
+
+	sf::Vector2f cord_enemy();
+
 
 	float getMapWidth();
 	float getMapHeight();

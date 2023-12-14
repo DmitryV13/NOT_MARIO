@@ -7,22 +7,29 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 	,screenHeight(screenHeight_)
 	,myView(sandbox, screenWidth_, screenHeight_)
 	,sandbox(level)
-	,game_state(GAME_STATE::FINISHED) {
+	,game_state(GAME_STATE::FINISHED)
+	,regime(2) {//1-random generation, 2-set positions
 	game_menu = new GameMenu(window, sandbox.getMapWidth(), sandbox.getMapHeight(), &game_state, menuColor);
 	life_bar = new ScaleParametrBar();
 		initPlayer();
 		menu_timer.restart();
-		initEvilBall();
-		init_Kusaka();
-		init_chubacabra();
-		//init_Wolf_boss();
+		if(regime == 1)
+		{
+			initEvilBall();
+			init_Kusaka();
+			init_chubacabra();
+			init_Wolf_boss();
+		}else if(regime == 2)
+		{
+			init_enemy();
+		}
+		
 	}
 	
 	Level::~Level(){
 		delete player;
 		delete game_menu;
 		delete life_bar;
-		delete evil_Ball;
 		for (auto& enemy : evil_ball_vector) {
 			delete enemy;
 		}
@@ -43,12 +50,13 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 
 	void Level::initEvilBall()
 	{
-		for (int i = 0; i < num_of_enemy_; i++)
-		{
-			Eye_evil* enemy = new Eye_evil(sandbox, *player);
-			evil_ball_vector.push_back(enemy);
-		}
-		evil_Ball = new Eye_evil(sandbox, *player);
+		
+			for (int i = 0; i < num_of_enemy_; i++)
+			{
+				Eye_evil* enemy = new Eye_evil(sandbox, *player);
+				evil_ball_vector.push_back(enemy);
+			}
+		
 	}
 
 	void Level::init_Kusaka()
@@ -78,36 +86,53 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		}
 	}
 
-	void Level::updateEvilBall()
+void Level::init_enemy()
+{
+	evil_ball_vector.push_back(new Eye_evil(sandbox, *player));
+	Kusaka_vector.push_back(new kusaka(sandbox, *player));
+	chubacabras_vector_.push_back(new RedMutant(sandbox, *player));
+	chubacabras_vector_.push_back(new RedMutant(sandbox, *player));
+	boss_vector.push_back(new WolfBoss(sandbox, *player));
+	Kusaka_vector.push_back(new kusaka(sandbox, *player));
+	chubacabras_vector_.push_back(new RedMutant(sandbox, *player));
+	Kusaka_vector.push_back(new kusaka(sandbox, *player));
+	Kusaka_vector.push_back(new kusaka(sandbox, *player));
+	Kusaka_vector.push_back(new kusaka(sandbox, *player));
+	evil_ball_vector.push_back(new Eye_evil(sandbox, *player));
+	Kusaka_vector.push_back(new kusaka(sandbox, *player));
+
+}
+
+void Level::updateEvilBall()
 	{
-		for (int i = 0; i < num_of_enemy_; i++)
+	for (auto& enemy : evil_ball_vector)
 		{
-			evil_ball_vector[i]->update();
+			(enemy)->update();
 		}
-		evil_Ball->update();
 	}
 
 	void Level::update_Kusaka()
 	{
-		for (int i = 0; i < num_of_enemy_; i++)
+		for (auto& enemy : Kusaka_vector)
 		{
-			Kusaka_vector[i]->update();
+			enemy->update();
  		}
 	}
 
 	void Level::update_chubacabra()
 	{
-		for (int i = 0; i < num_of_enemy_; i++)
+		for (auto& enemy : chubacabras_vector_)
 		{
-			chubacabras_vector_[i]->update();
+			enemy->update();
 		}
 	}
 
 	void Level::update_Wolf_boss()
 	{
-		for (int i = 0; i < num_of_enemy_; i++)
+		for (auto& enemy : boss_vector)
+
 		{
-			boss_vector[i]->update();
+			enemy->update();
 		}
 	}
 
@@ -155,7 +180,7 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		updateEvilBall();
 		update_Kusaka();
 		update_chubacabra();
-		//update_Wolf_boss();
+		update_Wolf_boss();
 
 		updateView();
 		updateCursor();
@@ -238,8 +263,7 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		render_Kusaka();
 		render_chubacabra();
 		render_shot();
-		
-		//render_Wolf_boss();
+		render_Wolf_boss();
 
 		sandbox.second_render(*window, myView.getCurrentViewCords());
 		//renderCursor();
@@ -255,52 +279,48 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 
 	void Level::renderEvilBall()
 	{
-		for (int i = 0; i < num_of_enemy_; i++)
+		for (auto& enemy : evil_ball_vector)
+
 		{
-			evil_ball_vector[i]->render(*window);
+			enemy->render(*window);
 		}
 
-		evil_Ball->render(*window);
+		
 	}
 
 	void Level::render_Kusaka()
 	{
-		for (int i = 0; i < num_of_enemy_; i++)
+		for (auto& enemy : Kusaka_vector)
 		{
-			Kusaka_vector[i]->render(*window);
+			enemy->render(*window);
 		}
 	}
 
 	void Level::render_chubacabra()
 	{
-		for (int i = 0; i < num_of_enemy_; i++)
+		for (auto& enemy : chubacabras_vector_)
 		{
-			chubacabras_vector_[i]->render(*window);
+			enemy->render(*window);
 		}
 	}
 
 	void Level::render_Wolf_boss()
 	{
-		for (int i = 0; i < num_of_enemy_; i++)
+		for (auto& enemy : boss_vector)
 		{
-			boss_vector[i]->render(*window);
+			enemy->render(*window);
 		}
 	}
 
 	void Level::render_shot()
 	{
-		if (evil_Ball->laser_existence())
+		
+		for (auto& enemy : evil_ball_vector)
 		{
-			if (evil_Ball->laser_existence())
-				evil_Ball->draw_laser(0, *window);
-
-		}
-		for (int i = 0; i < num_of_enemy_; i++)
-		{
-			if (evil_ball_vector[i]->laser_existence())
+			if (enemy->laser_existence())
 			{
 
-				evil_ball_vector[i]->draw_laser(1, *window);
+				enemy->draw_laser(1, *window);
 
 			}
 		}

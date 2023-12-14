@@ -25,13 +25,13 @@ private:
 	MyView myView;
 	//Cursor* cursor;
 
-	Eye_evil* evil_Ball;
+	
 	vector<Eye_evil*> evil_ball_vector;
 	vector<kusaka*> Kusaka_vector;
 	vector<RedMutant*> chubacabras_vector_;
 	vector<WolfBoss*> boss_vector;
 	int num_of_enemy_{ 12 };
-
+	short regime;
 	double screenWidth;
 	double screenHeight;
 
@@ -44,6 +44,7 @@ private:
 	void init_Kusaka();
 	void init_chubacabra();
 	void init_Wolf_boss();
+	void init_enemy();
 public:
 	Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level, Color menuColor);
 	~Level();

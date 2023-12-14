@@ -215,6 +215,7 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
             jump(-20.0f);
         }
         if (Mouse::isButtonPressed(Mouse::Left)) {
+            std::cout << player_S.getPosition().x << " " << getPosition().y << std::endl;
             weapons[chosen_weapon]->attack(movingDirection, Vector2f(Mouse::getPosition(*window)), view_cords, true);
         }
         if (!Mouse::isButtonPressed(Mouse::Left)) {
