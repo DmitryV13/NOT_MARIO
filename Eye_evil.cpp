@@ -8,7 +8,7 @@ Eye_evil::Eye_evil(TileMap& map, Player& pl) : Enemy(map, pl)
 		Eye_evil::init_texture();
 		Eye_evil::init_sprite();
 		Eye_evil::setAt(20);
-		Eye_evil::setHP(100);
+		Eye_evil::setHP(1000);
 		
 	}
 }
@@ -36,6 +36,7 @@ void Eye_evil::init_sprite()
 
 void Eye_evil::update_movement()
 {
+	
 	//decision explorer
 	if (on_ground)
 	{
@@ -334,8 +335,8 @@ bool Eye_evil::laser_existence()
 
 void Eye_evil::draw_laser(int i, sf::RenderTarget& target)
 {
-	laserFL->render_FL(target);
-	laser->render(target);
+	if(HP>=0)laserFL->render_FL(target);
+	if (HP >= 0)laser->render(target);
 }
 
 void Eye_evil::reset_attention()

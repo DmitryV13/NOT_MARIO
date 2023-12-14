@@ -1,6 +1,7 @@
 #pragma once
 #include "Map.h"
 #include "TileMap.h"
+#include "Player.h"
 using sf::Sprite;
 using sf::RenderWindow;
 using sf::FloatRect;
@@ -24,6 +25,7 @@ protected:
     Sprite laser_S;
     IntRect current_frame;
     Clock animation_timer;
+    Clock laser_timer;
     short animation_state;
     bool animation_switch;
     int first;

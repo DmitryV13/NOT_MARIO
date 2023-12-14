@@ -103,11 +103,14 @@ void Enemy::set_position(const float x, const float y)
 
 void Enemy::render(sf::RenderTarget& target)
 {
-	target.draw(Enemy_S);
+	if(HP>=0)target.draw(Enemy_S);
 }
 
 void Enemy::update()
+
+
 {
+	
 	update_movement();
 	update_animation();
 	update_physics();
