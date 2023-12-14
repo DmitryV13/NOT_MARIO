@@ -3,7 +3,7 @@
 
 
 
-    Sword::Sword(Vector2f player_position, FloatRect player_bounds) {
+    Sword::Sword(Vector2f player_position, FloatRect player_bounds){
         initTexture();
         initSprite(player_position, player_bounds);
         initVariables();

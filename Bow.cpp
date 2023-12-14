@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "Bow.h"
 
-	Bow::Bow(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_) : sandbox(sandbox_) {
+	Bow::Bow(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_)
+		: sandbox(sandbox_) {
 		initTexture();
 		initSprite(player_position, player_bounds);
 		initVariables();

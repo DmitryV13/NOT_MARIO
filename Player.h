@@ -21,6 +21,7 @@ private:
     vector<Weapon*> weapons;
     short chosen_weapon;
 
+
     IntRect currentFrame;
     Clock animationTimer;
     short animationState;
@@ -55,6 +56,9 @@ private:
     void initPhysics();
 public:
     Player(TileMap& map);
+
+    //Player(TileMap& map, vector<kusaka*>* k, vector<Eye_evil*>* e
+    //    , vector<RedMutant*>* c, vector<WolfBoss*>* w);
     IntRect get_pl_frame();
     // accessors
     const bool& getAnimationSwitch();

@@ -1,6 +1,7 @@
 #pragma once
 #include "Map.h"
 #include "TileMap.h"
+#include "Player.h"
 using sf::Sprite;
 using sf::RenderWindow;
 using sf::FloatRect;
@@ -14,8 +15,7 @@ enum LASER_ANIMATION_STATES {
     LASER_FIRST = 0, LASER_NEXT
 };
 
-class laser_weapon
-{
+class laser_weapon{
 protected:
 	TileMap* sandbox;
     Player* player;

@@ -12,6 +12,7 @@ private:
 	Texture arrow_T;
 	Sprite arrow_S;
 
+
 	short side;
 	bool is_flying;
 	float speed;
@@ -31,6 +32,7 @@ public:
 	void setPosition(Vector2f position);
 	void setRotationAngle(float angle);
 	const bool isFlying() const;
+	bool checkHit();
 
 	void render(RenderTarget& target);
 };

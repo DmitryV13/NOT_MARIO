@@ -18,6 +18,7 @@ private:
 
 	vector<Projectile*> projectiles;
 
+
 	short animationState;
 	bool animationSwitch;
 	bool attack_activation;

@@ -11,6 +11,7 @@ private:
 	Texture projectile_T;
 	Sprite projectile_S;
 
+
 	float speed;
 	Vector2f dest_pos;
 	Vector2f norm_s;
@@ -23,6 +24,7 @@ public:
 
 	void update();
 	bool updateCollision();
+	bool checkHit();
 
 	void render(RenderTarget& target);
 };

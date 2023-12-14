@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "Arrow.h"
 
-	Arrow::Arrow(Vector2f init_pos, short side_ ,TileMap* sandbox_) : side(side_), speed(10), sandbox(sandbox_) {
+	Arrow::Arrow(Vector2f init_pos, short side_ ,TileMap* sandbox_)
+		: side(side_), speed(10), sandbox(sandbox_) {
 		initTexture();
 		initSprite(init_pos);
 		initVariables();
@@ -49,6 +50,18 @@
 	const bool Arrow::isFlying() const{
 		return is_flying;
 	}
+
+	//bool Arrow::checkHit() {
+	//	for (int i = 0; i < enemies.size(); i++) {
+	//		for (int j = 0; j < enemies[i]->size(); j++) {
+	//			if (arrow_S.getGlobalBounds().intersects((*enemies[i])[j]->get_global_bounds())) {
+	//				(*enemies[i])[j]->changeHP(15);
+	//			}
+	//
+	//		}
+	//	}
+	//	return true;;
+	//}
 	
 	bool Arrow::updateCollision(){
 		for (int i = (arrow_S.getPosition().y - 4) / 64; i < (arrow_S.getPosition().y + 3) / 64; i++) {

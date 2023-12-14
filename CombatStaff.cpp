@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "CombatStaff.h"
 
-    CombatStaff::CombatStaff(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_): sandbox(sandbox_){
+    CombatStaff::CombatStaff(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_)
+        : sandbox(sandbox_){
         initTexture();
         initSprite(player_position, player_bounds);
         initVariables();
@@ -121,7 +122,9 @@
                     delete projectiles[0];
                     projectiles.erase(projectiles.begin());
                 }
-                projectiles.push_back(new Projectile(staff_S.getPosition(), Vector2f(mouse_pos.x + (view_cords.left - view_cords.width / 2), mouse_pos.y + (view_cords.top - view_cords.height / 2)), sandbox));
+                projectiles.push_back(new Projectile(staff_S.getPosition()
+                    , Vector2f(mouse_pos.x + (view_cords.left - view_cords.width / 2)
+                        , mouse_pos.y + (view_cords.top - view_cords.height / 2)), sandbox));
 
             }
         }

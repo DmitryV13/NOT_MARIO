@@ -2,12 +2,15 @@
 #include "PLAYER_ANIMATION_SATES.h"
 #include "Weapon.h"
 
+
 using namespace::sf;
 
 class Sword : public Weapon{
 private:
 	Texture sword_T;
 	Sprite sword_S;
+	
+
 	IntRect currentFrame;
 	Clock animationTimer;
 	short animationState;

@@ -20,6 +20,7 @@ private:
 	vector<Arrow*> arrows;
 	Vector2f arrow_dir;
 
+
 	bool bow_pulled;
 	float rot_angle;
 	short animationState;

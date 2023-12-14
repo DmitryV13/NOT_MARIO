@@ -9,6 +9,7 @@
 #include "GameMenu.h"
 #include "ScaleParametrBar.h"
 #include "GAME_STATE.h"
+#include "Enemy.h"
 
 using namespace::sf;
 
@@ -26,10 +27,10 @@ private:
 	//Cursor* cursor;
 
 	Eye_evil* evil_Ball;
-	vector<Eye_evil*> evil_ball_vector;
-	vector<kusaka*> Kusaka_vector;
-	vector<RedMutant*> chubacabras_vector_;
-	vector<WolfBoss*> boss_vector;
+	vector<Eye_evil*>* evil_ball_vector;
+	vector<kusaka*>* Kusaka_vector;
+	vector<RedMutant*>* chubacabras_vector_;
+	vector<WolfBoss*>* boss_vector;
 	int num_of_enemy_{ 12 };
 
 	double screenWidth;
