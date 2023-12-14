@@ -24,6 +24,7 @@ protected:
     Sprite laser_S;
     IntRect current_frame;
     Clock animation_timer;
+    Clock laser_timer;
     short animation_state;
     bool animation_switch;
     int first;

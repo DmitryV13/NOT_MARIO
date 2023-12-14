@@ -64,8 +64,10 @@ Enemy::Enemy(TileMap& map, Player& pl)
 	init_variables();
 	init_animation();
 	init_physics();
-	start_position = generate_random_start_position(sandbox->getMapWidth(), sandbox->getMapHeight());
-	set_position(start_position.x, start_position.y);
+	//start_position = generate_random_start_position(sandbox->getMapWidth(), sandbox->getMapHeight());
+	start_position = sandbox->cord_enemy();
+		
+		set_position(start_position.x, start_position.y);
 
 		//set_position(1300,600);
 }
@@ -103,11 +105,14 @@ void Enemy::set_position(const float x, const float y)
 
 void Enemy::render(sf::RenderTarget& target)
 {
-	target.draw(Enemy_S);
+	if(HP>=0)target.draw(Enemy_S);
 }
 
 void Enemy::update()
+
+
 {
+	
 	update_movement();
 	update_animation();
 	update_physics();

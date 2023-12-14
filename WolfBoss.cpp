@@ -59,7 +59,7 @@ void WolfBoss::update_animation()
 {
 	if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_MOVING)
 	{
-		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
+		if (animation_timer.getElapsedTime().asSeconds() >= 0.15f || get_animation_switch())
 		{
 			if (looks_to_the_right)
 			{
@@ -252,6 +252,9 @@ PL_SIDE WolfBoss::getPlayerSide(float playerX, float enemyX)
 
 void WolfBoss::update_movement()
 {
+	awakening = true;
+	animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;
+	boss_state = BOSS_STATE::MOVING;
 	if (!awakening)
 	{
 		if (search_for_enemies())
@@ -301,7 +304,7 @@ void WolfBoss::update_movement()
 		case BOSS_STATE::MOVING:
 			{
 			//std::cout << "Moving\n";
-
+			displacement_max = 0.8f;
 				if (on_ground)
 				{
 					if (update_collision_x())
@@ -315,7 +318,7 @@ void WolfBoss::update_movement()
 					looks_to_the_left = true;
 					looks_to_the_right = false;
 					moving *= -1.f;
-					boss_state = BOSS_STATE::RETREATING;
+					//boss_state = BOSS_STATE::RETREATING;
 					reset_step();
 				}
 				if (step_left == max_step)
@@ -323,7 +326,7 @@ void WolfBoss::update_movement()
 					looks_to_the_left = false;
 					looks_to_the_right = true;
 					moving *= -1.f;
-					boss_state = BOSS_STATE::RETREATING;
+					//boss_state = BOSS_STATE::RETREATING;
 					reset_step();
 				}
 				if (player_contact())

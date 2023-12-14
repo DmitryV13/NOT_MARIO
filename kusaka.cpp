@@ -7,7 +7,7 @@ kusaka::kusaka(TileMap& map, Player& pl) :Enemy(map, pl)
 		kusaka::init_texture();
 		kusaka::init_sprite();
 		kusaka::setAt(10);
-		kusaka::setHP(100);
+		kusaka::setHP(1000);
 	}
 }
 

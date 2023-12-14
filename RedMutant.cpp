@@ -7,7 +7,7 @@ RedMutant::RedMutant(TileMap& map, Player& pl) :Enemy(map, pl)
 		RedMutant::init_texture();
 		RedMutant::init_sprite();
 		RedMutant::setAt(12);
-		RedMutant::setHP(200);
+		RedMutant::setHP(2000);
 	}
 }
 

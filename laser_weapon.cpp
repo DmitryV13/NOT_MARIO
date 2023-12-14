@@ -15,6 +15,7 @@ laser_weapon::laser_weapon(TileMap& map, int compar, float i,
 	init_texture();
 	init_sprite();
 	set_position(i, j);
+	laser_timer.restart();
 }
 
 const bool& laser_weapon::get_animation_switch()
@@ -231,6 +232,17 @@ void laser_weapon::render_FL(sf::RenderTarget& target)
 		endPosition.x += 32;
 		update_animation();
 		laser_S.setPosition(startPosition);
+		if(laser_timer.getElapsedTime().asSeconds() >= 0.2f)
+		{
+			sf::FloatRect las = laser_S.getGlobalBounds();
+			sf::FloatRect pl = player->getGlobalBounds();
+			if (las.intersects(pl)) {
+				player->changeHP(-attack - (rand() % 5));
+			}
+			laser_timer.restart();
+
+		}
+		
 		target.draw(laser_S);
 
 		current_frame.left = 128;
@@ -239,6 +251,16 @@ void laser_weapon::render_FL(sf::RenderTarget& target)
 		if (endPosition.x >= startPosition.x)
 		{
 			laser_S.setPosition(endPosition);
+			if (laser_timer.getElapsedTime().asSeconds() >= 0.1f)
+			{
+				sf::FloatRect las = laser_S.getGlobalBounds();
+				sf::FloatRect pl = player->getGlobalBounds();
+				if (las.intersects(pl)) {
+					player->changeHP(-attack - (rand() % 5));
+				}
+				laser_timer.restart();
+
+			}
 			target.draw(laser_S);
 		}
 
@@ -254,6 +276,16 @@ void laser_weapon::render_FL(sf::RenderTarget& target)
 	{
 		endPosition.x -= 32;
 		laser_S.setPosition(startPosition);
+		if (laser_timer.getElapsedTime().asSeconds() >= 0.1f)
+		{
+			sf::FloatRect las = laser_S.getGlobalBounds();
+			sf::FloatRect pl = player->getGlobalBounds();
+			if (las.intersects(pl)) {
+				player->changeHP(-attack - (rand() % 5));
+			}
+			laser_timer.restart();
+
+		}
 		target.draw(laser_S);
 
 		current_frame.width = 90;
@@ -262,10 +294,14 @@ void laser_weapon::render_FL(sf::RenderTarget& target)
 		if (endPosition.x + 64 < startPosition.x)
 		{
 			laser_S.setPosition(endPosition);
-			sf::FloatRect las = laser_S.getGlobalBounds();
-			sf::FloatRect pl = player->getGlobalBounds();
-			if (las.intersects(pl)) {
-				player->changeHP(-attack - (rand() % 5));
+			if (laser_timer.getElapsedTime().asSeconds() >= 0.1f)
+			{
+				sf::FloatRect las = laser_S.getGlobalBounds();
+				sf::FloatRect pl = player->getGlobalBounds();
+				if (las.intersects(pl)) {
+					player->changeHP(-attack - (rand() % 5));
+				}
+				laser_timer.restart();
 			}
 			target.draw(laser_S);
 		}
