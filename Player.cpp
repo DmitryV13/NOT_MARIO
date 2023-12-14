@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
 
-    Player::Player(TileMap& map): HP(100) {
+    Player::Player(TileMap& map): HP(1000) {
         sandbox = &map;
         initVariables();
         initTexture();
@@ -65,6 +65,7 @@ void Player::initVariables(){
         isFlying = false;
         flyVelocity = 0;
 
+        alive = true;
         movingDirection = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
     }
 
@@ -128,12 +129,14 @@ bool Player::stan()
 }
 
 void Player::update(RenderWindow* window, FloatRect view_cords){
+    if (alive){
         updateMovement(window, view_cords);
         updateAnimation();
         updatePhysics();
         updateWeapon(window, view_cords);
         updateProjectiles();
     }
+}
 
     void Player::updatePhysics(){
 
@@ -366,6 +369,15 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
 
     void Player::changeHP(short z){
         HP += z;
+        if (HP <= 0) {
+            alive = false;
+            animationState == PLAYER_ANIMATION_STATES::DEAD;
+            currentFrame.top = 320;
+            currentFrame.left = 288;
+            currentFrame.width = 48;
+            animationTimer.restart();
+            player_S.setTextureRect(currentFrame);
+        }
     }
 
     bool Player::updateCollisionX(){

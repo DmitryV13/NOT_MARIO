@@ -35,10 +35,10 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 			delete enemy;
 		}
 		chubacabras_vector_->clear();
-		for (auto& enemy : *boss_vector) {
-			delete enemy;
-		}
-		boss_vector->clear();
+		//for (auto& enemy : *boss_vector) {
+		//	delete enemy;
+		//}
+		//boss_vector->clear();
 	}
 
 	void Level::initEvilBall()
@@ -72,15 +72,15 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		}
 	}
 
-	void Level::init_Wolf_boss()
-	{
-		boss_vector = new vector<WolfBoss*>();
-		for (int i = 0; i < num_of_enemy_; i++)
-		{
-			WolfBoss* enemy = new WolfBoss(sandbox, *player);
-			boss_vector->push_back(enemy);
-		}
-	}
+	//void Level::init_Wolf_boss()
+	//{
+	//	boss_vector = new vector<WolfBoss*>();
+	//	for (int i = 0; i < num_of_enemy_; i++)
+	//	{
+	//		WolfBoss* enemy = new WolfBoss(sandbox, *player);
+	//		boss_vector->push_back(enemy);
+	//	}
+	//}
 
 	void Level::updateEvilBall()
 	{

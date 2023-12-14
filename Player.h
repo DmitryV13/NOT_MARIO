@@ -46,6 +46,7 @@ private:
     bool isFlying;
     float flyVelocity;
 
+    bool alive;
     short movingDirection;
 
     void initVariables();
