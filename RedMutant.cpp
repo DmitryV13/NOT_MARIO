@@ -7,7 +7,7 @@ RedMutant::RedMutant(TileMap& map, FloatRect* player_gl_b_, Vector2f* player_pos
 	{
 		RedMutant::init_texture();
 		RedMutant::init_sprite();
-		RedMutant::setAt(12);
+		RedMutant::setAt(25);
 		RedMutant::setHP(2000);
 	}
 }

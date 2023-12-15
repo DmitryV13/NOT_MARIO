@@ -17,17 +17,19 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 	initPlayer();
 	hp = player->getHPp();
 		menu_timer.restart();
-		if(regime == 1)
+		if(regime == -1)
 		{
 			initEvilBall();
 			init_Kusaka();
 			init_chubacabra();
 			init_Wolf_boss();
-		}else if(regime == 2)
+			initWeapons();
+		}else if(level == 4)
 		{
 			init_enemy();
+			initWeapons();
 		}
-		initWeapons();
+		
 	}
 	
 	Level::~Level(){

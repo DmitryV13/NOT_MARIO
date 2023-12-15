@@ -7,7 +7,7 @@ kusaka::kusaka(TileMap& map, FloatRect* player_gl_b_, Vector2f* player_pos_, sho
 	{
 		kusaka::init_texture();
 		kusaka::init_sprite();
-		kusaka::setAt(10);
+		kusaka::setAt(20);
 		kusaka::setHP(1000);
 	}
 }

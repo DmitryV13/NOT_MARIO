@@ -70,6 +70,15 @@ void Player::initVariables(){
     }
 
     void Player::render(RenderTarget& target){
+        if (HP <= 0) {
+            alive = false;
+            animationState == PLAYER_ANIMATION_STATES::DEAD;
+            currentFrame.top = 310;
+            currentFrame.left = 288;
+            currentFrame.width = 48;
+            animationTimer.restart();
+            player_S.setTextureRect(currentFrame);
+        }
         target.draw(player_S);
         weapons[chosen_weapon]->render(target);
         renderProjectiles(target);
@@ -220,10 +229,12 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         }
         if (Mouse::isButtonPressed(Mouse::Left)) {
             std::cout << player_S.getPosition().x << " " << getPosition().y << std::endl;
-            weapons[chosen_weapon]->attack(movingDirection, Vector2f(Mouse::getPosition(*window)), view_cords, true);
+            if (chosen_weapon < weapons.size())
+                weapons[chosen_weapon]->attack(movingDirection, Vector2f(Mouse::getPosition(*window)), view_cords, true);
         }
         if (!Mouse::isButtonPressed(Mouse::Left)) {
-            weapons[chosen_weapon]->attack(movingDirection, Vector2f(Mouse::getPosition(*window)), view_cords, false);
+            if (chosen_weapon < weapons.size())
+                weapons[chosen_weapon]->attack(movingDirection, Vector2f(Mouse::getPosition(*window)), view_cords, false);
         }
     }
 
@@ -345,6 +356,7 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
     }
 
     void Player::updateWeapon(RenderWindow* window, FloatRect view_cords){
+        if(chosen_weapon<weapons.size())
         weapons[chosen_weapon]->update(player_S.getPosition(), movingDirection, window, view_cords);
     }
 
@@ -371,6 +383,7 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
 
     void Player::changeHP(short z){
         HP += z;
+        //std::cout << HP << std::endl;
         if (HP <= 0) {
             alive = false;
             animationState == PLAYER_ANIMATION_STATES::DEAD;

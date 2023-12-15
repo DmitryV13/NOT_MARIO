@@ -16,13 +16,21 @@
 		buttons["1"] = new Button(300, 300, buttons_size, font, "1", menuColor);
 		buttons["2"] = new Button(300, 600, buttons_size, font, "2", menuColor);
 		buttons["3"] = new Button(300, 600, buttons_size, font, "3", menuColor);
+		buttons["4"] = new Button(300, 600, buttons_size, font, "L", menuColor);
 	}
 
 	void RoadMap::setButtonsPosition(){
 		auto i = buttons.begin();
-		short first_button_y = (screen_height - (i->second->getHeight() * buttons.size() + space_between_buttons * (buttons.size() - 1))) / 2;
+		//short first_button_y = (screen_height - (i->second->getHeight() * buttons.size() + space_between_buttons * (buttons.size() - 1))) / 2;
+		//for (short j = 0; i != buttons.end(); i++, j++) {
+		//	i->second->setPosition(Vector2f((screen_width / 2 - i->second->getWidth() / 2), (first_button_y + j * (i->second->getHeight() + space_between_buttons))));
+		//}
+		short first_button_x = (screen_width - (i->second->getWidth() * buttons.size() + space_between_buttons * (buttons.size() - 1))) / 2;
 		for (short j = 0; i != buttons.end(); i++, j++) {
-			i->second->setPosition(Vector2f((screen_width / 2 - i->second->getWidth() / 2), (first_button_y + j * (i->second->getHeight() + space_between_buttons))));
+			auto tmp = i;
+			if (++tmp == buttons.end())
+				j += 1;
+			i->second->setPosition(Vector2f((first_button_x + j * (i->second->getWidth() + space_between_buttons)), (screen_height / 2 - i->second->getHeight() / 2)));
 		}
 	}
 
@@ -73,6 +81,12 @@
 		}
 		if (buttons["3"]->isPressed()) {
 			Level* level = new Level(window, screen_width, screen_height, 3, menuColor);
+			level->start();
+			delete level;
+			menu_timer.restart();
+		}
+		if (buttons["4"]->isPressed()) {
+			Level* level = new Level(window, screen_width, screen_height, 4, menuColor);
 			level->start();
 			delete level;
 			menu_timer.restart();

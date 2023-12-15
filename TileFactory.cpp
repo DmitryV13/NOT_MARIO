@@ -63,7 +63,7 @@ TileFactory::TileFactory(float temp_W, float temp_H, short int type_map, short i
         std::cout << "Time taken by function: " << duration.count() << " seconds" << std::endl;
     }
     else if (type_template) {
-        if (level == 1) {
+        if (level == 4) {
 
             std::vector<std::vector<std::vector<char>>> temlate_2(template_W, std::vector<std::vector<char>>(template_H, std::vector<char>(3)));
             temlate_2 =
