@@ -3,7 +3,8 @@
 
 
 
-    Sword::Sword(Vector2f player_position, FloatRect player_bounds){
+    Sword::Sword(Vector2f player_position, FloatRect player_bounds, vector<kusaka*>* k_, vector<Eye_evil*>* e_, vector<RedMutant*>* r_, vector<WolfBoss*>* w_)
+    :k(k_), e(e_), r(r_), w(w_) {
         initTexture();
         initSprite(player_position, player_bounds);
         initVariables();
@@ -110,6 +111,30 @@
         if (is_btn_pressed) {
             this->side_of_attack = side_attack;
             attack_activation = true;
+            for (auto& enemy : *e)
+            {
+                if (sword_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
+                    enemy->changeHP(10);
+                }
+            }
+            for (auto& enemy : *k)
+            {
+                if (sword_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
+                    enemy->changeHP(10);
+                }
+            }
+            for (auto& enemy : *r)
+            {
+                if (sword_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
+                    enemy->changeHP(10);
+                }
+            }
+            for (auto& enemy : *w)
+            {
+                if (sword_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
+                    enemy->changeHP(10);
+                }
+            }
         }
     }
     

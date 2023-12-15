@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "Arrow.h"
 
-	Arrow::Arrow(Vector2f init_pos, short side_ ,TileMap* sandbox_)
-		: side(side_), speed(10), sandbox(sandbox_) {
+	Arrow::Arrow(Vector2f init_pos, short side_ ,TileMap* sandbox_, vector<kusaka*>* k_, vector<Eye_evil*>* e_, vector<RedMutant*>* r_, vector<WolfBoss*>* w_)
+		:k(k_), e(e_), r(r_), w(w_), side(side_), speed(10), sandbox(sandbox_) {
 		initTexture();
 		initSprite(init_pos);
 		initVariables();
@@ -50,6 +50,41 @@
 	const bool Arrow::isFlying() const{
 		return is_flying;
 	}
+
+
+	bool Arrow::updateHit() {
+		for (auto& enemy : *e)
+		{
+			if (arrow_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
+				enemy->changeHP(10);
+				return true;
+			}
+		}
+		for (auto& enemy : *k)
+		{
+			if (arrow_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
+				enemy->changeHP(10);
+				return true;
+			}
+		}
+		for (auto& enemy : *r)
+		{
+			if (arrow_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
+				enemy->changeHP(10);
+				return true;
+			}
+		}
+		for (auto& enemy : *w)
+		{
+			if (arrow_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
+				enemy->changeHP(10);
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 
 	//bool Arrow::checkHit() {
 	//	for (int i = 0; i < enemies.size(); i++) {

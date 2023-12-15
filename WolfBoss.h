@@ -27,7 +27,7 @@ class WolfBoss :
 	void init_physics() override;
 
 public:
-	explicit WolfBoss(TileMap& map, Player&);
+	explicit WolfBoss(TileMap& map, FloatRect* player_gl_b_, Vector2f* player_pos_, short* pl_hp_);
 	~WolfBoss() override = default;
 	void update_movement() override;
 	void update_animation() override;

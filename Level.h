@@ -38,6 +38,12 @@ private:
 
 	short game_state;
 
+
+	FloatRect* player_gl_b;
+	Vector2f* player_pos;
+	Vector2f* player_vel;
+	short* hp;
+
 	//void initWindow();
 	void initPlayer();
 	void initView();
@@ -79,5 +85,6 @@ public:
 	void renderLifeBar();
 
 	void start();
+	void initWeapons();
 };
 

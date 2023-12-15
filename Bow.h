@@ -4,6 +4,10 @@
 #include "Weapon.h"
 #include "Arrow.h"
 #include "TileMap.h"
+#include "kusaka.h"
+#include "Eye_evil.h"
+#include "WolfBoss.h"
+#include "RedMutant.h"
 
 using namespace::sf;
 
@@ -13,6 +17,12 @@ private:
 
 	Texture bow_T;
 	Sprite bow_S;
+
+
+	vector<Eye_evil*>* e;
+	vector<kusaka*>* k;
+	vector<RedMutant*>* r;
+	vector<WolfBoss*>* w;
 
 	IntRect currentFrame;
 	Clock animationTimer;
@@ -35,7 +45,7 @@ private:
 	void initAnimation();
 
 public:
-	Bow(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_);
+	Bow(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_, vector<kusaka*>* k, vector<Eye_evil*>* e, vector<RedMutant*>* r, vector<WolfBoss*>* w);
 
 	void update(Vector2f player_position, short player_side, RenderWindow* window, FloatRect view_cords) override;
 	void updatePosition(Vector2f player_position, short player_side, RenderWindow* window, FloatRect view_cords);

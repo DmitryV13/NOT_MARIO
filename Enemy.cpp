@@ -56,10 +56,11 @@ void Enemy::init_variables()
 	animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
 }
 
-Enemy::Enemy(TileMap& map, Player& pl)
+Enemy::Enemy(TileMap& map, FloatRect* player_gl_b_, Vector2f* player_pos_, short* pl_hp_)
+	:player_gl_b(player_gl_b_), player_pos(player_pos_), pl_hp(pl_hp_)
 {
 	blow_timer.restart();
-	player_ = &pl;
+	//player_ = &pl;
 	sandbox = &map;
 	init_variables();
 	init_animation();
@@ -437,14 +438,14 @@ bool Enemy::update_collision_y()
 
 bool Enemy::sting(){
 	FloatRect en = get_global_bounds();
-	FloatRect pl = player_->getGlobalBounds();
+	FloatRect pl = *player_gl_b;
 	return en.intersects(pl);
 }
 
 void Enemy::jump_towards_player()
 {
 
-	float distance = std::abs(player_->getPosition().x - get_position().x);
+	float distance = std::abs(player_pos->x - get_position().x);
 	float jump_Height = std::min(1.0f, distance / 300.0f) * 2.0f; 
 	float max_jump_height = 2.0f; 
 	jump_Height = std::min(jump_Height, max_jump_height);

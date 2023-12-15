@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "Bow.h"
 
-	Bow::Bow(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_)
-		: sandbox(sandbox_) {
+	Bow::Bow(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_, vector<kusaka*>* k_, vector<Eye_evil*>* e_, vector<RedMutant*>* r_, vector<WolfBoss*>* w_)
+		:k(k_), e(e_), r(r_), w(w_), sandbox(sandbox_) {
 		initTexture();
 		initSprite(player_position, player_bounds);
 		initVariables();
@@ -80,7 +80,7 @@
 				if (!bow_pulled && Mouse::isButtonPressed(Mouse::Left)) {
 					currentFrame.top = 0;
 					if (currentFrame.left == 0) {
-						arrows.push_back(new Arrow(bow_S.getPosition(), side_of_attack, sandbox));
+						arrows.push_back(new Arrow(bow_S.getPosition(), side_of_attack, sandbox, k, e, r, w));
 					}
 					currentFrame.left += 36;
 					if (currentFrame.left == 144) {
@@ -99,7 +99,7 @@
 					currentFrame.top = 0;
 					
 					if (currentFrame.left == 36) {
-						arrows.push_back(new Arrow(bow_S.getPosition(), side_of_attack, sandbox));
+						arrows.push_back(new Arrow(bow_S.getPosition(), side_of_attack, sandbox, k, e, r,w));
 					}
 					currentFrame.left += 36;
 					if (currentFrame.left == 180) {
@@ -116,6 +116,9 @@
 	void Bow::updateProjectiles(){
 		for (int i = 0; i < arrows.size(); i++) {
 			arrows[i]->update();
+			if (arrows[i]->updateHit()) {
+
+			}
 			if (arrows[i]->isFlying()) {
 				arrows[i]->updateCollision();
 				//delete* (arrows.begin() + i);

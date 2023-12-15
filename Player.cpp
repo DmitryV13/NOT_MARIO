@@ -6,7 +6,7 @@
         initVariables();
         initTexture();
         initSprite();
-        initWeapon();
+        //initWeapon();
         initAnimation();
         initPhysics();
     }
@@ -32,14 +32,14 @@ void Player::initVariables(){
         currentFrame = IntRect(2, 80, 48, 70);
         player_S.setTextureRect(currentFrame);
         //initial position
-        //player_S.setPosition(67, 78);
+        player_S.setPosition(102, 2600);
     }
 
-    void Player::initWeapon() {
+    void Player::initWeapon(vector<kusaka*>* k, vector<Eye_evil*>* e, vector<RedMutant*>* r, vector<WolfBoss*>* w) {
         weapons.push_back(new Fist());
-        weapons.push_back(new Bow(player_S.getPosition(), player_S.getGlobalBounds(), sandbox));
-        weapons.push_back(new Sword(player_S.getPosition(), player_S.getGlobalBounds()));
-        weapons.push_back(new CombatStaff(player_S.getPosition(), player_S.getGlobalBounds(), sandbox));
+        weapons.push_back(new Bow(player_S.getPosition(), player_S.getGlobalBounds(), sandbox, k, e, r, w));
+        weapons.push_back(new Sword(player_S.getPosition(), player_S.getGlobalBounds(), k, e, r, w));
+        weapons.push_back(new CombatStaff(player_S.getPosition(), player_S.getGlobalBounds(), sandbox, k, e, r, w));
     }
 
     void Player::initAnimation(){
@@ -135,6 +135,7 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         updatePhysics();
         updateWeapon(window, view_cords);
         updateProjectiles();
+        //std::cout << player_S.getPosition().x << "  " << player_S.getPosition().y << std::endl;
     }
 }
 
@@ -485,6 +486,11 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
 
     const short Player::getHP() const{
         return HP;
+    }
+
+    short* Player::getHPp()
+    {
+        return &HP;
     }
 
     void Player::setPosition(const float x, const float y) {

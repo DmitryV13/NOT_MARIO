@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "CombatStaff.h"
 
-    CombatStaff::CombatStaff(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_)
-        : sandbox(sandbox_){
+    CombatStaff::CombatStaff(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_, vector<kusaka*>* k_, vector<Eye_evil*>* e_, vector<RedMutant*>* r_, vector<WolfBoss*>* w_)
+        :k(k_), e(e_), r(r_), w(w_), sandbox(sandbox_){
         initTexture();
         initSprite(player_position, player_bounds);
         initVariables();
@@ -106,6 +106,9 @@
     void CombatStaff::updateProjectiles(){
         for (int i = 0; i < projectiles.size(); i++) {
             projectiles[i]->update();
+            if (projectiles[i]->updateHit()) {
+                
+            }
             if (projectiles[i]->updateCollision()) {
                 delete *(projectiles.begin()+i);
                 projectiles.erase(projectiles.begin() + i);
@@ -124,7 +127,8 @@
                 }
                 projectiles.push_back(new Projectile(staff_S.getPosition()
                     , Vector2f(mouse_pos.x + (view_cords.left - view_cords.width / 2)
-                        , mouse_pos.y + (view_cords.top - view_cords.height / 2)), sandbox));
+                        , mouse_pos.y + (view_cords.top - view_cords.height / 2)), sandbox
+                    , k, e, r, w));
 
             }
         }

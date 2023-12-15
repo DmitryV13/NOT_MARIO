@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "Projectile.h"
 
-	Projectile::Projectile(Vector2f init_pos, Vector2f dest_pos_, TileMap* sandbox_)
-		: dest_pos(dest_pos_), speed(10), sandbox(sandbox_){
+	Projectile::Projectile(Vector2f init_pos, Vector2f dest_pos_, TileMap* sandbox_, vector<kusaka*>* k_, vector<Eye_evil*>* e_, vector<RedMutant*>* r_, vector<WolfBoss*>* w_)
+		:k(k_), e(e_), r(r_), w(w_), dest_pos(dest_pos_), speed(10), sandbox(sandbox_){
 		//std::cout << init_pos.x << "  " << init_pos.y << std::endl;
 		initTexture();
 		initSprite(init_pos);
@@ -47,17 +47,38 @@
 		return false;
 	}
 
-	//bool Projectile::checkHit(){
-	//	for (int i = 0; i < enemies.size(); i++) {
-	//		for (int j = 0; j < enemies[i]->size(); j++) {
-	//			if (projectile_S.getGlobalBounds().intersects((*enemies[i])[j]->get_global_bounds())) {
-	//				(*enemies[i])[j]->changeHP(15);
-	//			}
-	//				
-	//		}
-	//	}
-	//	return true;;
-	//}
+	bool Projectile::updateHit(){
+		for (auto& enemy : *e)
+		{
+			if (projectile_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
+				enemy->changeHP(10);
+				return true;
+			}
+		}
+		for (auto& enemy : *k)
+		{
+			if (projectile_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
+				enemy->changeHP(10);
+				return true;
+			}
+		}
+		for (auto& enemy : *r)
+		{
+			if (projectile_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
+				enemy->changeHP(10);
+				return true;
+			}
+		}
+		for (auto& enemy : *w)
+		{
+			if (projectile_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
+				enemy->changeHP(10);
+				return true;
+			}
+		}
+		
+		return false;
+	}
 
 	
 	
