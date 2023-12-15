@@ -8,6 +8,8 @@ WolfBoss::WolfBoss(TileMap& map, FloatRect* player_gl_b_, Vector2f* player_pos_,
 	WolfBoss::init_texture();
 	WolfBoss::init_sprite();
 	WolfBoss::init_physics();
+	WolfBoss::setAt(25);
+	WolfBoss::setHP(5000);
 }
 
 void WolfBoss::init_physics()
