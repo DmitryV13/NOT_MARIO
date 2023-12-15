@@ -12,9 +12,9 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 	life_bar = new ScaleParametrBar();
 		menu_timer.restart();
 		initPlayer();
-		initEvilBall();
-		init_Kusaka();
-		init_chubacabra();
+		//initEvilBall();
+		//init_Kusaka();
+		//init_chubacabra();
 		//init_Wolf_boss();
 	}
 	
@@ -22,19 +22,19 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		delete player;
 		delete game_menu;
 		delete life_bar;
-		delete evil_Ball;
-		for (auto& enemy : *evil_ball_vector) {
-			delete enemy;
-		}
-		evil_ball_vector->clear();
-		for (auto& enemy : *Kusaka_vector) {
-			delete enemy;
-		}
-		Kusaka_vector->clear();
-		for (auto& enemy : *chubacabras_vector_) {
-			delete enemy;
-		}
-		chubacabras_vector_->clear();
+		//delete evil_Ball;
+		//for (auto& enemy : *evil_ball_vector) {
+		//	delete enemy;
+		//}
+		//evil_ball_vector->clear();
+		//for (auto& enemy : *Kusaka_vector) {
+		//	delete enemy;
+		//}
+		//Kusaka_vector->clear();
+		//for (auto& enemy : *chubacabras_vector_) {
+		//	delete enemy;
+		//}
+		//chubacabras_vector_->clear();
 		//for (auto& enemy : *boss_vector) {
 		//	delete enemy;
 		//}
@@ -156,9 +156,9 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 	void Level::update(){
 		updatePlayer();
 		
-		updateEvilBall();
-		update_Kusaka();
-		update_chubacabra();
+		//updateEvilBall();
+		//update_Kusaka();
+		//update_chubacabra();
 		//update_Wolf_boss();
 
 		updateView();
@@ -238,10 +238,10 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		renderMap();
 		renderPLayer();
 
-		renderEvilBall();
-		render_Kusaka();
-		render_chubacabra();
-		render_shot();
+		//renderEvilBall();
+		//render_Kusaka();
+		//render_chubacabra();
+		//render_shot();
 		
 		//render_Wolf_boss();
 
