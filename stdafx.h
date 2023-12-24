@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <unordered_map>
+#include <stack>
 #include <vector>
 #include <string>
 #include <cstdlib>
@@ -13,6 +14,7 @@ using std::vector;
 using std::pair;
 using std::string;
 using std::unordered_map;
+using std::stack;
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>

@@ -640,6 +640,18 @@ public:
     }
 };
 
+class lakeC {
+public:
+    short dir;
+    int x;
+    int y;
+    lakeC(short dir_, int x_, int y_) {
+        dir = dir_;
+        x = x_;
+        y = y_;
+    }
+};
+
 coord* TileFactory::generationF1() {
     float y[20];
     float x[20];
