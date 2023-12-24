@@ -15,11 +15,7 @@ private:
 	Texture projectile_T;
 	Sprite projectile_S;
 
-
-	vector<Eye_evil*>* e;
-	vector<kusaka*>* k;
-	vector<RedMutant*>* r;
-	vector<WolfBoss*>* w;
+	vector<vector<Enemy*>*> enemies;
 
 	float speed;
 	Vector2f dest_pos;
@@ -29,7 +25,7 @@ private:
 	void initSprite(Vector2f init_pos);
 	void initVariables();
 public:
-	Projectile(Vector2f init_pos, Vector2f dest_pos, TileMap* sandbox_, vector<kusaka*>* k_, vector<Eye_evil*>* e_, vector<RedMutant*>* r_, vector<WolfBoss*>* w_);
+	Projectile(Vector2f init_pos, Vector2f dest_pos, TileMap* sandbox_, const vector<vector<Enemy*>*>& enemies_);
 
 	void update();
 	bool updateCollision();

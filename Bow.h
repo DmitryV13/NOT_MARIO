@@ -18,11 +18,7 @@ private:
 	Texture bow_T;
 	Sprite bow_S;
 
-
-	vector<Eye_evil*>* e;
-	vector<kusaka*>* k;
-	vector<RedMutant*>* r;
-	vector<WolfBoss*>* w;
+	vector<vector<Enemy*>*> enemies;
 
 	IntRect currentFrame;
 	Clock animationTimer;
@@ -45,7 +41,7 @@ private:
 	void initAnimation();
 
 public:
-	Bow(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_, vector<kusaka*>* k, vector<Eye_evil*>* e, vector<RedMutant*>* r, vector<WolfBoss*>* w);
+	Bow(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_, const vector<vector<Enemy*>*>& enemies_);
 
 	void update(Vector2f player_position, short player_side, RenderWindow* window, FloatRect view_cords) override;
 	void updatePosition(Vector2f player_position, short player_side, RenderWindow* window, FloatRect view_cords);

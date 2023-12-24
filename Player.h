@@ -60,7 +60,7 @@ private:
     void initPhysics();
 public:
     Player(TileMap& map);
-    void initWeapon(vector<kusaka*>* k, vector<Eye_evil*>* e, vector<RedMutant*>* r, vector<WolfBoss*>* w);
+    void initWeapon(const vector<vector<Enemy*>*>& enemies);
     //Player(TileMap& map, vector<kusaka*>* k, vector<Eye_evil*>* e
     //    , vector<RedMutant*>* c, vector<WolfBoss*>* w);
     IntRect get_pl_frame();

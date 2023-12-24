@@ -375,5 +375,12 @@ void Level::updateEvilBall()
 
 	void Level::initWeapons()
 	{
-		player->initWeapon(Kusaka_vector, evil_ball_vector, chubacabras_vector_, boss_vector);
+		//vector<vector<Enemy*>*> r = { reinterpret_cast<vector<Enemy*>*>(Kusaka_vector)
+		//	, reinterpret_cast<vector<Enemy*>*>(evil_ball_vector)
+		//	, reinterpret_cast<vector<Enemy*>*>(chubacabras_vector_)
+		//	, reinterpret_cast<vector<Enemy*>*>(boss_vector) };
+		player->initWeapon({ reinterpret_cast<vector<Enemy*>*>(Kusaka_vector)
+			, reinterpret_cast<vector<Enemy*>*>(evil_ball_vector)
+			, reinterpret_cast<vector<Enemy*>*>(chubacabras_vector_)
+			, reinterpret_cast<vector<Enemy*>*>(boss_vector) });
 	}

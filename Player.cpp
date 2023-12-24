@@ -35,11 +35,11 @@ void Player::initVariables(){
         player_S.setPosition(102, 2600);
     }
 
-    void Player::initWeapon(vector<kusaka*>* k, vector<Eye_evil*>* e, vector<RedMutant*>* r, vector<WolfBoss*>* w) {
+    void Player::initWeapon(const vector<vector<Enemy*>*>& enemies) {
         weapons.push_back(new Fist());
-        weapons.push_back(new Bow(player_S.getPosition(), player_S.getGlobalBounds(), sandbox, k, e, r, w));
-        weapons.push_back(new Sword(player_S.getPosition(), player_S.getGlobalBounds(), k, e, r, w));
-        weapons.push_back(new CombatStaff(player_S.getPosition(), player_S.getGlobalBounds(), sandbox, k, e, r, w));
+        weapons.push_back(new Bow(player_S.getPosition(), player_S.getGlobalBounds(), sandbox, enemies));
+        weapons.push_back(new Sword(player_S.getPosition(), player_S.getGlobalBounds(), enemies));
+        weapons.push_back(new CombatStaff(player_S.getPosition(), player_S.getGlobalBounds(), sandbox, enemies));
     }
 
     void Player::initAnimation(){

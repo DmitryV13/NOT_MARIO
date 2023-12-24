@@ -16,11 +16,7 @@ private:
 	Texture arrow_T;
 	Sprite arrow_S;
 
-
-	vector<Eye_evil*>* e;
-	vector<kusaka*>* k;
-	vector<RedMutant*>* r;
-	vector<WolfBoss*>* w;
+	vector<vector<Enemy*>*> enemies;
 
 	short side;
 	bool is_flying;
@@ -32,7 +28,7 @@ private:
 	void initSprite(Vector2f init_pos);
 	void initVariables();
 public:
-	Arrow(Vector2f init_pos, short side, TileMap* sanbox_, vector<kusaka*>* k_, vector<Eye_evil*>* e_, vector<RedMutant*>* r_, vector<WolfBoss*>* w_);
+	Arrow(Vector2f init_pos, short side, TileMap* sanbox_, const vector<vector<Enemy*>*>& enemies_);
 
 	void update();
 	bool updateCollision();

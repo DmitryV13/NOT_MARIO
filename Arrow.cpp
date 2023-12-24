@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "Arrow.h"
 
-	Arrow::Arrow(Vector2f init_pos, short side_ ,TileMap* sandbox_, vector<kusaka*>* k_, vector<Eye_evil*>* e_, vector<RedMutant*>* r_, vector<WolfBoss*>* w_)
-		:k(k_), e(e_), r(r_), w(w_), side(side_), speed(10), sandbox(sandbox_) {
+	Arrow::Arrow(Vector2f init_pos, short side_ ,TileMap* sandbox_, const vector<vector<Enemy*>*>& enemies_)
+		:enemies(enemies_), side(side_), speed(10), sandbox(sandbox_) {
 		initTexture();
 		initSprite(init_pos);
 		initVariables();
@@ -53,28 +53,28 @@
 
 
 	bool Arrow::updateHit() {
-		for (auto& enemy : *e)
+		for (auto& enemy : *(enemies[0]))
 		{
 			if (arrow_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
 				enemy->changeHP(10);
 				return true;
 			}
 		}
-		for (auto& enemy : *k)
+		for (auto& enemy : *(enemies[1]))
 		{
 			if (arrow_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
 				enemy->changeHP(10);
 				return true;
 			}
 		}
-		for (auto& enemy : *r)
+		for (auto& enemy : *(enemies[2]))
 		{
 			if (arrow_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
 				enemy->changeHP(10);
 				return true;
 			}
 		}
-		for (auto& enemy : *w)
+		for (auto& enemy : *(enemies[3]))
 		{
 			if (arrow_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
 				enemy->changeHP(10);
