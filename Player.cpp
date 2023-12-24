@@ -48,7 +48,7 @@ void Player::initVariables(){
     }
 
     void Player::initPhysics(){
-        velocityMax = 6.f;
+        velocityMax = 16.f;
         velocityMin = 0.5f;
         acceleration = 1.7f;
         deceleration = 0.77f;//0.77

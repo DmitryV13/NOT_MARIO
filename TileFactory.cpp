@@ -15,12 +15,12 @@ TileFactory::TileFactory(float temp_W, float temp_H, short int type_map, short i
     if (!type_template) {
         if (level == 1) {
             generation_map_Boev(generation_template);
-            for (int i = 0; i < template_W; ++i) {
-                for (int j = 0; j < template_H; ++j) {
-                    std::cout<< generation_template[i][j];
-                }
-                std::cout << std::endl;
-            }
+            //for (int i = 0; i < template_W; ++i) {
+            //    for (int j = 0; j < template_H; ++j) {
+            //        std::cout<< generation_template[i][j];
+            //    }
+            //    std::cout << std::endl;
+            //}
         }
         else if (level == 2) {
             for (int i = 0; i < template_W; ++i) {
@@ -29,12 +29,12 @@ TileFactory::TileFactory(float temp_W, float temp_H, short int type_map, short i
                 }
             }
             generation_map_Voicu(generation_template);
-            for (int i = 0; i < template_W; ++i) {
-                for (int j = 0; j < template_H; ++j) {
-                    std::cout<< generation_template[i][j];
-                }
-                std::cout << std::endl;
-            }
+            //for (int i = 0; i < template_W; ++i) {
+            //    for (int j = 0; j < template_H; ++j) {
+            //        std::cout<< generation_template[i][j];
+            //    }
+            //    std::cout << std::endl;
+            //}
         }
         else if (level == 3) {
             for (int i = 0; i < template_W; i++) {
@@ -54,12 +54,12 @@ TileFactory::TileFactory(float temp_W, float temp_H, short int type_map, short i
             artist_method(generation_template);
 
             fill_lakes_with_ground(generation_template);
-            for (int i = 0; i < template_W; ++i) {
-                for (int j = 0; j < template_H; ++j) {
-                    std::cout << generation_template[i][j];
-                }
-                std::cout << std::endl;
-            }
+            //for (int i = 0; i < template_W; ++i) {
+            //    for (int j = 0; j < template_H; ++j) {
+            //        std::cout << generation_template[i][j];
+            //    }
+            //    std::cout << std::endl;
+            //}
         }
         else {
             std::cout << "The generated map was not found. Map number 1 is being build." << std::endl;
@@ -630,6 +630,18 @@ public:
     }
 };
 
+class lakeC {
+public:
+    short dir;
+    int x;
+    int y;
+    lakeC(short dir_, int x_, int y_) {
+        dir = dir_;
+        x = x_;
+        y = y_;
+    }
+};
+
 coord* TileFactory::generationF1() {
     float y[20];
     float x[20];
@@ -825,24 +837,51 @@ void TileFactory::generation_map_Voicu(vector<vector<char>>& map) {
 void TileFactory::fill_lakes(vector<int>& x, vector<int>& y, vector<pair<int, int>> coords_for_water, vector<vector<char>>& map) {
     for (int i = 0; i < coords_for_water.size(); i++) {
         fill_lake(y[coords_for_water[i].first], x[coords_for_water[i].first] + 1, y[coords_for_water[i].first], map);
-
-
     }
 }
 
 void TileFactory::fill_lake(int& water_level, int pos_x, int pos_y, vector<vector<char>>& map) {
-    if (pos_x < 0 || pos_x >= template_H || pos_y < 0 || pos_y >= template_W) return;
-    if (map[pos_y][pos_x] != ' ' || pos_y < water_level) return;
+    stack<lakeC> lakeTiles;
+    lakeTiles.push(lakeC(1, pos_x, pos_y));
 
-    map[pos_y][pos_x] = 'w';
-    //moving down
-    fill_lake(water_level, pos_x, pos_y + 1, map);
-    //moving left
-    fill_lake(water_level, pos_x - 1, pos_y, map);
-    //moving up
-    fill_lake(water_level, pos_x, pos_y - 1, map);
-    //moving right
-    fill_lake(water_level, pos_x + 1, pos_y, map);
+    while (!lakeTiles.empty()) {
+        if (lakeTiles.top().dir == 1) {
+            if (lakeTiles.top().x < 0 || lakeTiles.top().x >= template_H
+                || lakeTiles.top().y < 0 || lakeTiles.top().y >= template_W
+                || map[lakeTiles.top().y][lakeTiles.top().x] != ' ' || lakeTiles.top().y < water_level
+                || lakeTiles.top().dir == 4) {
+                lakeTiles.pop();
+                continue;
+            }
+            map[lakeTiles.top().y][lakeTiles.top().x] = 'w';
+        }
+        if (lakeTiles.top().dir > 4) {
+            lakeTiles.pop();
+            continue;
+        }
+        switch (lakeTiles.top().dir) {
+        //moving down
+        case 1:
+            lakeTiles.top().dir++;
+            lakeTiles.push(lakeC(1, lakeTiles.top().x, lakeTiles.top().y + 1));
+            break;
+        //moving left
+        case 2:
+            lakeTiles.top().dir++;
+            lakeTiles.push(lakeC(1, lakeTiles.top().x - 1, lakeTiles.top().y));
+            break;
+        //moving up
+        case 3:
+            lakeTiles.top().dir++;
+            lakeTiles.push(lakeC(1, lakeTiles.top().x, lakeTiles.top().y - 1));
+            break;
+        //moving right
+        case 4:
+            lakeTiles.top().dir++;
+            lakeTiles.push(lakeC(1, lakeTiles.top().x + 1, lakeTiles.top().y));
+            break;
+        }
+    }
 }
 
 std::vector<std::pair<int, int>>  TileFactory::lakes_generation(vector<int>& x, vector<int>& y, vector<vector<char>>& map) {
