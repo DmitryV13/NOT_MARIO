@@ -99,7 +99,7 @@ public:
 	auto sting() -> bool;
 	PL_SIDE getPlayerSide(float playerX, float enemyX);
 	bool isPlayerInRadius(const sf::FloatRect& observationArea, const sf::FloatRect& playerBounds, float radius);
-
+	bool canMoveForward() const;
 
 	virtual void jump_towards_player();
 	virtual void changeHP(short);

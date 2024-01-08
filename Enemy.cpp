@@ -466,3 +466,23 @@ void Enemy::setAt(short at)
 	attack_ = at;
 }
 
+bool Enemy::canMoveForward() const{
+
+	int centerX = static_cast<int>(get_position().x / 64);
+	int centerY = static_cast<int>(get_position().y / 64);
+
+	int direction = looks_to_the_right ? 1 : -1;
+
+	int nextX = centerX + direction;
+	int nextY = centerY;
+
+	if (nextX >= 0 && nextX < sandbox->getMapWidth() / 64 && nextY >= 0 && nextY < sandbox->getMapHeight() / 64)
+	{
+		if (!sandbox->isBlock(nextY + 1, nextX) && !sandbox->isBlock(nextY + 2, nextX))
+		{
+			return true; 
+		}
+	}
+
+	return false; // Враг не может двигаться вперед
+}

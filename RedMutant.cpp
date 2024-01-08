@@ -61,6 +61,15 @@ void RedMutant::update_movement()
 		animation_counter_think = 12;
 		moving *= -1.f;
 		step_left = 0;
+	}if (on_ground && !canMoveForward())
+	{
+		// Враг может двигаться вперед
+		walk(moving);
+	}
+	else
+	{
+		// Враг не может двигаться вперед, разворачиваемся
+		moving *= -1.f;
 	}
 
 

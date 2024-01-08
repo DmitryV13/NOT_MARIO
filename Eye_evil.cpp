@@ -64,6 +64,16 @@ void Eye_evil::update_movement()
 		moving *= -1.f;
 		step_left = 0;
 	}
+	if (on_ground && !canMoveForward())
+	{
+		// Враг может двигаться вперед
+		walk(moving);
+	}
+	else
+	{
+		// Враг не может двигаться вперед, разворачиваемся
+		moving *= -1.f;
+	}
 
 
 	//turning when approaching the map boundaries

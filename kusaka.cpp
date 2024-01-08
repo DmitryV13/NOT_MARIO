@@ -33,6 +33,7 @@ void kusaka::init_sprite()
 
 void kusaka::update_movement()
 {
+
 	//decision explorer
 	if (on_ground)
 	{
@@ -61,7 +62,12 @@ void kusaka::update_movement()
 		step_left = 0;
 	}
 
-
+	if (on_ground && canMoveForward())
+	{
+		// Враг может двигаться вперед
+		moving *= -1.f;
+	}
+	
 	//turning when approaching the map boundaries
 
 
