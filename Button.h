@@ -22,8 +22,12 @@ public:
 
 	float getHeight();
 	float getWidth();
+	float getTextHeight();
+	float getTextWidth();
 
 	void setPosition(Vector2f new_pos);
+	void setMenuColor(Color menuColor);
+	void setBackgroundColor(Color shapeColor);
 	
 	const bool isPressed() const;
 

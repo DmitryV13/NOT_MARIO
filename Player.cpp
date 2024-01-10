@@ -174,10 +174,9 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         else {
             flyVelocity = 0.f;
         }
-        //std::cout << flyVelocity << std::endl;
         // deceleration
         velocity *= deceleration;
-       // std::cout << "x - " << getPosition().x << ", y - " << getPosition().y << std::endl;
+        // std::cout << "x - " << getPosition().x << ", y - " << getPosition().y << std::endl;
         // limits
 
         updateCollision();

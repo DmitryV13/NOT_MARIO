@@ -13,18 +13,14 @@
 	void RoadMap::initButtons() {
 		space_between_buttons = 52;
 		buttons_size = 82;
-		buttons["1"] = new Button(300, 300, buttons_size, font, "1", menuColor);
-		buttons["2"] = new Button(300, 600, buttons_size, font, "2", menuColor);
-		buttons["3"] = new Button(300, 600, buttons_size, font, "3", menuColor);
-		buttons["4"] = new Button(300, 600, buttons_size, font, "L", menuColor);
+		buttons["1"] = new Button(330, 330, 100, 100, buttons_size, font, "1", menuColor);
+		buttons["2"] = new Button(0, 0, 100, 100, buttons_size, font, "2", menuColor);
+		buttons["3"] = new Button(0, 0, 100, 100, buttons_size, font, "3", menuColor);
+		buttons["4"] = new Button(0, 0, 100, 100, buttons_size, font, "L", menuColor);
 	}
 
 	void RoadMap::setButtonsPosition(){
 		auto i = buttons.begin();
-		//short first_button_y = (screen_height - (i->second->getHeight() * buttons.size() + space_between_buttons * (buttons.size() - 1))) / 2;
-		//for (short j = 0; i != buttons.end(); i++, j++) {
-		//	i->second->setPosition(Vector2f((screen_width / 2 - i->second->getWidth() / 2), (first_button_y + j * (i->second->getHeight() + space_between_buttons))));
-		//}
 		short first_button_x = (screen_width - (i->second->getWidth() * buttons.size() + space_between_buttons * (buttons.size() - 1))) / 2;
 		for (short j = 0; i != buttons.end(); i++, j++) {
 			auto tmp = i;
@@ -43,7 +39,7 @@
 
 	void RoadMap::initBackground(){
 		background.setSize(Vector2f(screen_width, screen_height));
-		background.setFillColor(sf::Color(20, 16, 19, 255));
+		background.setFillColor(sf::Color(45, 49, 81, 255));
 	}
 
 	void RoadMap::updateMenuState(){

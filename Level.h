@@ -10,6 +10,7 @@
 #include "ScaleParametrBar.h"
 #include "GAME_STATE.h"
 #include "Enemy.h"
+#include "PopUpWindow.h"
 
 using namespace::sf;
 
@@ -17,6 +18,7 @@ class Level{
 private:
 	RenderWindow* window;
 	GameMenu* game_menu;
+	PopUpWindow* men;
 	ScaleParametrBar* life_bar;
 	Clock menu_timer;
 

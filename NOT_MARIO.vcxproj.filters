@@ -207,6 +207,9 @@
     <ClCompile Include="ScaleParametrBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PopUpWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemy.h">
@@ -321,6 +324,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ScaleParametrBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PopUpWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
