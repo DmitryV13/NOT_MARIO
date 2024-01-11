@@ -2,6 +2,7 @@
 #include "Map.h"
 #include "TileMap.h"
 #include "laser_weapon.h"
+#include "GeneralInfo.h"
 
 using sf::Sprite;
 using sf::RenderWindow;
@@ -35,11 +36,8 @@ class Enemy
 {
 protected:
 	TileMap* sandbox;
-	//Player* player_;
 
-	FloatRect* player_gl_b;
-	Vector2f* player_pos;
-	short* pl_hp;
+	GeneralInfo* player_info;
 
 	Texture Enemy_T;
 	Sprite Enemy_S;
@@ -85,7 +83,7 @@ public:
 	bool looks_to_the_left;
 	bool looks_to_the_right;
 	sf::Vector2f generate_random_start_position(int mapWidth, int mapHeight);
-	Enemy(TileMap& map, FloatRect* player_gl_b_, Vector2f* player_pos_, short* pl_hp_);
+	Enemy(TileMap& map, GeneralInfo* player_info_);
 	const bool& get_animation_switch();
 	sf::Vector2f get_position() const;
 	const FloatRect get_global_bounds() const;

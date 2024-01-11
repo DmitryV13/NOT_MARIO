@@ -77,10 +77,10 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		evil_ball_vector = new vector< Eye_evil*>();
 		for (int i = 0; i < num_of_enemy_; i++)
 		{
-			Eye_evil* enemy = new Eye_evil(sandbox, player_gl_b, player_pos, hp);
+			Eye_evil* enemy = new Eye_evil(sandbox, player->getGeneralInfo());
 			evil_ball_vector->push_back(enemy);
 		}
-		evil_Ball = new Eye_evil(sandbox, player_gl_b, player_pos, hp);
+		evil_Ball = new Eye_evil(sandbox, player->getGeneralInfo());
 	}
 
 	void Level::init_Kusaka()
@@ -88,7 +88,7 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		Kusaka_vector = new vector<kusaka*>();
 		for (int i = 0; i < num_of_enemy_; i++)
 		{
-			kusaka* enemy = new kusaka(sandbox, player_gl_b, player_pos, hp);
+			kusaka* enemy = new kusaka(sandbox, player->getGeneralInfo());
 			Kusaka_vector->push_back(enemy);
 		}
 	}
@@ -98,7 +98,7 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		chubacabras_vector_ = new vector<RedMutant*>();
 		for (int i = 0; i < num_of_enemy_; i++)
 		{
-			RedMutant* enemy = new RedMutant(sandbox, player_gl_b, player_pos, hp, player_vel);
+			RedMutant* enemy = new RedMutant(sandbox, player->getGeneralInfo());
 			chubacabras_vector_->push_back(enemy);
 		}
 	}
@@ -108,29 +108,29 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		boss_vector = new vector<WolfBoss*>();
 		for (int i = 0; i < num_of_enemy_; i++)
 		{
-			WolfBoss* enemy = new WolfBoss(sandbox, player_gl_b, player_pos, hp);
+			WolfBoss* enemy = new WolfBoss(sandbox, player->getGeneralInfo());
 			boss_vector->push_back(enemy);
 		}
 	}
 
 void Level::init_enemy()
 {
-	evil_ball_vector = new vector<Eye_evil*>();
 	Kusaka_vector = new vector<kusaka*>();
+	Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
+	Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
+	Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
+	Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
+	Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
+	Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
+	evil_ball_vector = new vector<Eye_evil*>();
+	evil_ball_vector->push_back(new Eye_evil(sandbox, player->getGeneralInfo()));
+	evil_ball_vector->push_back(new Eye_evil(sandbox, player->getGeneralInfo()));
 	chubacabras_vector_ = new vector<RedMutant*>();
+	chubacabras_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
+	chubacabras_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
+	chubacabras_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
 	boss_vector = new vector<WolfBoss*>();
-	evil_ball_vector->push_back(new Eye_evil(sandbox, player_gl_b, player_pos, hp));
-	Kusaka_vector->push_back(new kusaka(sandbox, player_gl_b, player_pos, hp));
-	chubacabras_vector_->push_back(new RedMutant(sandbox, player_gl_b, player_pos, hp, player_vel));
-	chubacabras_vector_->push_back(new RedMutant(sandbox, player_gl_b, player_pos, hp, player_vel));
-	boss_vector->push_back(new WolfBoss(sandbox, player_gl_b, player_pos, hp));
-	Kusaka_vector->push_back(new kusaka(sandbox, player_gl_b, player_pos, hp));
-	chubacabras_vector_->push_back(new RedMutant(sandbox, player_gl_b, player_pos, hp, player_vel));
-	Kusaka_vector->push_back(new kusaka(sandbox, player_gl_b, player_pos, hp));
-	Kusaka_vector->push_back(new kusaka(sandbox, player_gl_b, player_pos, hp));
-	Kusaka_vector->push_back(new kusaka(sandbox, player_gl_b, player_pos, hp));
-	evil_ball_vector->push_back(new Eye_evil(sandbox, player_gl_b, player_pos, hp));
-	Kusaka_vector->push_back(new kusaka(sandbox, player_gl_b, player_pos, hp));
+	boss_vector->push_back(new WolfBoss(sandbox, player->getGeneralInfo()));
 
 }
 

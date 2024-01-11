@@ -1,6 +1,8 @@
 #pragma once
 #include "Map.h"
 #include "TileMap.h"
+#include "GeneralInfo.h"
+
 using sf::Sprite;
 using sf::RenderWindow;
 using sf::FloatRect;
@@ -30,9 +32,7 @@ protected:
 	bool dir_x;
 
 
-    FloatRect* player_gl_b;
-    Vector2f* player_pos;
-    short* pl_hp;
+    GeneralInfo* player_info;
 
 
 	void init_texture();
@@ -41,7 +41,7 @@ protected:
     void init_animation();
     void init_physics();
 public:
-    explicit laser_weapon(TileMap& map,int,float,float,bool,FloatRect* player_gl_b_, Vector2f* player_pos_, short* pl_hp_);
+    explicit laser_weapon(TileMap& map, int, float, float, bool, GeneralInfo* player_info_);
     ~laser_weapon() = default;
    
     const bool& get_animation_switch();

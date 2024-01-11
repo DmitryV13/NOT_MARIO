@@ -8,7 +8,7 @@ public:
 	//vector<laser_weapon> laser;
 	laser_weapon* laser{nullptr};
 	laser_weapon* laserFL{nullptr};
-	explicit Eye_evil(TileMap& map, FloatRect* player_gl_b_, Vector2f* player_pos_, short* pl_hp_);
+	explicit Eye_evil(TileMap& map, GeneralInfo* player_info);
 	~Eye_evil() override = default;
 	void update_movement() override;
 	void update_animation() override;

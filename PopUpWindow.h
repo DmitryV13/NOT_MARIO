@@ -2,6 +2,7 @@
 #include "Button.h"
 #include "ComposedIMG.h"
 #include "Label.h"
+#include "Group.h"
 
 using namespace sf;
 
@@ -12,13 +13,14 @@ private:
 	ComposedIMG* w_background;
 	RectangleShape* background;
 	Label* label;
+
 	int width;
 	int height;
 
+	short alignment;
 	short state;
 	void *textInput;
-	vector<VertexArray*> lns;
-	vector<Button*> btns;
+	vector<Group*> groups;
 
 public:
 	PopUpWindow(double screen_width, double screen_height, int width_, int height_, RenderWindow* window_);

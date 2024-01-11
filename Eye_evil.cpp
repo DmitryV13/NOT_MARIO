@@ -2,9 +2,8 @@
 #include "Eye_evil.h"
 
 
-Eye_evil::Eye_evil(TileMap& map, FloatRect* player_gl_b_, Vector2f* player_pos_, short* pl_hp_)
-	: Enemy(map, player_gl_b_,player_pos_,pl_hp_)
-{
+Eye_evil::Eye_evil(TileMap& map, GeneralInfo* player_info)
+	: Enemy(map, player_info){
 	{
 		Eye_evil::init_texture();
 		Eye_evil::init_sprite();
@@ -258,9 +257,10 @@ void Eye_evil::shot()
 {
 	if (looks_to_the_right)
 	{
-		laserFL = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x, Enemy_S.getPosition().y, looks_to_the_right, player_gl_b, player_pos, pl_hp);
+		laserFL = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x, Enemy_S.getPosition().y,
+			looks_to_the_right, player_info);
 		laser = new laser_weapon(*sandbox, 2, Enemy_S.getPosition().x + 64, Enemy_S.getPosition().y,
-		                         looks_to_the_right, player_gl_b, player_pos, pl_hp);
+		                         looks_to_the_right, player_info);
 		//laser_weapon* shot_las = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x, Enemy_S.getPosition().y, looks_to_the_right);
 		/*laser.push_back(*shot_las);
 
@@ -275,9 +275,9 @@ void Eye_evil::shot()
 	else
 	{
 		laserFL = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x, Enemy_S.getPosition().y, 
-			looks_to_the_right,player_gl_b,player_pos,pl_hp);
+			looks_to_the_right, player_info);
 		laser = new laser_weapon(*sandbox, 2, Enemy_S.getPosition().x - 64, Enemy_S.getPosition().y,
-		                         looks_to_the_right, player_gl_b, player_pos, pl_hp);
+		                         looks_to_the_right, player_info);
 		//laser_weapon* shot_las = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x - 60, Enemy_S.getPosition().y, looks_to_the_right);
 		/*laser.push_back(*shot_las);
 		for (int j = (Enemy_S.getPosition().x / 60); j > 0 && j > j - 5 &&
@@ -293,7 +293,7 @@ void Eye_evil::shot()
 
 void Eye_evil::attack()
 {
-	PL_SIDE playerSide = getPlayerSide(player_pos->x, get_position().x);
+	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
 	if ((playerSide == PL_SIDE::LEFT && looks_to_the_left) || (playerSide == PL_SIDE::RIGHT && looks_to_the_right))
 	{
 		if (attention_counter == 1)
@@ -349,7 +349,7 @@ void Eye_evil::reset_attention()
 bool Eye_evil::search_for_enemies()
 {
 	FloatRect en = observation_area.getGlobalBounds();
-	FloatRect pl = *player_gl_b;
+	FloatRect pl = player_info->getGlobalBounds();
 	return en.intersects(pl);
 
 	/*int centerX = get_position().x / 64;

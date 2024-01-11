@@ -509,9 +509,9 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
     //    return velocity;
     //}
     //
-    //const short Player::getHP() const{
-    //    return HP;
-    //}
+    const short Player::getHP() const{
+        return info->getHP();
+    }
     //
     //short* Player::getHPp()
     //{

@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "RedMutant.h"
 
-RedMutant::RedMutant(TileMap& map, FloatRect* player_gl_b_, Vector2f* player_pos_, short* pl_hp_, Vector2f* pl_vel_)
-	:Enemy(map, player_gl_b_, player_pos_,pl_hp_), pl_vel(pl_vel_)
+RedMutant::RedMutant(TileMap& map, GeneralInfo* player_info)
+	:Enemy(map, player_info)
 {
 	{
 		RedMutant::init_texture();
@@ -272,7 +272,7 @@ void RedMutant::shot()
 {
 	animation_state = ENEMY_ANIMATION_STATES::ENEMY_SHOT;
 	//player_->changeHP(-attack_-(rand()%10));
-	*pl_hp += -attack_ - (rand() % 10);
+	player_info->changeHP(-attack_ - (rand() % 10));
 
 }
 
@@ -283,7 +283,7 @@ void RedMutant::attack()
 {
 	animation_state = ENEMY_ANIMATION_STATES::ENEMY_ATTENTION;
 	FloatRect en = get_global_bounds();
-	FloatRect pl = *player_gl_b;
+	FloatRect pl = player_info->getGlobalBounds();
 	if (displacement.x != 0.f && en.intersects(pl) && !plStan() )
 	{
 		sf::Vector2f tmp = calculateRandomPosition(get_global_bounds(), 10);
@@ -367,7 +367,7 @@ void RedMutant::attack()
 	
 
 
-	if (!isPlayerInRadius(observation_area.getGlobalBounds(), *player_gl_b,128))
+	if (!isPlayerInRadius(observation_area.getGlobalBounds(), player_info->getGlobalBounds(), 128))
 	{
 		reset_attention();
 		//float intersectionRadius = 50.0f;
@@ -447,9 +447,9 @@ bool RedMutant::search_for_enemies()
 {
 
 	FloatRect look = observation_area.getGlobalBounds();
-	FloatRect pl = *player_gl_b;
+	FloatRect pl = player_info->getGlobalBounds();
 
-	PL_SIDE playerSide = getPlayerSide(player_pos->x, get_position().x);
+	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
 	if (playerSide == PL_SIDE::RIGHT && look.intersects(pl))
 	{
 		player_l_r[1] = true;
@@ -536,6 +536,6 @@ void RedMutant::reset_attention()
 
 bool RedMutant::plStan()
 {
-	if (pl_vel->x != 0.f)return false;
+	if (player_info->getVelocity().x != 0.f)return false;
 	else return true;
 }
