@@ -1,5 +1,5 @@
 #pragma once
-#include "MenuItem.h"
+#include "InterfaceItem.h"
 #include "Button.h"
 #include "GAME_STATE.h"
 
@@ -17,12 +17,12 @@ private:
 
 	Font* font;
 
-	vector<vector<MenuItem*>> active_items;
-	vector<vector<MenuItem*>> passive_items;
+	vector<vector<InterfaceItem*>> active_items;
+	vector<vector<InterfaceItem*>> passive_items;
 	unordered_map<string, Button*> buttons;
-	vector<MenuItem*> necessary_info;
-	vector<MenuItem*> hidden_inventory;
-	vector<MenuItem*> displayed_inventory;
+	vector<InterfaceItem*> necessary_info;
+	vector<InterfaceItem*> hidden_inventory;
+	vector<InterfaceItem*> displayed_inventory;
 
 	void initFont();
 	void initBackground(float map_w, float map_h);

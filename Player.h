@@ -11,6 +11,7 @@
 #include "Eye_evil.h"
 #include "WolfBoss.h"
 #include "RedMutant.h"
+#include "GeneralInfo.h"
 
 using namespace::sf;
 
@@ -30,9 +31,10 @@ private:
     short animationState;
     bool animationSwitch;
 
-    short HP;
+    GeneralInfo* info;
+    //short HP;
 
-    Vector2f velocity;
+    //Vector2f velocity;
     float velocityMax;
     float velocityMin;
     float acceleration;
@@ -61,8 +63,6 @@ private:
 public:
     Player(TileMap& map);
     void initWeapon(const vector<vector<Enemy*>*>& enemies);
-    //Player(TileMap& map, vector<kusaka*>* k, vector<Eye_evil*>* e
-    //    , vector<RedMutant*>* c, vector<WolfBoss*>* w);
     IntRect get_pl_frame();
     // accessors
     const bool& getAnimationSwitch();
@@ -71,6 +71,8 @@ public:
     const Vector2f getVelocity() const;
     const short getHP() const;
     short* getHPp();
+    GeneralInfo* getGeneralInfo();
+
 
     //modifiers
     void resetVelocityY();

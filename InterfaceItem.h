@@ -2,7 +2,7 @@
 
 using namespace sf;
 
-class MenuItem{
+class InterfaceItem{
 private:
 public:
 	virtual void render(sf::RenderTarget* target);

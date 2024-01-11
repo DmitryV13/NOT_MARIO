@@ -16,32 +16,41 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 	}
 
 
-	men = new PopUpWindow(screenWidth, screenHeight, 500, 300, 20, font, string("Menu"), window);
+	pause_menu = new PopUpWindow(screenWidth, screenHeight, 800, 800, window);
+	pause_menu->addLabel(screenWidth, screenHeight, "Menu", font, 60, 10);
+	pause_menu->addBackground(sandbox.getMapWidth(), sandbox.getMapHeight(), Color(59, 66, 73, 87));
+
 	game_menu = new GameMenu(window, sandbox.getMapWidth(), sandbox.getMapHeight(), &game_state, menuColor);
 	life_bar = new ScaleParametrBar();
-	player_gl_b = new FloatRect();
-	player_pos = new Vector2f();
-	player_vel = new Vector2f();
-	//initPlayer();
+
+
+
+	//player_gl_b = new FloatRect();
+	//player_pos = new Vector2f();
+	//player_vel = new Vector2f();
 	//hp = player->getHPp();
+
+
+
+	initPlayer();
 		menu_timer.restart();
 		if(regime == -1)
 		{
-			//initEvilBall();
-			//init_Kusaka();
-			//init_chubacabra();
-			//init_Wolf_boss();
-			//initWeapons();
+			initEvilBall();
+			init_Kusaka();
+			init_chubacabra();
+			init_Wolf_boss();
+			initWeapons();
 		}else if(level == 4)
 		{
-			//init_enemy();
-			//initWeapons();
+			init_enemy();
+			initWeapons();
 		}
 		
 	}
 	
 	Level::~Level(){
-		//delete player;
+		delete player;
 		delete game_menu;
 		delete life_bar;
 		delete evil_Ball;
@@ -164,7 +173,7 @@ void Level::updateEvilBall()
 
 	void Level::updateGameMenu(){
 		game_menu->update(myView.getCurrentViewCords());
-		men->update(myView.getCurrentViewCords());
+		pause_menu->update(myView.getCurrentViewCords());
 	}
 
 	void Level::updateGameState(){
@@ -202,15 +211,16 @@ void Level::updateEvilBall()
 	}
 	
 	void Level::update(){
-		//updatePlayer();
+		updatePlayer();
+
 		//*player_gl_b = player->getGlobalBounds();
 		//*player_pos = player->getPosition();
 		//*player_vel = player->getVelocity();
 
-		//updateEvilBall();
-		//update_Kusaka();
-		//update_chubacabra();
-		//update_Wolf_boss();
+		updateEvilBall();
+		update_Kusaka();
+		update_chubacabra();
+		update_Wolf_boss();
 
 		updateView();
 		updateCursor();
@@ -240,15 +250,15 @@ void Level::updateEvilBall()
 					player->resetNTHJump();
 				}
 			}
-			//if (event.type == sf::Event::MouseWheelScrolled) {
-			//	if (event.mouseWheelScroll.delta > 0) {
-			//		player->change_weapon(1);
-			//		//player->changeHP(-1);
-			//	}
-			//	else {
-			//		player->change_weapon(-1);
-			//	}
-			//}
+			if (event.type == sf::Event::MouseWheelScrolled) {
+				if (event.mouseWheelScroll.delta > 0) {
+					player->change_weapon(1);
+					//player->changeHP(-1);
+				}
+				else {
+					player->change_weapon(-1);
+				}
+			}
 		}
 	}
 
@@ -263,13 +273,13 @@ void Level::updateEvilBall()
 	}
 	
 	void Level::renderGameMenu(){
-		//game_menu->render();
-		men->render();
+		game_menu->render();
+		pause_menu->render();
 		//window->display();
 	}
 
 	void Level::renderPLayer(){
-		//player->render(*window);
+		player->render(*window);
 	}
 
 	void Level::renderMap(){
@@ -282,30 +292,31 @@ void Level::updateEvilBall()
 	}
 	
 	void Level::updatePlayer(){
-		//player->update(window, myView.getCurrentViewCords());
+		player->update(window, myView.getCurrentViewCords());
 	}
 	
 	void Level::render(){
 		window->clear(Color::White);
 	
 		renderMap();
-		//renderPLayer();
-		//
-		//renderEvilBall();
-		//render_Kusaka();
-		//render_chubacabra();
-		//render_shot();
-		//render_Wolf_boss();
+		renderPLayer();
+		
+		renderEvilBall();
+		render_Kusaka();
+		render_chubacabra();
+		render_shot();
+		render_Wolf_boss();
 
 		sandbox.second_render(*window, myView.getCurrentViewCords());
 		renderCursor();
 		window->setView(myView.view);
 
+		renderLifeBar();
+
 		if (game_state == GAME_STATE::PAUSED) {
 			updateGameMenu();
 			renderGameMenu();
 		}
-		renderLifeBar();
 		window->display();
 	}
 

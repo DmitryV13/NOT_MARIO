@@ -139,6 +139,10 @@
   <ItemGroup>
     <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="Bow.cpp" />
+    <ClCompile Include="ComposedIMG.cpp" />
+    <ClCompile Include="GeneralInfo.cpp" />
+    <ClCompile Include="Group.cpp" />
+    <ClCompile Include="Label.cpp" />
     <ClCompile Include="PopUpWindow.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Button.cpp" />
@@ -153,7 +157,7 @@
     <ClCompile Include="Eye_evil.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="MainMenuOption.cpp" />
-    <ClCompile Include="MenuItem.cpp" />
+    <ClCompile Include="InterfaceItem.cpp" />
     <ClCompile Include="ScaleParametrBar.cpp" />
     <ClCompile Include="Setting.cpp" />
     <ClCompile Include="kusaka.cpp" />
@@ -167,6 +171,7 @@
     <ClCompile Include="NOT_MARIO.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Sword.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileAnim.cpp" />
     <ClCompile Include="TileBox.cpp" />
@@ -178,6 +183,10 @@
   <ItemGroup>
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="Bow.h" />
+    <ClInclude Include="ComposedIMG.h" />
+    <ClInclude Include="GeneralInfo.h" />
+    <ClInclude Include="Group.h" />
+    <ClInclude Include="Label.h" />
     <ClInclude Include="MENU_STATE.h" />
     <ClInclude Include="ORIENTATION.h" />
     <ClInclude Include="PopUpWindow.h" />
@@ -196,7 +205,7 @@
     <ClInclude Include="Eye_evil.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="MainMenuOption.h" />
-    <ClInclude Include="MenuItem.h" />
+    <ClInclude Include="InterfaceItem.h" />
     <ClInclude Include="kusaka.h" />
     <ClInclude Include="laser_weapon.h" />
     <ClInclude Include="resource.h" />
@@ -207,6 +216,7 @@
     <ClInclude Include="MyView.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Sword.h" />
+    <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileAnim.h" />
     <ClInclude Include="TileBox.h" />

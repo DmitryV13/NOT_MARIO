@@ -18,7 +18,7 @@ class Level{
 private:
 	RenderWindow* window;
 	GameMenu* game_menu;
-	PopUpWindow* men;
+	PopUpWindow* pause_menu;
 	ScaleParametrBar* life_bar;
 	Clock menu_timer;
 
@@ -41,10 +41,10 @@ private:
 	short game_state;
 
 
-	FloatRect* player_gl_b;
-	Vector2f* player_pos;
-	Vector2f* player_vel;
-	short* hp;
+	//FloatRect* player_gl_b;
+	//Vector2f* player_pos;
+	//Vector2f* player_vel;
+	//short* hp;
 
 	//void initWindow();
 	void initPlayer();

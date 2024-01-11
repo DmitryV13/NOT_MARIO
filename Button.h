@@ -1,9 +1,9 @@
 #pragma once
-#include "MenuItem.h"
+#include "InterfaceItem.h"
 
 enum BUTTON_STATE{BTN_IDLE = 0, BTN_HOVERED, BTN_ACTIVE};
 
-class Button : public MenuItem{
+class Button : public InterfaceItem{
 private:
 	short button_state;
 
