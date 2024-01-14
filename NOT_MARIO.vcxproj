@@ -140,6 +140,7 @@
     <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="Bow.cpp" />
     <ClCompile Include="ComposedIMG.cpp" />
+    <ClCompile Include="CRect.cpp" />
     <ClCompile Include="GeneralInfo.cpp" />
     <ClCompile Include="Group.cpp" />
     <ClCompile Include="Label.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="Bow.h" />
     <ClInclude Include="ComposedIMG.h" />
+    <ClInclude Include="CRect.h" />
     <ClInclude Include="GeneralInfo.h" />
     <ClInclude Include="Group.h" />
     <ClInclude Include="Label.h" />
@@ -193,6 +195,7 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="CombatStaff.h" />
+    <ClInclude Include="Rect.h" />
     <ClInclude Include="RedMutant.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Exit.h" />

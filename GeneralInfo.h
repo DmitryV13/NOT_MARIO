@@ -16,10 +16,10 @@ public:
 	const FloatRect getGlobalBounds() const;
 	const Vector2f getPosition() const;
 
-	void changeVelocityX(int x);
-	void changeVelocityY(int y);
-	void setVelocityX(int x);
-	void setVelocityY(int y);
+	void changeVelocityX(float x);
+	void changeVelocityY(float y);
+	void setVelocityX(float x);
+	void setVelocityY(float y);
 	void changeHP(short z);
 	void setGlobalBounds(FloatRect new_gb);
 	void setPosition(Vector2f new_position);

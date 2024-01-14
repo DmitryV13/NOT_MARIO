@@ -32,9 +32,7 @@ private:
     bool animationSwitch;
 
     GeneralInfo* info;
-    //short HP;
-
-    //Vector2f velocity;
+    
     float velocityMax;
     float velocityMin;
     float acceleration;

@@ -18,6 +18,12 @@
 	void ComposedIMG::setPosition(int x, int y){
 		offsetX = x - 6;
 		offsetY = y - 6;
+
+		cornerTopLeft.setPosition(offsetX, offsetY);
+		cornerTopRight.setPosition(offsetX + width + 6, offsetY);
+		cornerBottomLeft.setPosition(offsetX, offsetY + height + 6);
+		cornerBottomRight.setPosition(offsetX + width + 6, offsetY + height + 6);
+		filler.setPosition(offsetX + 6, offsetY + 6);
 	}
 	
 	void ComposedIMG::setPosition(string positionX, string positionY, int screen_width, int screen_height){
@@ -27,6 +33,12 @@
 		if (positionY == "center") {
 			offsetY = (screen_height - height + 12) / 2;
 		}
+
+		cornerTopLeft.setPosition(offsetX, offsetY);
+		cornerTopRight.setPosition(offsetX + width + 6, offsetY);
+		cornerBottomLeft.setPosition(offsetX, offsetY + height + 6);
+		cornerBottomRight.setPosition(offsetX + width + 6, offsetY + height + 6);
+		filler.setPosition(offsetX + 6, offsetY + 6);
 	}
 
 	void ComposedIMG::setPosition(string positionX, int y, int screen_width, int screen_height){
@@ -35,6 +47,11 @@
 		}
 		offsetY = y - 6;
 
+		cornerTopLeft.setPosition(offsetX, offsetY);
+		cornerTopRight.setPosition(offsetX + width + 6, offsetY);
+		cornerBottomLeft.setPosition(offsetX, offsetY + height + 6);
+		cornerBottomRight.setPosition(offsetX + width + 6, offsetY + height + 6);
+		filler.setPosition(offsetX + 6, offsetY + 6);
 	}
 
 	void ComposedIMG::setPosition(int x, string positionY, int screen_width, int screen_height){
@@ -42,6 +59,12 @@
 			offsetY = (screen_height - height + 12) / 2;
 		}
 		offsetX = x - 6;
+
+		cornerTopLeft.setPosition(offsetX, offsetY);
+		cornerTopRight.setPosition(offsetX + width + 6, offsetY);
+		cornerBottomLeft.setPosition(offsetX, offsetY + height + 6);
+		cornerBottomRight.setPosition(offsetX + width + 6, offsetY + height + 6);
+		filler.setPosition(offsetX + 6, offsetY + 6);
 	}
 
 	FloatRect ComposedIMG::getLocalBounds(){

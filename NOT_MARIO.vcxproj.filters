@@ -144,9 +144,6 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files\GUI\Menu</Filter>
     </ClCompile>
-    <ClCompile Include="MenuItem.cpp">
-      <Filter>Source Files\GUI\Items</Filter>
-    </ClCompile>
     <ClCompile Include="Sword.cpp">
       <Filter>Source Files\GameObjects\Artificial\Weapons\MeleeWeapon</Filter>
     </ClCompile>
@@ -210,6 +207,27 @@
     <ClCompile Include="PopUpWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ComposedIMG.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneralInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Group.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Label.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InterfaceItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CRect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemy.h">
@@ -232,9 +250,6 @@
     </ClInclude>
     <ClInclude Include="Level.h">
       <Filter>Header Files\ServiceClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuItem.h">
-      <Filter>Header Files\GUI\Items</Filter>
     </ClInclude>
     <ClInclude Include="MyView.h">
       <Filter>Header Files\ServiceClasses</Filter>
@@ -327,6 +342,30 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PopUpWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ComposedIMG.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneralInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Group.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Label.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InterfaceItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CRect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

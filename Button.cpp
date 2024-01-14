@@ -2,10 +2,10 @@
 #include "Button.h"
 
 	Button::Button(float x, float y, float width, float height, short text_size, sf::Font* font_, string text_, Color menuColor)
-	:hover_color(menuColor){
+	:hover_color(menuColor), position(Vector2f(x, y)) {
 		button_state = BUTTON_STATE::BTN_IDLE;
 
-		shape.setPosition(sf::Vector2f(x, y));
+		shape.setPosition(position);
 		shape.setSize(sf::Vector2f(width, height));
 
 		font = font_;
@@ -28,10 +28,10 @@
 	}
 
 	Button::Button(float x, float y, short text_size, sf::Font* font_, string text_, Color menuColor)
-	:hover_color(menuColor) {
+	:hover_color(menuColor), position(Vector2f(x, y)){
 		button_state = BUTTON_STATE::BTN_IDLE;
 
-		shape.setPosition(sf::Vector2f(x, y));
+		shape.setPosition(position);
 
 		font = font_;
 		text.setFont(*font);
@@ -74,8 +74,13 @@
 		return text.getLocalBounds().width;
 	}
 
-	void Button::setPosition(Vector2f new_pos){
-		shape.setPosition(new_pos);
+	FloatRect Button::getLocalBounds(){
+		return FloatRect(position, Vector2f(shape.getLocalBounds().width, shape.getLocalBounds().height));
+	}
+
+	void Button::setPosition(Vector2f new_position){
+		position = new_position;
+		shape.setPosition(position);
 		text.setPosition(
 			shape.getPosition().x + (shape.getGlobalBounds().width / 2.f) - text.getLocalBounds().width / 2.f - text.getLocalBounds().left,
 			shape.getPosition().y + (shape.getGlobalBounds().height / 2.f) - text.getLocalBounds().height / 2.f - text.getLocalBounds().top
@@ -95,8 +100,20 @@
 			return true;
 		return false;
 	}
+
+	void Button::updatePosition(FloatRect view_cords) {
+		shape.setPosition(
+			view_cords.left - view_cords.width / 2 + position.x,
+			view_cords.top - view_cords.height / 2 + position.y);
+		text.setPosition(
+			shape.getPosition().x + (shape.getGlobalBounds().width / 2.f) - text.getLocalBounds().width / 2.f - text.getLocalBounds().left,
+			shape.getPosition().y + (shape.getGlobalBounds().height / 2.f) - text.getLocalBounds().height / 2.f - text.getLocalBounds().top
+		);
+	}
 	
-	void Button::update(const sf::Vector2f mouse_pos, FloatRect view_cords){
+	void Button::update(Vector2f mouse_pos, FloatRect view_cords){
+		updatePosition(view_cords);
+
 		button_state = BUTTON_STATE::BTN_IDLE;
 		if (shape.getGlobalBounds().contains(mouse_pos.x + (view_cords.left - view_cords.width / 2), mouse_pos.y + (view_cords.top - view_cords.height / 2))) {
 			button_state = BUTTON_STATE::BTN_HOVERED;

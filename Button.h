@@ -11,6 +11,7 @@ private:
 	sf::Font* font;
 	sf::Text text;
 
+	Vector2f position;
 	//sf::Color idle_color;
 	sf::Color hover_color;
 	//sf::Color active_color;
@@ -24,14 +25,16 @@ public:
 	float getWidth();
 	float getTextHeight();
 	float getTextWidth();
+	FloatRect getLocalBounds() override;
 
-	void setPosition(Vector2f new_pos);
+	void setPosition(Vector2f new_position);
 	void setMenuColor(Color menuColor);
 	void setBackgroundColor(Color shapeColor);
 	
 	const bool isPressed() const;
 
-	void update(const sf::Vector2f mouse_pos, FloatRect view_cords);
+	void updatePosition(FloatRect view_cords);
+	void update(Vector2f mouse_pos, FloatRect view_cords) override;
 	void render(sf::RenderTarget* target) override;
 
 };

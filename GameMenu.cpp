@@ -2,8 +2,8 @@
 #include "GameMenu.h"
 
 
-	GameMenu::GameMenu(sf::RenderWindow* window_, float map_w, float map_h, short* game_state_, Color menuColor)
-		:game_state(game_state_){
+	GameMenu::GameMenu(sf::RenderWindow* window_, float map_w, float map_h, float w_w_, float w_h_, short* game_state_, Color menuColor)
+		:game_state(game_state_), w_w(w_w_), w_h(w_h_){
 		this->window = window_;
 		initBackground(map_w, map_h);
 		initFont();
@@ -41,6 +41,12 @@
 		buttons_size = 32;
 		buttons["CONTINUE"] = new Button(300, 300, buttons_size, font, "CONTINUE", menuColor);
 		buttons["RETURN TO ROAD MAP"] = new Button(300, 600, buttons_size, font, "RETURN TO ROAD MAP", menuColor);
+
+		auto i = buttons.begin();
+		short first_button_y = (w_h - (i->second->getHeight() * buttons.size() + space_between_buttons * (buttons.size() - 1))) / 2;
+		for ( short j=0; i != buttons.end(); i++,j++) {
+			i->second->setPosition(Vector2f((w_w - i->second->getWidth()) / 2 , (first_button_y + j * (i->second->getHeight() + space_between_buttons))));
+		}
 	}
 	
 	void GameMenu::initNecessaryInfo(){
@@ -57,10 +63,10 @@
 
 	void GameMenu::update(FloatRect view_cords) {
 		auto i = buttons.begin();
-		short first_button_y = (view_cords.height - (i->second->getHeight() * buttons.size() + space_between_buttons * (buttons.size() - 1))) / 2;
-		for ( short j=0; i != buttons.end(); i++,j++) {
-			i->second->setPosition(Vector2f((view_cords.width / 2 - i->second->getWidth() / 2) + view_cords.left-view_cords.width/2, (first_button_y + j * (i->second->getHeight() + space_between_buttons)) + view_cords.top - view_cords.height / 2));
-		}
+		//short first_button_y = (view_cords.height - (i->second->getHeight() * buttons.size() + space_between_buttons * (buttons.size() - 1))) / 2;
+		//for ( short j=0; i != buttons.end(); i++,j++) {
+		//	i->second->setPosition(Vector2f((view_cords.width / 2 - i->second->getWidth() / 2) + view_cords.left-view_cords.width/2, (first_button_y + j * (i->second->getHeight() + space_between_buttons)) + view_cords.top - view_cords.height / 2));
+		//}
 
 		for (auto &i : buttons) {
 			i.second->update(sf::Vector2f(Mouse::getPosition(*window)), view_cords);

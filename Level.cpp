@@ -19,18 +19,54 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 	pause_menu = new PopUpWindow(screenWidth, screenHeight, 800, 800, window);
 	pause_menu->addLabel(screenWidth, screenHeight, "Menu", font, 60, 10);
 	pause_menu->addBackground(sandbox.getMapWidth(), sandbox.getMapHeight(), Color(59, 66, 73, 87));
+	pause_menu->createGroupLine();
+	//pause_menu->addGroup(50, 100, 0);
 
-	game_menu = new GameMenu(window, sandbox.getMapWidth(), sandbox.getMapHeight(), &game_state, menuColor);
+	CRect<float>* tmp = pause_menu->calculatePFNG(50, 100, 0);
+	Group* t0 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
+	t0->addGroupName("pause1", 30, font);
+	delete tmp;
+
+	t0->createElementLine();
+	t0->addButton(45, font, "PAUSE1", Color::Red, 0);
+
+	t0->createElementLine();
+	t0->addButton(45, font, "PAUSE2", Color::Red, 1);
+
+	t0->createElementLine();
+	t0->addButton(45, font, "PAUSE3", Color::Red, 2);
+	//
+	//tmp = t0->calculatePFNII(50, 50, 0);
+	//Group* t1 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
+	//t1->addGroupName("0", 30, font);
+	//t0->addIElement((InterfaceItem*)t1, 0);
+	//delete tmp;
+	//
+	////t0->createGroupLine();
+	//
+	//tmp = t0->calculatePFNII(50, 50, 0);
+	//Group* t2 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
+	//t2->addGroupName("1", 30, font);
+	//t0->addIElement((InterfaceItem*)t2, 0);
+	//delete tmp;
+	//
+	//t0->createElementLine();
+	//
+	//tmp = t0->calculatePFNII(100, 50, 1);
+	//Group* t3 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
+	//t3->addGroupName("3", 40, font);
+	//t0->addIElement((InterfaceItem*)t3, 1);
+	//delete tmp;
+
+	pause_menu->addGroup(t0, 0);
+	//pause_menu->addGroupName(0, 0, "pause1", 30, font);
+	//pause_menu->addGroupName(0, 0, "pause1", 30, font);
+	pause_menu->addGroup(50, 100, 0);
+	pause_menu->addGroupName(0, 1, "pause2", 30, font);
+	//pause_menu->addGroupName(0, 1, "pause2", 30, font);
+
+	game_menu = new GameMenu(window, sandbox.getMapWidth(), sandbox.getMapHeight(), screenWidth, screenHeight, &game_state, menuColor);
 	life_bar = new ScaleParametrBar();
-
-
-
-	//player_gl_b = new FloatRect();
-	//player_pos = new Vector2f();
-	//player_vel = new Vector2f();
-	//hp = player->getHPp();
-
-
 
 	initPlayer();
 		menu_timer.restart();
@@ -273,7 +309,7 @@ void Level::updateEvilBall()
 	}
 	
 	void Level::renderGameMenu(){
-		game_menu->render();
+		//game_menu->render();
 		pause_menu->render();
 		//window->display();
 	}

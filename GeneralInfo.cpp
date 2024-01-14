@@ -20,19 +20,19 @@
         return position;
     }
 
-    void GeneralInfo::changeVelocityX(int x){
+    void GeneralInfo::changeVelocityX(float x){
         velocity.x += x;
     }
 
-    void GeneralInfo::changeVelocityY(int y) {
+    void GeneralInfo::changeVelocityY(float y) {
         velocity.y += y;
     }
 
-    void GeneralInfo::setVelocityX(int x){
+    void GeneralInfo::setVelocityX(float x){
         velocity.x = x;
     }
 
-    void GeneralInfo::setVelocityY(int y){
+    void GeneralInfo::setVelocityY(float y){
         velocity.y = y;
     }
 

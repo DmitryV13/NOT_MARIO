@@ -10,6 +10,9 @@ private:
 	short buttons_size;
 	short space_between_buttons;
 
+	float w_w;
+	float w_h;
+
 	short* game_state;
 	sf::RenderWindow* window;
 
@@ -34,7 +37,7 @@ private:
 	void initDisplayedInventory();
 
 public:
-	GameMenu(sf::RenderWindow* window_, float map_w, float map_h, short* game_state_, Color menuColor);
+	GameMenu(sf::RenderWindow* window_, float map_w, float map_h, float w_w_, float w_h_, short* game_state_, Color menuColor);
 	~GameMenu();
 
 	void update(FloatRect view_cords) ;

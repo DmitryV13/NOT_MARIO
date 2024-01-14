@@ -4,5 +4,9 @@
 	void InterfaceItem::render(sf::RenderTarget* target){
 	}
 	
-	void InterfaceItem::update(const sf::Vector2f mouse_pos){
+	void InterfaceItem::update(Vector2f mouse_pos, FloatRect view_cords){
+	}
+
+	FloatRect InterfaceItem::getLocalBounds(){
+		return FloatRect();
 	}
