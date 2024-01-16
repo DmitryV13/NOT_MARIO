@@ -1,4 +1,5 @@
 #pragma once
+
 #include "PLAYER_ANIMATION_SATES.h"
 #include "Map.h"
 #include "TileMap.h"
@@ -6,29 +7,32 @@
 #include "Sword.h"
 #include "CombatStaff.h"
 #include "Bow.h"
-
+#include "kusaka.h"
+#include "Eye_evil.h"
+#include "WolfBoss.h"
+#include "RedMutant.h"
+#include "GeneralInfo.h"
 
 using namespace::sf;
 
 
-class Player {
+class Player{
 private:
     TileMap* sandbox;
-
     Texture player_T;
     Sprite player_S;
 
     vector<Weapon*> weapons;
     short chosen_weapon;
 
+
     IntRect currentFrame;
     Clock animationTimer;
     short animationState;
     bool animationSwitch;
 
-    short HP;
-
-    Vector2f velocity;
+    GeneralInfo* info;
+    
     float velocityMax;
     float velocityMin;
     float acceleration;
@@ -45,16 +49,18 @@ private:
     bool isFlying;
     float flyVelocity;
 
+    bool alive;
     short movingDirection;
 
     void initVariables();
     void initTexture();
     void initSprite();
-    void initWeapon();
+    //void initWeapon();
     void initAnimation();
     void initPhysics();
 public:
     Player(TileMap& map);
+    void initWeapon(const vector<vector<Enemy*>*>& enemies);
     IntRect get_pl_frame();
     // accessors
     const bool& getAnimationSwitch();
@@ -62,6 +68,9 @@ public:
     const FloatRect getGlobalBounds() const;
     const Vector2f getVelocity() const;
     const short getHP() const;
+    short* getHPp();
+    GeneralInfo* getGeneralInfo();
+
 
     //modifiers
     void resetVelocityY();

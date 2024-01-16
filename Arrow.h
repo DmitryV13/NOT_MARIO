@@ -2,6 +2,10 @@
 
 #include "PLAYER_ANIMATION_SATES.h"
 #include "TileMap.h"
+#include "kusaka.h"
+#include "Eye_evil.h"
+#include "WolfBoss.h"
+#include "RedMutant.h"
 
 using namespace::sf;
 
@@ -11,6 +15,8 @@ private:
 
 	Texture arrow_T;
 	Sprite arrow_S;
+
+	vector<vector<Enemy*>*> enemies;
 
 	short side;
 	bool is_flying;
@@ -22,7 +28,7 @@ private:
 	void initSprite(Vector2f init_pos);
 	void initVariables();
 public:
-	Arrow(Vector2f init_pos, short side, TileMap* sanbox_);
+	Arrow(Vector2f init_pos, short side, TileMap* sanbox_, const vector<vector<Enemy*>*>& enemies_);
 
 	void update();
 	bool updateCollision();
@@ -31,6 +37,7 @@ public:
 	void setPosition(Vector2f position);
 	void setRotationAngle(float angle);
 	const bool isFlying() const;
+	bool updateHit();
 
 	void render(RenderTarget& target);
 };

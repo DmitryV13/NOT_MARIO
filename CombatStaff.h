@@ -3,6 +3,10 @@
 #include "PLAYER_ANIMATION_SATES.h"
 #include "Weapon.h"
 #include "Projectile.h"
+#include "kusaka.h"
+#include "Eye_evil.h"
+#include "WolfBoss.h"
+#include "RedMutant.h"
 
 using namespace::sf;
 
@@ -13,10 +17,13 @@ private:
 	Texture staff_T;
 	Sprite staff_S;
 
+	vector<vector<Enemy*>*> enemies;
+
 	IntRect currentFrame;
 	Clock animationTimer;
 
 	vector<Projectile*> projectiles;
+
 
 	short animationState;
 	bool animationSwitch;
@@ -30,7 +37,7 @@ private:
 	void initAnimation();
 
 public:
-	CombatStaff(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_);
+	CombatStaff(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_, const vector<vector<Enemy*>*>& enemies_);
 
 	void update(Vector2f player_position, short player_side, RenderWindow* window, FloatRect view_cords) override;
 	void updatePosition(Vector2f player_position, short player_side, RenderWindow* window, FloatRect view_cords);

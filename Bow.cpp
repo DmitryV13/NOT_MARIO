@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "Bow.h"
 
-	Bow::Bow(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_) : sandbox(sandbox_) {
+	Bow::Bow(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_, const vector<vector<Enemy*>*>& enemies_)
+		:enemies(enemies_), sandbox(sandbox_) {
 		initTexture();
 		initSprite(player_position, player_bounds);
 		initVariables();
@@ -79,7 +80,7 @@
 				if (!bow_pulled && Mouse::isButtonPressed(Mouse::Left)) {
 					currentFrame.top = 0;
 					if (currentFrame.left == 0) {
-						arrows.push_back(new Arrow(bow_S.getPosition(), side_of_attack, sandbox));
+						arrows.push_back(new Arrow(bow_S.getPosition(), side_of_attack, sandbox, enemies));
 					}
 					currentFrame.left += 36;
 					if (currentFrame.left == 144) {
@@ -98,7 +99,7 @@
 					currentFrame.top = 0;
 					
 					if (currentFrame.left == 36) {
-						arrows.push_back(new Arrow(bow_S.getPosition(), side_of_attack, sandbox));
+						arrows.push_back(new Arrow(bow_S.getPosition(), side_of_attack, sandbox, enemies));
 					}
 					currentFrame.left += 36;
 					if (currentFrame.left == 180) {
@@ -115,6 +116,9 @@
 	void Bow::updateProjectiles(){
 		for (int i = 0; i < arrows.size(); i++) {
 			arrows[i]->update();
+			if (arrows[i]->updateHit()) {
+
+			}
 			if (arrows[i]->isFlying()) {
 				arrows[i]->updateCollision();
 				//delete* (arrows.begin() + i);

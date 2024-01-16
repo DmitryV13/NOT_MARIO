@@ -1,6 +1,11 @@
 #pragma once
 #include "PLAYER_ANIMATION_SATES.h"
 #include "Weapon.h"
+#include "kusaka.h"
+#include "Eye_evil.h"
+#include "WolfBoss.h"
+#include "RedMutant.h"
+
 
 using namespace::sf;
 
@@ -8,6 +13,9 @@ class Sword : public Weapon{
 private:
 	Texture sword_T;
 	Sprite sword_S;
+	
+	vector<vector<Enemy*>*> enemies;
+
 	IntRect currentFrame;
 	Clock animationTimer;
 	short animationState;
@@ -22,7 +30,7 @@ private:
 	void initAnimation();
 
 public:
-	Sword(Vector2f player_position, FloatRect player_bounds);
+	Sword(Vector2f player_position, FloatRect player_bounds, const vector<vector<Enemy*>*>& enemies_);
 
 	void update(Vector2f player_position, short player_side, RenderWindow* window, FloatRect view_cords) override;
 	void updatePosition(Vector2f player_position, short player_side, RenderWindow* window, FloatRect view_cords);

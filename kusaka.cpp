@@ -1,12 +1,13 @@
 #include "stdafx.h"
 #include "kusaka.h"
 
-kusaka::kusaka(TileMap& map, Player& pl) :Enemy(map, pl)
+kusaka::kusaka(TileMap& map, GeneralInfo* player_info)
+	:Enemy(map, player_info)
 {
 	{
 		kusaka::init_texture();
 		kusaka::init_sprite();
-		kusaka::setAt(10);
+		kusaka::setAt(20);
 		kusaka::setHP(1000);
 	}
 }
@@ -285,14 +286,15 @@ void kusaka::shot()
 {
 
 	animation_state = ENEMY_ANIMATION_STATES::ENEMY_SHOT;
-	player_->changeHP(-attack_-(rand()%5));
+	//player_->changeHP(-attack_-(rand()%5));
+	player_info->changeHP(-attack_ - (rand() % 5));
 }
 
 
 void kusaka::attack()
 {
 	if(animation_state != ENEMY_ANIMATION_STATES::ENEMY_SHOT)animation_state = ENEMY_ANIMATION_STATES::ENEMY_ATTENTION;
-	if (isPlayerInRadius(observation_area.getGlobalBounds(), player_->getGlobalBounds(), 192))
+	if (isPlayerInRadius(observation_area.getGlobalBounds(), player_info->getGlobalBounds(), 192))
 	{
 		if (count_jump == 0) {
 			//jump(1.f);
@@ -308,7 +310,7 @@ void kusaka::attack()
 		displacement.x = 0;
 		displacement_max = 1.f;
 		FloatRect en = get_global_bounds();
-		FloatRect pl = player_->getGlobalBounds();
+		FloatRect pl = player_info->getGlobalBounds();
 		if (pl.left < en.left)
 		{
 			if (looks_to_the_right)
@@ -384,9 +386,9 @@ void kusaka::clear_shot()
 bool kusaka::search_for_enemies()
 {
 	FloatRect look = observation_area.getGlobalBounds();
-	FloatRect pl = player_->getGlobalBounds();
+	FloatRect pl = player_info->getGlobalBounds();
 
-	PL_SIDE playerSide = getPlayerSide(player_->getPosition().x, get_position().x);
+	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
 	if (playerSide == PL_SIDE::RIGHT && look.intersects(pl))
 	{
 		player_l_r[1] = true;

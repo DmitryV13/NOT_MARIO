@@ -1,22 +1,24 @@
 #include "stdafx.h"
 #include "TileMap.h"
 
-TileMap::TileMap(short level) : sizeTexture(64), mapH(50), mapW(100)
+TileMap::TileMap(short level) : sizeTexture(64), mapH(100), mapW(500)
 {
 	init_background();
 	init_tile_list();
 	init_tile_list_back();
 	init_tile_list_front();
-	init_tilemap(mapH, mapW);
+	
 	init_pos_enemy();
 
 	int a = 1;
 	int b = level;
 
-	if (a)
+	if (b==4)
 	{
-		TileFactory factory(mapH, mapW, a, b);
-
+		mapH = 50;
+		mapW = 100;
+		TileFactory factory(mapH, mapW, 1, b);
+		init_tilemap(mapH, mapW);
 		char tmp_letter;
 		for (int i = 0; i < mapH; i++)
 		{
@@ -51,7 +53,7 @@ TileMap::TileMap(short level) : sizeTexture(64), mapH(50), mapW(100)
 	}
 	else
 	{
-		TileFactory factory(mapH, mapW, a, b);
+		TileFactory factory(mapH, mapW, 0, b);
 
 		char tmp_letter;
 		for (int i = 0; i < mapH; i++)

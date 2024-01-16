@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #include "Player.h"
 
-    Player::Player(TileMap& map): HP(100) {
+    Player::Player(TileMap& map){
         sandbox = &map;
         initVariables();
         initTexture();
         initSprite();
-        initWeapon();
+        //initWeapon();
         initAnimation();
         initPhysics();
     }
@@ -32,14 +32,14 @@ void Player::initVariables(){
         currentFrame = IntRect(2, 80, 48, 70);
         player_S.setTextureRect(currentFrame);
         //initial position
-        //player_S.setPosition(67, 78);
+        player_S.setPosition(102, 2600);
     }
 
-    void Player::initWeapon() {
+    void Player::initWeapon(const vector<vector<Enemy*>*>& enemies) {
         weapons.push_back(new Fist());
-        weapons.push_back(new Bow(player_S.getPosition(), player_S.getGlobalBounds(), sandbox));
-        weapons.push_back(new Sword(player_S.getPosition(), player_S.getGlobalBounds()));
-        weapons.push_back(new CombatStaff(player_S.getPosition(), player_S.getGlobalBounds(), sandbox));
+        weapons.push_back(new Bow(player_S.getPosition(), player_S.getGlobalBounds(), sandbox, enemies));
+        weapons.push_back(new Sword(player_S.getPosition(), player_S.getGlobalBounds(), enemies));
+        weapons.push_back(new CombatStaff(player_S.getPosition(), player_S.getGlobalBounds(), sandbox, enemies));
     }
 
     void Player::initAnimation(){
@@ -48,7 +48,11 @@ void Player::initVariables(){
     }
 
     void Player::initPhysics(){
-        velocityMax = 10.f;
+        info = new GeneralInfo(1000);
+        info->setGlobalBounds(player_S.getGlobalBounds());
+        info->setPosition(player_S.getPosition());
+
+        velocityMax = 6.f;
         velocityMin = 0.5f;
         acceleration = 1.7f;
         deceleration = 0.77f;//0.77
@@ -65,10 +69,20 @@ void Player::initVariables(){
         isFlying = false;
         flyVelocity = 0;
 
+        alive = true;
         movingDirection = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
     }
 
     void Player::render(RenderTarget& target){
+        if (info->getHP() <= 0) {
+            alive = false;
+            animationState == PLAYER_ANIMATION_STATES::DEAD;
+            currentFrame.top = 310;
+            currentFrame.left = 288;
+            currentFrame.width = 48;
+            animationTimer.restart();
+            player_S.setTextureRect(currentFrame);
+        }
         target.draw(player_S);
         weapons[chosen_weapon]->render(target);
         renderProjectiles(target);
@@ -89,14 +103,13 @@ void Player::initVariables(){
 
     void Player::walk(const float dir_x){
         // acceleration
-        velocity.x += dir_x * acceleration;
+        info->changeVelocityX(dir_x * acceleration);
 
         // limits
-        if (std::abs(velocity.x) > velocityMax) {
-            velocity.x = velocityMax * ((velocity.x > 0.f) ? 1.f : -1.f);
+        if (std::abs(info->getVelocity().x) > velocityMax) {
+            info->setVelocityX(velocityMax * ((info->getVelocity().x > 0.f) ? 1.f : -1.f));
         }
        
-        //velocity.y += dir_y * gravity;
     }
 
 
@@ -123,35 +136,43 @@ void Player::initVariables(){
 
 bool Player::stan()
 {
-    if (velocity.x != 0.f)return false;
+    if (info->getVelocity().x != 0.f)return false;
     else return true;
 }
 
 void Player::update(RenderWindow* window, FloatRect view_cords){
+    if (alive){
         updateMovement(window, view_cords);
         updateAnimation();
         updatePhysics();
+
+        info->setGlobalBounds(player_S.getGlobalBounds());
+        info->setPosition(player_S.getPosition());
+
         updateWeapon(window, view_cords);
         updateProjectiles();
+        //std::cout << player_S.getPosition().x << "  " << player_S.getPosition().y << std::endl;
+        //std::cout << info->getVelocity().x << "  " << info->getVelocity().y << std::endl;
+        //std::cout << velocity.x << "  " << velocity.y << std::endl;
     }
+}
 
     void Player::updatePhysics(){
-
         // gravity
-        velocity.y += 1.f * gravity;
-        if (std::abs(velocity.y) > velocityMaxY) {
-            velocity.y = velocityMaxY * ((velocity.y > 0.f) ? 1.f : -1.f);
+        info->changeVelocityY(1.f * gravity);
+        if (std::abs(info->getVelocity().y) > velocityMaxY) {
+            info->setVelocityY(velocityMaxY * ((info->getVelocity().y > 0.f) ? 1.f : -1.f));
         }
-
+        
         //jumping
         if (isJumping) {
-            velocity.y -= jumpVelocity;
+            info->changeVelocityY(-jumpVelocity);
             //jump deceleration
             jumpVelocity *= 0.96;      
         }
-
+        
         //flying
-        velocity.y += flyVelocity;
+        info->changeVelocityY(flyVelocity);
         if (flyVelocity < -0.01f) {
             if (!isFlying) {
                 //fly deceleration
@@ -161,23 +182,23 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         else {
             flyVelocity = 0.f;
         }
-        //std::cout << flyVelocity << std::endl;
         // deceleration
-        velocity *= deceleration;
-       // std::cout << "x - " << getPosition().x << ", y - " << getPosition().y << std::endl;
+        info->setVelocityX(info->getVelocity().x * deceleration);
+        info->setVelocityY(info->getVelocity().y * deceleration);
+        // std::cout << "x - " << getPosition().x << ", y - " << getPosition().y << std::endl;
         // limits
-
-        updateCollision();
-
-        if (std::abs(velocity.x) < velocityMin || updateCollisionX()) {
-            velocity.x = 0.f;
-        }
-        if (std::abs(velocity.y) < velocityMin || updateCollisionY()) {
-            velocity.y = 0.f;
-        }
-
         
-        player_S.move(velocity);
+        updateCollision();
+        
+        if (std::abs(info->getVelocity().x) < velocityMin || updateCollisionX()) {
+            info->setVelocityX(0.f);
+        }
+        if (std::abs(info->getVelocity().y) < velocityMin || updateCollisionY()) {
+            info->setVelocityY(0.f);
+        }
+        
+        
+        player_S.move(info->getVelocity());
     }
 
     void Player::updateMovement(RenderWindow* window, FloatRect view_cords) {
@@ -215,11 +236,13 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
             jump(-20.0f);
         }
         if (Mouse::isButtonPressed(Mouse::Left)) {
-            std::cout << player_S.getPosition().x << " " << getPosition().y << std::endl;
-            weapons[chosen_weapon]->attack(movingDirection, Vector2f(Mouse::getPosition(*window)), view_cords, true);
+            //std::cout << player_S.getPosition().x << " " << getPosition().y << std::endl;
+            if (chosen_weapon < weapons.size())
+                weapons[chosen_weapon]->attack(movingDirection, Vector2f(Mouse::getPosition(*window)), view_cords, true);
         }
         if (!Mouse::isButtonPressed(Mouse::Left)) {
-            weapons[chosen_weapon]->attack(movingDirection, Vector2f(Mouse::getPosition(*window)), view_cords, false);
+            if (chosen_weapon < weapons.size())
+                weapons[chosen_weapon]->attack(movingDirection, Vector2f(Mouse::getPosition(*window)), view_cords, false);
         }
     }
 
@@ -341,6 +364,7 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
     }
 
     void Player::updateWeapon(RenderWindow* window, FloatRect view_cords){
+        if(chosen_weapon<weapons.size())
         weapons[chosen_weapon]->update(player_S.getPosition(), movingDirection, window, view_cords);
     }
 
@@ -366,20 +390,30 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
     }
 
     void Player::changeHP(short z){
-        HP += z;
+        info->changeHP(z);
+        //std::cout << HP << std::endl;
+        if (info->getHP() <= 0) {
+            alive = false;
+            animationState == PLAYER_ANIMATION_STATES::DEAD;
+            currentFrame.top = 320;
+            currentFrame.left = 288;
+            currentFrame.width = 48;
+            animationTimer.restart();
+            player_S.setTextureRect(currentFrame);
+        }
     }
 
     bool Player::updateCollisionX(){
         bool wasCollision = false;
         Vector2f newPosition(getPosition().x, getPosition().y);
         for (int i = player_S.getPosition().y / 64; i < (player_S.getPosition().y + player_S.getGlobalBounds().height) / 64; i++) {
-            for (int j = (player_S.getPosition().x + velocity.x) / 64; j < (player_S.getPosition().x + velocity.x + player_S.getGlobalBounds().width) / 64; j++) {
+            for (int j = (player_S.getPosition().x + info->getVelocity().x) / 64; j < (player_S.getPosition().x + info->getVelocity().x + player_S.getGlobalBounds().width) / 64; j++) {
                 if (sandbox->isBlock(i, j)) {
-                    if (velocity.x > 0) {
+                    if (info->getVelocity().x > 0) {
                         wasCollision = true;
                         newPosition.x = j * sandbox->getSizeTexture() - player_S.getGlobalBounds().width;
                     }
-                    if (velocity.x < 0) {
+                    if (info->getVelocity().x < 0) {
                         wasCollision = true;
                         newPosition.x = j * sandbox->getSizeTexture() + sandbox->getSizeTexture();
                     }
@@ -393,16 +427,16 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
     bool Player::updateCollisionY(){
         bool wasCollision = false;
         Vector2f newPosition(player_S.getPosition().x, player_S.getPosition().y);
-
-        for (int i = (player_S.getPosition().y + velocity.y) / 64; i < (player_S.getPosition().y + velocity.y + player_S.getGlobalBounds().height) / 64; i++) {
+        
+        for (int i = (player_S.getPosition().y + info->getVelocity().y) / 64; i < (player_S.getPosition().y + info->getVelocity().y + player_S.getGlobalBounds().height) / 64; i++) {
             for (int j = player_S.getPosition().x / 64; j < (player_S.getPosition().x + player_S.getGlobalBounds().width) / 64; j++) {
                 if (sandbox->isBlock(i, j)) {
-                    if (velocity.y > 0) {
+                    if (info->getVelocity().y > 0) {
                         wasCollision = true;
                         newPosition.y = (i * sandbox->getSizeTexture() - player_S.getGlobalBounds().height);
                         resetJumpAccess();
                     }
-                    if (velocity.y < 0) {
+                    if (info->getVelocity().y < 0) {
                         wasCollision = true;
                         newPosition.y = i * sandbox->getSizeTexture() + sandbox->getSizeTexture();
                         //speedY = 0;
@@ -415,31 +449,31 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
     }
 
     void Player::updateCollision() {
-        if ((getPosition().y + velocity.y + getGlobalBounds().height) > sandbox->getMapHeight()) {
+        if ((getPosition().y + info->getVelocity().y + getGlobalBounds().height) > sandbox->getMapHeight()) {
             resetVelocityY();
             setPosition(
                 getPosition().x,
                 sandbox->getMapHeight() - getGlobalBounds().height);
-            velocity.y = 0;
+            info->setVelocityY(0.f);
             resetJumpAccess();
         }
-        if (getPosition().y + velocity.y < 0.f) {
+        if (getPosition().y + info->getVelocity().y < 0.f) {
             setPosition(
                 getPosition().x,
                 0);
-            velocity.y = 0;
+            info->setVelocityY(0.f);
         }
-        if ((getPosition().x + velocity.x + getGlobalBounds().width) > sandbox->getMapWidth()) {
+        if ((getPosition().x + info->getVelocity().x + getGlobalBounds().width) > sandbox->getMapWidth()) {
             setPosition(
                 sandbox->getMapWidth() - getGlobalBounds().width,
                 getPosition().y);
-            velocity.x = 0;
+            info->setVelocityX(0.f);
         }
-        if (getPosition().x + velocity.x < 0) {
+        if (getPosition().x + info->getVelocity().x < 0) {
             setPosition(
                 0,
                 getPosition().y);
-            velocity.x = 0;
+            info->setVelocityX(0.f);
         }
     }
 
@@ -463,23 +497,31 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         return player_S.getGlobalBounds();
     }
 
+    GeneralInfo* Player::getGeneralInfo(){
+        return info;
+    }
+
     const Vector2f Player::getPosition() const {
         return player_S.getPosition();
     }
 
-    const Vector2f Player::getVelocity() const {
-        return velocity;
-    }
-
+    //const Vector2f Player::getVelocity() const {
+    //    return velocity;
+    //}
+    //
     const short Player::getHP() const{
-        return HP;
+        return info->getHP();
     }
+    //
+    //short* Player::getHPp()
+    //{
+    //    return &HP;
+    //}
 
     void Player::setPosition(const float x, const float y) {
         player_S.setPosition(x, y);
     }
 
     void Player::resetVelocityY() {
-        velocity.y = 0.f;
+        info->setVelocityY(0.f);
     }
-

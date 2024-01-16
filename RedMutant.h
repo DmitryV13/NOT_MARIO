@@ -1,9 +1,7 @@
 #pragma once
 #include "Enemy.h"
 
-class RedMutant: public Enemy
-
-{
+class RedMutant: public Enemy{
 private:
 	Texture chubacabra_t_;
 	bool player_l_r[2]{ false };
@@ -15,7 +13,7 @@ private:
 public:
 	
 	sf::Vector2f calculateRandomPosition(const sf::FloatRect& playerBounds, int radius);
-	explicit RedMutant(TileMap& map, Player&);
+	explicit RedMutant(TileMap& map, GeneralInfo* player_info);
 
 	~RedMutant() override = default;
 
@@ -27,6 +25,6 @@ public:
 	bool search_for_enemies() override;
 	void reset_attention() override;
 
-
+	bool plStan();
 };
 

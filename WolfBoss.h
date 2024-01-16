@@ -5,8 +5,7 @@ enum class BOSS_STATE { SLEEP, IDLE, MOVING, JUMPING, ATTACKING, RETREATING, HOW
 
 
 
-class WolfBoss :
-	public Enemy
+class WolfBoss : public Enemy
 {
 	BOSS_STATE boss_state;
 	Texture Wolf_Boss_t_;
@@ -27,7 +26,7 @@ class WolfBoss :
 	void init_physics() override;
 
 public:
-	explicit WolfBoss(TileMap& map, Player&);
+	explicit WolfBoss(TileMap& map, GeneralInfo* player_info);
 	~WolfBoss() override = default;
 	void update_movement() override;
 	void update_animation() override;

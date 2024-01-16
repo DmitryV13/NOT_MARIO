@@ -2,11 +2,14 @@
 #include "WolfBoss.h"
 
 
-WolfBoss::WolfBoss(TileMap& map, Player& pl) : Enemy(map, pl)
+WolfBoss::WolfBoss(TileMap& map, GeneralInfo* player_info)
+	: Enemy(map, player_info)
 {
 	WolfBoss::init_texture();
 	WolfBoss::init_sprite();
 	WolfBoss::init_physics();
+	WolfBoss::setAt(25);
+	WolfBoss::setHP(5000);
 }
 
 void WolfBoss::init_physics()
@@ -265,7 +268,7 @@ void WolfBoss::update_movement()
 	}
 	else
 	{
-		float distanceToPlayer = std::abs(player_->getPosition().x - get_position().x);
+		float distanceToPlayer = std::abs(player_info->getPosition().x - get_position().x);
 		switch (boss_state)
 		{
 		case BOSS_STATE::SLEEP:
@@ -281,7 +284,7 @@ void WolfBoss::update_movement()
 				animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
 				if (retreat_counter >= max_retreat_duration)
 				{
-					PL_SIDE playerSide = getPlayerSide(player_->getPosition().x, get_position().x);
+					PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
 					if (playerSide == PL_SIDE::LEFT)
 					{
 						looks_to_the_left = true;
@@ -384,11 +387,11 @@ void WolfBoss::update_movement()
 					boss_state = BOSS_STATE::RETREATING;
 				}
 				
-				if ((std::abs(player_->getPosition().x - get_position().x) < 7 * 64) && (std::abs(player_->getPosition().x - get_position().x) > 3 * 64)
-					&& ((getPlayerSide(player_->getPosition().x, get_position().x) == PL_SIDE::LEFT && looks_to_the_left) ||
-						(getPlayerSide(player_->getPosition().x, get_position().x) == PL_SIDE::RIGHT && looks_to_the_right)) || pl_cont_jump)
+				if ((std::abs(player_info->getPosition().x - get_position().x) < 7 * 64) && (std::abs(player_info->getPosition().x - get_position().x) > 3 * 64)
+					&& ((getPlayerSide(player_info->getPosition().x, get_position().x) == PL_SIDE::LEFT && looks_to_the_left) ||
+						(getPlayerSide(player_info->getPosition().x, get_position().x) == PL_SIDE::RIGHT && looks_to_the_right)) || pl_cont_jump)
 				{
-					if (!pl_cont_jump)distance = (player_->getPosition().x - get_position().x);
+					if (!pl_cont_jump)distance = (player_info->getPosition().x - get_position().x);
 
 					//jump_towardsS_player();
 					count_anger++;
@@ -459,7 +462,7 @@ void WolfBoss::update_movement()
 			}
 		case BOSS_STATE::HOWL:
 			{
-			PL_SIDE playerSide = getPlayerSide(player_->getPosition().x, get_position().x);
+			PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
 			if (playerSide == PL_SIDE::LEFT)
 			{
 				looks_to_the_left = true;
@@ -487,7 +490,7 @@ void WolfBoss::update_movement()
 		case BOSS_STATE::TORMENT:
 			//std::cout << "TORMENT";
 			{
-			PL_SIDE playerSide = getPlayerSide(player_->getPosition().x, get_position().x);
+			PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
 			if (!sting() && retreat_counter == 0) {
 				if (playerSide == PL_SIDE::LEFT)
 				{

@@ -9,6 +9,8 @@
 #include "GameMenu.h"
 #include "ScaleParametrBar.h"
 #include "GAME_STATE.h"
+#include "Enemy.h"
+#include "PopUpWindow.h"
 
 using namespace::sf;
 
@@ -16,6 +18,7 @@ class Level{
 private:
 	RenderWindow* window;
 	GameMenu* game_menu;
+	PopUpWindow* pause_menu;
 	ScaleParametrBar* life_bar;
 	Clock menu_timer;
 
@@ -25,17 +28,23 @@ private:
 	MyView myView;
 	//Cursor* cursor;
 
-	
-	vector<Eye_evil*> evil_ball_vector;
-	vector<kusaka*> Kusaka_vector;
-	vector<RedMutant*> chubacabras_vector_;
-	vector<WolfBoss*> boss_vector;
+	Eye_evil* evil_Ball;
+	vector<Eye_evil*>* evil_ball_vector;
+	vector<kusaka*>* Kusaka_vector;
+	vector<RedMutant*>* chubacabras_vector_;
+	vector<WolfBoss*>* boss_vector;
 	int num_of_enemy_{ 12 };
 	short regime;
 	double screenWidth;
 	double screenHeight;
 
 	short game_state;
+
+
+	//FloatRect* player_gl_b;
+	//Vector2f* player_pos;
+	//Vector2f* player_vel;
+	//short* hp;
 
 	//void initWindow();
 	void initPlayer();
@@ -78,5 +87,6 @@ public:
 	void renderLifeBar();
 
 	void start();
+	void initWeapons();
 };
 

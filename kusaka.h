@@ -4,7 +4,7 @@
 class kusaka : public Enemy
 {
 public:
-	explicit kusaka(TileMap& map, Player&);
+	explicit kusaka(TileMap& map, GeneralInfo* player_info);
 	~kusaka() override = default;
 	void update_movement() override;
 	void update_animation() override;

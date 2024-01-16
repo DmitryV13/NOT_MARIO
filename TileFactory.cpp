@@ -63,7 +63,7 @@ TileFactory::TileFactory(float temp_W, float temp_H, short int type_map, short i
         std::cout << "Time taken by function: " << duration.count() << " seconds" << std::endl;
     }
     else if (type_template) {
-        if (level == 1) {
+        if (level == 4) {
 
             std::vector<std::vector<std::vector<char>>> temlate_2(template_W, std::vector<std::vector<char>>(template_H, std::vector<char>(3)));
             temlate_2 =
@@ -640,6 +640,18 @@ public:
     }
 };
 
+class lakeC {
+public:
+    short dir;
+    int x;
+    int y;
+    lakeC(short dir_, int x_, int y_) {
+        dir = dir_;
+        x = x_;
+        y = y_;
+    }
+};
+
 coord* TileFactory::generationF1() {
     float y[20];
     float x[20];
@@ -841,18 +853,47 @@ void TileFactory::fill_lakes(vector<int>& x, vector<int>& y, vector<pair<int, in
 }
 
 void TileFactory::fill_lake(int& water_level, int pos_x, int pos_y, vector<vector<char>>& map) {
-    if (pos_x < 0 || pos_x >= template_H || pos_y < 0 || pos_y >= template_W) return;
-    if (map[pos_y][pos_x] != ' ' || pos_y < water_level) return;
+    stack<lakeC> lakeTiles;
+    lakeTiles.push(lakeC(1, pos_x, pos_y));
 
-    map[pos_y][pos_x] = 'w';
-    //moving down
-    fill_lake(water_level, pos_x, pos_y + 1, map);
-    //moving left
-    fill_lake(water_level, pos_x - 1, pos_y, map);
-    //moving up
-    fill_lake(water_level, pos_x, pos_y - 1, map);
-    //moving right
-    fill_lake(water_level, pos_x + 1, pos_y, map);
+    while (!lakeTiles.empty()) {
+        if (lakeTiles.top().dir == 1) {
+            if (lakeTiles.top().x < 0 || lakeTiles.top().x >= template_H
+                || lakeTiles.top().y < 0 || lakeTiles.top().y >= template_W
+                || map[lakeTiles.top().y][lakeTiles.top().x] != ' ' || lakeTiles.top().y < water_level
+                || lakeTiles.top().dir == 4) {
+                lakeTiles.pop();
+                continue;
+            }
+            map[lakeTiles.top().y][lakeTiles.top().x] = 'w';
+        }
+        if (lakeTiles.top().dir > 4) {
+            lakeTiles.pop();
+            continue;
+        }
+        switch (lakeTiles.top().dir) {
+            //moving down
+        case 1:
+            lakeTiles.top().dir++;
+            lakeTiles.push(lakeC(1, lakeTiles.top().x, lakeTiles.top().y + 1));
+            break;
+            //moving left
+        case 2:
+            lakeTiles.top().dir++;
+            lakeTiles.push(lakeC(1, lakeTiles.top().x - 1, lakeTiles.top().y));
+            break;
+            //moving up
+        case 3:
+            lakeTiles.top().dir++;
+            lakeTiles.push(lakeC(1, lakeTiles.top().x, lakeTiles.top().y - 1));
+            break;
+            //moving right
+        case 4:
+            lakeTiles.top().dir++;
+            lakeTiles.push(lakeC(1, lakeTiles.top().x + 1, lakeTiles.top().y));
+            break;
+        }
+    }
 }
 
 std::vector<std::pair<int, int>>  TileFactory::lakes_generation(vector<int>& x, vector<int>& y, vector<vector<char>>& map) {

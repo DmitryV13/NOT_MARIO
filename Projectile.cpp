@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "Projectile.h"
 
-	Projectile::Projectile(Vector2f init_pos, Vector2f dest_pos_, TileMap* sandbox_) : dest_pos(dest_pos_), speed(10), sandbox(sandbox_){
+	Projectile::Projectile(Vector2f init_pos, Vector2f dest_pos_, TileMap* sandbox_, const vector<vector<Enemy*>*>& enemies_)
+		:enemies(enemies_), dest_pos(dest_pos_), speed(10), sandbox(sandbox_) {
 		//std::cout << init_pos.x << "  " << init_pos.y << std::endl;
 		initTexture();
 		initSprite(init_pos);
@@ -43,6 +44,39 @@
 				}
 			}
 		}
+		return false;
+	}
+
+	bool Projectile::updateHit(){
+		for (auto& enemy : *(enemies[0]))
+		{
+			if (projectile_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
+				enemy->changeHP(10);
+				return true;
+			}
+		}
+		for (auto& enemy : *(enemies[1]))
+		{
+			if (projectile_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
+				enemy->changeHP(10);
+				return true;
+			}
+		}
+		for (auto& enemy : *(enemies[2]))
+		{
+			if (projectile_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
+				enemy->changeHP(10);
+				return true;
+			}
+		}
+		for (auto& enemy : *(enemies[3]))
+		{
+			if (projectile_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
+				enemy->changeHP(10);
+				return true;
+			}
+		}
+		
 		return false;
 	}
 
