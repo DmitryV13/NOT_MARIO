@@ -87,6 +87,18 @@
 		);
 	}
 
+	void Button::setPositionX(float x){
+		setPosition(Vector2f(x, getLocalBounds().top));
+	}
+
+	void Button::setPositionY(float y){
+		setPosition(Vector2f(getLocalBounds().left, y));
+	}
+
+	void Button::changePosition(float offset_x, float offset_y){
+		setPosition(Vector2f(getLocalBounds().left + offset_x, getLocalBounds().top+offset_y));
+	}
+
 	void Button::setMenuColor(Color menuColor){
 		hover_color = menuColor;
 	}

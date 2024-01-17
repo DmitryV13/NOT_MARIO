@@ -28,6 +28,11 @@ public:
 	FloatRect getLocalBounds() override;
 
 	void setPosition(Vector2f new_position);
+	void setPositionX(float x) override;
+	void setPositionY(float y) override;
+
+	void changePosition(float offset_x, float offset_y) override;
+
 	void setMenuColor(Color menuColor);
 	void setBackgroundColor(Color shapeColor);
 	

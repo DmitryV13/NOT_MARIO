@@ -10,3 +10,15 @@
 	FloatRect InterfaceItem::getLocalBounds(){
 		return FloatRect();
 	}
+
+	void InterfaceItem::setPositionX(float x)
+	{
+	}
+
+	void InterfaceItem::setPositionY(float y)
+	{
+	}
+
+	void InterfaceItem::changePosition(float offset_x, float offset_y)
+	{
+	}

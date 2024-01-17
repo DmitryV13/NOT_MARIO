@@ -20,50 +20,67 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 	pause_menu->addLabel(screenWidth, screenHeight, "Menu", font, 60, 10);
 	pause_menu->addBackground(sandbox.getMapWidth(), sandbox.getMapHeight(), Color(59, 66, 73, 87));
 	pause_menu->createGroupLine();
-	//pause_menu->addGroup(50, 100, 0);
 
 	CRect<float>* tmp = pause_menu->calculatePFNG(50, 100, 0);
 	Group* t0 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
-	t0->addGroupName("pause1", 30, font);
+	t0->addGroupName("pause1", 31, font);
+	delete tmp;
+	
+	t0->createElementLine();
+
+	tmp = t0->calculatePFNII(30, 50, 0);
+	Group* t1 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
+	t1->addGroupName("0", 31, font);
+	t0->addIElement((InterfaceItem*)t1, 0);
+	delete tmp;
+	
+	t1->createElementLine();
+	t1->addButton(20, font, "PAUSE1", Color::Red, 0);
+	
+	t1->createElementLine();
+	t1->addButton(20, font, "PAUSE2", Color::Red, 1);
+	
+	t1->createElementLine();
+	t1->addButton(20, font, "PAUSE3", Color::Red, 2);
+	t1->setAlignment("k", "top z auto");
+
+	tmp = t0->calculatePFNII(30, 50, 0);
+	Group* t2 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
+	t2->addGroupName("1", 31, font);
+	t0->addIElement((InterfaceItem*)t2, 0);
+	delete tmp;
+	
+	t2->createElementLine();
+	t2->addButton(20, font, "PAUS1", Color::Red, 0);
+	
+	t2->createElementLine();
+	t2->addButton(20, font, "PAUS2", Color::Red, 1);
+	
+	t2->createElementLine();
+	t2->addButton(20, font, "PAUS3", Color::Red, 2);
+	t2->setAlignment("k", "top auto");
+	
+	
+	t0->createElementLine();
+	tmp = t0->calculatePFNII(40, 50, 1);
+	Group* t3 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
+	t3->addGroupName("3", 31, font);
+	t0->addIElement((InterfaceItem*)t3, 1);
 	delete tmp;
 
-	t0->createElementLine();
-	t0->addButton(45, font, "PAUSE1", Color::Red, 0);
+	t3->createElementLine();
+	t3->addButton(20, font, "PAUS1", Color::Red, 0);
 
-	t0->createElementLine();
-	t0->addButton(45, font, "PAUSE2", Color::Red, 1);
-
-	t0->createElementLine();
-	t0->addButton(45, font, "PAUSE3", Color::Red, 2);
-	//
-	//tmp = t0->calculatePFNII(50, 50, 0);
-	//Group* t1 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
-	//t1->addGroupName("0", 30, font);
-	//t0->addIElement((InterfaceItem*)t1, 0);
-	//delete tmp;
-	//
-	////t0->createGroupLine();
-	//
-	//tmp = t0->calculatePFNII(50, 50, 0);
-	//Group* t2 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
-	//t2->addGroupName("1", 30, font);
-	//t0->addIElement((InterfaceItem*)t2, 0);
-	//delete tmp;
-	//
-	//t0->createElementLine();
-	//
-	//tmp = t0->calculatePFNII(100, 50, 1);
-	//Group* t3 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
-	//t3->addGroupName("3", 40, font);
-	//t0->addIElement((InterfaceItem*)t3, 1);
-	//delete tmp;
-
+	t3->createElementLine();
+	t3->addButton(20, font, "PAUS2", Color::Red, 1);
+	
+	t3->createElementLine();
+	t3->addButton(20, font, "PAUS3", Color::Red, 2);
+	t3->setAlignment("k", "bottom 0");
+	t0->setAlignment("right auto", "center 0");
 	pause_menu->addGroup(t0, 0);
-	//pause_menu->addGroupName(0, 0, "pause1", 30, font);
-	//pause_menu->addGroupName(0, 0, "pause1", 30, font);
-	pause_menu->addGroup(50, 100, 0);
-	pause_menu->addGroupName(0, 1, "pause2", 30, font);
-	//pause_menu->addGroupName(0, 1, "pause2", 30, font);
+	pause_menu->addGroup(50, 50, 0);
+	pause_menu->addGroupName(0, 1, "pause2", 31, font);
 
 	game_menu = new GameMenu(window, sandbox.getMapWidth(), sandbox.getMapHeight(), screenWidth, screenHeight, &game_state, menuColor);
 	life_bar = new ScaleParametrBar();

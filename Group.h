@@ -6,25 +6,35 @@ using namespace::sf;
 
 class Group : InterfaceItem{
 private:
+	RectangleShape g0;
+	RectangleShape g1;
+	RectangleShape g2;
+
 	Text* name;
 	vector<vector<InterfaceItem*>> g_elements;
-
 	short vertical_alignment;
 	short horizontal_alignment;
 
-	int width;
-	int height;
+	float inner_width;
+	float inner_height;
+	float outer_width;
+	float outer_height;
 	Vector2f position;
 public:
 	Group(int width_, int height_, Vector2f position_);
 
 	FloatRect getLocalBounds() override;
+	FloatRect getGlobalBounds();
 	int getMaxELHeight(short index);
 
 	void setAlignment(string horiz_a, string vertic_a);
-	void setPosition(float x, float y);
+	void setVAlignment(string vertic_a);
+	void setHAlignment(string horiz_a);
 
-	void changePosition(float offset_x, float offset_y);
+	void setPositionX(float x) override;
+	void setPositionY(float y) override;
+
+	void changePosition(float offset_x, float offset_y) override;
 
 	void createElementLine();
 

@@ -135,6 +135,8 @@
 		updateCursor();
 		updateSelected();
 		
+		//std::cout << sizeof(*this) << std::endl;
+
 	}
 
 	void Game::updateCursor(){

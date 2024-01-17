@@ -195,7 +195,6 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="CombatStaff.h" />
-    <ClInclude Include="Rect.h" />
     <ClInclude Include="RedMutant.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Exit.h" />
@@ -230,9 +229,6 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NOT_MARIO.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
