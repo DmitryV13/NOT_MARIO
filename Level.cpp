@@ -159,19 +159,21 @@ void Level::init_enemy()
 	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
 	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
 	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
-
+	chubacabras_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
+	chubacabras_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
 	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
 	////Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
 	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
 	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
 	boss_vector->push_back(new WolfBoss(sandbox, player->getGeneralInfo()));
+	chubacabras_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
 	Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
 	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
 	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
 	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
-	chubacabras_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
-	chubacabras_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
-	chubacabras_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
+	//chubacabras_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
+	//chubacabras_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
+	//chubacabras_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
 
 
 

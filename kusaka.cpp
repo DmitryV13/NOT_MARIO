@@ -571,7 +571,6 @@ void kusaka::update_movement()
 				displacement_max = 1.f;
 			}
 			//animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
-			std::cout << "idle\n";
 
 			break;
 		}
@@ -596,7 +595,6 @@ void kusaka::update_movement()
 			if (search_for_enemies())kusaka_state = KUSAKA_STATE::KUSAKA_ATTACKING;
 
 			walk(moving);
-			std::cout << "jumping\n";
 
 
 			break;
@@ -622,11 +620,9 @@ void kusaka::update_movement()
 			}
 			if (rand() % 10 > 5)kusaka_state = KUSAKA_STATE::KUSAKA_IDLE;
 			walk(moving);
-			std::cout << "moving\n";
 			break;
 		}
 	case KUSAKA_STATE::KUSAKA_ATTACKING:
-		std::cout << "attaking\n";
 		{
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_ATTENTION;
 			kusaka_state_past = kusaka_state;
@@ -664,7 +660,6 @@ void kusaka::update_movement()
 		}
 	case KUSAKA_STATE::KUSAKA_SHOT:
 		{
-			std::cout << "shot\n";
 
 			kusaka_state_past = kusaka_state;
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_SHOT;
@@ -685,7 +680,6 @@ void kusaka::update_movement()
 
 	case KUSAKA_STATE::KUSAKA_DEATH:
 		{
-			std::cout << "death\n";
 
 			kusaka_state_past = kusaka_state;
 			displacement.x = 0;
@@ -715,7 +709,6 @@ void kusaka::update_movement()
 		}
 	case KUSAKA_STATE::KUSAKA_RUN:
 		{
-			std::cout << "run\n";
 
 			kusaka_state_past = kusaka_state;
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_RUN;
@@ -763,7 +756,6 @@ void kusaka::update_movement()
 
 	case KUSAKA_STATE::KUSAKA_SLEEP:
 		{
-			std::cout << "sleep\n";
 
 			kusaka_state_past = kusaka_state;
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_SLEEP;
@@ -775,7 +767,6 @@ void kusaka::update_movement()
 
 	default:
 		{
-			std::cout << "default\n";
 
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_SLEEP;
 			kusaka_state = KUSAKA_STATE::KUSAKA_SLEEP;

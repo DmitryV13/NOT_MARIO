@@ -9,12 +9,19 @@ RedMutant::RedMutant(TileMap& map, GeneralInfo* player_info)
 		RedMutant::init_sprite();
 		RedMutant::setAt(25);
 		RedMutant::setHP(2000);
+		red_mutant_state =RED_MUTANT_STATE::RED_MUTANT_IDLE;
+		hp_damage_i = HP;
+		red_mutant_state_past = red_mutant_state;
+		RED_MUTANT_TAKING_DAMAGE_TIMER.restart();
+		IDLE_timer.restart();
+		DEATH_timer.restart();
+		count_jm = 0;
 	}
 }
 
 void RedMutant::init_texture()
 {
-	if (!chubacabra_t_.loadFromFile("Textures/chubacabra.png"))
+	if (!chubacabra_t_.loadFromFile("Textures/Enemies/chubacabra.png"))
 	{
 		std::cout << "Error -> Enemy_chubacabra -> couldn't load enemy_chubacabra texture" << std::endl;
 	}
@@ -31,47 +38,312 @@ void RedMutant::init_sprite()
 	Enemy_S.setTextureRect(current_frame);
 }
 
+void RedMutant::reset_Timer()
+{
+	if (red_mutant_state_past != red_mutant_state)
+	{
+		IDLE_timer.restart();
+		DEATH_timer.restart();
+		red_mutant_state_past = red_mutant_state;
+	}
+}
 void RedMutant::update_movement()
 {
-	//decision explorer
-	if (on_ground)
+
+	if (HP <= 0)red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_DEATH;
+	if (hp_damage_i > HP)
 	{
+		red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_TAKING_DAMAGE;
+	}
+	//if (!search_for_enemies())clear_shot();
+	switch (red_mutant_state)
+	{
+	case RED_MUTANT_STATE::RED_MUTANT_IDLE:
+	{
+		animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
+		if (search_for_enemies())
+		{
+			red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_ATTACKING;
+		}
+		reset_Timer();
+		if (IDLE_timer.getElapsedTime().asSeconds() >= 1.5f)
+		{
+			if (update_collision_x() && update_collision_x_jump())
+			{
+				jump_flag = true;
+				red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_JUMPING;
+			}
+			else if (hit_a_wall())
+			{
+				red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_MOVING;
+				moving *= -1.f;
+				animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;
+			}
+			else
+			{
+				red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_MOVING;
+			}
+
+
+			IDLE_timer.restart();
+		}
+		else
+		{
+			displacement.x = 0;
+			displacement_max = 1.f;
+		}
+		//animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
+		std::cout << "idle\n";
+
+		break;
+	}
+	case RED_MUTANT_STATE::RED_MUTANT_JUMPING:
+	{
+		animation_state = ENEMY_ANIMATION_STATES::ENEMY_JUMPING;
+		red_mutant_state_past = red_mutant_state;
+		if (on_ground && jump_flag)
+		{
+			jump(1.2f);
+			on_ground = false;
+			jump_tile = true;
+			count_jm++;
+		}
+
+		else if (!canJumpForward() || count_jm > 2)
+		{
+			count_jm = 0;
+			jump_flag = false;
+			red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;
+		}
+		if (search_for_enemies())red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_ATTACKING;
+
+		walk(moving);
+		std::cout << "jumping\n";
+
+
+		break;
+	}
+	case RED_MUTANT_STATE::RED_MUTANT_MOVING:
+	{
+		red_mutant_state_past = red_mutant_state;
+		if (search_for_enemies())
+		{
+			red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_ATTACKING;
+			reset_Timer();
+			break;
+		}
+		animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;
 		if (update_collision_x())
 		{
-			//переписать для подьема без прыжка
-			if (!update_collision_x_jump())
+			if (canJumpForward())
 			{
-
-				
-				jump(1);
-				on_ground = false;
-				jump_tile = true;
+				jump_flag = true;
+				red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_JUMPING;
 			}
 			else moving *= -1.f;
 		}
-	}
-	//step limits
-	if (step_right == max_step)
-	{
-		moving *= -1.f;
-		step_right = 0;
-		animation_counter_think = 12;
-	}
-	if (step_left == max_step)
-	{
-		animation_counter_think = 12;
-		moving *= -1.f;
-		step_left = 0;
-	}if (on_ground && !canMoveForward())
-	{
-		// Враг может двигаться вперед
+		if (rand() % 10 > 5)red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;
 		walk(moving);
+		std::cout << "moving\n";
+		break;
 	}
-	else
+	case RED_MUTANT_STATE::RED_MUTANT_ATTACKING:
+		std::cout << "attaking\n";
+		{
+			animation_state = ENEMY_ANIMATION_STATES::ENEMY_ATTENTION;
+			red_mutant_state_past = red_mutant_state;
+			if (search_for_enemies())
+			{
+				red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_RUN;
+			}
+			if (isPlayerInRadius(observation_area.getGlobalBounds(), player_info->getGlobalBounds(), 192))
+			{
+				if (count_jump == 0)
+				{
+					//jump(1.f);
+					jump_towards_player();
+					count_jump++;
+					red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_JUMPING;
+				}
+			}
+			else reset_attention();
+			if (sting())
+			{
+				red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_SHOT;
+			}
+			if (update_collision_x())
+			{
+				if (canJumpForward())
+				{
+					jump_flag = true;
+					red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_JUMPING;
+				}
+				else moving *= -1.f;
+			}
+
+			walk(moving);
+			break;
+		}
+	case RED_MUTANT_STATE::RED_MUTANT_SHOT:
 	{
-		// Враг не может двигаться вперед, разворачиваемся
-		moving *= -1.f;
+		std::cout << "shot\n";
+
+		red_mutant_state_past = red_mutant_state;
+		animation_state = ENEMY_ANIMATION_STATES::ENEMY_SHOT;
+		if (search_for_enemies() && (on_ground))
+		{
+			attack();
+		}
+		else
+		{
+			reset_attention();
+			clear_shot();
+
+			red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;
+		}
+		walk(moving);
+		break;
 	}
+
+	case RED_MUTANT_STATE::RED_MUTANT_DEATH:
+	{
+		std::cout << "death\n";
+
+		red_mutant_state_past = red_mutant_state;
+		displacement.x = 0;
+		animation_state = ENEMY_ANIMATION_STATES::ENEMY_DEATH;
+		break;
+	}
+	case RED_MUTANT_STATE::RED_MUTANT_TAKING_DAMAGE:
+	{
+		red_mutant_state_past = red_mutant_state;
+		animation_state = ENEMY_ANIMATION_STATES::ENEMY_TAKING_DAMAGE;
+		if (HP <= 0)
+		{
+			red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_DEATH;
+			break;
+		}
+		if (hp_damage_i > HP)
+		{
+			RED_MUTANT_TAKING_DAMAGE_TIMER.restart();
+			hp_damage_i = HP;
+		}
+		if (RED_MUTANT_TAKING_DAMAGE_TIMER.getElapsedTime().asSeconds() >= 1.5f)
+		{
+			red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;
+		}
+
+		break;
+	}
+	case RED_MUTANT_STATE::RED_MUTANT_RUN:
+	{
+		std::cout << "run\n";
+
+		red_mutant_state_past = red_mutant_state;
+		animation_state = ENEMY_ANIMATION_STATES::ENEMY_RUN;
+		if (search_for_enemies())
+		{
+			if (jump_tile || !on_ground)displacement_max = 1.f;
+			else displacement_max = 5.f;
+			if (player_l_r[0] && displacement.x > 0)
+			{
+				displacement.x = 0;
+				moving = -1.f;
+				looks_to_the_right = false;
+				looks_to_the_left = true;
+			}
+			else if (player_l_r[0] && displacement.x < 0)
+			{
+				displacement.x = 0;
+				//moving= 1.f;
+				looks_to_the_right = false;
+				looks_to_the_left = true;
+			}
+			else if (player_l_r[1] && displacement.x > 0)
+			{
+				displacement.x = 0;
+				looks_to_the_right = true;
+				looks_to_the_left = false;
+				//moving = 1.f;
+			}
+			else
+			{
+				displacement.x = 0;
+				moving = 1.f;
+				looks_to_the_right = true;
+				looks_to_the_left = false;
+			}
+			displacement.x += 10 * moving * acceleration;
+		}
+		else red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;
+
+
+		walk(moving);
+		red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_ATTACKING;
+		break;
+	}
+
+	case RED_MUTANT_STATE::RED_MUTANT_TELEPORT:
+	{
+		std::cout << "sleep\n";
+
+		red_mutant_state_past = red_mutant_state;
+		animation_state = ENEMY_ANIMATION_STATES::ENEMY_SLEEP;
+		displacement.x = 0.f;
+		if (search_for_enemies()) red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;
+
+		break;
+	}
+
+	default:
+	{
+		std::cout << "default\n";
+
+		animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
+		red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;
+		break;
+	}
+	}
+
+	//decision explorer
+	//if (on_ground)
+	//{
+	//	if (update_collision_x())
+	//	{
+	//		//переписать для подьема без прыжка
+	//		if (!update_collision_x_jump())
+	//		{
+
+	//			
+	//			jump(1);
+	//			on_ground = false;
+	//			jump_tile = true;
+	//		}
+	//		else moving *= -1.f;
+	//	}
+	//}
+	////step limits
+	//if (step_right == max_step)
+	//{
+	//	moving *= -1.f;
+	//	step_right = 0;
+	//	animation_counter_think = 12;
+	//}
+	//if (step_left == max_step)
+	//{
+	//	animation_counter_think = 12;
+	//	moving *= -1.f;
+	//	step_left = 0;
+	//}if (on_ground && !canMoveForward())
+	//{
+	//	// Враг может двигаться вперед
+	//	walk(moving);
+	//}
+	//else
+	//{
+	//	// Враг не может двигаться вперед, разворачиваемся
+	//	moving *= -1.f;
+	//}
 
 
 	//turning when approaching the map boundaries
@@ -87,7 +359,7 @@ void RedMutant::update_movement()
 	// 	animation_counter_think = 12;
 	// 	moving *= -1.f;
 	// }
-	walk(moving);
+	//walk(moving);
 }
 
 void RedMutant::update_animation()
