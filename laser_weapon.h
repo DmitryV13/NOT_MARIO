@@ -56,8 +56,13 @@ public:
     void update_animation();
     //bool update_collision_x();
     void reset_animation_timer();
-    bool update_collision_x(float x);
+    //bool update_collision_x(float x);
     sf::Vector2f calculateEndPosition(float x);
+    bool collision_block(int, int);
+    bool update_collision_x();
+
+
+    bool hit_a_wall(const sf::Vector2f& currentPosition, float x) const;
     //bool search_for_enemies();
 
 

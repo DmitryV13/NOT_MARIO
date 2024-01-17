@@ -28,11 +28,11 @@ void EyeEvil::init_texture()
 
 void EyeEvil::init_sprite()
 {
-	current_area = IntRect(0, 0, 640, 128);
+	current_area = IntRect(0, 0, 640, 67);
 	observation_area.setTextureRect(current_area);
 
 	Enemy_S.setTexture(Enemy_T);
-	current_frame = IntRect(0, 0, 60, 55.5);
+	current_frame = IntRect(0, 0, 60, 55.4);
 	Enemy_S.setTextureRect(current_frame);
 }
 
