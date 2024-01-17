@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "TileMap.h"
 #include "MyView.h"
-#include "Eye_evil.h"
+#include "EyeEvil.h"
 #include "kusaka.h"
 #include "RedMutant.h"
 #include "WolfBoss.h"
@@ -28,8 +28,8 @@ private:
 	MyView myView;
 	//Cursor* cursor;
 
-	Eye_evil* evil_Ball;
-	vector<Eye_evil*>* evil_ball_vector;
+	EyeEvil* evil_Ball;
+	vector<EyeEvil*>* evil_ball_vector;
 	vector<kusaka*>* Kusaka_vector;
 	vector<RedMutant*>* chubacabras_vector_;
 	vector<WolfBoss*>* boss_vector;

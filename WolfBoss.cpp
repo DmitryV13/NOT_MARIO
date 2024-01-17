@@ -45,7 +45,7 @@ void WolfBoss::init_physics()
 
 void WolfBoss::init_texture()
 {
-	if (!Wolf_Boss_t_.loadFromFile("Textures/boss.png"))
+	if (!Wolf_Boss_t_.loadFromFile("Textures/Enemies/wolf.png"))
 	{
 		std::cout << "Error -> Enemy_Wolf_Boss -> couldn't load enemy_Wolf_Boss texture" << std::endl;
 	}

@@ -22,7 +22,8 @@ enum ENEMY_ANIMATION_STATES
 	ENEMY_ATTENTION,
 	ENEMY_SHOT,
 	ENEMY_SLEEP,
-	ENEMY_BITE
+	ENEMY_BITE,
+	ENEMY_DEATH
 
 };
 enum class PL_SIDE
@@ -36,8 +37,8 @@ class Enemy
 {
 protected:
 	TileMap* sandbox;
-
 	GeneralInfo* player_info;
+
 
 	Texture Enemy_T;
 	Sprite Enemy_S;
@@ -46,6 +47,7 @@ protected:
 	IntRect current_area;
 	Clock animation_timer;
 	Clock blow_timer;
+
 	short animation_state;
 	bool animation_switch;
 	short HP;
@@ -70,14 +72,15 @@ protected:
 	float jump_velocity;
 	bool on_ground;
 	//enemy
-	virtual void init_physics();
 	void init_animation();
 	void init_variables();
-	//virtual
-	virtual void init_texture() = 0;
-	virtual void init_sprite() = 0;
 	void setAt(short at);
 	void setHP(short hp);
+	//virtual
+	virtual void init_physics();
+	virtual void init_texture() = 0;
+	virtual void init_sprite() = 0;
+
 public:
 	//Enemy
 	bool looks_to_the_left;
@@ -95,18 +98,20 @@ public:
 	bool update_collision_x_jump();
 	bool update_collision_y();
 	void reset_animation_timer();
-	virtual void walk(const float dir_x);
-	virtual void jump(const float dir_y);
 	bool player_contact();
 	auto sting() -> bool;
-	PL_SIDE getPlayerSide(float playerX, float enemyX);
 	bool isPlayerInRadius(const sf::FloatRect& observationArea, const sf::FloatRect& playerBounds, float radius);
 	bool canMoveForward() const;
+	bool hit_a_wall() const;
+	bool canJumpForward() const;
 
-	virtual void jump_towards_player();
-	virtual void changeHP(short);
 
 	//virtual
+	virtual PL_SIDE getPlayerSide(float playerX, float enemyX);
+	virtual void jump(const float dir_y);
+	virtual void walk(const float dir_x);
+	virtual void changeHP(short);
+	virtual void jump_towards_player();
 	virtual void reset_attention() = 0;
 	virtual ~Enemy() = default;
 	virtual void shot() = 0;

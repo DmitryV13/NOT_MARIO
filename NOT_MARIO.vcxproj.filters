@@ -186,7 +186,7 @@
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\GameObjects\Alive\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Eye_evil.cpp">
+    <ClCompile Include="EyeEvil.cpp">
       <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="RedMutant.cpp">
@@ -323,7 +323,7 @@
     <ClInclude Include="Enemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Eye_evil.h">
+    <ClInclude Include="EyeEvil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="laser_weapon.h">

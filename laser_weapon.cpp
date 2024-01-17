@@ -111,7 +111,7 @@ void laser_weapon::reset_animation_timer()
 
 void laser_weapon::init_texture()
 {
-	if (!laser_T.loadFromFile("Textures/laser.png"))
+	if (!laser_T.loadFromFile("Textures/Enemies/laser.png"))
 	{
 		std::cout << "Error -> laser -> couldn't load laser texture" << std::endl;
 	}

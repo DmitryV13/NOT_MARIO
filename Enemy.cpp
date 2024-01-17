@@ -63,7 +63,7 @@ Enemy::Enemy(TileMap& map, GeneralInfo* player_info_)
 	sandbox = &map;
 	init_variables();
 	init_animation();
-	init_physics();
+	Enemy::init_physics();
 	//start_position = generate_random_start_position(sandbox->getMapWidth(), sandbox->getMapHeight());
 	start_position = sandbox->cord_enemy();
 		
@@ -75,6 +75,7 @@ Enemy::Enemy(TileMap& map, GeneralInfo* player_info_)
 sf::Vector2f Enemy::get_position() const
 {
 	return Enemy_S.getPosition();
+	
 }
 
 const FloatRect Enemy::get_global_bounds() const
@@ -105,14 +106,11 @@ void Enemy::set_position(const float x, const float y)
 
 void Enemy::render(sf::RenderTarget& target)
 {
-	if(HP>=0)target.draw(Enemy_S);
+	target.draw(Enemy_S);
 }
 
 void Enemy::update()
-
-
 {
-	
 	update_movement();
 	update_animation();
 	update_physics();
@@ -212,7 +210,6 @@ void Enemy::walk(const float dir_x)
 
 bool Enemy::isPlayerInRadius(const sf::FloatRect& observationArea, const sf::FloatRect& playerBounds, float radius)
 {
-
 
 	if (observationArea.intersects(playerBounds)) {
 		sf::Vector2f observationCenter = {
@@ -366,7 +363,7 @@ bool Enemy::update_collision_x()
 			}
 		}
 	}
-	Enemy_S.setPosition(newPosition.x, newPosition.y);
+	set_position(newPosition.x, newPosition.y);
 	return wasCollision;
 }
 
@@ -395,7 +392,7 @@ bool Enemy::update_collision_x_jump()
 			}
 		}
 	}
-	Enemy_S.setPosition(newPosition.x, newPosition.y);
+	set_position(newPosition.x, newPosition.y);
 	return wasCollision;
 }
 
@@ -467,22 +464,89 @@ void Enemy::setAt(short at)
 }
 
 bool Enemy::canMoveForward() const{
-
-	int centerX = static_cast<int>(get_position().x / 64);
-	int centerY = static_cast<int>(get_position().y / 64);
-
-	int direction = looks_to_the_right ? 1 : -1;
-
-	int nextX = centerX + direction;
-	int nextY = centerY;
-
-	if (nextX >= 0 && nextX < sandbox->getMapWidth() / 64 && nextY >= 0 && nextY < sandbox->getMapHeight() / 64)
+	
+	const int direction = looks_to_the_right ? 1 : -1;
+	int centerX;
+	int centerY;
+	if (direction == 1)
 	{
-		if (!sandbox->isBlock(nextY + 1, nextX) && !sandbox->isBlock(nextY + 2, nextX))
+		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width / 2)) / 64);
+		centerY = static_cast<int>(get_position().y / 64);
+	}
+	else
+	{
+		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width)/2) / 64)-direction;
+		centerY = static_cast<int>(get_position().y / 64);
+	}
+
+
+	const int nextX = centerX+direction;
+	const int nextY = centerY;
+
+	
+		if (sandbox->outOfMap(nextY + 2, nextX) && !sandbox->isBlock(nextY+1, nextX) && !sandbox->isBlock(nextY + 2, nextX))
 		{
 			return true; 
 		}
+	
+
+	return false; // Враг не может двигаться вперед
+}
+
+bool Enemy::hit_a_wall() const {
+	const int direction = looks_to_the_right ? 1 : -1;
+	int centerX;
+	int centerY;
+	if(direction == 1)
+	{
+		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width)) / 64)-direction;
+		centerY = static_cast<int>(get_position().y / 64);
+	}else
+	{
+		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width )) / 64);
+		centerY = static_cast<int>(get_position().y / 64);
 	}
+	
+
+
+	const int nextX = centerX+direction;
+	const int nextY = centerY;
+
+		if (sandbox->outOfMap(nextY, nextX) && sandbox->isBlock(nextY, nextX))
+		{
+			return true;
+		}
+	
+
+	return false; // Враг не может двигаться вперед
+}
+
+bool Enemy::canJumpForward() const {
+
+	const int direction = looks_to_the_right ? 1 : -1;
+	int centerX;
+	int centerY;
+	if (direction == 1)
+	{
+		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width / 2)) / 64);
+		centerY = static_cast<int>(get_position().y / 64);
+	}
+	else
+	{
+		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width) / 2) / 64);
+		centerY = static_cast<int>(get_position().y / 64);
+	}
+
+
+	const int nextX = centerX + direction;
+	const int nextY = centerY;
+
+
+	if (sandbox->outOfMap(nextY - 2, nextX) && !sandbox->isBlock(nextY - 1, nextX) && !sandbox->isBlock(nextY - 2, nextX))
+	{
+		return true;
+	}
+
 
 	return false; // Враг не может двигаться вперед
 }

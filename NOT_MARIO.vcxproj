@@ -155,7 +155,7 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="GameMenu.cpp" />
     <ClCompile Include="RoadMap.cpp" />
-    <ClCompile Include="Eye_evil.cpp" />
+    <ClCompile Include="EyeEvil.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="MainMenuOption.cpp" />
     <ClCompile Include="InterfaceItem.cpp" />
@@ -205,7 +205,7 @@
     <ClInclude Include="GameMenu.h" />
     <ClInclude Include="PLAYER_ANIMATION_SATES.h" />
     <ClInclude Include="RoadMap.h" />
-    <ClInclude Include="Eye_evil.h" />
+    <ClInclude Include="EyeEvil.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="MainMenuOption.h" />
     <ClInclude Include="InterfaceItem.h" />
