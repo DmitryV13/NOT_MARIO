@@ -1,7 +1,14 @@
 #pragma once
 #include "Enemy.h"
-enum class EYE_EVIL_STATE {
-	IDLE = 0, MOVING, JUMPING, ATTACKING, DEATH, TAKING_DAMAGE
+
+enum class EYE_EVIL_STATE
+{
+	IDLE = 0,
+	MOVING,
+	JUMPING,
+	ATTACKING,
+	DEATH,
+	TAKING_DAMAGE
 };
 
 using sf::Sprite;
@@ -15,7 +22,6 @@ using sf::Clock;
 class EyeEvil : public Enemy
 {
 public:
-
 	EYE_EVIL_STATE eye_state;
 	EYE_EVIL_STATE eye_state_past;
 	Clock IDLE_timer;
@@ -24,7 +30,7 @@ public:
 
 	bool jump_flag{true};
 
-	short hp_damage_i;
+
 	//vector<laser_weapon> laser;
 	laser_weapon* laser{nullptr};
 	laser_weapon* laserFL{nullptr};
@@ -44,9 +50,7 @@ public:
 	void reset_Timer();
 
 private:
-
 	Texture evil_ball_t_;
 	void init_texture() override;
 	void init_sprite() override;
-
 };

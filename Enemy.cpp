@@ -19,7 +19,7 @@ sf::Vector2f Enemy::generate_random_start_position(int mapWidth, int mapHeight)
 		int centerY = (y + 64) / 64;
 
 		bool collisionDetected = false;
-		if (sandbox->outOfMap(centerY,centerX) && sandbox->isBlock(centerY, centerX))
+		if (sandbox->outOfMap(centerY, centerX) && sandbox->isBlock(centerY, centerX))
 		{
 			collisionDetected = true;
 		}
@@ -57,7 +57,8 @@ void Enemy::init_variables()
 }
 
 Enemy::Enemy(TileMap& map, GeneralInfo* player_info_)
-	:player_info(player_info_){
+	: player_info(player_info_)
+{
 	blow_timer.restart();
 	//player_ = &pl;
 	sandbox = &map;
@@ -66,16 +67,15 @@ Enemy::Enemy(TileMap& map, GeneralInfo* player_info_)
 	Enemy::init_physics();
 	//start_position = generate_random_start_position(sandbox->getMapWidth(), sandbox->getMapHeight());
 	start_position = sandbox->cord_enemy();
-		
-		set_position(start_position.x, start_position.y);
 
-		//set_position(1300,600);
+	set_position(start_position.x, start_position.y);
+
+	//set_position(1300,600);
 }
 
 sf::Vector2f Enemy::get_position() const
 {
 	return Enemy_S.getPosition();
-	
 }
 
 const FloatRect Enemy::get_global_bounds() const
@@ -98,10 +98,11 @@ PL_SIDE Enemy::getPlayerSide(float playerX, float enemyX)
 
 void Enemy::set_position(const float x, const float y)
 {
-	observation_area.setPosition(x-(observation_area.getGlobalBounds().width - (observation_area.getGlobalBounds().width/2)-(Enemy_S.getGlobalBounds().width/2)),
+	observation_area.setPosition(
+		x - (observation_area.getGlobalBounds().width - (observation_area.getGlobalBounds().width / 2) - (Enemy_S.
+			getGlobalBounds().width / 2)),
 		(y - (observation_area.getGlobalBounds().height - Enemy_S.getGlobalBounds().height)));
 	Enemy_S.setPosition(x, y);
-
 }
 
 void Enemy::render(sf::RenderTarget& target)
@@ -187,17 +188,17 @@ void Enemy::walk(const float dir_x)
 		displacement.x = displacement_max * ((displacement.x > 0.f) ? 1.f : -1.f);
 	}
 	if (animation_counter_think > 2 && animation_state != ENEMY_ANIMATION_STATES::ENEMY_ATTENTION)
-	{ 
+	{
 		displacement.x = 0;
 		animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
 	}
 	else if (displacement.y >= gravity)animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING_DOWN;
 	else if (jump_tile)animation_state = ENEMY_ANIMATION_STATES::ENEMY_JUMPING;
 	else animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;
-	
+
 
 	//logic when exposing a player
-	if (search_for_enemies() && ((on_ground) || (jump_tile)) )
+	if (search_for_enemies() && ((on_ground) || (jump_tile)))
 	{
 		attack();
 	}
@@ -210,8 +211,8 @@ void Enemy::walk(const float dir_x)
 
 bool Enemy::isPlayerInRadius(const sf::FloatRect& observationArea, const sf::FloatRect& playerBounds, float radius)
 {
-
-	if (observationArea.intersects(playerBounds)) {
+	if (observationArea.intersects(playerBounds))
+	{
 		sf::Vector2f observationCenter = {
 			observationArea.left + observationArea.width / 2,
 			observationArea.top + observationArea.height / 2
@@ -232,8 +233,8 @@ bool Enemy::isPlayerInRadius(const sf::FloatRect& observationArea, const sf::Flo
 	}
 
 	return false;
-
 }
+
 //ground contact
 void Enemy::reset_jump_access()
 {
@@ -259,37 +260,37 @@ bool Enemy::player_contact()
 	int centerX = get_position().x / 64;
 	int centerY = get_position().y / 64;
 	int l = 2;
-	if(looks_to_the_right)
-	for (int i = centerY - 5; i <= centerY + 5; i++)
-	{
-		for (int j = centerX; j <= centerX + l; j++)
+	if (looks_to_the_right)
+		for (int i = centerY - 5; i <= centerY + 5; i++)
 		{
-			if (i >= 0 && i < (sandbox->getMapHeight()/64) && j >= 0 && j < (sandbox->getMapWidth()/64))
+			for (int j = centerX; j <= centerX + l; j++)
 			{
-				if (sandbox->isOccupied(i, j))
+				if (i >= 0 && i < (sandbox->getMapHeight() / 64) && j >= 0 && j < (sandbox->getMapWidth() / 64))
 				{
-					return true;
+					if (sandbox->isOccupied(i, j))
+					{
+						return true;
+					}
 				}
 			}
 		}
-	}
 
 	else
-	for (int i = centerY - 5; i <= centerY + 5; i++)
-	{
-		for (int j = centerX - l+1 ; j <= centerX; j++)
+		for (int i = centerY - 5; i <= centerY + 5; i++)
 		{
-			if (i >= 0 && i < (sandbox->getMapHeight() / 64) && j >= 0 && j < (sandbox->getMapWidth() / 64))
+			for (int j = centerX - l + 1; j <= centerX; j++)
 			{
-				if (sandbox->isOccupied(i, j))
+				if (i >= 0 && i < (sandbox->getMapHeight() / 64) && j >= 0 && j < (sandbox->getMapWidth() / 64))
 				{
-					return true;
+					if (sandbox->isOccupied(i, j))
+					{
+						return true;
+					}
 				}
 			}
 		}
-	}
 
-	
+
 	return false;
 }
 
@@ -311,7 +312,7 @@ void Enemy::update_physics()
 	{
 		displacement.y -= jump_velocity;
 		//jumping onto a block
-		displacement.x +=  moving * acceleration;
+		displacement.x += moving * acceleration;
 		//jump deceleratin
 		jump_velocity *= 0.96;
 	}
@@ -319,9 +320,9 @@ void Enemy::update_physics()
 	displacement *= deceleration;
 
 	// limits
-	if (jump_tile&& search_for_enemies())
+	if (jump_tile && search_for_enemies())
 	{
-		displacement.x = 2* moving * displacement_max;
+		displacement.x = 2 * moving * displacement_max;
 	}
 	if (update_collision_x())
 	{
@@ -382,7 +383,8 @@ bool Enemy::update_collision_x_jump()
 		for (int j = (Enemy_S.getPosition().x + displacement.x) / 64; j < (Enemy_S.getPosition().x + displacement.x +
 			     Enemy_S.getGlobalBounds().width) / 64; j++)
 		{
-			if (sandbox->outOfMap(i, j) && (i>0 && sandbox->isBlock(i - 1, j)) || j <= 0 || j > sandbox->getMapWidth() / 64)
+			if (sandbox->outOfMap(i, j) && (i > 0 && sandbox->isBlock(i - 1, j)) || j <= 0 || j > sandbox->getMapWidth()
+				/ 64)
 			{
 				wasCollision = true;
 				if (displacement.x >= 0)
@@ -403,7 +405,6 @@ bool Enemy::update_collision_x_jump()
 //collision y
 bool Enemy::update_collision_y()
 {
-	
 	bool wasCollision = false;
 
 	sf::Vector2f newPosition(Enemy_S.getPosition().x, Enemy_S.getPosition().y);
@@ -436,7 +437,8 @@ bool Enemy::update_collision_y()
 	return wasCollision;
 }
 
-bool Enemy::sting(){
+bool Enemy::sting()
+{
 	FloatRect en = get_global_bounds();
 	FloatRect pl = player_info->getGlobalBounds();
 	return en.intersects(pl);
@@ -444,12 +446,11 @@ bool Enemy::sting(){
 
 void Enemy::jump_towards_player()
 {
-
 	float distance = std::abs(player_info->getPosition().x - get_position().x);
-	float jump_Height = std::min(1.0f, distance / 300.0f) * 2.0f; 
-	float max_jump_height = 2.0f; 
+	float jump_Height = std::min(1.0f, distance / 300.0f) * 2.0f;
+	float max_jump_height = 2.0f;
 	jump_Height = std::min(jump_Height, max_jump_height);
-	
+
 	jump(jump_Height);
 }
 
@@ -457,6 +458,7 @@ void Enemy::changeHP(short attackPl)
 {
 	HP -= attackPl;
 }
+
 void Enemy::setHP(short hp)
 {
 	HP = hp;
@@ -467,8 +469,8 @@ void Enemy::setAt(short at)
 	attack_ = at;
 }
 
-bool Enemy::canMoveForward() const{
-	
+bool Enemy::canMoveForward() const
+{
 	const int direction = looks_to_the_right ? 1 : -1;
 	int centerX;
 	int centerY;
@@ -479,65 +481,7 @@ bool Enemy::canMoveForward() const{
 	}
 	else
 	{
-		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width)/2) / 64)-direction;
-		centerY = static_cast<int>(get_position().y / 64);
-	}
-
-
-	const int nextX = centerX+direction;
-	const int nextY = centerY;
-
-	
-		if (sandbox->outOfMap(nextY + 2, nextX) && !sandbox->isBlock(nextY+1, nextX) && !sandbox->isBlock(nextY + 2, nextX))
-		{
-			return true; 
-		}
-	
-
-	return false; // Враг не может двигаться вперед
-}
-
-bool Enemy::hit_a_wall() const {
-	const int direction = looks_to_the_right ? 1 : -1;
-	int centerX;
-	int centerY;
-	if(direction == 1)
-	{
-		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width)) / 64)-direction;
-		centerY = static_cast<int>(get_position().y / 64);
-	}else
-	{
-		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width )) / 64);
-		centerY = static_cast<int>(get_position().y / 64);
-	}
-	
-
-
-	const int nextX = centerX+direction;
-	const int nextY = centerY;
-
-		if (sandbox->outOfMap(nextY, nextX) && sandbox->isBlock(nextY, nextX))
-		{
-			return true;
-		}
-	
-
-	return false; // Враг не может двигаться вперед
-}
-
-bool Enemy::canJumpForward() const {
-
-	const int direction = looks_to_the_right ? 1 : -1;
-	int centerX;
-	int centerY;
-	if (direction == 1)
-	{
-		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width / 2)) / 64);
-		centerY = static_cast<int>(get_position().y / 64);
-	}
-	else
-	{
-		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width) / 2) / 64);
+		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width) / 2) / 64) - direction;
 		centerY = static_cast<int>(get_position().y / 64);
 	}
 
@@ -546,11 +490,72 @@ bool Enemy::canJumpForward() const {
 	const int nextY = centerY;
 
 
-	if (sandbox->outOfMap(nextY - 2, nextX) && !sandbox->isBlock(nextY - 1, nextX) && !sandbox->isBlock(nextY - 2, nextX))
+	if (sandbox->outOfMap(nextY + 2, nextX) && !sandbox->isBlock(nextY + 1, nextX) && !sandbox->isBlock(
+		nextY + 2, nextX))
 	{
 		return true;
 	}
 
 
 	return false; // Враг не может двигаться вперед
+}
+
+bool Enemy::hit_a_wall() const
+{
+	const int direction = looks_to_the_right ? 1 : -1;
+	int centerX;
+	int centerY;
+	if (direction == 1)
+	{
+		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width)) / 64) - direction;
+		centerY = static_cast<int>((get_position().y + (Enemy_S.getGlobalBounds().height / 2)) / 64);
+	}
+	else
+	{
+		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width)) / 64);
+		centerY = static_cast<int>((get_position().y + (Enemy_S.getGlobalBounds().height / 2)) / 64);
+	}
+
+
+	const int nextX = centerX + direction;
+	const int nextY = centerY;
+
+	if (sandbox->outOfMap(nextY, nextX) && sandbox->isBlock(nextY, nextX))
+	{
+		return true;
+	}
+
+
+	return false;
+}
+
+bool Enemy::canJumpForward() const
+{
+	const int direction = looks_to_the_right ? 1 : -1;
+	int centerX;
+	int centerY;
+	if (direction == 1)
+	{
+		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width / 2)) / 64);
+		centerY = static_cast<int>((get_position().y + (Enemy_S.getGlobalBounds().height / 2)) / 64);
+	}
+	else
+	{
+		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width) / 2) / 64);
+		centerY = static_cast<int>((get_position().y + (Enemy_S.getGlobalBounds().height / 2)) / 64);
+	}
+
+
+	const int nextX = centerX + direction;
+	const int nextY = centerY;
+
+
+	if (sandbox->outOfMap(nextY - 2, nextX) && !sandbox->isBlock(nextY - 1, nextX) && !sandbox->isBlock(
+		nextY - 2, nextX))
+	{
+		return true;
+	}
+
+
+	return false;
 }

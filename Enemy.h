@@ -24,9 +24,10 @@ enum ENEMY_ANIMATION_STATES
 	ENEMY_SLEEP,
 	ENEMY_BITE,
 	ENEMY_DEATH,
-	ENEMY_TAKING_DAMAGE
-
+	ENEMY_TAKING_DAMAGE,
+	ENEMY_RUN
 };
+
 enum class PL_SIDE
 {
 	LEFT,
@@ -49,8 +50,10 @@ protected:
 	Clock animation_timer;
 	Clock blow_timer;
 
+
 	short animation_state;
 	bool animation_switch;
+	short hp_damage_i;
 	short HP;
 	short attack_;
 	short count_shot;

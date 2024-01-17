@@ -60,8 +60,9 @@ void EyeEvil::update_movement()
 	{
 	case EYE_EVIL_STATE::IDLE:
 		{
-			if (search_for_enemies() && ATTACKING_timer.getElapsedTime().asSeconds() >= 6.1f)eye_state =
-				EYE_EVIL_STATE::ATTACKING;
+			if (search_for_enemies() && ATTACKING_timer.getElapsedTime().asSeconds() >= 6.1f)
+				eye_state =
+					EYE_EVIL_STATE::ATTACKING;
 			reset_Timer();
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
 			if (IDLE_timer.getElapsedTime().asSeconds() >= 1.5f)
@@ -93,7 +94,6 @@ void EyeEvil::update_movement()
 				displacement_max = 1.f;
 			}
 			//animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
-			std::cout << "idle\n";
 
 			break;
 		}
@@ -113,7 +113,6 @@ void EyeEvil::update_movement()
 				eye_state = EYE_EVIL_STATE::IDLE;
 			}
 			walk(moving);
-			std::cout << "jumping\n";
 
 
 			break;
@@ -121,7 +120,8 @@ void EyeEvil::update_movement()
 	case EYE_EVIL_STATE::MOVING:
 		{
 			eye_state_past = eye_state;
-			if (search_for_enemies()) {
+			if (search_for_enemies())
+			{
 				eye_state = EYE_EVIL_STATE::ATTACKING;
 				reset_Timer();
 			}
@@ -136,7 +136,6 @@ void EyeEvil::update_movement()
 				else moving *= -1.f;
 			}
 			walk(moving);
-			std::cout << "moving\n";
 			break;
 		}
 	case EYE_EVIL_STATE::ATTACKING:
@@ -151,7 +150,8 @@ void EyeEvil::update_movement()
 			else
 			{
 				reset_attention();
-				clear_shot(); reset_Timer();
+				clear_shot();
+				reset_Timer();
 				eye_state = EYE_EVIL_STATE::IDLE;
 			}
 			break;
@@ -166,6 +166,12 @@ void EyeEvil::update_movement()
 	case EYE_EVIL_STATE::TAKING_DAMAGE:
 		{
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_TAKING_DAMAGE;
+			if (HP <= 0)
+			{
+				eye_state = EYE_EVIL_STATE::DEATH;
+				break;
+			}
+
 			if (hp_damage_i > HP)
 			{
 				hp_damage_i = HP;
@@ -247,8 +253,6 @@ void EyeEvil::walk(const float dir_x)
 	{
 		displacement_max = 2.2f;
 		displacement.x = 2 * moving * displacement_max;
-
-
 	}
 	else displacement_max = 1.f;
 

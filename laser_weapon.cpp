@@ -2,8 +2,8 @@
 #include "laser_weapon.h"
 
 laser_weapon::laser_weapon(TileMap& map, int compar, float i,
-	float j, bool direction, GeneralInfo* player_info_)
-	:attack(12), player_info(player_info_)
+                           float j, bool direction, GeneralInfo* player_info_)
+	: attack(12), player_info(player_info_)
 {
 	//player = pl;
 	dir_x = direction;
@@ -11,7 +11,7 @@ laser_weapon::laser_weapon(TileMap& map, int compar, float i,
 	sandbox = &map;
 
 	init_variables(compar);
-	
+
 	init_texture();
 	init_sprite();
 	set_position(i, j);
@@ -70,8 +70,6 @@ void laser_weapon::update_animation()
 			}
 			else
 			{
-				
-
 				current_frame.top += 60;
 				if (current_frame.top >= 180.f)
 				{
@@ -196,7 +194,7 @@ sf::Vector2f laser_weapon::calculateEndPosition(float x)
 	else j = (laser_S.getPosition().x + x) / 64;
 
 	int g = 0;
-	
+
 	while (sandbox->outOfMap(i, j) && !sandbox->isBlock(i, j) && g < 64)
 	{
 		g++;
@@ -205,21 +203,20 @@ sf::Vector2f laser_weapon::calculateEndPosition(float x)
 		if (dir_x)j = (newPosition.x + laser_S.getGlobalBounds().width) / 64;
 		else j = (newPosition.x) / 64;
 	}
-	if (dir_x) {
+	if (dir_x)
+	{
 		newPosition.x = (j - 1) * 64;
 	}
-	else {
+	else
+	{
 		newPosition.x = (j + 1) * 64;
 	}
 	return newPosition;
 }
+
 void laser_weapon::render_FL(sf::RenderTarget& target)
 {
-
 	float x = dir_x ? 64.0f : -64.0f;
-
-	
-
 
 
 	sf::Vector2f startPosition = get_position();
@@ -227,7 +224,7 @@ void laser_weapon::render_FL(sf::RenderTarget& target)
 	damage(startPosition, endPosition);
 	if (startPosition.x / 64 == endPosition.x / 64)return;
 	if (startPosition == endPosition)return;
-	if(abs(endPosition.x + startPosition.x)>128)
+	if (abs(endPosition.x + startPosition.x) > 128)
 	{
 		if (dir_x)
 		{
@@ -250,7 +247,6 @@ void laser_weapon::render_FL(sf::RenderTarget& target)
 			current_frame.width = 65;
 			current_frame.left = 0;
 			laser_S.setTextureRect(current_frame);
-
 		}
 
 		else
@@ -274,8 +270,8 @@ void laser_weapon::render_FL(sf::RenderTarget& target)
 			laser_S.setTextureRect(current_frame);
 		}
 	}
-	else {
-
+	else
+	{
 		if (dir_x)
 		{
 			endPosition.x += 32;
@@ -297,7 +293,6 @@ void laser_weapon::render_FL(sf::RenderTarget& target)
 			current_frame.width = 65;
 			current_frame.left = 0;
 			laser_S.setTextureRect(current_frame);
-
 		}
 
 		else
@@ -322,15 +317,16 @@ void laser_weapon::render_FL(sf::RenderTarget& target)
 		}
 	}
 }
+
 bool laser_weapon::collision_block(int i, int j)
 {
 	float blockSize = 64.f;
 	float blockX = static_cast<float>(j * blockSize);
 	float blockY = static_cast<float>(i * blockSize);
 
-	
+
 	sf::FloatRect blockRect(blockX, blockY, blockSize, blockSize);
-	if (sandbox->outOfMap(i,j) && sandbox->isBlock(i,j) && blockRect.intersects(laser_S.getGlobalBounds()))
+	if (sandbox->outOfMap(i, j) && sandbox->isBlock(i, j) && blockRect.intersects(laser_S.getGlobalBounds()))
 	{
 		return false;
 	}
@@ -355,7 +351,7 @@ bool laser_weapon::update_collision_x()
 			++totalPixels;
 			if (sandbox->outOfMap(i, j) && sandbox->isBlock(i, j))
 			{
-					++collidedPixels;
+				++collidedPixels;
 			}
 		}
 	}
@@ -370,40 +366,33 @@ void laser_weapon::damage(sf::Vector2f startPosition, sf::Vector2f endPosition)
 	if (laser_timer.getElapsedTime().asSeconds() >= 0.5f)
 	{
 		laser_timer.restart();
-		if(dir_x)
+		if (dir_x)
 		{
-			sf::RectangleShape greenSquare(sf::Vector2f(((endPosition.x- startPosition.x)+64), 40));
-		greenSquare.setFillColor(sf::Color::Green);
-		greenSquare.setPosition(startPosition.x, startPosition.y);
-		if (greenSquare.getGlobalBounds().intersects(player_info->getGlobalBounds())) {
-			//player->changeHP(-attack - (rand() % 5));
-			player_info->changeHP(-attack - (rand() % 5));
-		}
-		
-		
-		}
-		else
-		{
-			sf::RectangleShape greenSquare(sf::Vector2f((abs( startPosition.x- endPosition.x) + 64), 40));
+			sf::RectangleShape greenSquare(sf::Vector2f(((endPosition.x - startPosition.x) + 64), 40));
 			greenSquare.setFillColor(sf::Color::Green);
-			greenSquare.setPosition(endPosition.x, endPosition.y);
-			if (greenSquare.getGlobalBounds().intersects(player_info->getGlobalBounds())) {
+			greenSquare.setPosition(startPosition.x, startPosition.y);
+			if (greenSquare.getGlobalBounds().intersects(player_info->getGlobalBounds()))
+			{
 				//player->changeHP(-attack - (rand() % 5));
 				player_info->changeHP(-attack - (rand() % 5));
 			}
-		
-		
 		}
-		
-
-
-
+		else
+		{
+			sf::RectangleShape greenSquare(sf::Vector2f((abs(startPosition.x - endPosition.x) + 64), 40));
+			greenSquare.setFillColor(sf::Color::Green);
+			greenSquare.setPosition(endPosition.x, endPosition.y);
+			if (greenSquare.getGlobalBounds().intersects(player_info->getGlobalBounds()))
+			{
+				//player->changeHP(-attack - (rand() % 5));
+				player_info->changeHP(-attack - (rand() % 5));
+			}
+		}
 	}
 }
 
 void laser_weapon::render(sf::RenderTarget& target)
 {
-
 	float x = dir_x ? 64.0f : -64.0f;
 	sf::Vector2f startPosition = get_position();
 	sf::Vector2f currentPosition = startPosition;
@@ -419,17 +408,18 @@ void laser_weapon::render(sf::RenderTarget& target)
 
 		if (hit_a_wall(currentPosition, x))
 		{
-			if(!dir_x){
+			if (!dir_x)
+			{
 				current_frame.left = 200;
 				current_frame.width = 64;
 				laser_S.setPosition(currentPosition);
 				laser_S.setTextureRect(current_frame);
-				if(!update_collision_x())target.draw(laser_S);
+				if (!update_collision_x())target.draw(laser_S);
 
 				current_frame.left = 120;
-			current_frame.width = 64;
-			
-			laser_S.setTextureRect(current_frame);
+				current_frame.width = 64;
+
+				laser_S.setTextureRect(current_frame);
 			}
 			else
 			{
@@ -450,7 +440,7 @@ void laser_weapon::render(sf::RenderTarget& target)
 		}
 
 		laser_S.setPosition(currentPosition);
-		
+
 		if (!update_collision_x())target.draw(laser_S);
 
 		// Optionally, you may want to check if currentPosition is close enough to endPosition
@@ -496,8 +486,6 @@ void laser_weapon::render(sf::RenderTarget& target)
 bool laser_weapon::hit_a_wall(const sf::Vector2f& currentPosition, float x) const
 
 {
-
-
 	int centerX = static_cast<int>((currentPosition.x + (laser_S.getGlobalBounds().width * 0.5f)) / 64);
 	int centerY = static_cast<int>(currentPosition.y / 64);
 
