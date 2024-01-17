@@ -10,6 +10,7 @@ EyeEvil::EyeEvil(TileMap& map, GeneralInfo* player_info)
 		EyeEvil::init_sprite();
 		EyeEvil::setAt(20);
 		EyeEvil::setHP(1000);
+		hp_damage_i = HP;
 		eye_state = eye_state_past = EYE_EVIL_STATE::IDLE;
 		IDLE_timer.restart();
 		ATTACKING_timer.restart();
@@ -50,14 +51,20 @@ void EyeEvil::reset_Timer()
 void EyeEvil::update_movement()
 {
 	if (HP <= 0)eye_state = EYE_EVIL_STATE::DEATH;
+	if (hp_damage_i > HP)
+	{
+		eye_state = EYE_EVIL_STATE::TAKING_DAMAGE;
+	}
+	if (!search_for_enemies())clear_shot();
 	switch (eye_state)
 	{
 	case EYE_EVIL_STATE::IDLE:
 		{
-			if (search_for_enemies() && ATTACKING_timer.getElapsedTime().asSeconds() >= 7.1f)eye_state = EYE_EVIL_STATE::ATTACKING;
+			if (search_for_enemies() && ATTACKING_timer.getElapsedTime().asSeconds() >= 6.1f)eye_state =
+				EYE_EVIL_STATE::ATTACKING;
 			reset_Timer();
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
-			if (IDLE_timer.getElapsedTime().asSeconds() >= 2.1f)
+			if (IDLE_timer.getElapsedTime().asSeconds() >= 1.5f)
 			{
 				if (hit_a_wall() && update_collision_x_jump())
 				{
@@ -96,7 +103,7 @@ void EyeEvil::update_movement()
 			eye_state_past = eye_state;
 			if (on_ground && jump_flag)
 			{
-				jump(1);
+				jump(1.2);
 				on_ground = false;
 				jump_tile = true;
 			}
@@ -114,8 +121,10 @@ void EyeEvil::update_movement()
 	case EYE_EVIL_STATE::MOVING:
 		{
 			eye_state_past = eye_state;
-			if (search_for_enemies())eye_state = EYE_EVIL_STATE::ATTACKING;
-
+			if (search_for_enemies()) {
+				eye_state = EYE_EVIL_STATE::ATTACKING;
+				reset_Timer();
+			}
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;
 			if (hit_a_wall())
 			{
@@ -132,31 +141,40 @@ void EyeEvil::update_movement()
 		}
 	case EYE_EVIL_STATE::ATTACKING:
 		{
-		
-		animation_state = ENEMY_ANIMATION_STATES::ENEMY_ATTENTION;
-		
+			animation_state = ENEMY_ANIMATION_STATES::ENEMY_ATTENTION;
 
-		
-		if (search_for_enemies() && ATTACKING_timer.getElapsedTime().asSeconds() <= 5.1f)
-		{
-			attack();
-			
 
-		}
-				
+			if (search_for_enemies() && ATTACKING_timer.getElapsedTime().asSeconds() <= 5.1f)
+			{
+				attack();
+			}
 			else
 			{
 				reset_attention();
-				clear_shot();
+				clear_shot(); reset_Timer();
 				eye_state = EYE_EVIL_STATE::IDLE;
 			}
-		break;
+			break;
 		}
 	case EYE_EVIL_STATE::DEATH:
 		{
 			displacement.x = 0;
 			reset_Timer();
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_DEATH;
+			break;
+		}
+	case EYE_EVIL_STATE::TAKING_DAMAGE:
+		{
+			animation_state = ENEMY_ANIMATION_STATES::ENEMY_TAKING_DAMAGE;
+			if (hp_damage_i > HP)
+			{
+				hp_damage_i = HP;
+			}
+			else
+			{
+				eye_state = EYE_EVIL_STATE::IDLE;
+			}
+
 			break;
 		}
 
@@ -225,6 +243,14 @@ void EyeEvil::walk(const float dir_x)
 	{
 		displacement.x += dir_x * acceleration;
 	}
+	if (eye_state == EYE_EVIL_STATE::JUMPING)
+	{
+		displacement_max = 2.2f;
+		displacement.x = 2 * moving * displacement_max;
+
+
+	}
+	else displacement_max = 1.f;
 
 	// limits
 	/*if (std::abs(displacement.x) > displacement_max)
@@ -433,6 +459,42 @@ void EyeEvil::update_animation()
 				if (current_frame.left >= 420.f)
 				{
 					current_frame.left = 360.f;
+				}
+				current_frame.top = 240;
+				current_frame.width = -60;
+			}
+
+
+			Enemy_S.setTextureRect(current_frame);
+			animation_timer.restart();
+		}
+	}
+	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_TAKING_DAMAGE)
+	{
+		if (animation_timer.getElapsedTime().asSeconds() >= 0.05f || get_animation_switch())
+		{
+			if (looks_to_the_right)
+			{
+				if (attention_counter == 3)current_frame.left = 60.f;
+				attention_counter--;
+				current_frame.left += 60;
+
+				if (current_frame.left >= 300.f)
+				{
+					current_frame.left = 240.f;
+				}
+				current_frame.top = 240;
+				current_frame.width = 60;
+			}
+			else
+			{
+				if (attention_counter == 3)current_frame.left = 180.f;
+				attention_counter--;
+				current_frame.left += 60;
+
+				if (current_frame.left >= 360.f)
+				{
+					current_frame.left = 300.f;
 				}
 				current_frame.top = 240;
 				current_frame.width = -60;

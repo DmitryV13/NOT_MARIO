@@ -22,6 +22,7 @@ protected:
     short attack;
     Texture laser_T;
     Sprite laser_S;
+    Sprite laser_area;
     IntRect current_frame;
     Clock animation_timer;
     Clock laser_timer;
@@ -60,6 +61,7 @@ public:
     sf::Vector2f calculateEndPosition(float x);
     bool collision_block(int, int);
     bool update_collision_x();
+    void damage(sf::Vector2f , sf::Vector2f);
 
 
     bool hit_a_wall(const sf::Vector2f& currentPosition, float x) const;

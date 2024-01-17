@@ -218,105 +218,109 @@ void laser_weapon::render_FL(sf::RenderTarget& target)
 
 	float x = dir_x ? 64.0f : -64.0f;
 
-
+	
 
 
 
 	sf::Vector2f startPosition = get_position();
 	sf::Vector2f endPosition = calculateEndPosition(x);
+	damage(startPosition, endPosition);
 	if (startPosition.x / 64 == endPosition.x / 64)return;
 	if (startPosition == endPosition)return;
-
-
-	if (dir_x)
+	if(abs(endPosition.x + startPosition.x)>128)
 	{
-		endPosition.x += 32;
-		update_animation();
-		laser_S.setPosition(startPosition);
-		if(laser_timer.getElapsedTime().asSeconds() >= 0.2f)
+		if (dir_x)
 		{
-			sf::FloatRect las = laser_S.getGlobalBounds();
-			sf::FloatRect pl = player_info->getGlobalBounds();
-			if (las.intersects(pl)) {
-				//player->changeHP(-attack - (rand() % 5));
-				player_info->changeHP(-attack - (rand() % 5));
-			}
-			laser_timer.restart();
-
-		}
-		
-		target.draw(laser_S);
-
-		current_frame.left = 67;
-		current_frame.width = -67;
-		laser_S.setTextureRect(current_frame);
-		if (endPosition.x >= startPosition.x)
-		{
-			laser_S.setPosition(endPosition);
-			if (laser_timer.getElapsedTime().asSeconds() >= 0.1f)
-			{
-				sf::FloatRect las = laser_S.getGlobalBounds();
-				sf::FloatRect pl = player_info->getGlobalBounds();
-				if (las.intersects(pl)) {
-					//player->changeHP(-attack - (rand() % 5));
-					player_info->changeHP(-attack - (rand() % 5));
-				}
-				laser_timer.restart();
-
-			}
+			endPosition.x += 32;
+			update_animation();
+			laser_S.setPosition(startPosition);
 			target.draw(laser_S);
-		}
 
-
-		laser_S.setPosition(startPosition);
-		current_frame.width = 65;
-		current_frame.left = 0;
-		laser_S.setTextureRect(current_frame);
-
-	}
-
-	else
-	{
-		endPosition.x -= 32;
-		laser_S.setPosition(startPosition);
-		if (laser_timer.getElapsedTime().asSeconds() >= 0.1f)
-		{
-			sf::FloatRect las = laser_S.getGlobalBounds();
-			sf::FloatRect pl = player_info->getGlobalBounds();
-			if (las.intersects(pl)) {
-				//player->changeHP(-attack - (rand() % 5));
-				player_info->changeHP(-attack - (rand() % 5));
-			}
-			laser_timer.restart();
-
-		}
-		target.draw(laser_S);
-
-		current_frame.width = 60;
-		current_frame.left = 8;
-		laser_S.setTextureRect(current_frame);
-		if (endPosition.x + 64 < startPosition.x)
-		{
-			laser_S.setPosition(endPosition);
-			if (laser_timer.getElapsedTime().asSeconds() >= 0.1f)
+			current_frame.left = 80;
+			current_frame.width = -120;
+			laser_S.setTextureRect(current_frame);
+			if (endPosition.x >= startPosition.x)
 			{
-				sf::FloatRect las = laser_S.getGlobalBounds();
-				sf::FloatRect pl = player_info->getGlobalBounds();
-				if (las.intersects(pl)) {
-					//player->changeHP(-attack - (rand() % 5));
-					player_info->changeHP(-attack - (rand() % 5));
-				}
-				laser_timer.restart();
+				laser_S.setPosition(endPosition);
+				target.draw(laser_S);
 			}
-			target.draw(laser_S);
+
+
+			laser_S.setPosition(startPosition);
+			current_frame.width = 65;
+			current_frame.left = 0;
+			laser_S.setTextureRect(current_frame);
+
 		}
 
-		laser_S.setPosition(startPosition);
-		current_frame.left = 65;
-		current_frame.width = -65;
-		laser_S.setTextureRect(current_frame);
-	}
+		else
+		{
+			endPosition.x -= 32;
+			laser_S.setPosition(startPosition);
+			target.draw(laser_S);
 
+			current_frame.width = 120;
+			current_frame.left = 8;
+			laser_S.setTextureRect(current_frame);
+			if (endPosition.x + 64 < startPosition.x)
+			{
+				laser_S.setPosition(endPosition);
+				target.draw(laser_S);
+			}
+
+			laser_S.setPosition(startPosition);
+			current_frame.left = 65;
+			current_frame.width = -65;
+			laser_S.setTextureRect(current_frame);
+		}
+	}
+	else {
+
+		if (dir_x)
+		{
+			endPosition.x += 32;
+			update_animation();
+			laser_S.setPosition(startPosition);
+			target.draw(laser_S);
+
+			current_frame.left = 67;
+			current_frame.width = -67;
+			laser_S.setTextureRect(current_frame);
+			if (endPosition.x >= startPosition.x)
+			{
+				laser_S.setPosition(endPosition);
+				target.draw(laser_S);
+			}
+
+
+			laser_S.setPosition(startPosition);
+			current_frame.width = 65;
+			current_frame.left = 0;
+			laser_S.setTextureRect(current_frame);
+
+		}
+
+		else
+		{
+			endPosition.x -= 32;
+			laser_S.setPosition(startPosition);
+			target.draw(laser_S);
+
+			current_frame.width = 60;
+			current_frame.left = 8;
+			laser_S.setTextureRect(current_frame);
+			if (endPosition.x + 64 < startPosition.x)
+			{
+				laser_S.setPosition(endPosition);
+				target.draw(laser_S);
+			}
+
+			laser_S.setPosition(startPosition);
+			current_frame.left = 65;
+			current_frame.width = -65;
+			laser_S.setTextureRect(current_frame);
+		}
+	}
 }
 bool laser_weapon::collision_block(int i, int j)
 {
@@ -358,9 +362,44 @@ bool laser_weapon::update_collision_x()
 
 	set_position(newPosition.x, newPosition.y);
 
-	return (collidedPixels > totalPixels * 0.5);
+	return (collidedPixels > totalPixels * 0.2);
 }
 
+void laser_weapon::damage(sf::Vector2f startPosition, sf::Vector2f endPosition)
+{
+	if (laser_timer.getElapsedTime().asSeconds() >= 0.5f)
+	{
+		laser_timer.restart();
+		if(dir_x)
+		{
+			sf::RectangleShape greenSquare(sf::Vector2f(((endPosition.x- startPosition.x)+64), 40));
+		greenSquare.setFillColor(sf::Color::Green);
+		greenSquare.setPosition(startPosition.x, startPosition.y);
+		if (greenSquare.getGlobalBounds().intersects(player_info->getGlobalBounds())) {
+			//player->changeHP(-attack - (rand() % 5));
+			player_info->changeHP(-attack - (rand() % 5));
+		}
+		
+		
+		}
+		else
+		{
+			sf::RectangleShape greenSquare(sf::Vector2f((abs( startPosition.x- endPosition.x) + 64), 40));
+			greenSquare.setFillColor(sf::Color::Green);
+			greenSquare.setPosition(endPosition.x, endPosition.y);
+			if (greenSquare.getGlobalBounds().intersects(player_info->getGlobalBounds())) {
+				//player->changeHP(-attack - (rand() % 5));
+				player_info->changeHP(-attack - (rand() % 5));
+			}
+		
+		
+		}
+		
+
+
+
+	}
+}
 
 void laser_weapon::render(sf::RenderTarget& target)
 {
@@ -372,17 +411,6 @@ void laser_weapon::render(sf::RenderTarget& target)
 
 	//if (startPosition == endPosition) return;
 	laser_S.setPosition(currentPosition);
-	if (laser_timer.getElapsedTime().asSeconds() >= 0.1f)
-	{
-		sf::FloatRect las = laser_S.getGlobalBounds();
-		sf::FloatRect pl = player_info->getGlobalBounds();
-		if (las.intersects(pl)) {
-			//player->changeHP(-attack - (rand() % 5));
-			player_info->changeHP(-attack - (rand() % 5));
-		}
-		laser_timer.restart();
-
-	}
 	if (!update_collision_x())target.draw(laser_S);
 
 	while (true)
@@ -393,19 +421,8 @@ void laser_weapon::render(sf::RenderTarget& target)
 		{
 			if(!dir_x){
 				current_frame.left = 200;
-				current_frame.width = -64;
+				current_frame.width = 64;
 				laser_S.setPosition(currentPosition);
-				if (laser_timer.getElapsedTime().asSeconds() >= 0.1f)
-				{
-					sf::FloatRect las = laser_S.getGlobalBounds();
-					sf::FloatRect pl = player_info->getGlobalBounds();
-					if (las.intersects(pl)) {
-						//player->changeHP(-attack - (rand() % 5));
-						player_info->changeHP(-attack - (rand() % 5));
-					}
-					laser_timer.restart();
-
-				}
 				laser_S.setTextureRect(current_frame);
 				if(!update_collision_x())target.draw(laser_S);
 
@@ -414,23 +431,26 @@ void laser_weapon::render(sf::RenderTarget& target)
 			
 			laser_S.setTextureRect(current_frame);
 			}
+			else
+			{
+				current_frame.left = 220;
+				current_frame.width = 50;
+				laser_S.setPosition(currentPosition);
+				laser_S.setTextureRect(current_frame);
+				if (!update_collision_x())target.draw(laser_S);
+
+				current_frame.left = 120;
+				current_frame.width = 64;
+
+				laser_S.setTextureRect(current_frame);
+			}
 			laser_S.setPosition(startPosition);
 			// If hit a wall, stop drawing
 			return;
 		}
 
 		laser_S.setPosition(currentPosition);
-		if (laser_timer.getElapsedTime().asSeconds() >= 0.1f)
-		{
-			sf::FloatRect las = laser_S.getGlobalBounds();
-			sf::FloatRect pl = player_info->getGlobalBounds();
-			if (las.intersects(pl)) {
-				//player->changeHP(-attack - (rand() % 5));
-				player_info->changeHP(-attack - (rand() % 5));
-			}
-			laser_timer.restart();
-
-		}
+		
 		if (!update_collision_x())target.draw(laser_S);
 
 		// Optionally, you may want to check if currentPosition is close enough to endPosition

@@ -1,7 +1,7 @@
 #pragma once
 #include "Enemy.h"
 enum class EYE_EVIL_STATE {
-	IDLE = 0, MOVING, JUMPING, ATTACKING, DEATH
+	IDLE = 0, MOVING, JUMPING, ATTACKING, DEATH, TAKING_DAMAGE
 };
 
 using sf::Sprite;
@@ -24,6 +24,7 @@ public:
 
 	bool jump_flag{true};
 
+	short hp_damage_i;
 	//vector<laser_weapon> laser;
 	laser_weapon* laser{nullptr};
 	laser_weapon* laserFL{nullptr};

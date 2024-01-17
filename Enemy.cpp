@@ -302,6 +302,10 @@ void Enemy::update_physics()
 	{
 		displacement.y = velocity_max_y * ((displacement.y > 0.f) ? 1.f : -1.f);
 	}
+	if (std::abs(displacement.x) > displacement_max)
+	{
+		displacement.x = displacement_max * ((displacement.x > 0.f) ? 1.f : -1.f);
+	}
 	//jumping
 	if (jump_tile)
 	{
