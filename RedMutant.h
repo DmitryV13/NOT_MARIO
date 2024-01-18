@@ -23,9 +23,11 @@ private:
 	Clock IDLE_timer;
 	Clock DEATH_timer;
 	Clock RED_MUTANT_TAKING_DAMAGE_TIMER;
-
+	Clock Shot_timer;
+	bool teleport{ true };
 	bool jump_flag{ true };
 	short count_jm;
+	short count_anim{ 0 };
 	bool player_l_r[2]{ false };
 	int count_jump = 0;
 	int count_atack = 0;
@@ -39,7 +41,7 @@ public:
 
 	~RedMutant() override = default;
 	void reset_Timer();
-
+	void walk(const float dir_x) override;
 	void update_movement() override;
 	void update_animation() override;
 	void clear_shot() override;
@@ -47,6 +49,7 @@ public:
 	void attack() override;
 	bool search_for_enemies() override;
 	void reset_attention() override;
+	virtual void changeHP(short)override;
 
 	bool plStan();
 };

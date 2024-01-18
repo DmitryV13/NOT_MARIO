@@ -64,16 +64,18 @@ void EyeEvil::update_movement()
 				eye_state =
 					EYE_EVIL_STATE::ATTACKING;
 			reset_Timer();
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
-			if (IDLE_timer.getElapsedTime().asSeconds() >= 1.5f)
-			{
-				if (hit_a_wall() && update_collision_x_jump())
+			if (hit_a_wall() && update_collision_x_jump())
 				{
 					jump_flag = true;
 					eye_state = EYE_EVIL_STATE::JUMPING;
 					//animation_state = ENEMY_ANIMATION_STATES::ENEMY_JUMPING;
+				break;
 				}
-				else if (hit_a_wall())
+			animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
+			if (IDLE_timer.getElapsedTime().asSeconds() >= 1.5f)
+			{
+				
+				 if (hit_a_wall())
 				{
 					eye_state = EYE_EVIL_STATE::MOVING;
 

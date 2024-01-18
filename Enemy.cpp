@@ -8,7 +8,7 @@
 sf::Vector2f Enemy::generate_random_start_position(int mapWidth, int mapHeight)
 {
 	//  randomized distribution
-	int maxAttempts = 100000;
+	int maxAttempts = 1000000;
 
 	for (int i = 0; i < maxAttempts; i++)
 	{
@@ -537,12 +537,12 @@ bool Enemy::canJumpForward() const
 	if (direction == 1)
 	{
 		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width / 2)) / 64);
-		centerY = static_cast<int>((get_position().y + (Enemy_S.getGlobalBounds().height / 2)) / 64);
+		centerY = static_cast<int>((get_position().y + (Enemy_S.getGlobalBounds().height-64/2 )) / 64);
 	}
 	else
 	{
 		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width) / 2) / 64);
-		centerY = static_cast<int>((get_position().y + (Enemy_S.getGlobalBounds().height / 2)) / 64);
+		centerY = static_cast<int>((get_position().y + (Enemy_S.getGlobalBounds().height-64/2 )) / 64);
 	}
 
 

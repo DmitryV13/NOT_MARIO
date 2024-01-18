@@ -543,14 +543,17 @@ void kusaka::update_movement()
 				kusaka_state = KUSAKA_STATE::KUSAKA_ATTACKING;
 			}
 			reset_Timer();
+
+			if (update_collision_x() && update_collision_x_jump())
+			{
+				jump_flag = true;
+				kusaka_state = KUSAKA_STATE::KUSAKA_JUMPING;
+				break;
+			}
 			if (IDLE_timer.getElapsedTime().asSeconds() >= 1.5f)
 			{
-				if (update_collision_x() && update_collision_x_jump())
-				{
-					jump_flag = true;
-					kusaka_state = KUSAKA_STATE::KUSAKA_JUMPING;
-				}
-				else if (hit_a_wall())
+				
+				 if (hit_a_wall())
 				{
 					kusaka_state = KUSAKA_STATE::KUSAKA_MOVING;
 					moving *= -1.f;
