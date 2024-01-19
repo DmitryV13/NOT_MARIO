@@ -148,7 +148,7 @@ void Enemy::init_physics()
 	acceleration = 0.4f;
 	deceleration = 0.77f;
 	gravity = 2.5f;
-	velocity_max_y = 15.f;
+	velocity_max_y = 6.f;
 	on_ground = false;
 	jump_velocity = 7.f;
 	moving = 1.f;

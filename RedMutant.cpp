@@ -42,6 +42,7 @@ void RedMutant::reset_Timer()
 {
 	if (red_mutant_state_past != red_mutant_state)
 	{
+		
 		count_anim = 0;
 		IDLE_timer.restart();
 		DEATH_timer.restart();
@@ -217,6 +218,9 @@ void RedMutant::update_movement()
 			if (Shot_timer.getElapsedTime().asSeconds() >= 0.5f)
 			{
 				red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_TELEPORT;
+				if (looks_to_the_left)current_frame.width = 60;
+				else current_frame.width = 0;
+				Enemy_S.setTextureRect(current_frame);
 				Shot_timer.restart();
 			}
 
@@ -253,6 +257,7 @@ void RedMutant::update_movement()
 				red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;
 			}
 			walk(moving);
+
 			break;
 		}
 
@@ -282,7 +287,7 @@ void RedMutant::update_movement()
 				std::cout <<HP<< "\n";
 				
 			}
-			if (RED_MUTANT_TAKING_DAMAGE_TIMER.getElapsedTime().asSeconds() >= 0.4f)
+			if (RED_MUTANT_TAKING_DAMAGE_TIMER.getElapsedTime().asSeconds() >= 0.3f)
 			{
 				red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;
 			}
@@ -292,7 +297,7 @@ void RedMutant::update_movement()
 	case RED_MUTANT_STATE::RED_MUTANT_RUN:
 		{
 			std::cout << "run\n";
-			red_mutant_state_past = red_mutant_state;
+			
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_RUN;
 			if (search_for_enemies())
 			{
@@ -341,7 +346,7 @@ void RedMutant::update_movement()
 			std::cout << "TELEPORT\n";
 			reset_Timer();
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_TELEPORT;
-			if (Shot_timer.getElapsedTime().asSeconds() >= 0.5f)
+			if (Shot_timer.getElapsedTime().asSeconds() >= 0.3f)
 			{
 				if (teleport)
 					while (true)
@@ -358,7 +363,7 @@ void RedMutant::update_movement()
 						}
 						else set_position(get_position().x, get_position().y);
 					}
-				if (Shot_timer.getElapsedTime().asSeconds() >= 0.9f)
+				if (Shot_timer.getElapsedTime().asSeconds() >= 0.7f)
 				{
 					teleport = true;
 					red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;
@@ -500,8 +505,8 @@ void RedMutant::update_animation()
 					current_frame.left = 0;
 					count_anim++;
 				}
-					current_frame.left += 70;
-					if (current_frame.left >= 210.f)
+					current_frame.left += 60;
+					if (current_frame.left >= 180.f)
 					{
 						current_frame.left = 0.f;
 					}
@@ -512,13 +517,13 @@ void RedMutant::update_animation()
 			else
 			{
 				if (count_anim == 0) {
-					current_frame.left = 70;
+					current_frame.left = 60;
 					count_anim++;
 				}
-				current_frame.left += 70;
-				if (current_frame.left >= 280.f)
+				current_frame.left += 60;
+				if (current_frame.left >= 240.f)
 				{
-					current_frame.left = 70.f;
+					current_frame.left = 60.f;
 				}
 				current_frame.width = -60;
 				current_frame.top = 0;
@@ -546,6 +551,10 @@ void RedMutant::update_animation()
 				else
 				{
 					current_frame.left += 60;
+					if (current_frame.left >= 420.f)
+					{
+						current_frame.left = 0.f;
+					}
 					current_frame.width = 60;
 					current_frame.top = 350;
 				}
@@ -564,7 +573,10 @@ void RedMutant::update_animation()
 				else
 				{
 					current_frame.left += 60;
-					
+					if (current_frame.left >= 480.f)
+					{
+						current_frame.left = 60.f;
+					}
 					current_frame.width = -60;
 					current_frame.top = 350;
 				}
@@ -584,28 +596,30 @@ void RedMutant::update_animation()
 					current_frame.left = 0;
 					count_anim++;
 				}
-				current_frame.left += 70;
-				if (current_frame.left >= 210.f)
+				current_frame.left += 60;
+				if (current_frame.left >= 180.f)
 				{
 					current_frame.left = 0.f;
 				}
 				current_frame.width = 60;
 				current_frame.top = 0;
+
 			}
 			else
 			{
 				if (count_anim == 0) {
-					current_frame.left = 70;
+					current_frame.left = 60;
 					count_anim++;
 				}
-				current_frame.left += 70;
-				if (current_frame.left >= 280.f)
+				current_frame.left += 60;
+				if (current_frame.left >= 240.f)
 				{
-					current_frame.left = 70.f;
+					current_frame.left = 60.f;
 				}
 				current_frame.width = -60;
 				current_frame.top = 0;
 			}
+
 
 			Enemy_S.setTextureRect(current_frame);
 			animation_timer.restart();
@@ -621,28 +635,30 @@ void RedMutant::update_animation()
 					current_frame.left = 0;
 					count_anim++;
 				}
-				current_frame.left += 70;
-				if (current_frame.left >= 210.f)
+				current_frame.left += 60;
+				if (current_frame.left >= 180.f)
 				{
 					current_frame.left = 0.f;
 				}
 				current_frame.width = 60;
 				current_frame.top = 0;
+
 			}
 			else
 			{
 				if (count_anim == 0) {
-					current_frame.left = 70;
+					current_frame.left = 60;
 					count_anim++;
 				}
-				current_frame.left += 70;
-				if (current_frame.left >= 280.f)
+				current_frame.left += 60;
+				if (current_frame.left >= 240.f)
 				{
-					current_frame.left = 70.f;
+					current_frame.left = 60.f;
 				}
 				current_frame.width = -60;
 				current_frame.top = 0;
 			}
+
 
 			Enemy_S.setTextureRect(current_frame);
 			animation_timer.restart();
@@ -654,26 +670,34 @@ void RedMutant::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				
-				current_frame.left += 70;
-				if (current_frame.left >= 210.f)
+				if (count_anim == 0) {
+					current_frame.left = 0;
+					count_anim++;
+				}
+				current_frame.left += 60;
+				if (current_frame.left >= 180.f)
 				{
 					current_frame.left = 0.f;
 				}
 				current_frame.width = 60;
 				current_frame.top = 0;
+
 			}
 			else
 			{
-				
-				current_frame.left += 70;
-				if (current_frame.left >= 280.f)
+				if (count_anim == 0) {
+					current_frame.left = 60;
+					count_anim++;
+				}
+				current_frame.left += 60;
+				if (current_frame.left >= 240.f)
 				{
-					current_frame.left = 70.f;
+					current_frame.left = 60.f;
 				}
 				current_frame.width = -60;
 				current_frame.top = 0;
 			}
+
 
 			Enemy_S.setTextureRect(current_frame);
 			animation_timer.restart();
@@ -688,24 +712,23 @@ void RedMutant::update_animation()
 			{
 				if (count_anim == 0) { current_frame.left = 0; count_anim++; }
 
-				current_frame.left += 80;
-				if (current_frame.left >= 320.f)
+				else current_frame.left += 70;
+				if (current_frame.left >= 280.f)
 				{
 					current_frame.left = 0.f;
 				}
-				current_frame.width = 80;
+				current_frame.width = 70;
 				current_frame.top = 122;
 			}
 			else
 			{
-				if (count_anim == 0) { current_frame.left = 80; count_anim++; }
-
-				current_frame.left += 80;
-				if (current_frame.left >= 400.f)
+				if (count_anim == 0) { current_frame.left =70; count_anim++; }
+				else current_frame.left += 70;
+				if (current_frame.left >= 350.f)
 				{
-					current_frame.left = 80.f;
+					current_frame.left = 70.f;
 				}
-				current_frame.width = -80;
+				current_frame.width = -70;
 				current_frame.top = 122;
 			}
 
@@ -723,8 +746,8 @@ void RedMutant::update_animation()
 					current_frame.left = 0;
 					count_anim++;
 				}
-				current_frame.left += 70;
-				if (current_frame.left >= 350.f)
+				current_frame.left += 60;
+				if (current_frame.left >= 300.f)
 				{
 					current_frame.left = 0.f;
 				}
@@ -735,13 +758,13 @@ void RedMutant::update_animation()
 
 			{
 				if (count_anim == 0) {
-					current_frame.left = 70;
+					current_frame.left = 60;
 					count_anim++;
 				}
-				current_frame.left += 70;
-				if (current_frame.left >= 420.f)
+				current_frame.left += 60;
+				if (current_frame.left >= 360.f)
 				{
-					current_frame.left = 70.f;
+					current_frame.left = 60.f;
 				}
 				current_frame.width = -60;
 				current_frame.top = 242;
@@ -756,29 +779,26 @@ void RedMutant::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				if (attention_counter == 3)current_frame.left = 0.f;
-				attention_counter--;
-				current_frame.left += 70;
+				
+				current_frame.left += 60;
 
-				if (current_frame.left >= 210.f)
+				if (current_frame.left >= 180.f)
 				{
 					current_frame.left = 0.f;
 				}
 				current_frame.top = 580;
-				current_frame.width = 70;
+				current_frame.width = 60;
 			}
 			else
 			{
-				if (attention_counter == 3)current_frame.left = 0.f;
-				attention_counter--;
-				current_frame.left += 70;
+				current_frame.left += 60;
 
-				if (current_frame.left >= 280.f)
+				if (current_frame.left >= 240.f)
 				{
-					current_frame.left = 70.f;
+					current_frame.left = 60.f;
 				}
 				current_frame.top = 580;
-				current_frame.width = -70;
+				current_frame.width = -60;
 			}
 
 
@@ -792,39 +812,34 @@ void RedMutant::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				count_anim++;
-				if (count_anim<4) {
-					if (count_anim == 0) {
-						current_frame.left = 0;
-						count_anim++;
-					}
-					else current_frame.left += 60;
-					if (current_frame.left >= 180.f)
-					{
-						current_frame.left = 0.f;
-					}
-					current_frame.width = 60;
-					current_frame.top = 458;
+				if (count_anim == 0) {
+					current_frame.left = 0;
+					count_anim++;
 				}
+				current_frame.left += 60;
+
+				if (current_frame.left >= 240.f)
+				{
+					current_frame.left = 180.f;
+				}
+				current_frame.top = 457;
+				current_frame.width = 60;
 			}
 			else
 			{
-				count_anim++;
-				if (count_anim < 4) {
-					if (count_anim == 0) {
-						current_frame.left = 60;
-						count_anim++;
-					}
-					current_frame.left += 60;
-					if (current_frame.left >= 240.f)
-					{
-						current_frame.left = 60.f;
-					}
-					current_frame.width = -60;
-					current_frame.top = 458;
+				if (count_anim == 0) {
+					current_frame.left = 60;
+					count_anim++;
 				}
-			}
+				current_frame.left += 60;
 
+				if (current_frame.left >= 300.f)
+				{
+					current_frame.left = 240.f;
+				}
+				current_frame.top = 457;
+				current_frame.width = -60;
+			}
 			Enemy_S.setTextureRect(current_frame);
 			animation_timer.restart();
 		}
@@ -945,31 +960,42 @@ sf::Vector2f RedMutant::calculateRandomPosition(const sf::FloatRect& playerBound
 {
 	int x = static_cast<int>(get_position().x / sandbox->getSizeTexture());
 	int y = static_cast<int>(get_position().y / sandbox->getSizeTexture());
-	int count = 10000;
+	int count = 1000000;
 	int startDirection = (rand() % 2 == 0) ? 1 : -1;
-	while (true)
+
+	
+	int spriteSizeInBlocksX = static_cast<int>(Enemy_S.getGlobalBounds().width / sandbox->getSizeTexture());
+	int spriteSizeInBlocksY = static_cast<int>(Enemy_S.getGlobalBounds().height / sandbox->getSizeTexture());
+
+	while (count--)
 	{
-		for (int i = startDirection * jumpDistance; i != 0; i -= startDirection)
-		{
-			int newX = x + i;
-			int newY = y;
+		int randomXOffset = rand() % (2 * jumpDistance + 1) - jumpDistance; // Random offset within [-jumpDistance, jumpDistance]
+		int randomYOffset = rand() % (2 * jumpDistance + 1) - jumpDistance; // Random offset within [-jumpDistance, jumpDistance]
 
-			if (sandbox->outOfMap(newY + 1, newX) && sandbox->isBlock(newY + 1, newX))
-			{
-				newY += 1;
-			}
+		int newX = x + randomXOffset;
+		int newY = y + randomYOffset;
 
-			if (sandbox->outOfMap(newY, newX))
-			{
-				if (!sandbox->isBlock(newY, newX))
-				{
-					return sf::Vector2f(newX * sandbox->getSizeTexture(), newY * sandbox->getSizeTexture());
-				}
-			}
-		}
-		if (!count--)return get_position();
+		
+		if (!sandbox->outOfMap(newY, newX))
+			continue;
+
+		
+		if (sandbox->isBlock(newY, newX))
+			continue;
+
+		
+		if (sandbox->outOfMap(newY + 2, newX) && !sandbox->isBlock(newY + 2, newX))
+			continue;
+		if (sandbox->outOfMap(newY+1, newX) && sandbox->isBlock(newY + 1, newX) )
+			continue;
+		return sf::Vector2f(newX * sandbox->getSizeTexture(), newY * sandbox->getSizeTexture());
 	}
+
+	return get_position(); 
 }
+
+
+
 
 
 void RedMutant::clear_shot()
