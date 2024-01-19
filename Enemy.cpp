@@ -102,6 +102,12 @@ void Enemy::set_position(const float x, const float y)
 		x - (observation_area.getGlobalBounds().width - (observation_area.getGlobalBounds().width / 2) - (Enemy_S.
 			getGlobalBounds().width / 2)),
 		(y - (observation_area.getGlobalBounds().height - Enemy_S.getGlobalBounds().height)));
+
+	standard_area.setPosition(
+		x - (standard_area.getGlobalBounds().width - (standard_area.getGlobalBounds().width / 2) - (Enemy_S.
+			getGlobalBounds().width / 2)),
+		(y - (standard_area.getGlobalBounds().height - Enemy_S.getGlobalBounds().height)));
+
 	Enemy_S.setPosition(x, y);
 }
 

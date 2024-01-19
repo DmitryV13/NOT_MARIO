@@ -31,7 +31,7 @@ private:
 	EyeEvil* evil_Ball;
 	vector<EyeEvil*>* evil_ball_vector;
 	vector<kusaka*>* Kusaka_vector;
-	vector<RedMutant*>* chubacabras_vector_;
+	vector<RedMutant*>* Red_Mutant_vector_;
 	vector<WolfBoss*>* boss_vector;
 	int num_of_enemy_{ 12 };
 	short regime;
@@ -67,7 +67,7 @@ public:
 	void updateCursor();
 	void updateEvilBall();
 	void update_Kusaka();
-	void update_chubacabra();
+	void update_Red_Mutant();
 	void update_Wolf_boss();
 	void updateGameMenu();
 	void updateGameState();

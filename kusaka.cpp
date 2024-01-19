@@ -542,6 +542,11 @@ void kusaka::update_movement()
 			{
 				kusaka_state = KUSAKA_STATE::KUSAKA_ATTACKING;
 			}
+			if(kusaka_state_past == KUSAKA_STATE::KUSAKA_JUMPING)
+			{
+				kusaka_state = KUSAKA_STATE::KUSAKA_MOVING;
+				break;
+			}
 			reset_Timer();
 
 			if (update_collision_x() && update_collision_x_jump())
@@ -583,17 +588,20 @@ void kusaka::update_movement()
 			kusaka_state_past = kusaka_state;
 			if (on_ground && jump_flag)
 			{
-				jump(1.2f);
+				jump(1.3f);
 				on_ground = false;
 				jump_tile = true;
 				count_jm++;
+				displacement_max = 3.f;
+				displacement.x *= displacement_max;
 			}
 
-			else if (!canJumpForward() || count_jm > 2)
+			else if (!canJumpForward() || count_jm > 4)
 			{
 				count_jm = 0;
 				jump_flag = false;
 				kusaka_state = KUSAKA_STATE::KUSAKA_IDLE;
+				displacement_max = 1.f;
 			}
 			if (search_for_enemies())kusaka_state = KUSAKA_STATE::KUSAKA_ATTACKING;
 

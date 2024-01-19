@@ -26,7 +26,11 @@ enum ENEMY_ANIMATION_STATES
 	ENEMY_DEATH,
 	ENEMY_TAKING_DAMAGE,
 	ENEMY_RUN,
-	ENEMY_TELEPORT
+	ENEMY_TELEPORT,
+	ENEMY_PUNCH,
+	ENEMY_DOUBLE_KICK,
+	ENEMY_HOWL,
+	HIT_EARTH
 };
 
 enum class PL_SIDE
@@ -46,8 +50,10 @@ protected:
 	Texture Enemy_T;
 	Sprite Enemy_S;
 	Sprite observation_area;
+	Sprite standard_area;
 	IntRect current_frame;
 	IntRect current_area;
+	IntRect standard_frame;
 	Clock animation_timer;
 	Clock blow_timer;
 

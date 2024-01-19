@@ -32,7 +32,7 @@ void Player::initVariables(){
         currentFrame = IntRect(2, 80, 48, 70);
         player_S.setTextureRect(currentFrame);
         //initial position
-        player_S.setPosition(102, 2600);
+        player_S.setPosition(4266, 250);
     }
 
     void Player::initWeapon(const vector<vector<Enemy*>*>& enemies) {
@@ -83,6 +83,7 @@ void Player::initVariables(){
             animationTimer.restart();
             player_S.setTextureRect(currentFrame);
         }
+        //std::cout << getPosition().x << " " <<getPosition().y<<"\n";
         target.draw(player_S);
         weapons[chosen_weapon]->render(target);
         renderProjectiles(target);

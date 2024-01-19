@@ -98,10 +98,10 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 			delete enemy;
 		}
 		Kusaka_vector->clear();
-		for (auto& enemy : *chubacabras_vector_) {
+		for (auto& enemy : *Red_Mutant_vector_) {
 			delete enemy;
 		}
-		chubacabras_vector_->clear();
+		Red_Mutant_vector_->clear();
 		//for (auto& enemy : *boss_vector) {
 		//	delete enemy;
 		//}
@@ -131,11 +131,11 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 
 	void Level::init_chubacabra()
 	{
-		chubacabras_vector_ = new vector<RedMutant*>();
+		Red_Mutant_vector_ = new vector<RedMutant*>();
 		for (int i = 0; i < num_of_enemy_; i++)
 		{
 			RedMutant* enemy = new RedMutant(sandbox, player->getGeneralInfo());
-			chubacabras_vector_->push_back(enemy);
+			Red_Mutant_vector_->push_back(enemy);
 		}
 	}
 
@@ -153,29 +153,29 @@ void Level::init_enemy()
 {
 	Kusaka_vector = new vector<kusaka*>();
 	evil_ball_vector = new vector<EyeEvil*>();
-	chubacabras_vector_ = new vector<RedMutant*>();
+	Red_Mutant_vector_ = new vector<RedMutant*>();
 	boss_vector = new vector<WolfBoss*>();
 	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
 	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
 	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
 	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
+	boss_vector->push_back(new WolfBoss(sandbox, player->getGeneralInfo()));
 	Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
-	
-	chubacabras_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
-	//chubacabras_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
+
+	Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
+	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
 	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
 	////Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
 	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
 	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
-	boss_vector->push_back(new WolfBoss(sandbox, player->getGeneralInfo()));
-	//chubacabras_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
+	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
 	Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
 	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
 	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
 	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
-	//chubacabras_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
-	//chubacabras_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
-	//chubacabras_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
+	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
+	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
+	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
 
 
 
@@ -191,7 +191,7 @@ void Level::updateEvilBall()
 
 		if ((*it)->eye_state == EYE_EVIL_STATE::DEATH && (*it)->DEATH_timer.getElapsedTime().asSeconds() >= 5.1f)
 		{
-			
+			delete* it;
 			it = evil_ball_vector->erase(it);
 		}
 		else
@@ -212,7 +212,7 @@ void Level::updateEvilBall()
 
 			if ((*it)->kusaka_state == KUSAKA_STATE::KUSAKA_DEATH && (*it)->DEATH_timer.getElapsedTime().asSeconds() >= 5.1f)
 			{
-
+				delete* it;
 				it = Kusaka_vector->erase(it);
 			}
 			else
@@ -227,14 +227,28 @@ void Level::updateEvilBall()
  	//	}
 	}
 
-	void Level::update_chubacabra()
+	void Level::update_Red_Mutant()
 	{
 
+		auto it = Red_Mutant_vector_->begin();
+		while (it != Red_Mutant_vector_->end())
+		{
+			(*it)->update();
 
-		for (auto& enemy : *chubacabras_vector_)
+			if ((*it)->red_mutant_state == RED_MUTANT_STATE::RED_MUTANT_DEATH && (*it)->DEATH_timer.getElapsedTime().asSeconds() >= 5.1f)
+			{
+				delete *it;
+				it = Red_Mutant_vector_->erase(it);
+			}
+			else
+			{
+				++it;
+			}
+		}
+		for (auto& enemy : *Red_Mutant_vector_)
 		{
 			enemy->update();
-			//(*chubacabras_vector_)[i]->update();
+			//(*Red_Mutant_vector_)[i]->update();
 		}
 	}
 
@@ -296,7 +310,7 @@ void Level::updateEvilBall()
 
 		updateEvilBall();
 		update_Kusaka();
-		update_chubacabra();
+		update_Red_Mutant();
 		update_Wolf_boss();
 
 		updateView();
@@ -420,9 +434,9 @@ void Level::updateEvilBall()
 
 	void Level::render_chubacabra()
 	{
-		for (auto& enemy : *chubacabras_vector_)
+		for (auto& enemy : *Red_Mutant_vector_)
 		{
-			//(*chubacabras_vector_)[i]->render(*window);
+			//(*Red_Mutant_vector_)[i]->render(*window);
 			enemy->render(*window);
 		}
 	}
@@ -475,6 +489,6 @@ void Level::updateEvilBall()
 	void Level::initWeapons(){
 		player->initWeapon({ reinterpret_cast<vector<Enemy*>*>(Kusaka_vector)
 			, reinterpret_cast<vector<Enemy*>*>(evil_ball_vector)
-			, reinterpret_cast<vector<Enemy*>*>(chubacabras_vector_)
+			, reinterpret_cast<vector<Enemy*>*>(Red_Mutant_vector_)
 			, reinterpret_cast<vector<Enemy*>*>(boss_vector) });
 	}

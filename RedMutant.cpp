@@ -42,7 +42,6 @@ void RedMutant::reset_Timer()
 {
 	if (red_mutant_state_past != red_mutant_state)
 	{
-		
 		count_anim = 0;
 		IDLE_timer.restart();
 		DEATH_timer.restart();
@@ -105,7 +104,6 @@ void RedMutant::update_movement()
 				displacement_max = 1.f;
 			}
 			//animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
-			std::cout << "idle\n";
 			walk(moving);
 			break;
 		}
@@ -131,7 +129,6 @@ void RedMutant::update_movement()
 			if (search_for_enemies())red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_ATTACKING;
 
 			walk(moving);
-			std::cout << "jumping\n";
 
 
 			break;
@@ -160,11 +157,9 @@ void RedMutant::update_movement()
 			}
 			if (rand() % 10 > 5)red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;
 			if (!sting())walk(moving);
-			std::cout << "moving\n";
 			break;
 		}
 	case RED_MUTANT_STATE::RED_MUTANT_ATTACKING:
-		std::cout << "attaking\n";
 		{	reset_Timer();
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_ATTENTION;
 			
@@ -204,7 +199,6 @@ void RedMutant::update_movement()
 		}
 	case RED_MUTANT_STATE::RED_MUTANT_SHOT:
 		{
-			std::cout << "shot\n";
 			FloatRect en = get_global_bounds();
 			FloatRect pl = player_info->getGlobalBounds();
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_SHOT;
@@ -263,7 +257,6 @@ void RedMutant::update_movement()
 
 	case RED_MUTANT_STATE::RED_MUTANT_DEATH:
 		{
-			std::cout << "death\n";
 
 			reset_Timer();
 			displacement.x = 0;
@@ -284,7 +277,6 @@ void RedMutant::update_movement()
 			{
 				RED_MUTANT_TAKING_DAMAGE_TIMER.restart();
 				hp_damage_i = HP;
-				std::cout <<HP<< "\n";
 				
 			}
 			if (RED_MUTANT_TAKING_DAMAGE_TIMER.getElapsedTime().asSeconds() >= 0.3f)
@@ -296,7 +288,6 @@ void RedMutant::update_movement()
 		}
 	case RED_MUTANT_STATE::RED_MUTANT_RUN:
 		{
-			std::cout << "run\n";
 			
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_RUN;
 			if (search_for_enemies())
