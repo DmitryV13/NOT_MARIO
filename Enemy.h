@@ -30,7 +30,7 @@ enum ENEMY_ANIMATION_STATES
 	ENEMY_PUNCH,
 	ENEMY_DOUBLE_KICK,
 	ENEMY_HOWL,
-	HIT_EARTH
+	ENEMY_HIT_EARTH
 };
 
 enum class PL_SIDE
@@ -50,7 +50,7 @@ protected:
 	Texture Enemy_T;
 	Sprite Enemy_S;
 	Sprite observation_area;
-	Sprite standard_area;
+	Sprite anim_area;
 	IntRect current_frame;
 	IntRect current_area;
 	IntRect standard_frame;
@@ -59,6 +59,7 @@ protected:
 
 
 	short animation_state;
+	short animation_state_past;
 	bool animation_switch;
 	short hp_damage_i;
 	short HP;
@@ -115,6 +116,7 @@ public:
 	bool canMoveForward() const;
 	bool hit_a_wall() const;
 	bool canJumpForward() const;
+	const FloatRect get_global_bounds_anim() const;
 
 
 	//virtual

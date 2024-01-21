@@ -32,9 +32,17 @@ void kusaka::init_sprite()
 {
 	current_area = IntRect(0, 0, 1280, 192);
 	observation_area.setTextureRect(current_area);
+
+
+	anim_area.setTexture(kusaka_t_);
+	standard_frame = IntRect(0, 0, 90, 55);
+	anim_area.setTextureRect(standard_frame);
+
+
+
 	//Enemy_T = init_texture();
-	Enemy_S.setTexture(kusaka_t_);
-	current_frame = IntRect(0, 0, 90, 55);
+	//Enemy_S.setTexture(kusaka_t_);
+	current_frame = IntRect(0, 0, 64, 55);
 	Enemy_S.setTextureRect(current_frame);
 }
 
@@ -47,26 +55,26 @@ void kusaka::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 810.f)
+				standard_frame.left += 90;
+				if (standard_frame.left >= 810.f)
 				{
-					current_frame.left = 0.f;
+					standard_frame.left = 0.f;
 				}
-				current_frame.width = 90;
-				current_frame.top = 0;
+				standard_frame.width = 90;
+				standard_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 900.f)
+				standard_frame.left += 90;
+				if (standard_frame.left >= 900.f)
 				{
-					current_frame.left = 90.f;
+					standard_frame.left = 90.f;
 				}
-				current_frame.width = -90;
-				current_frame.top = 0;
+				standard_frame.width = -90;
+				standard_frame.top = 0;
 			}
 
-			Enemy_S.setTextureRect(current_frame);
+			anim_area.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -74,30 +82,28 @@ void kusaka::update_animation()
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
-			animation_counter_think--;
 			if (looks_to_the_right)
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 810.f)
+				standard_frame.left += 90;
+				if (standard_frame.left >= 450.f)
 				{
-					current_frame.left = 0.f;
+					standard_frame.left = 0.f;
 				}
-				current_frame.width = 90;
-				current_frame.top = 0;
+				standard_frame.width = 90;
+				standard_frame.top = 281;
 			}
 			else
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 900.f)
+				standard_frame.left += 90;
+				if (standard_frame.left >= 540.f)
 				{
-					current_frame.left = 90.f;
+					standard_frame.left = 90.f;
 				}
-				current_frame.width = -90;
-				current_frame.top = 0;
+				standard_frame.width = -90;
+				standard_frame.top = 281;
 			}
 
-
-			Enemy_S.setTextureRect(current_frame);
+			anim_area.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -107,26 +113,26 @@ void kusaka::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 810.f)
+				standard_frame.left += 90;
+				if (standard_frame.left >= 810.f)
 				{
-					current_frame.left = 0.f;
+					standard_frame.left = 0.f;
 				}
-				current_frame.width = 90;
-				current_frame.top = 0;
+				standard_frame.width = 90;
+				standard_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 900.f)
+				standard_frame.left += 90;
+				if (standard_frame.left >= 900.f)
 				{
-					current_frame.left = 90.f;
+					standard_frame.left = 90.f;
 				}
-				current_frame.width = -90;
-				current_frame.top = 0;
+				standard_frame.width = -90;
+				standard_frame.top = 0;
 			}
 
-			Enemy_S.setTextureRect(current_frame);
+			anim_area.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -137,27 +143,27 @@ void kusaka::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 810.f)
+				standard_frame.left += 90;
+				if (standard_frame.left >= 810.f)
 				{
-					current_frame.left = 90.f;
+					standard_frame.left = 90.f;
 				}
-				current_frame.width = 90;
-				current_frame.top = 70;
+				standard_frame.width = 90;
+				standard_frame.top = 70;
 			}
 			else
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 900.f)
+				standard_frame.left += 90;
+				if (standard_frame.left >= 900.f)
 				{
-					current_frame.left = 90.f;
+					standard_frame.left = 90.f;
 				}
-				current_frame.width = -90;
-				current_frame.top = 70;
+				standard_frame.width = -90;
+				standard_frame.top = 70;
 			}
 
 
-			Enemy_S.setTextureRect(current_frame);
+			anim_area.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -167,32 +173,32 @@ void kusaka::update_animation()
 		{
 			if (count_shot == 0)
 			{
-				current_frame.left = 0.f;
+				standard_frame.left = 0.f;
 			}
 			count_shot++;
 
 			if (looks_to_the_right)
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 810.f)
+				standard_frame.left += 90;
+				if (standard_frame.left >= 810.f)
 				{
-					current_frame.left = 0.f;
+					standard_frame.left = 0.f;
 				}
-				current_frame.width = 90;
-				current_frame.top = 70;
+				standard_frame.width = 90;
+				standard_frame.top = 70;
 			}
 			else
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 900.f)
+				standard_frame.left += 90;
+				if (standard_frame.left >= 900.f)
 				{
-					current_frame.left = 90.f;
+					standard_frame.left = 90.f;
 				}
-				current_frame.width = -90;
-				current_frame.top = 70;
+				standard_frame.width = -90;
+				standard_frame.top = 70;
 			}
 
-			Enemy_S.setTextureRect(current_frame);
+			anim_area.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -203,27 +209,27 @@ void kusaka::update_animation()
 			animation_counter_think--;
 			if (looks_to_the_right)
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 810.f)
+				standard_frame.left += 90;
+				if (standard_frame.left >= 810.f)
 				{
-					current_frame.left = 0.f;
+					standard_frame.left = 0.f;
 				}
-				current_frame.width = 90;
-				current_frame.top = 140;
+				standard_frame.width = 90;
+				standard_frame.top = 140;
 			}
 			else
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 900.f)
+				standard_frame.left += 90;
+				if (standard_frame.left >= 900.f)
 				{
-					current_frame.left = 90.f;
+					standard_frame.left = 90.f;
 				}
-				current_frame.width = -90;
-				current_frame.top = 140;
+				standard_frame.width = -90;
+				standard_frame.top = 140;
 			}
 
 
-			Enemy_S.setTextureRect(current_frame);
+			anim_area.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -233,26 +239,26 @@ void kusaka::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 810.f)
+				standard_frame.left += 90;
+				if (standard_frame.left >= 450.f)
 				{
-					current_frame.left = 0.f;
+					standard_frame.left = 360.f;
 				}
-				current_frame.width = 90;
-				current_frame.top = 0;
+				standard_frame.width = 90;
+				standard_frame.top = 350;
 			}
 			else
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 900.f)
+				standard_frame.left += 90;
+				if (standard_frame.left >= 540.f)
 				{
-					current_frame.left = 90.f;
+					standard_frame.left = 450.f;
 				}
-				current_frame.width = -90;
-				current_frame.top = 0;
+				standard_frame.width = -90;
+				standard_frame.top = 350;
 			}
 
-			Enemy_S.setTextureRect(current_frame);
+			anim_area.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -262,55 +268,55 @@ void kusaka::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 810.f)
+				standard_frame.left += 90;
+				if (standard_frame.left >= 810.f)
 				{
-					current_frame.left = 0.f;
+					standard_frame.left = 0.f;
 				}
-				current_frame.width = 90;
-				current_frame.top = 0;
+				standard_frame.width = 90;
+				standard_frame.top = 0;
 			}
 			else
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 900.f)
+				standard_frame.left += 90;
+				if (standard_frame.left >= 900.f)
 				{
-					current_frame.left = 90.f;
+					standard_frame.left = 90.f;
 				}
-				current_frame.width = -90;
-				current_frame.top = 0;
+				standard_frame.width = -90;
+				standard_frame.top = 0;
 			}
 
-			Enemy_S.setTextureRect(current_frame);
+			anim_area.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
 	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_TAKING_DAMAGE)
 	{
-		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
+		if (animation_timer.getElapsedTime().asSeconds() >= 0.09f || get_animation_switch())
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 810.f)
+				standard_frame.left += 90;
+				if (standard_frame.left >= 450.f)
 				{
-					current_frame.left = 0.f;
+					standard_frame.left = 0.f;
 				}
-				current_frame.width = 90;
-				current_frame.top = 0;
+				standard_frame.width = 90;
+				standard_frame.top = 208;
 			}
 			else
 			{
-				current_frame.left += 90;
-				if (current_frame.left >= 900.f)
+				standard_frame.left += 90;
+				if (standard_frame.left >= 540.f)
 				{
-					current_frame.left = 90.f;
+					standard_frame.left = 90.f;
 				}
-				current_frame.width = -90;
-				current_frame.top = 0;
+				standard_frame.width = -90;
+				standard_frame.top = 208;
 			}
 
-			Enemy_S.setTextureRect(current_frame);
+			anim_area.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -528,7 +534,7 @@ void kusaka::reset_Timer()
 void kusaka::update_movement()
 {
 	if (HP <= 0)kusaka_state = KUSAKA_STATE::KUSAKA_DEATH;
-	if (hp_damage_i > HP)
+	if (hp_damage_i > HP && kusaka_state != KUSAKA_STATE::KUSAKA_DEATH)
 	{
 		kusaka_state = KUSAKA_STATE::KUSAKA_TAKING_DAMAGE;
 	}
@@ -711,7 +717,7 @@ void kusaka::update_movement()
 				KUSAKA_TAKING_DAMAGE_TIMER.restart();
 				hp_damage_i = HP;
 			}
-			if (KUSAKA_TAKING_DAMAGE_TIMER.getElapsedTime().asSeconds() >= 1.5f)
+			if (KUSAKA_TAKING_DAMAGE_TIMER.getElapsedTime().asSeconds() >= 0.5f)
 			{
 				kusaka_state = KUSAKA_STATE::KUSAKA_IDLE;
 			}

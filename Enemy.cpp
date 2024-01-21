@@ -82,6 +82,10 @@ const FloatRect Enemy::get_global_bounds() const
 {
 	return Enemy_S.getGlobalBounds();
 }
+const FloatRect Enemy::get_global_bounds_anim() const
+{
+	return anim_area.getGlobalBounds();
+}
 
 
 PL_SIDE Enemy::getPlayerSide(float playerX, float enemyX)
@@ -103,16 +107,17 @@ void Enemy::set_position(const float x, const float y)
 			getGlobalBounds().width / 2)),
 		(y - (observation_area.getGlobalBounds().height - Enemy_S.getGlobalBounds().height)));
 
-	standard_area.setPosition(
-		x - (standard_area.getGlobalBounds().width - (standard_area.getGlobalBounds().width / 2) - (Enemy_S.
+	anim_area.setPosition(
+		x - (anim_area.getGlobalBounds().width - (anim_area.getGlobalBounds().width / 2) - (Enemy_S.
 			getGlobalBounds().width / 2)),
-		(y - (standard_area.getGlobalBounds().height - Enemy_S.getGlobalBounds().height)));
+		(y - (anim_area.getGlobalBounds().height - Enemy_S.getGlobalBounds().height)));
 
 	Enemy_S.setPosition(x, y);
 }
 
 void Enemy::render(sf::RenderTarget& target)
 {
+	target.draw(anim_area);
 	target.draw(Enemy_S);
 }
 

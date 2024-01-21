@@ -33,6 +33,8 @@ void Player::initVariables(){
         player_S.setTextureRect(currentFrame);
         //initial position
         player_S.setPosition(4266, 250);
+       // player_S.setPosition(153, 2746);
+
     }
 
     void Player::initWeapon(const vector<vector<Enemy*>*>& enemies) {
@@ -48,7 +50,7 @@ void Player::initVariables(){
     }
 
     void Player::initPhysics(){
-        info = new GeneralInfo(1000);
+        info = new GeneralInfo(5000);
         info->setGlobalBounds(player_S.getGlobalBounds());
         info->setPosition(player_S.getPosition());
 
@@ -83,7 +85,7 @@ void Player::initVariables(){
             animationTimer.restart();
             player_S.setTextureRect(currentFrame);
         }
-        //std::cout << getPosition().x << " " <<getPosition().y<<"\n";
+       // std::cout << getPosition().x << " " <<getPosition().y<<"\n";
         target.draw(player_S);
         weapons[chosen_weapon]->render(target);
         renderProjectiles(target);

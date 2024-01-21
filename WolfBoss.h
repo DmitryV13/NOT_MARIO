@@ -33,6 +33,7 @@ class WolfBoss : public Enemy
 	Clock Shot_timer;
 	Clock DEATH_timer;
 
+
 	bool jump_flag{true};
 	short count_jm;
 	short count_anim{0};
@@ -68,6 +69,11 @@ public:
 	void jump(const float dir_y) override;
 	void shot_HOWL();
 	void reset_Timer();
+	bool outside_sting();
+	void looks();
+	void changeHP(short) override;
+
+
 	sf::Vector2f calculateRandomPosition(const sf::FloatRect& playerBounds, int jumpDistance);
 
 	PL_SIDE getPlayerSide(float playerX, float enemyX);
