@@ -150,9 +150,6 @@
     <ClCompile Include="TileMap.cpp">
       <Filter>Source Files\Map</Filter>
     </ClCompile>
-    <ClCompile Include="GameMenu.cpp">
-      <Filter>Source Files\GUI\Menu</Filter>
-    </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files\GUI\Menu</Filter>
     </ClCompile>
@@ -240,6 +237,24 @@
     <ClCompile Include="TextureManager.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
+    <ClCompile Include="FontManager.cpp">
+      <Filter>Source Files\ServiceClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="SliderControl.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CallbacksHandler.cpp">
+      <Filter>Source Files\ServiceClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Reviewer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedImage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Exit.h">
@@ -252,9 +267,6 @@
       <Filter>Header Files\Map</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
-      <Filter>Header Files\GUI\Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="GameMenu.h">
       <Filter>Header Files\GUI\Menu</Filter>
     </ClInclude>
     <ClInclude Include="Level.h">
@@ -314,7 +326,7 @@
     <ClInclude Include="ORIENTATION.h">
       <Filter>Header Files\Enums</Filter>
     </ClInclude>
-    <ClInclude Include="MENU_STATE.h">
+    <ClInclude Include="POP_UP_WINDOW_STATE.h">
       <Filter>Header Files\Enums</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
@@ -377,10 +389,40 @@
     <ClInclude Include="ScaleParametrBar.h">
       <Filter>Header Files\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="BUTTON_STATE.h">
+      <Filter>Header Files\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="INTERFACE_ITEM_TYPE.h">
+      <Filter>Header Files\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="PAGE_STATE.h">
+      <Filter>Header Files\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="SliderControl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FontManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CallbacksHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Reviewer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedImage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NOT_MARIO.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lobby.frag" />
   </ItemGroup>
 </Project>

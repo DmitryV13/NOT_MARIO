@@ -137,12 +137,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimatedImage.cpp" />
     <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="Bow.cpp" />
+    <ClCompile Include="CallbacksHandler.cpp" />
     <ClCompile Include="ComposedIMG.cpp" />
     <ClCompile Include="CRect.cpp" />
+    <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GeneralInfo.cpp" />
     <ClCompile Include="Group.cpp" />
+    <ClCompile Include="ImageButton.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="PopUpWindow.cpp" />
     <ClCompile Include="Projectile.cpp" />
@@ -153,7 +157,7 @@
     <ClCompile Include="Exit.cpp" />
     <ClCompile Include="Fist.cpp" />
     <ClCompile Include="Level.cpp" />
-    <ClCompile Include="GameMenu.cpp" />
+    <ClCompile Include="Reviewer.cpp" />
     <ClCompile Include="RoadMap.cpp" />
     <ClCompile Include="Eye_evil.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -163,6 +167,7 @@
     <ClCompile Include="Setting.cpp" />
     <ClCompile Include="kusaka.cpp" />
     <ClCompile Include="laser_weapon.cpp" />
+    <ClCompile Include="SliderControl.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -182,14 +187,21 @@
     <ClCompile Include="WolfBoss.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimatedImage.h" />
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="Bow.h" />
+    <ClInclude Include="BUTTON_STATE.h" />
+    <ClInclude Include="CallbacksHandler.h" />
     <ClInclude Include="ComposedIMG.h" />
     <ClInclude Include="CRect.h" />
+    <ClInclude Include="FontManager.h" />
     <ClInclude Include="GeneralInfo.h" />
     <ClInclude Include="Group.h" />
+    <ClInclude Include="ImageButton.h" />
+    <ClInclude Include="INTERFACE_ITEM_TYPE.h" />
     <ClInclude Include="Label.h" />
-    <ClInclude Include="MENU_STATE.h" />
+    <ClInclude Include="PAGE_STATE.h" />
+    <ClInclude Include="POP_UP_WINDOW_STATE.h" />
     <ClInclude Include="ORIENTATION.h" />
     <ClInclude Include="PopUpWindow.h" />
     <ClInclude Include="Projectile.h" />
@@ -201,8 +213,8 @@
     <ClInclude Include="Fist.h" />
     <ClInclude Include="GAME_STATE.h" />
     <ClInclude Include="Level.h" />
-    <ClInclude Include="GameMenu.h" />
     <ClInclude Include="PLAYER_ANIMATION_SATES.h" />
+    <ClInclude Include="Reviewer.h" />
     <ClInclude Include="RoadMap.h" />
     <ClInclude Include="Eye_evil.h" />
     <ClInclude Include="Game.h" />
@@ -213,6 +225,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="ScaleParametrBar.h" />
     <ClInclude Include="Setting.h" />
+    <ClInclude Include="SliderControl.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MyView.h" />
@@ -229,6 +242,9 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NOT_MARIO.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lobby.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

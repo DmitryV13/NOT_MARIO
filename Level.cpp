@@ -21,68 +21,39 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 	pause_menu->addBackground(sandbox.getMapWidth(), sandbox.getMapHeight(), Color(59, 66, 73, 87));
 	pause_menu->createGroupLine();
 
-	CRect<float>* tmp = pause_menu->calculatePFNG(50, 100, 0);
+	CRect<float>* tmp = pause_menu->calculatePFNG(100, 100, 0);
 	Group* t0 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
-	t0->addGroupName("pause1", 31, font);
 	delete tmp;
 	
 	t0->createElementLine();
-
-	tmp = t0->calculatePFNII(30, 50, 0);
-	Group* t1 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
-	t1->addGroupName("0", 31, font);
-	t0->addIElement((InterfaceItem*)t1, 0);
-	delete tmp;
-	
-	t1->createElementLine();
-	t1->addButton(20, font, "PAUSE1", Color::Red, 0);
-	
-	t1->createElementLine();
-	t1->addButton(20, font, "PAUSE2", Color::Red, 1);
-	
-	t1->createElementLine();
-	t1->addButton(20, font, "PAUSE3", Color::Red, 2);
-	t1->setAlignment("k", "top z auto");
-
-	tmp = t0->calculatePFNII(30, 50, 0);
-	Group* t2 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
-	t2->addGroupName("1", 31, font);
-	t0->addIElement((InterfaceItem*)t2, 0);
-	delete tmp;
-	
-	t2->createElementLine();
-	t2->addButton(20, font, "PAUS1", Color::Red, 0);
-	
-	t2->createElementLine();
-	t2->addButton(20, font, "PAUS2", Color::Red, 1);
-	
-	t2->createElementLine();
-	t2->addButton(20, font, "PAUS3", Color::Red, 2);
-	t2->setAlignment("k", "top auto");
-	
+	t0->addButton(40, font, "CONTINUE", menuColor, 0, 0);
 	
 	t0->createElementLine();
-	tmp = t0->calculatePFNII(40, 50, 1);
-	Group* t3 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
-	t3->addGroupName("3", 31, font);
-	t0->addIElement((InterfaceItem*)t3, 1);
-	delete tmp;
+	t0->addButton(40, font, "SETTINGS", menuColor, 1, 1);
 
-	t3->createElementLine();
-	t3->addButton(20, font, "PAUS1", Color::Red, 0);
-
-	t3->createElementLine();
-	t3->addButton(20, font, "PAUS2", Color::Red, 1);
+	t0->createElementLine();
+	t0->addButton(40, font, "BACK TO LOBBY", menuColor, 2, 2);
 	
-	t3->createElementLine();
-	t3->addButton(20, font, "PAUS3", Color::Red, 2);
-	t3->setAlignment("k", "bottom 0");
-	t0->setAlignment("right auto", "center 0");
+	//t0->createElementLine();
+	//tmp = t0->calculatePFNII(40, 50, 1);
+	//Group* t3 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
+	//t3->addGroupName("3", 31, font);
+	//t0->addIElement((InterfaceItem*)t3, 1);
+	//delete tmp;
+
+	
+	//t3->createElementLine();
+	//t3->addButton(20, font, "CLOSE", Color::Red, 2);
+	//t3->setAlignment("k", "bottom 0");
+	//	pause_menu->addCallback(t0->getButtonState("BACK TO LOBBY"), (short)BUTTON_STATE::BTN_ACTIVE, &PopUpWindow::setPUWStateC, pause_menu);
+	t0->setAlignment("center auto", "center 50");
+	pause_menu->addCallback(t0->getButtonState(0), (short)BUTTON_STATE::BTN_ACTIVE, 0, &Level::continueGame , this);
+	
+	pause_menu->addCallback(t0->getButtonState(2), (short)BUTTON_STATE::BTN_ACTIVE, 0, &Level::finishGame, this);
 	pause_menu->addGroup(t0, 0);
-	pause_menu->addGroup(50, 50, 0);
-	pause_menu->addGroupName(0, 1, "pause2", 31, font);
+	//pause_menu->addGroup(50, 50, 0);
+	//pause_menu->addGroupName(0, 1, "pause2", 31, font);
 
-	game_menu = new GameMenu(window, sandbox.getMapWidth(), sandbox.getMapHeight(), screenWidth, screenHeight, &game_state, menuColor);
 	life_bar = new ScaleParametrBar();
 
 	initPlayer();
@@ -104,7 +75,6 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 	
 	Level::~Level(){
 		delete player;
-		delete game_menu;
 		delete life_bar;
 		delete evil_Ball;
 		for (auto& enemy : *evil_ball_vector) {
@@ -123,6 +93,14 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		//	delete enemy;
 		//}
 		//boss_vector->clear();
+	}
+
+	void Level::finishGame(float q){
+		game_state = GAME_STATE::FINISHED;
+	}
+
+	void Level::continueGame(float q){
+		game_state = GAME_STATE::CONTINUES;
 	}
 
 	void Level::initEvilBall()
@@ -166,7 +144,7 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		}
 	}
 
-void Level::init_enemy()
+	void Level::init_enemy()
 {
 	Kusaka_vector = new vector<kusaka*>();
 	Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
@@ -187,7 +165,14 @@ void Level::init_enemy()
 
 }
 
-void Level::updateEvilBall()
+	void Level::initWeapons() {
+		player->initWeapon({ reinterpret_cast<vector<Enemy*>*>(Kusaka_vector)
+			, reinterpret_cast<vector<Enemy*>*>(evil_ball_vector)
+			, reinterpret_cast<vector<Enemy*>*>(chubacabras_vector_)
+			, reinterpret_cast<vector<Enemy*>*>(boss_vector) });
+	}
+	
+	void Level::updateEvilBall()
 	{
 	for (auto& enemy : *evil_ball_vector)
 		{
@@ -225,7 +210,6 @@ void Level::updateEvilBall()
 	}
 
 	void Level::updateGameMenu(){
-		game_menu->update(myView.getCurrentViewCords());
 		pause_menu->update(myView.getCurrentViewCords());
 	}
 
@@ -266,10 +250,6 @@ void Level::updateEvilBall()
 	void Level::update(){
 		updatePlayer();
 
-		//*player_gl_b = player->getGlobalBounds();
-		//*player_pos = player->getPosition();
-		//*player_vel = player->getVelocity();
-
 		updateEvilBall();
 		update_Kusaka();
 		update_chubacabra();
@@ -304,12 +284,13 @@ void Level::updateEvilBall()
 				}
 			}
 			if (event.type == sf::Event::MouseWheelScrolled) {
-				if (event.mouseWheelScroll.delta > 0) {
-					player->change_weapon(1);
-					//player->changeHP(-1);
-				}
-				else {
-					player->change_weapon(-1);
+				if (game_state == GAME_STATE::CONTINUES) {
+					if (event.mouseWheelScroll.delta > 0) {
+						player->change_weapon(1);
+					}
+					else {
+						player->change_weapon(-1);
+					}
 				}
 			}
 		}
@@ -326,9 +307,7 @@ void Level::updateEvilBall()
 	}
 	
 	void Level::renderGameMenu(){
-		//game_menu->render();
 		pause_menu->render();
-		//window->display();
 	}
 
 	void Level::renderPLayer(){
@@ -446,11 +425,4 @@ void Level::updateEvilBall()
 			}
 			render();
 		}
-	}
-
-	void Level::initWeapons(){
-		player->initWeapon({ reinterpret_cast<vector<Enemy*>*>(Kusaka_vector)
-			, reinterpret_cast<vector<Enemy*>*>(evil_ball_vector)
-			, reinterpret_cast<vector<Enemy*>*>(chubacabras_vector_)
-			, reinterpret_cast<vector<Enemy*>*>(boss_vector) });
 	}

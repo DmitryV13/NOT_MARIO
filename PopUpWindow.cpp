@@ -3,41 +3,41 @@
 
 
 	PopUpWindow::PopUpWindow(double screen_width, double screen_height, int width_, int height_, RenderWindow* window_)
-		:width(width_), height(height_), window(window_){
-
+		:width(width_), height(height_), window(window_), puw_state(POP_UP_WINDOW_STATE::PUW_CLOSED){
+		callbacks_handler = new CallbacksHandler();
 		manager = new TextureManager();
 
-		w_background = new ComposedIMG(width, height, manager, 1);
+		w_background = new ComposedIMG(width, height, 6, manager, 2);
 		w_background->setPosition("center", "center", screen_width, screen_height);
 		position = Vector2f(w_background->getLocalBounds().left, w_background->getLocalBounds().top);
 	}
 
 	PopUpWindow::PopUpWindow(double screen_width, double screen_height, int width_, int height_, RenderWindow* window_, string positionX, string positionY) 
-		:width(width_), height(height_), window(window_) {
-
+		:width(width_), height(height_), window(window_), puw_state(POP_UP_WINDOW_STATE::PUW_CLOSED){
+		callbacks_handler = new CallbacksHandler();
 		manager = new TextureManager();
 
-		w_background = new ComposedIMG(width, height, manager, 1);
+		w_background = new ComposedIMG(width, height, 6, manager, 1);
 		w_background->setPosition(positionX, positionY, screen_width, screen_height);
 		position = Vector2f(w_background->getLocalBounds().left, w_background->getLocalBounds().top);
 	}
 
 	PopUpWindow::PopUpWindow(double screen_width, double screen_height, int width_, int height_, RenderWindow* window_, string positionX, int y) 
-		:width(width_), height(height_), window(window_) {
-
+		:width(width_), height(height_), window(window_), puw_state(POP_UP_WINDOW_STATE::PUW_CLOSED){
+		callbacks_handler = new CallbacksHandler();
 		manager = new TextureManager();
 
-		w_background = new ComposedIMG(width, height, manager, 1);
+		w_background = new ComposedIMG(width, height, 6, manager, 1);
 		w_background->setPosition(positionX, y, screen_width, screen_height);
 		position = Vector2f(w_background->getLocalBounds().left, w_background->getLocalBounds().top);
 	}
 
 	PopUpWindow::PopUpWindow(double screen_width, double screen_height, int width_, int height_, RenderWindow* window_, int x, string positionY) 
-		:width(width_), height(height_), window(window_) {
-
+		:width(width_), height(height_), window(window_), puw_state(POP_UP_WINDOW_STATE::PUW_CLOSED){
+		callbacks_handler = new CallbacksHandler();
 		manager = new TextureManager();
 
-		w_background = new ComposedIMG(width, height, manager, 1);
+		w_background = new ComposedIMG(width, height, 6, manager, 1);
 		w_background->setPosition(x, positionY, screen_width, screen_height);
 		position = Vector2f(w_background->getLocalBounds().left, w_background->getLocalBounds().top);
 	}
@@ -49,6 +49,23 @@
 	}
 	
 	void PopUpWindow::setSize(){
+	}
+
+	void PopUpWindow::setPUWStateO(float q){
+		puw_state = POP_UP_WINDOW_STATE::PUW_OPENED;
+	}
+
+	void PopUpWindow::setPUWStateC(float q){
+		puw_state = POP_UP_WINDOW_STATE::PUW_CLOSED;
+		for (auto i : groups) {
+			for (auto j : i) {
+				j->resetActiveState();
+			}
+		}
+	}
+
+	short PopUpWindow::getState(){
+		return puw_state;
 	}
 
 	int PopUpWindow::getMaxGroupsHeight(short index){
@@ -113,9 +130,6 @@
 		background->setFillColor(color);
 	}
 	
-	//void PopUpWindow::addButton(){
-	//}
-	
 	void PopUpWindow::addDelimiter(){
 	}
 	
@@ -138,19 +152,23 @@
 	
 	void PopUpWindow::update(FloatRect view_cords){
 		w_background->update(view_cords);
-		label->update(view_cords);
+		if(label!=nullptr)
+			label->update(view_cords);
 
 		for (auto i = groups.begin(); i != groups.end(); ++i) {
 			for (auto j = i->begin(); j != i->end(); ++j) {
 				(*j)->update(Vector2f(Mouse::getPosition(*window)), view_cords);
 			}
 		}
+
+		callbacks_handler->update();
 	}
 	
 	void PopUpWindow::render(){
 		window->draw(*background);
 		w_background->render(window);
-		label->render(window);
+		if (label != nullptr)
+			label->render(window);
 
 		for (auto i : groups) {
 			for (auto j : i) {

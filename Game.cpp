@@ -6,24 +6,26 @@
 		, screen_height(screen_h)
 		, options_number(3)
 		, option_selected(MENU_OPTION::MENU_PLAY) {
+		t_manager = new TextureManager();
 		view.reset(FloatRect(0, 0, screen_width, screen_height));
 		initMenuTexture();
 		initMenuSprite();
-		initOptions();
 		initWindow();
+		initOptions();
 	}
 
-		Game::Game()
+	Game::Game()
 		: options_number(3)
 		, option_selected(MENU_OPTION::MENU_PLAY) {
+		t_manager = new TextureManager();
 		VideoMode desktop = VideoMode::getDesktopMode();
 		screen_width = desktop.width;
 		screen_height = desktop.height;
 		view.reset(FloatRect(0, 0, screen_width, screen_height));
 		initMenuTexture();
 		initMenuSprite();
-		initOptions();
 		initWindow();
+		initOptions();
 		initBackgroundTexture();
 		initBackgroundSprite();
 	}
@@ -65,6 +67,7 @@
 
 	void Game::initBackgroundSprite(){\
 		background_S.setTexture(background_T);
+	auto r = window.getSize().y;
 		background_S.setScale(static_cast<float>(window.getSize().y) / background_S.getLocalBounds().height, static_cast<float>(window.getSize().y) / background_S.getLocalBounds().height);
 		background_S.setPosition((static_cast<float>(window.getSize().x) - background_S.getGlobalBounds().width) / 2, 0);
 	}
@@ -72,7 +75,7 @@
 
 	void Game::initOptions(){
 		options = new MainMenuOption*[options_number];
-		options[0] = new RoadMap(&window, screen_width, screen_height, menuMainColor[menuGUIS]);
+		options[0] = new RoadMap(&window, screen_width, screen_height, menuMainColor[menuGUIS], t_manager);
 		options[1] = new Setting();
 		options[2] = new Exit();
 

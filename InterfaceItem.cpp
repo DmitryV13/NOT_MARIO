@@ -11,14 +11,22 @@
 		return FloatRect();
 	}
 
-	void InterfaceItem::setPositionX(float x)
-	{
+	FloatRect InterfaceItem::getGlobalBounds(){
+		return FloatRect();
 	}
 
-	void InterfaceItem::setPositionY(float y)
-	{
+	short& InterfaceItem::getIIType(){
+		return ii_type;
 	}
 
-	void InterfaceItem::changePosition(float offset_x, float offset_y)
-	{
+	void InterfaceItem::setPositionX(float x){
+	}
+
+	void InterfaceItem::setPositionY(float y){
+	}
+
+	void InterfaceItem::changePosition(float offset_x, float offset_y){
+	}
+
+	void InterfaceItem::resetActiveState(){
 	}

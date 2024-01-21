@@ -1,4 +1,7 @@
 #pragma once
+#include "GAME_STATE.h"
+#include "BUTTON_STATE.h"
+#include "POP_UP_WINDOW_STATE.h"
 #include "Player.h"
 #include "TileMap.h"
 #include "MyView.h"
@@ -6,9 +9,7 @@
 #include "kusaka.h"
 #include "RedMutant.h"
 #include "WolfBoss.h"
-#include "GameMenu.h"
 #include "ScaleParametrBar.h"
-#include "GAME_STATE.h"
 #include "Enemy.h"
 #include "PopUpWindow.h"
 
@@ -17,7 +18,6 @@ using namespace::sf;
 class Level{
 private:
 	RenderWindow* window;
-	GameMenu* game_menu;
 	PopUpWindow* pause_menu;
 	ScaleParametrBar* life_bar;
 	Clock menu_timer;
@@ -58,6 +58,8 @@ public:
 	Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level, Color menuColor);
 	~Level();
 
+	void finishGame(float q);
+	void continueGame(float q);
 
 	//const sf::RenderWindow& getWindow() const;
 	void update();

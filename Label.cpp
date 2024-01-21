@@ -10,7 +10,7 @@
 		label_text->setCharacterSize(text_size);
 		label_text->setOutlineThickness(3.f);
 		label_text->setOutlineColor(sf::Color(0, 0, 0, 0));
-		label_background = new ComposedIMG(label_text->getLocalBounds().width + label_text->getLocalBounds().width / 2, label_text->getLocalBounds().height + label_text->getLocalBounds().height / 2, manager, 0);
+		label_background = new ComposedIMG(label_text->getLocalBounds().width + label_text->getLocalBounds().width / 2, label_text->getLocalBounds().height + label_text->getLocalBounds().height / 4, 6, manager, 1);
 
 	}
 
@@ -44,7 +44,7 @@
 
 	void Label::update(FloatRect view_cords){
 		label_background->update(view_cords);
-		label_text->setPosition(label_background->getLocalBounds().left - label_text->getLocalBounds().left + label_text->getLocalBounds().width / 4, label_background->getLocalBounds().top - label_text->getLocalBounds().top + label_text->getLocalBounds().height / 4);
+		label_text->setPosition(label_background->getLocalBounds().left - label_text->getLocalBounds().left + label_text->getLocalBounds().width / 4, label_background->getLocalBounds().top - label_text->getLocalBounds().top + label_text->getLocalBounds().height / 8);
 	}
 
 	void Label::render(RenderTarget* target){

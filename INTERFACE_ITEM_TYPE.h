@@ -1,0 +1,3 @@
+#pragma once
+enum INTERFACE_ITEM_TYPE { GROUP = 0, BUTTON, REVIEWER};
+

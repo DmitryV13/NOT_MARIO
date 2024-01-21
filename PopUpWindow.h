@@ -1,10 +1,12 @@
 #pragma once
 #include "Button.h"
+#include "Reviewer.h"
 #include "ComposedIMG.h"
 #include "Label.h"
 #include "Group.h"
-
-using namespace sf;
+#include "BUTTON_STATE.h"
+#include "POP_UP_WINDOW_STATE.h"
+#include "CallbacksHandler.h"
 
 class PopUpWindow{
 private:
@@ -13,7 +15,9 @@ private:
 	ComposedIMG* w_background;
 	RectangleShape* background;
 	Label* label;
+	short puw_state;
 
+	CallbacksHandler* callbacks_handler;
 	//inner clean parameters
 	int width;
 	int height;
@@ -34,7 +38,10 @@ public:
 
 	void setBackground();
 	void setSize();
+	void setPUWStateO(float q);
+	void setPUWStateC(float q);
 
+	short getState();
 	int getMaxGroupsHeight(short index);
 
 	void createGroupLine();
@@ -48,6 +55,9 @@ public:
 	//void addButton();
 	void addDelimiter();
 
+	template<class T>
+	bool addCallback(short* b_state, short a_state, float param, void(T::* l_func)(float), T* l_instance);
+
 	CRect<float>* calculatePFNG(short fill_p_w, short fill_p_h, short index);//parameters for new group
 	void verifyBtnsPressed();
 
@@ -55,3 +65,7 @@ public:
 	void render();
 };
 
+template<class T>
+inline bool PopUpWindow::addCallback(short* b_state, short a_state, float param, void(T::* l_func)(float), T* l_instance){
+	return callbacks_handler->addCallback(b_state, a_state, param, l_func, l_instance);
+}

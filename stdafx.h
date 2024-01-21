@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <random>
 #include <cmath>
+#include <functional>
 
 using std::vector;
 using std::pair;

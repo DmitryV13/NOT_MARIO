@@ -7,6 +7,6 @@ private:
 	vector<unordered_map<string, Texture>> textures;
 public:
 	TextureManager();
-	Texture& getTexture(int number, string name);
+	Texture& getTexture(int index, string name);
 };
 

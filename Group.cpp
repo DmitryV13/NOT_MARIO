@@ -2,11 +2,13 @@
 #include "Group.h"
 
 	Group::Group(int width_, int height_, Vector2f position_)
-		: outer_width(width_), outer_height(height_), inner_width(width_), inner_height(height_), position(position_){
+		: outer_width(width_), outer_height(height_), inner_width(width_), inner_height(height_)
+		, position(position_){
+		ii_type = INTERFACE_ITEM_TYPE::GROUP;
+
 		g0.setSize(Vector2f(width_ - 2, height_ - 2));
 		g0.setOutlineThickness(1.f);
 		g0.setFillColor(Color(0, 0, 0, 0));
-
 		
 		g1.setOutlineThickness(1.f);
 		g1.setFillColor(Color(0, 0, 0, 0));
@@ -15,19 +17,19 @@
 		g2.setFillColor(Color(0, 0, 0, 0));
 	}
 
-	FloatRect Group::getLocalBounds(){//inv
+	FloatRect Group::getGlobalBounds(){
 		return FloatRect(position, Vector2f(outer_width, outer_height));
 	}
 
-	FloatRect Group::getGlobalBounds() {//inv
+	FloatRect Group::getLocalBounds() {
 		return FloatRect(position, Vector2f(inner_width, inner_height));
 	}
 
 	int Group::getMaxELHeight(short index){
 		int height = 0;
 		for (size_t i = 0; i < g_elements[index].size(); i++) {
-			if (g_elements[index][i]->getLocalBounds().height > height) {
-				height = g_elements[index][i]->getLocalBounds().height;
+			if (g_elements[index][i]->getGlobalBounds().height > height) {
+				height = g_elements[index][i]->getGlobalBounds().height;
 			}
 		}
 		return height;
@@ -48,13 +50,13 @@
 				elements_height += getMaxELHeight(i);
 			}
 			float space_arnd = (inner_height - elements_height) / (g_elements.size() + 1);
-
+			float height_acc = 0;
 			for (auto i = g_elements.begin(); i != g_elements.end(); ++i) {
 				for (auto j = i->begin(); j != i->end(); ++j) {
 					(*j)->setPositionY(outer_height - inner_height + space_arnd + position.y
-						+ (i - g_elements.begin()) * getMaxELHeight((i - g_elements.begin()))
-						+ (i - g_elements.begin()) * space_arnd);
+						+ height_acc + (i - g_elements.begin()) * space_arnd);
 				}
+				height_acc += getMaxELHeight(i - g_elements.begin());
 			}
 			return;
 		}
@@ -76,12 +78,13 @@
 			float space_btwn = (g_elements.size() - 1) != 0 ? (inner_height - elements_height
 				- add_offset * 2) / (g_elements.size() - 1) : 0;
 			add_offset = (g_elements.size() - 1) == 0 ? ((inner_height - elements_height) / 2) : add_offset;
+			float height_acc = 0;
 			for (auto i = g_elements.begin(); i != g_elements.end(); ++i) {
 				for (auto j = i->begin(); j != i->end(); ++j) {
 					(*j)->setPositionY(outer_height - inner_height + add_offset + position.y
-						+ (i - g_elements.begin()) * getMaxELHeight((i - g_elements.begin()))
-						+ (i - g_elements.begin()) * space_btwn);
+						+ height_acc + (i - g_elements.begin()) * space_btwn);
 				}
+				height_acc += getMaxELHeight(i - g_elements.begin());
 			}
 			return;
 		}
@@ -102,12 +105,14 @@
 			}
 			float space_edge = (inner_height - elements_height
 				- add_offset * (g_elements.size() - 1)) / 2;
-
+			float height_acc = 0;
 			for (auto i = g_elements.begin(); i != g_elements.end(); ++i) {
 				for (auto j = i->begin(); j != i->end(); ++j) {
+					float el_offset = (getMaxELHeight(i - g_elements.begin()) - (*j)->getGlobalBounds().height) / 2;
 					(*j)->setPositionY(outer_height - inner_height + space_edge + position.y
-						+ (i - g_elements.begin()) * (getMaxELHeight(i - g_elements.begin()) + add_offset));
+						+ height_acc + el_offset + (i - g_elements.begin()) * add_offset);
 				}
+				height_acc += getMaxELHeight(i - g_elements.begin());
 			}
 			return;
 		}
@@ -130,12 +135,13 @@
 			else {
 				add_offset = stof(add_parameter);
 			}
-
+			float height_acc = 0;
 			for (auto i = g_elements.begin(); i != g_elements.end(); ++i) {
 				for (auto j = i->begin(); j != i->end(); ++j) {
 					(*j)->setPositionY(outer_height - inner_height + z * add_offset + position.y
-						+ (i - g_elements.begin()) * (getMaxELHeight(i - g_elements.begin()) + add_offset));
+						+ height_acc + ((i - g_elements.begin()) * add_offset));
 				}
+				height_acc += getMaxELHeight(i - g_elements.begin());
 			}
 			return;
 		}
@@ -164,12 +170,13 @@
 			}
 			float space_edge = inner_height - elements_height
 				- add_offset * (g_elements.size() - z);
-
+			float height_acc = 0;
 			for (auto i = g_elements.begin(); i != g_elements.end(); ++i) {
 				for (auto j = i->begin(); j != i->end(); ++j) {
 					(*j)->setPositionY(outer_height - inner_height + space_edge + position.y
-						+ (i - g_elements.begin()) * (getMaxELHeight(i - g_elements.begin()) + add_offset));
+						+ height_acc + ((i - g_elements.begin()) * add_offset));
 				}
+				height_acc += getMaxELHeight(i - g_elements.begin());
 			}
 			return;
 		}
@@ -183,14 +190,14 @@
 			for (size_t i = 0; i < g_elements.size(); i++) {
 				float elements_width = 0;
 				for (size_t j = 0; j < g_elements[i].size(); j++) {
-					elements_width += g_elements[i][j]->getLocalBounds().width;
+					elements_width += g_elements[i][j]->getGlobalBounds().width;
 				}
 				float space_arnd = (inner_width - elements_width) / (g_elements[i].size() + 1);
 				float width_acc = 0;
 				for (auto j = g_elements[i].begin(); j != g_elements[i].end(); ++j) {
 					(*j)->setPositionX(space_arnd + position.x + width_acc
 						+ (j - g_elements[i].begin()) * space_arnd);
-					width_acc += (*j)->getLocalBounds().width;
+					width_acc += (*j)->getGlobalBounds().width;
 				}
 			}
 			return;
@@ -206,19 +213,21 @@
 			for (size_t i = 0; i < g_elements.size(); i++) {
 				float elements_width = 0;
 				for (size_t j = 0; j < g_elements[i].size(); j++) {
-					elements_width += g_elements[i][j]->getLocalBounds().width;
+					elements_width += g_elements[i][j]->getGlobalBounds().width;
 				}
 				if (add_parameter == "auto") {
-					add_offset = g_elements[i][0]->getLocalBounds().width/2;
+					add_offset = g_elements[i][0]->getGlobalBounds().width/2;
 				}
 				float space_btwn = (g_elements[i].size() - 1) != 0 ? (inner_width - elements_width
-					- add_offset * 2) / (g_elements.size() - 1) : 0;
+					- add_offset * 2) / (g_elements[i].size() - 1) : 0;
 				add_offset = (g_elements[i].size() - 1) == 0 ? ((inner_width - elements_width) / 2) : add_offset;
 				float width_acc = 0;
 				for (auto j = g_elements[i].begin(); j != g_elements[i].end(); ++j) {
+					float r = add_offset + position.x
+						+ width_acc + (j - g_elements[i].begin()) * space_btwn;
 					(*j)->setPositionX(add_offset + position.x
 						+ width_acc + (j - g_elements[i].begin()) * space_btwn);
-					width_acc += (*j)->getLocalBounds().width;
+					width_acc += (*j)->getGlobalBounds().width;
 				}
 			}
 			return;
@@ -234,10 +243,10 @@
 			for (size_t i = 0; i < g_elements.size(); i++) {
 				float elements_width = 0;
 				for (size_t j = 0; j < g_elements[i].size(); j++) {
-					elements_width += g_elements[i][j]->getLocalBounds().width;
+					elements_width += g_elements[i][j]->getGlobalBounds().width;
 				}
 				if (add_parameter == "auto") {
-					add_offset = g_elements[i][0]->getLocalBounds().width / 2;
+					add_offset = g_elements[i][0]->getGlobalBounds().width / 2;
 				}
 				float space_edge = (inner_width - elements_width
 					- add_offset * (g_elements[i].size() - 1)) / 2;
@@ -245,7 +254,7 @@
 				for (auto j = g_elements[i].begin(); j != g_elements[i].end(); ++j) {
 					(*j)->setPositionX(space_edge + position.x
 						+ width_acc + ((j - g_elements[i].begin()) * add_offset));
-					width_acc += (*j)->getLocalBounds().width;
+					width_acc += (*j)->getGlobalBounds().width;
 				}
 			}
 			return;
@@ -269,13 +278,13 @@
 
 			for (size_t i = 0; i < g_elements.size(); i++) {
 				if (add_parameter == "auto") {
-					add_offset = g_elements[i][0]->getLocalBounds().width / 2;
+					add_offset = g_elements[i][0]->getGlobalBounds().width / 2;
 				}
 				float width_acc = 0;
 				for (auto j = g_elements[i].begin(); j != g_elements[i].end(); ++j) {
 					(*j)->setPositionX(z * add_offset + position.x
 						+ width_acc + ((j - g_elements[i].begin()) * add_offset));
-					width_acc += (*j)->getLocalBounds().width;
+					width_acc += (*j)->getGlobalBounds().width;
 				}
 			}
 			return;
@@ -300,10 +309,10 @@
 			for (size_t i = 0; i < g_elements.size(); i++) {
 				float elements_width = 0;
 				for (size_t j = 0; j < g_elements[i].size(); j++) {
-					elements_width += g_elements[i][j]->getLocalBounds().width;
+					elements_width += g_elements[i][j]->getGlobalBounds().width;
 				}
 				if (add_parameter == "auto") {
-					add_offset = g_elements[i][0]->getLocalBounds().width / 2;
+					add_offset = g_elements[i][0]->getGlobalBounds().width / 2;
 				}
 				float space_edge = inner_width - elements_width
 					- add_offset * (g_elements[i].size() - z);
@@ -311,7 +320,7 @@
 				for (auto j = g_elements[i].begin(); j != g_elements[i].end(); ++j) {
 					(*j)->setPositionX(space_edge + position.x
 						+ width_acc + ((j - g_elements[i].begin()) * add_offset));
-					width_acc += (*j)->getLocalBounds().width;
+					width_acc += (*j)->getGlobalBounds().width;
 				}
 			}
 			return;
@@ -349,6 +358,19 @@
 		g_elements.push_back(vector<InterfaceItem*>());
 	}
 
+	short* Group::getButtonState(int btn_id){
+		for (int i = 0; i < g_elements.size(); i++){
+			for (int j = 0; j < g_elements[i].size(); j++) {
+				if (g_elements[i][j]->getIIType() == INTERFACE_ITEM_TYPE::BUTTON) {
+					//string u = static_cast<Button*>(g_elements[i][j])->getName();
+					if (static_cast<Button*>(g_elements[i][j])->getIdentificator() == btn_id) {
+						return static_cast<Button*>(g_elements[i][j])->getButtonState();
+					}
+				}
+			}
+		}
+	}
+
 	void Group::addIElement(InterfaceItem* new_element, short index) {
 		g_elements[index].push_back(new_element);
 	}
@@ -379,7 +401,7 @@
 		
 		int new_eposition_x = position.x;
 		for (size_t i = 0; i < g_elements[index].size(); i++) {
-			new_eposition_x += g_elements[index][i]->getLocalBounds().width;
+			new_eposition_x += g_elements[index][i]->getGlobalBounds().width;
 		}
 
 		g_elements[index].push_back(new Group(fill_p_w * inner_width / 100, fill_p_h * inner_height / 100, Vector2f(new_eposition_x, new_eposition_y)));
@@ -387,19 +409,54 @@
 
 
 
-	void Group::addButton(short text_size, sf::Font* font, string btn_name, Color btn_color, short index){
+	void Group::addButton(short text_size, sf::Font* font, string btn_name, Color btn_color, int btn_id, short index_g){
 		int new_eposition_y = position.y;
-		for (size_t i = 0; i < index; i++) {
+		for (size_t i = 0; i < index_g; i++) {
 			new_eposition_y += getMaxELHeight(i);
 		}
-		new_eposition_y += 2 * (name == nullptr ? 0 : name->getLocalBounds().height);
+		new_eposition_y += outer_height-inner_height;
 
 		int new_eposition_x = position.x;
-		for (size_t i = 0; i < g_elements[index].size(); i++) {
-			new_eposition_x += g_elements[index][i]->getLocalBounds().width;
+		for (size_t i = 0; i < g_elements[index_g].size(); i++) {
+			new_eposition_x += g_elements[index_g][i]->getGlobalBounds().width;
 		}
+		g_elements[index_g].push_back(new Button(new_eposition_x, new_eposition_y, text_size, font, btn_name, btn_color, btn_id));
+	}
 
-		g_elements[index].push_back(new Button(new_eposition_x, new_eposition_y, text_size, font, btn_name, btn_color));
+	void Group::addButton(float width, float height, short text_size, sf::Font* font
+		, string btn_name, Color btn_hcolor, Color btn_icolor, Color shp_hcolor, Color shp_icolor
+		, bool outline, int btn_id, short index_g){
+		int new_eposition_y = position.y;
+		for (size_t i = 0; i < index_g; i++) {
+			new_eposition_y += getMaxELHeight(i);
+		}
+		new_eposition_y += outer_height - inner_height;
+
+		int new_eposition_x = position.x;
+		for (size_t i = 0; i < g_elements[index_g].size(); i++) {
+			new_eposition_x += g_elements[index_g][i]->getGlobalBounds().width;
+		}
+		Button* btn = new Button(new_eposition_x, new_eposition_y, width, height, text_size, font, btn_name, outline, btn_id);
+		btn->setColors(btn_hcolor, btn_icolor, shp_hcolor, shp_icolor);
+		g_elements[index_g].push_back(btn);
+	}
+
+	void Group::addButton(float width, float height, short text_size, sf::Font* font, string btn_name
+		, Color btn_hcolor, Color btn_icolor, Color shp_hcolor, Color shp_icolor, TextureManager* t_manager
+		, int index_t, string name, bool outline, int btn_id, short index_g){
+		int new_eposition_y = position.y;
+		for (size_t i = 0; i < index_g; i++) {
+			new_eposition_y += getMaxELHeight(i);
+		}
+		new_eposition_y += outer_height - inner_height;
+
+		int new_eposition_x = position.x;
+		for (size_t i = 0; i < g_elements[index_g].size(); i++) {
+			new_eposition_x += g_elements[index_g][i]->getGlobalBounds().width;
+		}
+		ImageButton* btn = new ImageButton(new_eposition_x, new_eposition_y, width, height, text_size, font, btn_name, t_manager, index_t, name, outline, btn_id);
+		btn->setColors(btn_hcolor, btn_icolor, shp_hcolor, shp_icolor);
+		g_elements[index_g].push_back(btn);
 	}
 
 
@@ -412,10 +469,18 @@
 
 		int new_gposition_x = position.x;
 		for (size_t i = 0; i < g_elements[index].size(); i++) {
-			new_gposition_x += g_elements[index][i]->getLocalBounds().width;
+			new_gposition_x += g_elements[index][i]->getGlobalBounds().width;
 		}
 
 		return new CRect<float>(new_gposition_x, new_gposition_y, fill_p_w * inner_width / 100, fill_p_h * inner_height / 100);
+	}
+
+	void Group::resetActiveState(){
+		for (int i = 0; i < g_elements.size(); i++) {
+			for (int j = 0; j < g_elements[i].size(); j++) {
+				g_elements[i][j]->resetActiveState();
+			}
+		}
 	}
 
 	void Group::update(Vector2f mouse_pos, FloatRect view_cords){
@@ -470,6 +535,7 @@
 		}
 
 		//target->draw(g1);
+		// 
 		target->draw(g2);
 		target->draw(g0);
 	}

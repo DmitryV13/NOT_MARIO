@@ -1,86 +1,113 @@
 #include "stdafx.h"
 #include "ComposedIMG.h"
 
-	ComposedIMG::ComposedIMG(int width_, int height_, TextureManager* manager, int index): width(width_), height(height_){
+	ComposedIMG::ComposedIMG(int width_, int height_, int original_size, TextureManager* manager, int index)
+		: width(width_), height(height_), origin_size(original_size), scale(1){
 		filler.setTexture(manager->getTexture(index, "Filler"));
 		cornerTopLeft.setTexture(manager->getTexture(index, "TopLeft"));
 		cornerTopRight.setTexture(manager->getTexture(index, "TopRight"));
 		cornerBottomLeft.setTexture(manager->getTexture(index, "BottomLeft"));
 		cornerBottomRight.setTexture(manager->getTexture(index, "BottomRight"));
 	
-		cornerTopLeft.setTextureRect(IntRect(0, 0, 6 + width, 6 + height));
-		cornerTopRight.setTextureRect(IntRect(0, 0, 6, 6 + height));
-		cornerBottomRight.setTextureRect(IntRect(0, 0, 6, 6));
-		cornerBottomLeft.setTextureRect(IntRect(0, 0, 6 + width, 6));
+		cornerTopLeft.setTextureRect(IntRect(0, 0, origin_size + width, origin_size + height));
+		cornerTopRight.setTextureRect(IntRect(0, 0, origin_size, origin_size + height));
+		cornerBottomRight.setTextureRect(IntRect(0, 0, origin_size, origin_size));
+		cornerBottomLeft.setTextureRect(IntRect(0, 0, origin_size + width, origin_size));
+		filler.setTextureRect(IntRect(0, 0, width, height));
+	}
+
+	ComposedIMG::ComposedIMG(int width_, int height_, int original_size, TextureManager* manager
+		, int index_0, string name_0, int index_1, string name_1, int index_2, string name_2
+		, int index_3, string name_3, int index_4, string name_4)
+		: width(width_), height(height_), origin_size(original_size), scale(1) {
+		filler.setTexture(manager->getTexture(index_0, name_0));
+		cornerTopLeft.setTexture(manager->getTexture(index_1, name_1));
+		cornerTopRight.setTexture(manager->getTexture(index_2, name_2));
+		cornerBottomLeft.setTexture(manager->getTexture(index_3, name_3));
+		cornerBottomRight.setTexture(manager->getTexture(index_4, name_4));
+
+		cornerTopLeft.setTextureRect(IntRect(0, 0, origin_size + width, origin_size + height));
+		cornerTopRight.setTextureRect(IntRect(0, 0, origin_size, origin_size + height));
+		cornerBottomRight.setTextureRect(IntRect(0, 0, origin_size, origin_size));
+		cornerBottomLeft.setTextureRect(IntRect(0, 0, origin_size + width, origin_size));
 		filler.setTextureRect(IntRect(0, 0, width, height));
 	}
 	
 	void ComposedIMG::setPosition(int x, int y){
-		offsetX = x - 6;
-		offsetY = y - 6;
+		offsetX = x - origin_size;
+		offsetY = y - origin_size;
 
 		cornerTopLeft.setPosition(offsetX, offsetY);
-		cornerTopRight.setPosition(offsetX + width + 6, offsetY);
-		cornerBottomLeft.setPosition(offsetX, offsetY + height + 6);
-		cornerBottomRight.setPosition(offsetX + width + 6, offsetY + height + 6);
-		filler.setPosition(offsetX + 6, offsetY + 6);
+		cornerTopRight.setPosition(offsetX + width + origin_size, offsetY);
+		cornerBottomLeft.setPosition(offsetX, offsetY + height + origin_size);
+		cornerBottomRight.setPosition(offsetX + width + origin_size, offsetY + height + origin_size);
+		filler.setPosition(offsetX + origin_size, offsetY + origin_size);
 	}
 	
 	void ComposedIMG::setPosition(string positionX, string positionY, int screen_width, int screen_height){
 		if (positionX == "center") {
-			offsetX = (screen_width - width + 12) / 2;
+			offsetX = (screen_width - width + origin_size*2) / 2;
 		}
 		if (positionY == "center") {
-			offsetY = (screen_height - height + 12) / 2;
+			offsetY = (screen_height - height + origin_size*2) / 2;
 		}
 
 		cornerTopLeft.setPosition(offsetX, offsetY);
-		cornerTopRight.setPosition(offsetX + width + 6, offsetY);
-		cornerBottomLeft.setPosition(offsetX, offsetY + height + 6);
-		cornerBottomRight.setPosition(offsetX + width + 6, offsetY + height + 6);
-		filler.setPosition(offsetX + 6, offsetY + 6);
+		cornerTopRight.setPosition(offsetX + width + origin_size, offsetY);
+		cornerBottomLeft.setPosition(offsetX, offsetY + height + origin_size);
+		cornerBottomRight.setPosition(offsetX + width + origin_size, offsetY + height + origin_size);
+		filler.setPosition(offsetX + origin_size, offsetY + origin_size);
 	}
 
 	void ComposedIMG::setPosition(string positionX, int y, int screen_width, int screen_height){
 		if (positionX == "center") {
-			offsetX = (screen_width - width + 12) / 2;
+			offsetX = (screen_width - width + origin_size*2) / 2;
 		}
-		offsetY = y - 6;
+		offsetY = y - origin_size;
 
 		cornerTopLeft.setPosition(offsetX, offsetY);
-		cornerTopRight.setPosition(offsetX + width + 6, offsetY);
-		cornerBottomLeft.setPosition(offsetX, offsetY + height + 6);
-		cornerBottomRight.setPosition(offsetX + width + 6, offsetY + height + 6);
-		filler.setPosition(offsetX + 6, offsetY + 6);
+		cornerTopRight.setPosition(offsetX + width + origin_size, offsetY);
+		cornerBottomLeft.setPosition(offsetX, offsetY + height + origin_size);
+		cornerBottomRight.setPosition(offsetX + width + origin_size, offsetY + height + origin_size);
+		filler.setPosition(offsetX + origin_size, offsetY + origin_size);
 	}
 
 	void ComposedIMG::setPosition(int x, string positionY, int screen_width, int screen_height){
 		if (positionY == "center") {
-			offsetY = (screen_height - height + 12) / 2;
+			offsetY = (screen_height - height + origin_size*2) / 2;
 		}
-		offsetX = x - 6;
+		offsetX = x - origin_size;
 
 		cornerTopLeft.setPosition(offsetX, offsetY);
-		cornerTopRight.setPosition(offsetX + width + 6, offsetY);
-		cornerBottomLeft.setPosition(offsetX, offsetY + height + 6);
-		cornerBottomRight.setPosition(offsetX + width + 6, offsetY + height + 6);
-		filler.setPosition(offsetX + 6, offsetY + 6);
+		cornerTopRight.setPosition(offsetX + width + origin_size, offsetY);
+		cornerBottomLeft.setPosition(offsetX, offsetY + height + origin_size);
+		cornerBottomRight.setPosition(offsetX + width + origin_size, offsetY + height + origin_size);
+		filler.setPosition(offsetX + origin_size, offsetY + origin_size);
+	}
+
+	void ComposedIMG::setScale(float scale_){
+		scale = scale_;
+		filler.setScale(Vector2f(scale, scale));
+		cornerTopLeft.setScale(Vector2f(scale, scale));
+		cornerTopRight.setScale(Vector2f(scale, scale));
+		cornerBottomLeft.setScale(Vector2f(scale, scale));
+		cornerBottomRight.setScale(Vector2f(scale, scale));
 	}
 
 	FloatRect ComposedIMG::getLocalBounds(){
-		return FloatRect(cornerTopLeft.getPosition().x + 6, cornerTopLeft.getPosition().y + 6, width, height);
+		return FloatRect(cornerTopLeft.getPosition().x + origin_size, cornerTopLeft.getPosition().y + origin_size, width, height);
 	}
 
 	FloatRect ComposedIMG::getGlobalBounds(){
-		return FloatRect(cornerTopLeft.getPosition().x, cornerTopLeft.getPosition().y, width + 12, height + 12);
+		return FloatRect(cornerTopLeft.getPosition().x, cornerTopLeft.getPosition().y, width + origin_size*2, height + origin_size*2);
 	}
 	
 	void ComposedIMG::update(FloatRect view_cords){
 		cornerTopLeft.setPosition(view_cords.left - view_cords.width/2 + offsetX, view_cords.top - view_cords.height/2 + offsetY);
-		cornerTopRight.setPosition(view_cords.left - view_cords.width/2 + offsetX + width + 6, view_cords.top - view_cords.height/2 + offsetY);
-		cornerBottomLeft.setPosition(view_cords.left - view_cords.width/2 + offsetX, view_cords.top - view_cords.height/2 + offsetY + height + 6);
-		cornerBottomRight.setPosition(view_cords.left - view_cords.width/2 + offsetX + width + 6, view_cords.top - view_cords.height/2 + offsetY + height + 6);
-		filler.setPosition(view_cords.left - view_cords.width/2 + offsetX + 6, view_cords.top - view_cords.height/2 + offsetY + 6);
+		cornerTopRight.setPosition(view_cords.left - view_cords.width/2 + offsetX + width + origin_size, view_cords.top - view_cords.height/2 + offsetY);
+		cornerBottomLeft.setPosition(view_cords.left - view_cords.width/2 + offsetX, view_cords.top - view_cords.height/2 + offsetY + height + origin_size);
+		cornerBottomRight.setPosition(view_cords.left - view_cords.width/2 + offsetX + width + origin_size, view_cords.top - view_cords.height/2 + offsetY + height + origin_size);
+		filler.setPosition(view_cords.left - view_cords.width/2 + offsetX + origin_size, view_cords.top - view_cords.height/2 + offsetY + origin_size);
 	}
 	
 	void ComposedIMG::render(RenderTarget* target){

@@ -1,8 +1,16 @@
 #include "stdafx.h"
 #include "Button.h"
 
-	Button::Button(float x, float y, float width, float height, short text_size, sf::Font* font_, string text_, Color menuColor)
-	:hover_color(menuColor), position(Vector2f(x, y)) {
+Button::Button(){
+	int y = 0;
+}
+
+Button::Button(float x, float y, float width, float height, short text_size, sf::Font* font_
+		, string text_, Color btn_hcolor, int id_)
+		: btn_hover_color(btn_hcolor), btn_active_color(btn_hcolor), btn_idle_color(Color::White)
+		, shp_hover_color(sf::Color(28, 26, 47, 255)), shp_active_color(sf::Color(28, 26, 47, 255))
+		, shp_idle_color(sf::Color(28, 26, 47, 255)), position(Vector2f(x, y)), id(id_) {
+		ii_type = INTERFACE_ITEM_TYPE::BUTTON;
 		button_state = BUTTON_STATE::BTN_IDLE;
 
 		shape.setPosition(position);
@@ -11,7 +19,7 @@
 		font = font_;
 		text.setFont(*font);
 		text.setString(text_);
-		text.setFillColor(sf::Color::White);
+		text.setFillColor(btn_idle_color);
 		text.setCharacterSize(text_size);
 		text.setOutlineThickness(3.f);
 		text.setOutlineColor(sf::Color(0, 0, 0, 0));
@@ -19,24 +27,23 @@
 			shape.getPosition().x +(shape.getGlobalBounds().width / 2.f) - text.getLocalBounds().width / 2.f - text.getLocalBounds().left,
 			shape.getPosition().y + (shape.getGlobalBounds().height / 2.f) - text.getLocalBounds().height / 2.f - text.getLocalBounds().top
 			);
-		
-		//idle_color = sf::Color(100, 150, 200, 255);
-		//hover_color = sf::Color(100, 100, 200, 255);
-		//active_color = sf::Color(150, 100, 200, 255);
 
-		shape.setFillColor(sf::Color(28, 26, 47, 255));
+		shape.setFillColor(shp_idle_color);
 	}
 
-	Button::Button(float x, float y, short text_size, sf::Font* font_, string text_, Color menuColor)
-	:hover_color(menuColor), position(Vector2f(x, y)){
+	Button::Button(float x, float y, short text_size, sf::Font* font_, string text_, Color btn_hcolor, int id_)
+		: btn_hover_color(btn_hcolor), btn_active_color(btn_hcolor), btn_idle_color(Color::White)
+		, shp_hover_color(Color(0, 0, 0, 0)), shp_active_color(Color(0, 0, 0, 0))
+		, shp_idle_color(Color(0, 0, 0, 0)), position(Vector2f(x, y)), id(id_) {
+		ii_type = INTERFACE_ITEM_TYPE::BUTTON;
 		button_state = BUTTON_STATE::BTN_IDLE;
 
 		shape.setPosition(position);
-
+		
 		font = font_;
 		text.setFont(*font);
 		text.setString(text_);
-		text.setFillColor(sf::Color::White);
+		text.setFillColor(btn_idle_color);
 		text.setCharacterSize(text_size);
 		text.setOutlineThickness(3.f);
 		text.setOutlineColor(sf::Color(0, 0, 0, 0));
@@ -47,11 +54,34 @@
 
 		shape.setSize(sf::Vector2f(text.getLocalBounds().width, text.getLocalBounds().height));
 
-		//idle_color = sf::Color(100, 150, 200, 255);
-		//hover_color = sf::Color(100, 100, 200, 255);
-		//active_color = sf::Color(150, 100, 200, 255);
+		shape.setFillColor(shp_idle_color);
+	}
 
-		shape.setFillColor(sf::Color(0,0,0,0));
+	Button::Button(float x, float y, float width, float height, short text_size, sf::Font* font_
+		, string text_, bool outline, int id_)
+		: position(Vector2f(x, y)), id(id_) {
+		ii_type = INTERFACE_ITEM_TYPE::BUTTON;
+		button_state = BUTTON_STATE::BTN_IDLE;
+
+		shape.setPosition(position);
+		shape.setSize(sf::Vector2f(width, height));
+		if (outline) {
+			shape.setOutlineThickness(3.f);
+			shape.setOutlineColor(Color::Black);
+		}
+		font = font_;
+		text.setFont(*font);
+		text.setString(text_);
+		text.setFillColor(btn_idle_color);
+		text.setCharacterSize(text_size);
+		text.setOutlineThickness(3.f);
+		text.setOutlineColor(sf::Color(0, 0, 0, 0));
+		text.setPosition(
+			shape.getPosition().x + (shape.getGlobalBounds().width / 2.f) - text.getLocalBounds().width / 2.f - text.getLocalBounds().left,
+			shape.getPosition().y + (shape.getGlobalBounds().height / 2.f) - text.getLocalBounds().height / 2.f - text.getLocalBounds().top
+		);
+		FloatRect g = text.getLocalBounds();
+		shape.setFillColor(shp_idle_color);
 	}
 	
 	Button::~Button(){
@@ -59,11 +89,11 @@
 	}
 
 	float Button::getHeight(){
-		return shape.getLocalBounds().height;
+		return shape.getGlobalBounds().height;
 	}
 
 	float Button::getWidth(){
-		return shape.getLocalBounds().width;
+		return shape.getGlobalBounds().width;
 	}
 
 	float Button::getTextHeight(){
@@ -74,7 +104,19 @@
 		return text.getLocalBounds().width;
 	}
 
+	short* Button::getButtonState(){
+		return &button_state;
+	}
+
+	const int& Button::getIdentificator() const{
+		return id;
+	}
+
 	FloatRect Button::getLocalBounds(){
+		return FloatRect(position, Vector2f(shape.getLocalBounds().width, shape.getLocalBounds().height));
+	}
+
+	FloatRect Button::getGlobalBounds(){
 		return FloatRect(position, Vector2f(shape.getLocalBounds().width, shape.getLocalBounds().height));
 	}
 
@@ -88,23 +130,32 @@
 	}
 
 	void Button::setPositionX(float x){
-		setPosition(Vector2f(x, getLocalBounds().top));
+		setPosition(Vector2f(x + shape.getOutlineThickness(), position.y));
 	}
 
 	void Button::setPositionY(float y){
-		setPosition(Vector2f(getLocalBounds().left, y));
+		setPosition(Vector2f(position.x, y + shape.getOutlineThickness()));
 	}
 
 	void Button::changePosition(float offset_x, float offset_y){
-		setPosition(Vector2f(getLocalBounds().left + offset_x, getLocalBounds().top+offset_y));
+		setPosition(Vector2f(position.x + offset_x, position.y + offset_y));
 	}
 
-	void Button::setMenuColor(Color menuColor){
-		hover_color = menuColor;
+	void Button::setColors(Color btn_hcolor, Color btn_icolor, Color shp_hcolor, Color shp_icolor){
+		btn_idle_color = btn_icolor;
+		btn_hover_color = btn_hcolor;
+		btn_active_color = btn_hcolor;
+		shp_idle_color = shp_icolor;
+		shp_hover_color = shp_hcolor;
+		shp_active_color = shp_hcolor;
 	}
 
 	void Button::setBackgroundColor(Color shapeColor){
 		shape.setFillColor(shapeColor);
+	}
+
+	void Button::resetActiveState(){
+		button_state = BUTTON_STATE::BTN_IDLE;
 	}
 
 	const bool Button::isPressed() const{
@@ -131,36 +182,42 @@
 			button_state = BUTTON_STATE::BTN_HOVERED;
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 				button_state = BUTTON_STATE::BTN_ACTIVE;
+				//std::cout << "active" << std::endl;
+			}
+			else {
+				button_state = BUTTON_STATE::BTN_HOVERED;
+				//std::cout << "hover" << std::endl;
 			}
 		}
 
 		switch (button_state) {
 			case BTN_IDLE:
 				text.setOutlineColor(sf::Color(0, 0, 0, 0));
-				text.setFillColor(sf::Color::White);
-				//shape.setFillColor(sf::Color(50, 50, 50, 50));
+				text.setFillColor(btn_idle_color);
+				shape.setFillColor(shp_idle_color);
 				break;
 
 			case BTN_HOVERED:
 				text.setOutlineColor(sf::Color(0, 0, 0, 255));
-				text.setFillColor(hover_color);
-				//text.setFillColor(sf::Color(191,42,62,255));
-				//shape.setFillColor(hover_color);
+				text.setFillColor(btn_hover_color);
+				shape.setFillColor(shp_hover_color);
 				break;
 
 			case BTN_ACTIVE:
 				text.setOutlineColor(sf::Color(0, 0, 0, 0));
-				text.setFillColor(hover_color);
-				//shape.setFillColor(active_color);
+				text.setFillColor(btn_hover_color);
+				shape.setFillColor(shp_active_color);
 				break;
 
 			default:
-				//shape.setFillColor(sf::Color::Red);
 				break;
 		}
 	}
 
 	void Button::render(sf::RenderTarget* target){
 		target->draw(shape);
+		//if (btn_image != nullptr) {
+			//target->draw(*btn_image);
+		//}
 		target->draw(text);
 	}

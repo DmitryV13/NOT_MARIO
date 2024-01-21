@@ -12,6 +12,7 @@ private:
 	double screen_width;
 	double screen_height;
 
+	TextureManager* t_manager;
 	short menuGUIS;
 
 	Event event;
