@@ -5,6 +5,7 @@
 		: outer_width(width_), outer_height(height_), inner_width(width_), inner_height(height_)
 		, position(position_){
 		ii_type = INTERFACE_ITEM_TYPE::GROUP;
+		background.setFillColor(Color(0, 0, 0, 0));
 
 		g0.setSize(Vector2f(width_ - 2, height_ - 2));
 		g0.setOutlineThickness(1.f);
@@ -25,8 +26,8 @@
 		return FloatRect(position, Vector2f(inner_width, inner_height));
 	}
 
-	int Group::getMaxELHeight(short index){
-		int height = 0;
+	float Group::getMaxELHeight(short index){
+		float height = 0;
 		for (size_t i = 0; i < g_elements[index].size(); i++) {
 			if (g_elements[index][i]->getGlobalBounds().height > height) {
 				height = g_elements[index][i]->getGlobalBounds().height;
@@ -329,29 +330,33 @@
 
 	void Group::setPositionX(float x){
 		float offset = x - position.x;
-
-		for (auto i : g_elements) {
-			for (auto j : i) {
-				j->changePosition(offset, 0);
-			}
-		}
 		changePosition(offset, 0);
 	}
 
 	void Group::setPositionY(float y) {
 		float offset = y - position.y;
-
-		for (auto i : g_elements) {
-			for (auto j : i) {
-				j->changePosition(0, offset);
-			}
-		}
 		changePosition(0, offset);
+	}
+
+	void Group::setBColor(Color color){
+		background.setFillColor(color);
+		background.setPosition(position);
+		background.setSize(Vector2f(outer_width, outer_height));
 	}
 
 	void Group::changePosition(float offset_x, float offset_y){
 		position.x += offset_x;
 		position.y += offset_y;
+		for (auto i : g_elements) {
+			for (auto j : i) {
+				j->changePosition(offset_x, offset_y);
+			}
+		}
+		background.setPosition(position);
+	}
+
+	void Group::changePositionY(float offset){
+		changePosition(0, offset);
 	}
 	
 	void Group::createElementLine(){
@@ -494,7 +499,7 @@
 		g0.setPosition(position.x + 1, position.y + 1);
 		g1.setPosition(position.x + 1, position.y + 1 + outer_height - inner_height);
 		g2.setPosition(position.x + 1, position.y + 1);
-
+		background.setPosition(position);
 		if (FloatRect(mouse_pos, Vector2f(100, 100)).intersects(g0.getGlobalBounds())) {
 			g0.setOutlineColor(Color::Green);
 			g1.setOutlineColor(Color::Blue);
@@ -505,6 +510,10 @@
 			g1.setOutlineColor(Color(0, 0, 0, 0));
 			g2.setOutlineColor(Color(0, 0, 0, 0));
 		}
+
+		background.setPosition(view_cords.left - view_cords.width / 2 + position.x,
+			view_cords.top - view_cords.height / 2 + position.y
+		);
 		g0.setPosition(view_cords.left - view_cords.width / 2 + g0.getPosition().x,
 			view_cords.top - view_cords.height / 2 + g0.getPosition().y
 		);
@@ -524,6 +533,7 @@
 	}
 
 	void Group::render(RenderTarget* target){
+		target->draw(background);
 		if (name != nullptr) {
 			target->draw(*name);
 		}
@@ -536,6 +546,7 @@
 
 		//target->draw(g1);
 		// 
+		
 		target->draw(g2);
 		target->draw(g0);
 	}

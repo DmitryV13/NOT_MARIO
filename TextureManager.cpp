@@ -16,8 +16,23 @@
 		if (!textures[0]["ArrowR"].loadFromFile("Textures/GUI/buttons/arrowR.png")) {
 			std::cout << "Error -> TextureManager -> couldn't load ArrowR texture" << std::endl;
 		}
+		if (!textures[0]["ArrowBack"].loadFromFile("Textures/GUI/buttons/arrowBack.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load ArrowBack texture" << std::endl;
+		}
 		if (!textures[0]["B"].loadFromFile("Textures/GUI/b.png")) {
-			std::cout << "Error -> TextureManager -> couldn't load ArrowR texture" << std::endl;
+			std::cout << "Error -> TextureManager -> couldn't load B texture" << std::endl;
+		}
+		if (!textures[0]["Coin"].loadFromFile("Textures/GUI/resources/coin.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load Coin texture" << std::endl;
+		}
+		if (!textures[0]["BSplinter"].loadFromFile("Textures/GUI/resources/blueSplinter.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load blueSplinter texture" << std::endl;
+		}
+		if (!textures[0]["RSplinter"].loadFromFile("Textures/GUI/resources/redSplinter.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load redSplinter texture" << std::endl;
+		}
+		if (!textures[0]["Arrow1"].loadFromFile("Textures/Weapons/arrow1.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load Arrow1 texture" << std::endl;
 		}
 
 		//label 1 (6)
@@ -75,6 +90,9 @@
 		textures.push_back(unordered_map<string, Texture>());
 		if (!textures[4]["Hero1"].loadFromFile("Textures/Heroes/hero1.png")) {
 			std::cout << "Error -> TextureManager -> couldn't load Hero1 texture" << std::endl;
+		}
+		if (!textures[4]["Hero2"].loadFromFile("Textures/Heroes/hero2.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load Hero2 texture" << std::endl;
 		}
 	}
 

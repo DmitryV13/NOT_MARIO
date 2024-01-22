@@ -15,7 +15,7 @@
 	}
 	
 	void Reviewer::addAnimatedImage(TextureManager* t_manager, int index, string name, IntRect first_frame, short frames_number_){
-		if (images.size() == 0) {
+		if (images.empty()) {
 			current_image = 0;
 		}
 		images.push_back(new AnimatedImage(t_manager, index, name, first_frame, frames_number_));
@@ -62,6 +62,10 @@
 	}
 
 	void Reviewer::update(Vector2f mouse_pos, FloatRect view_cords){
+		setPosition
+		(Vector2f(position.x + view_cords.left - view_cords.width / 2,
+			position.y + view_cords.top - view_cords.height / 2)
+		);
 		if (!images.empty()) {
 			images[current_image]->update();
 		}

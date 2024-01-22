@@ -6,17 +6,23 @@
 #include "PopUpWindow.h"
 #include "Level.h"
 #include "Button.h"
+#include "ResourceInfo.h"
+#include "Inventory.h"
+#include "TabContainer.h"
+#include "ProductCard.h"
 
 using namespace sf;
 
 class RoadMap : public MainMenuOption{
 private:
+	Inventory* inventory;
 	RenderWindow* window;
 	double screen_width;
 	double screen_height;
 	short* u;
 	Group* all_static_items;
 	PopUpWindow* level_selection;
+	PopUpWindow* shop;
 	CallbacksHandler* cb_handler;
 
 	unordered_map<string, Button*> buttons;
@@ -40,6 +46,7 @@ public:
 	void updateEvents();
 	void update();
 	void openLevel(float level_index);
+	void closeRoadMap(float q);
 
 	void render();
 

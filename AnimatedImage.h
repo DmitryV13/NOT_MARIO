@@ -1,7 +1,6 @@
 #pragma once
 #include "TextureManager.h"
 
-
 using namespace::sf;
 
 class AnimatedImage{

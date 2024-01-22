@@ -1,0 +1,3 @@
+#pragma once
+enum PURCHASE { PURCHASE_DONE = 0, PURCHASE_UNDONE };
+

@@ -11,6 +11,7 @@ private:
 	RectangleShape g2;
 
 	//
+	RectangleShape background;
 	Text* name;
 	vector<vector<InterfaceItem*>> g_elements;
 
@@ -24,17 +25,18 @@ public:
 
 	FloatRect getLocalBounds() override;
 	FloatRect getGlobalBounds();
-	int getMaxELHeight(short index);
+	float getMaxELHeight(short index);
 	short* getButtonState(int btn_id);
 
 	void setAlignment(string horiz_a, string vertic_a);
 	void setVAlignment(string vertic_a);
 	void setHAlignment(string horiz_a);
-
 	void setPositionX(float x) override;
 	void setPositionY(float y) override;
+	void setBColor(Color color);
 
 	void changePosition(float offset_x, float offset_y) override;
+	void changePositionY(float offset);
 
 	void createElementLine();
 

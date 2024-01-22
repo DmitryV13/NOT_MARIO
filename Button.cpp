@@ -2,7 +2,8 @@
 #include "Button.h"
 
 Button::Button(){
-	int y = 0;
+	ii_type = INTERFACE_ITEM_TYPE::BUTTON;
+	button_state = BUTTON_STATE::BTN_IDLE;
 }
 
 Button::Button(float x, float y, float width, float height, short text_size, sf::Font* font_

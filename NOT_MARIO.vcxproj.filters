@@ -52,14 +52,8 @@
     <Filter Include="Header Files\GUI\Items">
       <UniqueIdentifier>{2790310e-0868-4f13-bf9a-6ae924251065}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\GUI\Tabs">
-      <UniqueIdentifier>{d966aea3-413c-4bf2-bbd5-5172fb12fdd4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\GUI">
       <UniqueIdentifier>{65d21878-6202-455d-8d70-6cec66667806}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GUI\Tabs">
-      <UniqueIdentifier>{82424bf7-a522-4fe2-810c-f49e3e060e81}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\GUI\Menu">
       <UniqueIdentifier>{ac5a82fa-b797-4839-a404-faf2a19de91c}</UniqueIdentifier>
@@ -115,6 +109,12 @@
     <Filter Include="Header Files\GameObjects\Alive\Enemy\Weapons">
       <UniqueIdentifier>{efa035b5-f627-4127-8ab5-f8fe135d7af4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GUI\Pages">
+      <UniqueIdentifier>{82424bf7-a522-4fe2-810c-f49e3e060e81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GUI\Pages">
+      <UniqueIdentifier>{d966aea3-413c-4bf2-bbd5-5172fb12fdd4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyView.cpp">
@@ -130,16 +130,16 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Exit.cpp">
-      <Filter>Source Files\GUI\Tabs</Filter>
+      <Filter>Source Files\GUI\Pages</Filter>
     </ClCompile>
     <ClCompile Include="MainMenuOption.cpp">
-      <Filter>Source Files\GUI\Tabs</Filter>
+      <Filter>Source Files\GUI\Pages</Filter>
     </ClCompile>
     <ClCompile Include="Setting.cpp">
-      <Filter>Source Files\GUI\Tabs</Filter>
+      <Filter>Source Files\GUI\Pages</Filter>
     </ClCompile>
     <ClCompile Include="RoadMap.cpp">
-      <Filter>Source Files\GUI\Tabs</Filter>
+      <Filter>Source Files\GUI\Pages</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>Source Files\Map</Filter>
@@ -216,17 +216,11 @@
     <ClCompile Include="ScaleParametrBar.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="InterfaceItem.cpp">
-      <Filter>Source Files\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="ComposedIMG.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Group.cpp">
-      <Filter>Source Files\GUI</Filter>
     </ClCompile>
     <ClCompile Include="GeneralInfo.cpp">
       <Filter>Source Files\GameObjects\Alive\Player</Filter>
@@ -246,22 +240,43 @@
     <ClCompile Include="CallbacksHandler.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
-    <ClCompile Include="Reviewer.cpp">
+    <ClCompile Include="AnimatedImage.cpp">
+      <Filter>Source Files\ServiceClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AnimatedImage.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="InterfaceItem.cpp">
+      <Filter>Source Files\GUI\Items</Filter>
     </ClCompile>
     <ClCompile Include="ImageButton.cpp">
+      <Filter>Source Files\GUI\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Group.cpp">
+      <Filter>Source Files\GUI\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Reviewer.cpp">
+      <Filter>Source Files\GUI\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceInfo.cpp">
+      <Filter>Source Files\GUI\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="TabContainer.cpp">
+      <Filter>Source Files\GUI\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProductCard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Exit.h">
-      <Filter>Header Files\GUI\Tabs</Filter>
+      <Filter>Header Files\GUI\Pages</Filter>
     </ClInclude>
     <ClInclude Include="RoadMap.h">
-      <Filter>Header Files\GUI\Tabs</Filter>
+      <Filter>Header Files\GUI\Pages</Filter>
     </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>Header Files\Map</Filter>
@@ -276,7 +291,7 @@
       <Filter>Header Files\ServiceClasses</Filter>
     </ClInclude>
     <ClInclude Include="MainMenuOption.h">
-      <Filter>Header Files\GUI\Tabs</Filter>
+      <Filter>Header Files\GUI\Pages</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files\ServiceClasses</Filter>
@@ -285,7 +300,7 @@
       <Filter>Header Files\ServiceClasses</Filter>
     </ClInclude>
     <ClInclude Include="Setting.h">
-      <Filter>Header Files\GUI\Tabs</Filter>
+      <Filter>Header Files\GUI\Pages</Filter>
     </ClInclude>
     <ClInclude Include="TileFactory.h">
       <Filter>Header Files\Map</Filter>
@@ -416,13 +431,28 @@
     <ClInclude Include="ImageButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ResourceInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TabContainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProductCard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PURCHASE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NOT_MARIO.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="lobby.frag" />
   </ItemGroup>
 </Project>
