@@ -38,19 +38,19 @@
 		t02->createElementLine();
 		tmp = t02->calculatePFNII(5, 100, 0);
 		ResourceInfo* ri0 = new ResourceInfo(tmp->first, tmp->second, inventory->getItemInfo("Coin").first,
-			inventory->getItemInfo("Coin").second, 30, font, t_manager, 0, "Coin");
+			inventory->getItemInfo("Coin").second, 30, font, t_manager, 0, "Coin", false);
 		t02->addIElement((InterfaceItem*)ri0, 0);
 		delete tmp;
 
 		tmp = t02->calculatePFNII(5, 100, 0);
 		ResourceInfo* ri1 = new ResourceInfo(tmp->first, tmp->second, inventory->getItemInfo("BSplinter").first,
-			inventory->getItemInfo("BSplinter").second, 30, font, t_manager, 0, "BSplinter");
+			inventory->getItemInfo("BSplinter").second, 30, font, t_manager, 0, "BSplinter", false);
 		t02->addIElement((InterfaceItem*)ri1, 0);
 		delete tmp;
 		
 		tmp = t02->calculatePFNII(5, 100, 0);
 		ResourceInfo* ri2 = new ResourceInfo(tmp->first, tmp->second, inventory->getItemInfo("RSplinter").first,
-			inventory->getItemInfo("RSplinter").second, 30, font, t_manager, 0, "RSplinter");
+			inventory->getItemInfo("RSplinter").second, 30, font, t_manager, 0, "RSplinter", false);
 		t02->addIElement((InterfaceItem*)ri2, 0);
 		delete tmp;
 
@@ -207,7 +207,7 @@
 
 		tb01->createElementLine();
 		tmp = tb01->calculatePFNII(85, 10, 0);
-		ResourceInfo* ii0 = new ResourceInfo(tmp->first, tmp->second, prc0->getPrice(), 0, 24, font, t_manager, 0, "Coin");
+		ResourceInfo* ii0 = new ResourceInfo(tmp->first, tmp->second, prc0->getPrice(), 0, 24, font, t_manager, 0, "Coin", true);
 		tb01->addIElement((InterfaceItem*)ii0, 1);
 		delete tmp;
 

@@ -4,10 +4,11 @@ using namespace::sf;
 
 class GeneralInfo{
 private:
+	short HP;
+	float stan_time;
 	FloatRect globalBounds;
 	Vector2f position;
 	Vector2f velocity;
-	short HP;
 public:
 	GeneralInfo(short HP_);
 
@@ -15,12 +16,16 @@ public:
 	const short getHP() const;
 	const FloatRect getGlobalBounds() const;
 	const Vector2f getPosition() const;
+	float getStanTime();
 
 	void changeVelocityX(float x);
 	void changeVelocityY(float y);
+
 	void setVelocityX(float x);
 	void setVelocityY(float y);
-	void changeHP(short z);
+	void setStanTime(float new_st);
 	void setGlobalBounds(FloatRect new_gb);
 	void setPosition(Vector2f new_position);
+
+	void changeHP(short z);
 };

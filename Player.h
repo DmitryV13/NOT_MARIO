@@ -27,6 +27,7 @@ private:
 
 
     IntRect currentFrame;
+    Clock stan_timer;
     Clock animationTimer;
     short animationState;
     bool animationSwitch;
@@ -95,6 +96,8 @@ public:
     bool updateCollisionX();
     bool updateCollisionY();
     void updateCollision();
+
+    bool checkStan();
 
     void render(RenderTarget& target);
     void renderProjectiles(RenderTarget& target);

@@ -48,6 +48,7 @@ void Player::initVariables(){
     }
 
     void Player::initPhysics(){
+        stan_timer.restart();
         info = new GeneralInfo(1000);
         info->setGlobalBounds(player_S.getGlobalBounds());
         info->setPosition(player_S.getPosition());
@@ -141,7 +142,7 @@ bool Player::stan()
 }
 
 void Player::update(RenderWindow* window, FloatRect view_cords){
-    if (alive){
+    if (alive && !checkStan()){
         updateMovement(window, view_cords);
         updateAnimation();
         updatePhysics();
@@ -380,6 +381,8 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
     }
 
     void Player::change_weapon(short count){
+        if (checkStan())
+            return;
         chosen_weapon+=count;
         if (chosen_weapon >= static_cast<short>(weapons.size())) {
             chosen_weapon = 0;
@@ -474,6 +477,17 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
                 0,
                 getPosition().y);
             info->setVelocityX(0.f);
+        }
+    }
+
+    bool Player::checkStan(){
+        if (stan_timer.getElapsedTime().asSeconds() <= info->getStanTime()) {
+            return true;
+        }
+        else {
+            info->setStanTime(0);
+            stan_timer.restart();
+            return false;
         }
     }
 

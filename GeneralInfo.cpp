@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "GeneralInfo.h"
 
-    GeneralInfo::GeneralInfo(short HP_): HP(HP_){
+    GeneralInfo::GeneralInfo(short HP_): HP(HP_), stan_time(0.f){
     }
     
     const Vector2f GeneralInfo::getVelocity() const{
@@ -20,6 +20,10 @@
         return position;
     }
 
+    float GeneralInfo::getStanTime(){
+        return stan_time;
+    }
+
     void GeneralInfo::changeVelocityX(float x){
         velocity.x += x;
     }
@@ -34,6 +38,10 @@
 
     void GeneralInfo::setVelocityY(float y){
         velocity.y = y;
+    }
+
+    void GeneralInfo::setStanTime(float new_st){
+        stan_time = new_st;
     }
 
     void GeneralInfo::changeHP(short z){

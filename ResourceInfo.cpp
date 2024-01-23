@@ -2,7 +2,8 @@
 #include "ResourceInfo.h"
 
 	ResourceInfo::ResourceInfo(float x, float y, int* resource_, int max_v, int text_size, Font* font
-		, TextureManager* t_manager, int index, string name): resource(resource_){
+		, TextureManager* t_manager, int index, string name, bool self_align_)
+		: resource(resource_), self_align(self_align_){
 		src_img.setTexture(t_manager->getTexture(index, name));
 
 		shape.setPosition(x, y);
@@ -39,5 +40,18 @@
 			shape.getPosition().y + view_cords.top - view_cords.height / 2)
 		);
 		text.setString(std::to_string(*resource) + max);
+		if (self_align) {
+			shape.setSize(Vector2f(
+				src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 + text.getGlobalBounds().width,
+				text.getGlobalBounds().height * 2)
+			);
+
+			src_img.setPosition(shape.getPosition());
+
+			text.setPosition(
+				shape.getPosition().x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
+				shape.getPosition().y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
+			);
+		}
 	}
 
