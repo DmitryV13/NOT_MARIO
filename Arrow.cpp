@@ -53,32 +53,13 @@
 
 
 	bool Arrow::updateHit() {
-		for (auto& enemy : *(enemies[0]))
+		for (auto enemy_l : enemies)
 		{
-			if (arrow_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
-				enemy->changeHP(10);
-				return true;
-			}
-		}
-		for (auto& enemy : *(enemies[1]))
-		{
-			if (arrow_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
-				enemy->changeHP(10);
-				return true;
-			}
-		}
-		for (auto& enemy : *(enemies[2]))
-		{
-			if (arrow_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
-				enemy->changeHP(10);
-				return true;
-			}
-		}
-		for (auto& enemy : *(enemies[3]))
-		{
-			if (arrow_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
-				enemy->changeHP(10);
-				return true;
+			for (auto enemy : *enemy_l) {
+				if (arrow_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
+					enemy->changeHP(10);
+					return true;
+				}
 			}
 		}
 

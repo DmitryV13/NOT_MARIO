@@ -221,8 +221,8 @@ void Enemy::walk(const float dir_x)
 }
 
 bool Enemy::isPlayerInRadius(const sf::FloatRect& observationArea, const sf::FloatRect& playerBounds, float radius)
-{
-	if (observationArea.intersects(playerBounds))
+{		
+	if (observation_area.getGlobalBounds().intersects(playerBounds))
 	{
 		sf::Vector2f observationCenter = {
 			observationArea.left + observationArea.width / 2,

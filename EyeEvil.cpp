@@ -48,10 +48,15 @@ void EyeEvil::reset_Timer()
 	}
 }
 
+void EyeEvil::changeHP(short i)
+{
+	if(eye_state != EYE_EVIL_STATE::TAKING_DAMAGE && eye_state != EYE_EVIL_STATE::DEATH)Enemy::changeHP(i);
+}
+
 void EyeEvil::update_movement()
 {
 	if (HP <= 0)eye_state = EYE_EVIL_STATE::DEATH;
-	if (hp_damage_i > HP)
+	if (hp_damage_i > HP && eye_state != EYE_EVIL_STATE::DEATH)
 	{
 		eye_state = EYE_EVIL_STATE::TAKING_DAMAGE;
 	}

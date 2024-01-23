@@ -569,7 +569,6 @@ void WolfBoss::changeHP(short i)
 void WolfBoss::update_movement()
 {
 
-	std::cout << HP << " \N";
 	if (HP <= 0)
 	{
 		boss_state = BOSS_STATE::DEATH;
@@ -587,7 +586,6 @@ void WolfBoss::update_movement()
 		{
 		looks();
 
-			std::cout << "sleep\n";
 			displacement.x = 0.f;
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_SLEEP;
 			if (isPlayerInRadius(observation_area.getGlobalBounds(), player_info->getGlobalBounds(), 300) ||
@@ -603,7 +601,6 @@ void WolfBoss::update_movement()
 		}
 	case BOSS_STATE::IDLE:
 		{
-			std::cout << "idle\n";
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
 			reset_Timer();
 			//retreat_counter++;
@@ -640,7 +637,6 @@ void WolfBoss::update_movement()
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;
 			reset_Timer();
 			looks();
-			std::cout << "Moving\n";
 			displacement_max = 0.8f;
 			if (on_ground)
 			{
@@ -696,7 +692,6 @@ void WolfBoss::update_movement()
 		}
 	case BOSS_STATE::PUNCH:
 		{
-			std::cout << "PUNCH\n";
 			looks();
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_PUNCH;
 			reset_Timer();
@@ -717,7 +712,6 @@ void WolfBoss::update_movement()
 		}
 	case BOSS_STATE::JUMPING:
 		{
-			std::cout << "jumping\n";
 			if (animation_state != ENEMY_ANIMATION_STATES::ENEMY_JUMPING)animation_state =
 				ENEMY_ANIMATION_STATES::ENEMY_MOVING;
 
@@ -824,7 +818,6 @@ void WolfBoss::update_movement()
 		}
 	case BOSS_STATE::RUN:
 		{
-			std::cout << "RUN\n";
 			looks();
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_RUN;
 			reset_Timer();
@@ -858,7 +851,6 @@ void WolfBoss::update_movement()
 		}
 	case BOSS_STATE::DOUBLE_KICK:
 		{
-			std::cout << "DOUBLE_KICK\n";
 
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_DOUBLE_KICK;
 			reset_Timer();
@@ -880,7 +872,6 @@ void WolfBoss::update_movement()
 		}
 	case BOSS_STATE::ATTACKING:
 		{
-			std::cout << "attacking\n";
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_ATTENTION;
 			reset_Timer();
 			if (rand_ == 0)
@@ -920,7 +911,6 @@ void WolfBoss::update_movement()
 
 	case BOSS_STATE::RETREATING:
 		{
-			std::cout << "retreating\n";
 
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;
 			if (update_collision_x())boss_state = BOSS_STATE::IDLE;
@@ -953,7 +943,6 @@ void WolfBoss::update_movement()
 		}
 	case BOSS_STATE::HOWL:
 		{
-			std::cout << "HOWL\n";
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_HOWL;
 			reset_Timer();
 			looks();
@@ -971,7 +960,6 @@ void WolfBoss::update_movement()
 	case BOSS_STATE::TORMENT:
 
 		{
-			std::cout << "TORMENT\n";
 			displacement_max = 7.f;
 			displacement.x *= (displacement_max / 4);
 			if (update_collision_x())boss_state = BOSS_STATE::IDLE;
@@ -1034,7 +1022,6 @@ void WolfBoss::update_movement()
 
 	case BOSS_STATE::DEATH:
 		{
-			std::cout << "DEATH\n";
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_DEATH;
 			reset_Timer();
 			displacement.x = 0;
@@ -1043,7 +1030,6 @@ void WolfBoss::update_movement()
 		}
 	case BOSS_STATE::HIT_EARTH:
 		{
-			std::cout << "HIT_EARTH\n";
 			looks();
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_HIT_EARTH;
 			reset_Timer();
@@ -1066,7 +1052,6 @@ void WolfBoss::update_movement()
 	if (!search_for_enemies() && awakening)
 
 	{
-		std::cout << "pppppppppp";
 
 		if (on_ground)
 		{

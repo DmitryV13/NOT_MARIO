@@ -15,6 +15,7 @@ laser_weapon::laser_weapon(TileMap& map, int compar, float i,
 	init_texture();
 	init_sprite();
 	set_position(i, j);
+	init_animation();
 	laser_timer.restart();
 }
 
@@ -195,7 +196,7 @@ sf::Vector2f laser_weapon::calculateEndPosition(float x)
 
 	int g = 0;
 
-	while (sandbox->outOfMap(i, j) && !sandbox->isBlock(i, j) && g < 64)
+	while (sandbox->outOfMap(i, j) && !sandbox->isBlock(i, j) && g < 40)
 	{
 		g++;
 		newPosition.x += x / 2;
@@ -369,7 +370,6 @@ void laser_weapon::damage(sf::Vector2f startPosition, sf::Vector2f endPosition)
 		if (dir_x)
 		{
 			sf::RectangleShape greenSquare(sf::Vector2f(((endPosition.x - startPosition.x) + 64), 40));
-			greenSquare.setFillColor(sf::Color::Green);
 			greenSquare.setPosition(startPosition.x, startPosition.y);
 			if (greenSquare.getGlobalBounds().intersects(player_info->getGlobalBounds()))
 			{
@@ -380,7 +380,6 @@ void laser_weapon::damage(sf::Vector2f startPosition, sf::Vector2f endPosition)
 		else
 		{
 			sf::RectangleShape greenSquare(sf::Vector2f((abs(startPosition.x - endPosition.x) + 64), 40));
-			greenSquare.setFillColor(sf::Color::Green);
 			greenSquare.setPosition(endPosition.x, endPosition.y);
 			if (greenSquare.getGlobalBounds().intersects(player_info->getGlobalBounds()))
 			{
@@ -405,8 +404,8 @@ void laser_weapon::render(sf::RenderTarget& target)
 	while (true)
 	{
 		currentPosition.x += x;
-
-		if (hit_a_wall(currentPosition, x))
+		cout_las++;
+		if (hit_a_wall(currentPosition, x)|| cout_las>20)
 		{
 			if (!dir_x)
 			{
@@ -436,6 +435,8 @@ void laser_weapon::render(sf::RenderTarget& target)
 			}
 			laser_S.setPosition(startPosition);
 			// If hit a wall, stop drawing
+
+			cout_las= 0;
 			return;
 		}
 

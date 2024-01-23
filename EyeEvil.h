@@ -48,6 +48,8 @@ public:
 	void walk(const float dir_x) override;
 	//int laser_length();
 	void reset_Timer();
+	void changeHP(short) override;
+
 
 private:
 	Texture evil_ball_t_;

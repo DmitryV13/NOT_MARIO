@@ -3,6 +3,7 @@
 #include "TileMap.h"
 #include "laser_weapon.h"
 #include "GeneralInfo.h"
+#include "killer_leaf.h"
 
 using sf::Sprite;
 using sf::RenderWindow;
@@ -30,7 +31,8 @@ enum ENEMY_ANIMATION_STATES
 	ENEMY_PUNCH,
 	ENEMY_DOUBLE_KICK,
 	ENEMY_HOWL,
-	ENEMY_HIT_EARTH
+	ENEMY_HIT_EARTH,
+	ENEMY_AWAKENING
 };
 
 enum class PL_SIDE

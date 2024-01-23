@@ -108,7 +108,7 @@ void TileMap::init_pos_enemy()
 	enemy_position.push({ 6091.f,2230.f });
 	enemy_position.push({ 4613.f,2740.f });
 	enemy_position.push({ 1993.f,2920.f });
-	enemy_position.push({ 989.f,2900.f });
+	enemy_position.push({ 989.f,2890.f });
 	enemy_position.push({ 5622.f,400.f });
 	enemy_position.push({ 1101.f,480.f });
 	enemy_position.push({ 1100.f,1590.f });

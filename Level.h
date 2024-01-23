@@ -1,4 +1,5 @@
 #pragma once
+#include "BushKiller.h"
 #include "Player.h"
 #include "TileMap.h"
 #include "MyView.h"
@@ -29,6 +30,7 @@ private:
 	//Cursor* cursor;
 
 	EyeEvil* evil_Ball;
+	vector<BushKiller*>* bush_killers_vector;
 	vector<EyeEvil*>* evil_ball_vector;
 	vector<kusaka*>* Kusaka_vector;
 	vector<RedMutant*>* Red_Mutant_vector_;
@@ -53,6 +55,7 @@ private:
 	void init_Kusaka();
 	void init_chubacabra();
 	void init_Wolf_boss();
+	void init_BushKiller();
 	void init_enemy();
 public:
 	Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level, Color menuColor);
@@ -67,6 +70,7 @@ public:
 	void updateCursor();
 	void updateEvilBall();
 	void update_Kusaka();
+	void update_BushKiller();
 	void update_Red_Mutant();
 	void update_Wolf_boss();
 	void updateGameMenu();
@@ -82,6 +86,7 @@ public:
 	void renderEvilBall();
 	void render_Kusaka();
 	void render_chubacabra();
+	void render_BushKiller();
 	void render_Wolf_boss();
 	void render_shot();
 	void renderLifeBar();

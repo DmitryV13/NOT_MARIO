@@ -149,29 +149,41 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 		}
 	}
 
+void Level::init_BushKiller()
+{
+	bush_killers_vector = new vector<BushKiller*>();
+	for (int i = 0; i < num_of_enemy_; i++)
+	{
+		auto* enemy = new BushKiller(sandbox, player->getGeneralInfo());
+		bush_killers_vector->push_back(enemy);
+	}
+}
+
 void Level::init_enemy()
 {
 	Kusaka_vector = new vector<kusaka*>();
 	evil_ball_vector = new vector<EyeEvil*>();
 	Red_Mutant_vector_ = new vector<RedMutant*>();
 	boss_vector = new vector<WolfBoss*>();
+	bush_killers_vector = new vector<BushKiller*>();
 	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
 	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
 	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
 	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
 	boss_vector->push_back(new WolfBoss(sandbox, player->getGeneralInfo()));
-	Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
-
-	Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
+	bush_killers_vector->push_back(new BushKiller(sandbox, player->getGeneralInfo()));
+	
+	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
+	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
 	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
 	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
 	////Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
 	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
 	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
 	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
-	Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
-	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
-	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
+	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
+	//evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
+	//evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
 	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
 	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
 	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
@@ -227,7 +239,34 @@ void Level::updateEvilBall()
  	//	}
 	}
 
-	void Level::update_Red_Mutant()
+void Level::update_BushKiller()
+
+{
+
+	for (auto& enemy : *bush_killers_vector)
+
+	{
+		enemy->update();
+	}
+
+	//auto it = bush_killers_vector->begin();
+	//while (it != bush_killers_vector->end())
+	//{
+	//	(*it)->update();
+
+	//	if ((*it)->kusaka_state == KUSAKA_STATE::KUSAKA_DEATH && (*it)->DEATH_timer.getElapsedTime().asSeconds() >= 5.1f)
+	//	{
+	//		delete* it;
+	//		it = bush_killers_vector->erase(it);
+	//	}
+	//	else
+	//	{
+	//		++it;
+	//	}
+	//}
+}
+
+void Level::update_Red_Mutant()
 	{
 
 		auto it = Red_Mutant_vector_->begin();
@@ -258,7 +297,6 @@ void Level::updateEvilBall()
 
 		{
 			enemy->update();
-			//(*boss_vector)[i]->update();
 		}
 	}
 
@@ -312,7 +350,7 @@ void Level::updateEvilBall()
 		update_Kusaka();
 		update_Red_Mutant();
 		update_Wolf_boss();
-
+		update_BushKiller();
 		updateView();
 		updateCursor();
 		updateMap();
@@ -395,6 +433,7 @@ void Level::updateEvilBall()
 		renderEvilBall();
 		render_Kusaka();
 		render_chubacabra();
+		render_BushKiller();
 		render_shot();
 		render_Wolf_boss();
 
@@ -441,7 +480,17 @@ void Level::updateEvilBall()
 		}
 	}
 
-	void Level::render_Wolf_boss()
+void Level::render_BushKiller()
+{
+
+	for (auto& enemy : *bush_killers_vector)
+	{
+		//(*boss_vector)[i]->render(*window);
+		enemy->render(*window);
+	}
+}
+
+void Level::render_Wolf_boss()
 	{
 		for (auto& enemy : *boss_vector)
 		{
@@ -461,6 +510,17 @@ void Level::updateEvilBall()
 
 				//(*evil_ball_vector)[i]->draw_laser(1, *window);
 				enemy->draw_laser(1, *window);
+
+			}
+		}
+		for (auto& enemy : *bush_killers_vector)
+		{
+			//if ((*evil_ball_vector)[i]->laser_existence())
+			if (!enemy->leaf_empty())
+			{
+
+				//(*evil_ball_vector)[i]->draw_laser(1, *window);
+				enemy->draw_leaf(*window);
 
 			}
 		}
@@ -490,5 +550,6 @@ void Level::updateEvilBall()
 		player->initWeapon({ reinterpret_cast<vector<Enemy*>*>(Kusaka_vector)
 			, reinterpret_cast<vector<Enemy*>*>(evil_ball_vector)
 			, reinterpret_cast<vector<Enemy*>*>(Red_Mutant_vector_)
-			, reinterpret_cast<vector<Enemy*>*>(boss_vector) });
+			, reinterpret_cast<vector<Enemy*>*>(boss_vector)
+			, reinterpret_cast<vector<Enemy*>*>(bush_killers_vector)});
 	}

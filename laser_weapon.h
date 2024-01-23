@@ -34,6 +34,7 @@ protected:
 	int first;
 	int next;
 	bool dir_x;
+	short cout_las{ 0 };
 
 
 	GeneralInfo* player_info;

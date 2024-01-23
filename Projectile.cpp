@@ -48,32 +48,13 @@
 	}
 
 	bool Projectile::updateHit(){
-		for (auto& enemy : *(enemies[0]))
+		for (auto enemy_l : enemies)
 		{
-			if (projectile_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
-				enemy->changeHP(10);
-				return true;
-			}
-		}
-		for (auto& enemy : *(enemies[1]))
-		{
-			if (projectile_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
-				enemy->changeHP(10);
-				return true;
-			}
-		}
-		for (auto& enemy : *(enemies[2]))
-		{
-			if (projectile_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
-				enemy->changeHP(10);
-				return true;
-			}
-		}
-		for (auto& enemy : *(enemies[3]))
-		{
-			if (projectile_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
-				enemy->changeHP(10);
-				return true;
+			for (auto enemy : *enemy_l) {
+				if (projectile_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
+					enemy->changeHP(10);
+					return true;
+				}
 			}
 		}
 		
