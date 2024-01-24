@@ -94,6 +94,21 @@
 		if (!textures[4]["Hero2"].loadFromFile("Textures/Heroes/hero2.png")) {
 			std::cout << "Error -> TextureManager -> couldn't load Hero2 texture" << std::endl;
 		}
+
+		//potions
+		textures.push_back(unordered_map<string, Texture>());
+		if (!textures[5]["ManaPotion"].loadFromFile("Textures/Textures_map/mana_potion.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load ManaPotion texture" << std::endl;
+		}
+		if (!textures[5]["HealthPotion"].loadFromFile("Textures/Textures_map/health_potion.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load HealthPotion texture" << std::endl;
+		}
+		if (!textures[5]["PoisonPotion"].loadFromFile("Textures/Textures_map/poison_potion.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load PoisonPotion texture" << std::endl;
+		}
+		if (!textures[5]["SpeedPotion"].loadFromFile("Textures/Textures_map/speed_potion.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load SpeedPotion texture" << std::endl;
+		}
 	}
 
 	Texture& TextureManager::getTexture(int index, string name)

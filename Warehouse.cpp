@@ -13,6 +13,12 @@ Warehouse::Warehouse(){
 	warehouse["heroes"] = vector<WarehouseItem*>();
 	warehouse["heroes"].push_back(new WarehouseItem("Hero1", 1, 1, true, 4, IntRect(0, 0, 54, 70), 6));
 	warehouse["heroes"].push_back(new WarehouseItem("Hero2", 1, 1, true, 4, IntRect(0, 0, 63, 68), 1));
+
+	warehouse["potions"] = vector<WarehouseItem*>();
+	warehouse["potions"].push_back(new WarehouseItem("ManaPotion", 1, 0, true, 5, IntRect(0, 0, 19, 39), 5));
+	warehouse["potions"].push_back(new WarehouseItem("HealthPotion", 1, 0, true, 5, IntRect(0, 0, 19, 39), 5));
+	warehouse["potions"].push_back(new WarehouseItem("PoisonPotion", 1, 0, true, 5, IntRect(0, 0, 19, 39), 5));
+	warehouse["potions"].push_back(new WarehouseItem("SpeedPotion", 1, 0, true, 5, IntRect(0, 0, 19, 39), 5));
 	}
 	
 	pair<int*, int> Warehouse::getItemInfo(string item_type, string item_name){
