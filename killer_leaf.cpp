@@ -5,7 +5,7 @@ void killer_leaf::init_texture()
 {
 	if (!leaf_T.loadFromFile("Textures/Enemies/sheet.png"))
 	{
-		std::cout << "Error -> laser -> couldn't load laser texture" << std::endl;
+		std::cout << "Error -> sheet -> couldn't load sheet texture" << std::endl;
 	}
 }
 

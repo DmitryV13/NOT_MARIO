@@ -144,6 +144,7 @@
     <ClCompile Include="CRect.cpp" />
     <ClCompile Include="GeneralInfo.cpp" />
     <ClCompile Include="Group.cpp" />
+    <ClCompile Include="hornet.cpp" />
     <ClCompile Include="killer_leaf.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="PopUpWindow.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="CRect.h" />
     <ClInclude Include="GeneralInfo.h" />
     <ClInclude Include="Group.h" />
+    <ClInclude Include="hornet.h" />
     <ClInclude Include="killer_leaf.h" />
     <ClInclude Include="Label.h" />
     <ClInclude Include="MENU_STATE.h" />

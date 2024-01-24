@@ -12,6 +12,7 @@
 #include "GAME_STATE.h"
 #include "Enemy.h"
 #include "PopUpWindow.h"
+#include "hornet.h"
 
 using namespace::sf;
 
@@ -35,6 +36,8 @@ private:
 	vector<kusaka*>* Kusaka_vector;
 	vector<RedMutant*>* Red_Mutant_vector_;
 	vector<WolfBoss*>* boss_vector;
+	vector<hornet*>* hornet_vector;
+
 	int num_of_enemy_{ 12 };
 	short regime;
 	double screenWidth;
@@ -68,6 +71,8 @@ public:
 	void updatePlayer();
 	void updateView();
 	void updateCursor();
+
+	void update_Enemy();
 	void updateEvilBall();
 	void update_Kusaka();
 	void update_BushKiller();
@@ -83,6 +88,8 @@ public:
 	void renderMap();
 	void renderCursor();
 	void render();
+
+	void renderEnemy();
 	void renderEvilBall();
 	void render_Kusaka();
 	void render_chubacabra();

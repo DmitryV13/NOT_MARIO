@@ -234,6 +234,9 @@
     <ClCompile Include="killer_leaf.cpp">
       <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="hornet.cpp">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemy.h">
@@ -378,6 +381,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="killer_leaf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hornet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

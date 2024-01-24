@@ -440,7 +440,6 @@ void BushKiller::attack()
 void BushKiller::update_movement()
 {
 	update_life();
-	std::cout << HP << " \n";
 	if (HP <= 0)
 	{
 		bush_state = BUSH_KILLER_STATE::DEATH;
@@ -460,7 +459,6 @@ void BushKiller::update_movement()
 		{
 			//looks();
 			//reset_Timer();
-			std::cout << "sleep\n";
 			displacement.x = 0.f;
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_SLEEP;
 			if (isPlayerInRadius(Enemy_S.getGlobalBounds(), player_info->getGlobalBounds(), 500)||bush_state==bush_state_past)
@@ -471,7 +469,6 @@ void BushKiller::update_movement()
 		}
 	case BUSH_KILLER_STATE::IDLE:
 		{
-		std::cout << "IDLE\n";
 
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
 			reset_Timer();
@@ -504,7 +501,6 @@ void BushKiller::update_movement()
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;
 			reset_Timer();
 			//looks();
-			std::cout << "Moving\n";
 			displacement_max = 1.f;
 			if (update_collision_x()||hit_a_wall())
 			{
@@ -531,7 +527,6 @@ void BushKiller::update_movement()
 		}
 	case BUSH_KILLER_STATE::SHOT:
 		{
-			std::cout << "SHOT\n";
 			looks();
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_SHOT;
 			reset_Timer();
@@ -554,7 +549,6 @@ void BushKiller::update_movement()
 		}
 	case BUSH_KILLER_STATE::PUNCH:
 		{
-		std::cout << "PUNCH\n";
 		looks();
 
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_PUNCH;
@@ -577,7 +571,6 @@ void BushKiller::update_movement()
 
 	case BUSH_KILLER_STATE::TAKING_DAMAGE:
 		{
-		std::cout << "TAKING_DAMAGE\n";
 
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_TAKING_DAMAGE;
 			reset_Timer();
@@ -605,7 +598,6 @@ void BushKiller::update_movement()
 
 	case BUSH_KILLER_STATE::DEATH:
 		{
-		std::cout << "DEATH\n";
 
 			displacement.x = 0;
 			reset_Timer();
