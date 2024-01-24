@@ -49,7 +49,7 @@
 
     void Player::initPhysics(){
         stan_timer.restart();
-        info = new GeneralInfo(1000);
+        info = new GeneralInfo(100);
         info->setGlobalBounds(player_S.getGlobalBounds());
         info->setPosition(player_S.getPosition());
 
@@ -78,7 +78,7 @@
         if (info->getHP() <= 0) {
             alive = false;
             animationState == PLAYER_ANIMATION_STATES::DEAD;
-            currentFrame.top = 310;
+            currentFrame.top = 303;
             currentFrame.left = 288;
             currentFrame.width = 48;
             animationTimer.restart();

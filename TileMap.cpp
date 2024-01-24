@@ -97,7 +97,7 @@ void TileMap::init_level(short int level)
 {
 	if (level >= 4) {
 		std::string level_ = std::to_string(level-3);
-		std::string path = "D:/Visual Studio!/Проект Нот Марио/Maps/level"+level_+"/level.txt";
+		std::string path = "Maps/level"+level_+"/level.txt";
 		std::ifstream fin;
 		fin.open(path);
 		if (!fin.is_open()) {
@@ -169,7 +169,7 @@ void TileMap::init_level(short int level)
 void TileMap::init_objects(short int level)
 {
 	std::string level_ = std::to_string(level-3);
-	std::string path = "D:/Visual Studio!/Проект Нот Марио/Maps/level"+level_+"/Object.txt";
+	std::string path = "Maps/level"+level_+"/Object.txt";
 	std::ifstream fin;
 	fin.open(path);
 	if (!fin.is_open()) {
@@ -191,7 +191,7 @@ void TileMap::init_objects(short int level)
 void TileMap::init_animObjects(short int level)
 {
 	std::string level_ = std::to_string(level-3);
-	std::string path = "D:/Visual Studio!/Проект Нот Марио/Maps/level"+level_+"/AnimObject.txt";
+	std::string path = "Maps/level"+level_+"/AnimObject.txt";
 	std::ifstream fin;
 	fin.open(path);
 	if (!fin.is_open()) {
@@ -212,7 +212,7 @@ void TileMap::init_animObjects(short int level)
 void TileMap::init_movingObjects(short int level)
 {
 	std::string level_ = std::to_string(level-3);
-	std::string path = "D:/Visual Studio!/Проект Нот Марио/Maps/level"+level_+"/MovingObject.txt";
+	std::string path = "Maps/level"+level_+"/MovingObject.txt";
 	std::ifstream fin;
 	fin.open(path);
 	if (!fin.is_open()) {
@@ -235,7 +235,7 @@ void TileMap::init_movingObjects(short int level)
 void TileMap::init_movingAnimObjects(short int level)
 {
 	std::string level_ = std::to_string(level-3);
-	std::string path = "D:/Visual Studio!/Проект Нот Марио/Maps/level"+level_+"/MovingAnimObject.txt";
+	std::string path = "Maps/level"+level_+"/MovingAnimObject.txt";
 	std::ifstream fin;
 	fin.open(path);
 	if (!fin.is_open()) {
@@ -258,7 +258,7 @@ void TileMap::init_switch(short int level)
 {
 	std::string level_ = std::to_string(level-3);
 	std::vector<Object*> tmpObject;
-	std::string path_ = "D:/Visual Studio!/Проект Нот Марио/Maps/level"+level_+"/forSwitch.txt";
+	std::string path_ = "Maps/level"+level_+"/forSwitch.txt";
 	std::ifstream fin_;
 	fin_.open(path_);
 	if (!fin_.is_open()) {
@@ -277,7 +277,7 @@ void TileMap::init_switch(short int level)
 
 	fin_.close();
 
-	std::string path = "D:/Visual Studio!/Проект Нот Марио/Maps/level"+level_+"/Switch.txt";
+	std::string path = "Maps/level"+level_+"/Switch.txt";
 	std::ifstream fin;
 	fin.open(path);
 	if (!fin.is_open()) {
@@ -305,7 +305,7 @@ void TileMap::init_switch(short int level)
 void TileMap::init_chest(short int level)
 {
 	std::string level_ = std::to_string(level-3);
-	std::string path = "D:/Visual Studio!/Проект Нот Марио/Maps/level"+level_+"/Chest.txt";
+	std::string path = "Maps/level"+level_+"/Chest.txt";
 	std::ifstream fin;
 	fin.open(path);
 	if (!fin.is_open()) {
