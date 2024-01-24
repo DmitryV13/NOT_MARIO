@@ -229,6 +229,7 @@
     <ClInclude Include="ImageInfo.h" />
     <ClInclude Include="INTERFACE_ITEM_TYPE.h" />
     <ClInclude Include="InventoryItem.h" />
+    <ClInclude Include="OBJECT_TYPE.h" />
     <ClInclude Include="Warehouse.h" />
     <ClInclude Include="Label.h" />
     <ClInclude Include="Notification.h" />

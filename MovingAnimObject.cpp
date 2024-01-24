@@ -3,6 +3,7 @@
 
 MovingAnimObject::MovingAnimObject() : AnimObject()
 {
+	object_type = OBJECT_TYPE::MOVING_ANIM_OBJECT;
 	this->move_left = position_x - 0;
 	this->move_right = position_x + 0;
 	this->move_up = position_y - 0;
@@ -12,10 +13,11 @@ MovingAnimObject::MovingAnimObject() : AnimObject()
 	this->flagMoveV = false;
 }
 
-MovingAnimObject::MovingAnimObject(std::string name, float position_x, float position_y, OBJECT_TYPE interaction, short int size_W, short int size_H
+MovingAnimObject::MovingAnimObject(std::string name, float position_x, float position_y, short int size_W, short int size_H
 	, short int anim_factor, short int anim_quantity, float anim_time)
-		: AnimObject(name, position_x, position_y, interaction, size_W, size_H, anim_factor, anim_quantity, anim_time)
+		: AnimObject(name, position_x, position_y, size_W, size_H, anim_factor, anim_quantity, anim_time)
 {
+	object_type = OBJECT_TYPE::MOVING_ANIM_OBJECT;
 	this->move_left = position_x - 0;
 	this->move_right = position_x + 0;
 	this->move_up = position_y - 0;
@@ -25,10 +27,11 @@ MovingAnimObject::MovingAnimObject(std::string name, float position_x, float pos
 	this->flagMoveV = false;
 }
 
-MovingAnimObject::MovingAnimObject(std::string name, float position_x, float position_y, OBJECT_TYPE interaction, short int size_W, short int size_H
+MovingAnimObject::MovingAnimObject(std::string name, float position_x, float position_y, short int size_W, short int size_H
 	, short int anim_factor, short int anim_quantity, float anim_time, float move_l, float move_r, float move_u, float move_d, float speed)
-		: AnimObject(name, position_x, position_y, interaction, size_W, size_H, anim_factor, anim_quantity, anim_time)
+		: AnimObject(name, position_x, position_y, size_W, size_H, anim_factor, anim_quantity, anim_time)
 {
+	object_type = OBJECT_TYPE::MOVING_ANIM_OBJECT;
 	this->move_left = position_x - move_l;
 	this->move_right = position_x + move_r;
 	this->move_up = position_y - move_u;

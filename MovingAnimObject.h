@@ -13,9 +13,9 @@ private:
 
 public:
 	MovingAnimObject();
-	MovingAnimObject(std::string name, float position_x, float position_y, OBJECT_TYPE interaction, short int size_W, short int size_H
+	MovingAnimObject(std::string name, float position_x, float position_y, short int size_W, short int size_H
 		, short int anim_factor, short int anim_quantity, float anim_time);
-	MovingAnimObject(std::string name, float position_x, float position_y, OBJECT_TYPE interaction, short int size_W, short int size_H
+	MovingAnimObject(std::string name, float position_x, float position_y, short int size_W, short int size_H
 		, short int anim_factor, short int anim_quantity, float anim_time, float move_l, float move_r, float move_u, float move_d, float speed);
 	bool moveLeft() override;
 	bool moveRight() override;

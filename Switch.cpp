@@ -3,27 +3,30 @@
 
 Switch::Switch() : AnimObject()
 {
+    object_type = OBJECT_TYPE::SWITCH;
 	this->on = false;
 	this->obj = nullptr;
 }
 
-Switch::Switch(std::string name, float position_x, float position_y, OBJECT_TYPE interaction, short int size_W, short int size_H
+Switch::Switch(std::string name, float position_x, float position_y, short int size_W, short int size_H
 	, short int anim_factor, short int anim_quantity, float anim_time)
-	: AnimObject (name, position_x, position_y, interaction,  size_W, size_H, anim_factor, anim_quantity, anim_time)
+	: AnimObject (name, position_x, position_y, size_W, size_H, anim_factor, anim_quantity, anim_time)
 {
+    object_type = OBJECT_TYPE::SWITCH;
 	this->on = false;
 	this->obj = nullptr;
 }
 
-Switch::Switch(std::string name, float position_x, float position_y, OBJECT_TYPE interaction, short int size_W, short int size_H
+Switch::Switch(std::string name, float position_x, float position_y, short int size_W, short int size_H
 	, short int anim_factor, short int anim_quantity, float anim_time, Object* obj)
-	: AnimObject(name, position_x, position_y, interaction, size_W, size_H, anim_factor, anim_quantity, anim_time)
+	: AnimObject(name, position_x, position_y, size_W, size_H, anim_factor, anim_quantity, anim_time)
 {
+    object_type = OBJECT_TYPE::SWITCH;
 	this->on = false;
 	this->obj = obj;
 }
 
-void Switch::useSwitch()
+void Switch::useObject()
 {
 	if (!on) {
 		on = true;

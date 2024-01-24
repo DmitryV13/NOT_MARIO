@@ -19,6 +19,7 @@ private:
 
 	Tile ****tilemap;
 	std::vector<Object*> object;
+
 	std::unordered_map<char, Tile*> tile_list;
 	std::unordered_map<char, Tile*> tile_list_back;
 	std::unordered_map<char, Tile*> tile_list_front;
@@ -82,5 +83,6 @@ public:
 
 	bool isOccupied(int i, int j);
 	void updatePlayerPresence(int indexI[], int indexJ[]);
+	vector<Object*>& getObjects();
 };
 

@@ -69,7 +69,7 @@ Level::~Level()
 	
 	delete life_bar;
 	
-	boss_vector->clear();
+	//boss_vector->clear();
 }
 
 	void Level::finishGame(float q){
