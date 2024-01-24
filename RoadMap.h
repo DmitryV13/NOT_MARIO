@@ -7,7 +7,7 @@
 #include "Level.h"
 #include "Button.h"
 #include "ResourceInfo.h"
-#include "Inventory.h"
+#include "Warehouse.h"
 #include "TabContainer.h"
 #include "ProductCard.h"
 
@@ -15,21 +15,21 @@ using namespace sf;
 
 class RoadMap : public MainMenuOption{
 private:
-	Inventory* inventory;
 	RenderWindow* window;
 	double screen_width;
 	double screen_height;
-	short* u;
+
+	Warehouse* warehouse;
+
 	Group* all_static_items;
 	PopUpWindow* level_selection;
 	PopUpWindow* shop;
+	PopUpWindow* inventory;
+
 	CallbacksHandler* cb_handler;
 
-	unordered_map<string, Button*> buttons;
-	short buttons_size;
-	short space_between_buttons;
-
 	TextureManager* t_manager;
+
 	Sprite background;
 
 	Font* font;

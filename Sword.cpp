@@ -111,28 +111,13 @@
         if (is_btn_pressed) {
             this->side_of_attack = side_attack;
             attack_activation = true;
-            for (auto& enemy : *(enemies[0]))
+
+            for (auto enemy_l : enemies)
             {
-                if (sword_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
-                    enemy->changeHP(10);
-                }
-            }
-            for (auto& enemy : *(enemies[1]))
-            {
-                if (sword_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
-                    enemy->changeHP(10);
-                }
-            }
-            for (auto& enemy : *(enemies[2]))
-            {
-                if (sword_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
-                    enemy->changeHP(10);
-                }
-            }
-            for (auto& enemy : *(enemies[3]))
-            {
-                if (sword_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
-                    enemy->changeHP(10);
+                for (auto enemy : *enemy_l) {
+                    if (sword_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
+                        enemy->changeHP(10);
+                    }
                 }
             }
         }

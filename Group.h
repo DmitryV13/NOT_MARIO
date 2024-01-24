@@ -21,7 +21,7 @@ private:
 	float outer_height;
 	Vector2f position;
 public:
-	Group(int width_, int height_, Vector2f position_);
+	Group(float x, float y, float width_, float height_);
 
 	FloatRect getLocalBounds() override;
 	FloatRect getGlobalBounds();
@@ -53,7 +53,6 @@ public:
 		, TextureManager* t_manager, int index_t, string name, bool outline, int btn_id, short index_g);
 	//void addDelimiter();
 	//void addSlider();
-	//void addCard();
 	
 	CRect<float>* calculatePFNII(short fill_p_w, short fill_p_h, short index);
 	void resetActiveState() override;

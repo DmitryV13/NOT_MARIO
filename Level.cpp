@@ -22,7 +22,7 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 	pause_menu->createGroupLine();
 
 	CRect<float>* tmp = pause_menu->calculatePFNG(100, 100, 0);
-	Group* t0 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
+	Group* t0 = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
 	delete tmp;
 	
 	t0->createElementLine();
@@ -33,26 +33,12 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 
 	t0->createElementLine();
 	t0->addButton(40, font, "BACK TO LOBBY", menuColor, 2, 2);
-	
-	//t0->createElementLine();
-	//tmp = t0->calculatePFNII(40, 50, 1);
-	//Group* t3 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
-	//t3->addGroupName("3", 31, font);
-	//t0->addIElement((InterfaceItem*)t3, 1);
-	//delete tmp;
 
-	
-	//t3->createElementLine();
-	//t3->addButton(20, font, "CLOSE", Color::Red, 2);
-	//t3->setAlignment("k", "bottom 0");
-	//	pause_menu->addCallback(t0->getButtonState("BACK TO LOBBY"), (short)BUTTON_STATE::BTN_ACTIVE, &PopUpWindow::setPUWStateC, pause_menu);
 	t0->setAlignment("center auto", "center 50");
 	pause_menu->addCallback(t0->getButtonState(0), (short)BUTTON_STATE::BTN_ACTIVE, 0, &Level::continueGame , this);
 	
 	pause_menu->addCallback(t0->getButtonState(2), (short)BUTTON_STATE::BTN_ACTIVE, 0, &Level::finishGame, this);
 	pause_menu->addGroup(t0, 0);
-	//pause_menu->addGroup(50, 50, 0);
-	//pause_menu->addGroupName(0, 1, "pause2", 31, font);
 
 	life_bar = new ScaleParametrBar();
 

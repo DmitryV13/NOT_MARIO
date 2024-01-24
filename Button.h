@@ -8,7 +8,8 @@
 class Button : public InterfaceItem{
 protected:
 	int id;
-	short button_state;
+	short button_prstate;
+	short button_cstate;
 	RectangleShape shape;
 
 	Font* font;

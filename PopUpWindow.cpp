@@ -92,13 +92,12 @@
 		for (size_t i = 0; i < index; i++){
 			new_gposition_y += getMaxGroupsHeight(i);
 		}
-		Rect<int> f;
 		int new_gposition_x = position.x;
 		for (size_t i = 0; i < groups[index].size(); i++) {
 			new_gposition_x += groups[index][i]->getLocalBounds().width;
 		}
 
-		groups[index].push_back(new Group(fill_p_w * width / 100, fill_p_h * height / 100, Vector2f(new_gposition_x, new_gposition_y)));
+		groups[index].push_back(new Group(new_gposition_x, new_gposition_y, fill_p_w * width / 100, fill_p_h * height / 100));
 		groups[index][groups[index].size() - 1]->addGroupName(name, name_size, font);
 	}
 
@@ -107,13 +106,12 @@
 		for (size_t i = 0; i < index; i++) {
 			new_gposition_y += getMaxGroupsHeight(i);
 		}
-		Rect<int> f;
 		int new_gposition_x = position.x;
 		for (size_t i = 0; i < groups[index].size(); i++) {
 			new_gposition_x += groups[index][i]->getLocalBounds().width;
 		}
 
-		groups[index].push_back(new Group(fill_p_w * width / 100, fill_p_h * height / 100, Vector2f(new_gposition_x, new_gposition_y)));
+		groups[index].push_back(new Group(new_gposition_x, new_gposition_y, fill_p_w * width / 100, fill_p_h * height / 100));
 	}
 
 	void PopUpWindow::addGroup(Group* new_group, short index){
@@ -146,9 +144,6 @@
 		
 		return new CRect<float>(new_gposition_x, new_gposition_y, fill_p_w * width / 100, fill_p_h * height / 100);
 	}
-
-	void PopUpWindow::verifyBtnsPressed(){
-	}
 	
 	void PopUpWindow::update(FloatRect view_cords){
 		w_background->update(view_cords);
@@ -165,7 +160,8 @@
 	}
 	
 	void PopUpWindow::render(){
-		window->draw(*background);
+		if(background)
+			window->draw(*background);
 		w_background->render(window);
 		if (label != nullptr)
 			label->render(window);

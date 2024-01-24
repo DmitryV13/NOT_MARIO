@@ -146,10 +146,13 @@
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GeneralInfo.cpp" />
     <ClCompile Include="Group.cpp" />
+    <ClCompile Include="BasicImage.cpp" />
     <ClCompile Include="ImageButton.cpp" />
     <ClCompile Include="ImageInfo.cpp" />
-    <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="InventoryItem.cpp" />
+    <ClCompile Include="Warehouse.cpp" />
     <ClCompile Include="Label.cpp" />
+    <ClCompile Include="Notification.cpp" />
     <ClCompile Include="PopUpWindow.cpp" />
     <ClCompile Include="ProductCard.cpp" />
     <ClCompile Include="Projectile.cpp" />
@@ -188,6 +191,7 @@
     <ClCompile Include="TileBox.cpp" />
     <ClCompile Include="TileFactory.cpp" />
     <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="WarehouseItem.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="WolfBoss.cpp" />
   </ItemGroup>
@@ -202,11 +206,14 @@
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GeneralInfo.h" />
     <ClInclude Include="Group.h" />
+    <ClInclude Include="BasicImage.h" />
     <ClInclude Include="ImageButton.h" />
     <ClInclude Include="ImageInfo.h" />
     <ClInclude Include="INTERFACE_ITEM_TYPE.h" />
-    <ClInclude Include="Inventory.h" />
+    <ClInclude Include="InventoryItem.h" />
+    <ClInclude Include="Warehouse.h" />
     <ClInclude Include="Label.h" />
+    <ClInclude Include="Notification.h" />
     <ClInclude Include="PAGE_STATE.h" />
     <ClInclude Include="POP_UP_WINDOW_STATE.h" />
     <ClInclude Include="ORIENTATION.h" />
@@ -248,6 +255,7 @@
     <ClInclude Include="TileBox.h" />
     <ClInclude Include="TileFactory.h" />
     <ClInclude Include="TileMap.h" />
+    <ClInclude Include="WarehouseItem.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WolfBoss.h" />
   </ItemGroup>

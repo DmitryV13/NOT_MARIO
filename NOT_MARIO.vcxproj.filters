@@ -243,7 +243,7 @@
     <ClCompile Include="AnimatedImage.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
-    <ClCompile Include="Inventory.cpp">
+    <ClCompile Include="Warehouse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="InterfaceItem.cpp">
@@ -264,10 +264,22 @@
     <ClCompile Include="TabContainer.cpp">
       <Filter>Source Files\GUI\Items</Filter>
     </ClCompile>
-    <ClCompile Include="ImageInfo.cpp">
+    <ClCompile Include="InventoryItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ImageInfo.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Notification.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
     <ClCompile Include="ProductCard.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicImage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -434,7 +446,7 @@
     <ClInclude Include="ResourceInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Inventory.h">
+    <ClInclude Include="Warehouse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TabContainer.h">
@@ -447,6 +459,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PURCHASE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Notification.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicImage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

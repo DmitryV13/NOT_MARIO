@@ -11,15 +11,15 @@
         initPhysics();
     }
 
-IntRect Player::get_pl_frame()
-{
-    return currentFrame;
-}
-
-void Player::initVariables(){
-        animationState = PLAYER_ANIMATION_STATES::IDLE_RIGHT;
-        chosen_weapon = 0;
+    IntRect Player::get_pl_frame()
+    {
+        return currentFrame;
     }
+    
+    void Player::initVariables(){
+            animationState = PLAYER_ANIMATION_STATES::IDLE_RIGHT;
+            chosen_weapon = 0;
+        }
 
     void Player::initTexture(){
         if (!player_T.loadFromFile("Textures/Heroes/hero1.png")) {
@@ -394,7 +394,6 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
 
     void Player::changeHP(short z){
         info->changeHP(z);
-        //std::cout << HP << std::endl;
         if (info->getHP() <= 0) {
             alive = false;
             animationState == PLAYER_ANIMATION_STATES::DEAD;

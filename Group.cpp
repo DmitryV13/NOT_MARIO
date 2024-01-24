@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "Group.h"
 
-	Group::Group(int width_, int height_, Vector2f position_)
+	Group::Group(float x, float y, float width_, float height_)
 		: outer_width(width_), outer_height(height_), inner_width(width_), inner_height(height_)
-		, position(position_){
+		, position(Vector2f(x, y)){
 		ii_type = INTERFACE_ITEM_TYPE::GROUP;
 		background.setFillColor(Color(0, 0, 0, 0));
 
@@ -409,7 +409,7 @@
 			new_eposition_x += g_elements[index][i]->getGlobalBounds().width;
 		}
 
-		g_elements[index].push_back(new Group(fill_p_w * inner_width / 100, fill_p_h * inner_height / 100, Vector2f(new_eposition_x, new_eposition_y)));
+		g_elements[index].push_back(new Group(new_eposition_x, new_eposition_y, fill_p_w * inner_width / 100, fill_p_h * inner_height / 100));
 	}
 
 

@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "ProductCard.h"
 
-	ProductCard::ProductCard(int price_, int amount_, int* source_)
-	: price(price_), amount(amount_), source(source_){
+	ProductCard::ProductCard(int price_, int amount_, float p_coefficient_, int* source_)
+	: price(price_), amount(amount_), source(source_), p_coefficient(p_coefficient_){
 	}
 	
 	FloatRect ProductCard::getLocalBounds(){
@@ -47,6 +47,14 @@
 		v_alignment = v_align;
 		group->setAlignment(h_alignment, v_alignment);
 	}
+
+	void ProductCard::addNotification(short text_size, sf::Font* font_, string text_, Color text_color){
+		notification = new Notification(getGlobalBounds(), text_size, font_, text_, text_color);
+	}
+
+	void ProductCard::addNotification(short text_size, sf::Font* font_, Color text_color){
+		notification = new Notification(getGlobalBounds(), text_size, font_, "+"+std::to_string(amount), text_color);
+	}
 	
 	void ProductCard::changePosition(float offset_x, float offset_y){
 		group->changePosition(offset_x, offset_y);
@@ -56,8 +64,11 @@
 		if (*currency >= price) {
 			*source += amount;
 			*currency -= price;
-			price *= 2;
+			price *= p_coefficient;
 			purchase_state = PURCHASE::PURCHASE_DONE;
+			if (notification) {
+				notification->activation(0);
+			}
 		}
 	}
 	
@@ -67,8 +78,14 @@
 		}
 		group->setAlignment(h_alignment, v_alignment);
 		group->update(mouse_pos, view_cords);
+		if (notification) {
+			notification->update();
+		}
 	}
 	
 	void ProductCard::render(sf::RenderTarget* target){
 		group->render(target);
+		if (notification) {
+			notification->render(target);
+		}
 	}

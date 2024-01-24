@@ -23,10 +23,7 @@ private:
 	int height;
 
 	Vector2f position;
-	short vertical_alignment;
-	short horizontal_alignment;
-	short state;
-	void *textInput;
+	//void *textInput;
 
 	vector<vector<Group*>> groups;
 public:
@@ -52,14 +49,12 @@ public:
 	void addGroup(Group* new_group, short index);
 	void addGroupName(int i, int j, string name, int name_size, Font* font);
 	void addBackground(double map_width, double map_height, Color color);
-	//void addButton();
 	void addDelimiter();
 
 	template<class T>
 	bool addCallback(short* b_state, short a_state, float param, void(T::* l_func)(float), T* l_instance);
 
 	CRect<float>* calculatePFNG(short fill_p_w, short fill_p_h, short index);//parameters for new group
-	void verifyBtnsPressed();
 
 	void update(FloatRect view_cords);
 	void render();

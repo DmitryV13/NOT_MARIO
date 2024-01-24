@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "Reviewer.h"
 
-	Reviewer::Reviewer(float width, float height, Vector2f position_)
-		: max_height(height), max_width(width), position(position_){
+	Reviewer::Reviewer(float x, float y, float width_, float height_)
+		: max_height(height_), max_width(width_), position(Vector2f(x, y)){
 		ii_type = INTERFACE_ITEM_TYPE::REVIEWER;
 	}
 
@@ -19,6 +19,22 @@
 			current_image = 0;
 		}
 		images.push_back(new AnimatedImage(t_manager, index, name, first_frame, frames_number_));
+		short scale = (max_width / images[images.size() - 1]->getLocalBounds().width) <
+			(max_height / images[images.size() - 1]->getLocalBounds().height) ?
+			(max_width / images[images.size() - 1]->getLocalBounds().width) :
+			(max_height / images[images.size() - 1]->getLocalBounds().height);
+		images[images.size() - 1]->setScale(scale);
+		images[images.size() - 1]->setPosition(
+			position.x + (max_width - images[images.size() - 1]->getGlobalBounds().width) / 2,
+			position.y + (max_height - images[images.size() - 1]->getGlobalBounds().height) / 2
+		);
+	}
+
+	void Reviewer::addStaticImage(TextureManager* t_manager, int index, string name, IntRect first_frame){
+		if (images.empty()) {
+			current_image = 0;
+		}
+		images.push_back(new BasicImage(t_manager, index, name, first_frame));
 		short scale = (max_width / images[images.size() - 1]->getLocalBounds().width) <
 			(max_height / images[images.size() - 1]->getLocalBounds().height) ?
 			(max_width / images[images.size() - 1]->getLocalBounds().width) :
@@ -67,7 +83,7 @@
 			position.y + view_cords.top - view_cords.height / 2)
 		);
 		if (!images.empty()) {
-			images[current_image]->update();
+			images[current_image]->update(mouse_pos, view_cords);
 		}
 	}
 

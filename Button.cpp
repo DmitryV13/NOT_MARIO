@@ -3,7 +3,8 @@
 
 Button::Button(){
 	ii_type = INTERFACE_ITEM_TYPE::BUTTON;
-	button_state = BUTTON_STATE::BTN_IDLE;
+	button_cstate = BUTTON_STATE::BTN_IDLE;
+	button_prstate = BUTTON_STATE::BTN_HOVERED;
 }
 
 Button::Button(float x, float y, float width, float height, short text_size, sf::Font* font_
@@ -12,7 +13,8 @@ Button::Button(float x, float y, float width, float height, short text_size, sf:
 		, shp_hover_color(sf::Color(28, 26, 47, 255)), shp_active_color(sf::Color(28, 26, 47, 255))
 		, shp_idle_color(sf::Color(28, 26, 47, 255)), position(Vector2f(x, y)), id(id_) {
 		ii_type = INTERFACE_ITEM_TYPE::BUTTON;
-		button_state = BUTTON_STATE::BTN_IDLE;
+		button_cstate = BUTTON_STATE::BTN_IDLE;
+		button_prstate = BUTTON_STATE::BTN_HOVERED;
 
 		shape.setPosition(position);
 		shape.setSize(sf::Vector2f(width, height));
@@ -37,7 +39,8 @@ Button::Button(float x, float y, float width, float height, short text_size, sf:
 		, shp_hover_color(Color(0, 0, 0, 0)), shp_active_color(Color(0, 0, 0, 0))
 		, shp_idle_color(Color(0, 0, 0, 0)), position(Vector2f(x, y)), id(id_) {
 		ii_type = INTERFACE_ITEM_TYPE::BUTTON;
-		button_state = BUTTON_STATE::BTN_IDLE;
+		button_cstate = BUTTON_STATE::BTN_IDLE;
+		button_prstate = BUTTON_STATE::BTN_HOVERED;
 
 		shape.setPosition(position);
 		
@@ -62,7 +65,8 @@ Button::Button(float x, float y, float width, float height, short text_size, sf:
 		, string text_, bool outline, int id_)
 		: position(Vector2f(x, y)), id(id_) {
 		ii_type = INTERFACE_ITEM_TYPE::BUTTON;
-		button_state = BUTTON_STATE::BTN_IDLE;
+		button_cstate = BUTTON_STATE::BTN_IDLE;
+		button_prstate = BUTTON_STATE::BTN_HOVERED;
 
 		shape.setPosition(position);
 		shape.setSize(sf::Vector2f(width, height));
@@ -106,7 +110,7 @@ Button::Button(float x, float y, float width, float height, short text_size, sf:
 	}
 
 	short* Button::getButtonState(){
-		return &button_state;
+		return &button_cstate;
 	}
 
 	const int& Button::getIdentificator() const{
@@ -156,11 +160,11 @@ Button::Button(float x, float y, float width, float height, short text_size, sf:
 	}
 
 	void Button::resetActiveState(){
-		button_state = BUTTON_STATE::BTN_IDLE;
+		button_cstate = BUTTON_STATE::BTN_IDLE;
 	}
 
 	const bool Button::isPressed() const{
-		if (button_state == BUTTON_STATE::BTN_ACTIVE)
+		if (button_cstate == BUTTON_STATE::BTN_ACTIVE)
 			return true;
 		return false;
 	}
@@ -178,20 +182,22 @@ Button::Button(float x, float y, float width, float height, short text_size, sf:
 	void Button::update(Vector2f mouse_pos, FloatRect view_cords){
 		updatePosition(view_cords);
 
-		button_state = BUTTON_STATE::BTN_IDLE;
+		button_cstate = BUTTON_STATE::BTN_IDLE;
 		if (shape.getGlobalBounds().contains(mouse_pos.x + (view_cords.left - view_cords.width / 2), mouse_pos.y + (view_cords.top - view_cords.height / 2))) {
-			button_state = BUTTON_STATE::BTN_HOVERED;
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-				button_state = BUTTON_STATE::BTN_ACTIVE;
+			button_cstate = BUTTON_STATE::BTN_HOVERED;
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && button_prstate == BUTTON_STATE::BTN_HOVERED) {
+				button_cstate = BUTTON_STATE::BTN_ACTIVE;
+				button_prstate = BUTTON_STATE::BTN_ACTIVE;
 				//std::cout << "active" << std::endl;
 			}
-			else {
-				button_state = BUTTON_STATE::BTN_HOVERED;
+			if(!Mouse::isButtonPressed(sf::Mouse::Left)){
+				button_cstate = BUTTON_STATE::BTN_HOVERED;
+				button_prstate = BUTTON_STATE::BTN_HOVERED;
 				//std::cout << "hover" << std::endl;
 			}
 		}
 
-		switch (button_state) {
+		switch (button_cstate) {
 			case BTN_IDLE:
 				text.setOutlineColor(sf::Color(0, 0, 0, 0));
 				text.setFillColor(btn_idle_color);

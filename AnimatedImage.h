@@ -1,26 +1,17 @@
 #pragma once
-#include "TextureManager.h"
+#include "BasicImage.h"
 
 using namespace::sf;
 
-class AnimatedImage{
+class AnimatedImage : public BasicImage{
 private:
-	Sprite image;
 	IntRect current_frame;
 	short frames_number;
-	short scale;
 	Clock animation_timer;
-	Vector2f position;
 public:
 	AnimatedImage(TextureManager* t_manager, int index, string name, IntRect first_frame, short frames_number_);
 
-	FloatRect getLocalBounds();
-	FloatRect getGlobalBounds();
-
-	void setPosition(float x, float y);
-	void setScale(float scale_);
-
-	void update();
+	void update(Vector2f mouse_pos, FloatRect view_cords) override;
 	void render(RenderTarget* target);
 };
 

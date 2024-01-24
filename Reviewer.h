@@ -8,18 +8,19 @@ using namespace::sf;
 class Reviewer : public InterfaceItem{
 private:
 	short current_image;
-	vector<AnimatedImage*> images;
+	vector<BasicImage*> images;
 	float scale;
 	float max_width;
 	float max_height;
 	Vector2f position;
 public:
-	Reviewer(float width, float height, Vector2f position_);
+	Reviewer(float x, float y, float width_, float height_);
 
 	FloatRect getLocalBounds() override;
 	FloatRect getGlobalBounds() override;
 
 	void addAnimatedImage(TextureManager* t_manager, int index, string name, IntRect first_frame, short frames_number_);
+	void addStaticImage(TextureManager* t_manager, int index, string name, IntRect first_frame);
 	void setPosition(Vector2f position_);
 	void setPositionX(float x) override;
 	void setPositionY(float y) override;

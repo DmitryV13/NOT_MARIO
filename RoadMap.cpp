@@ -4,246 +4,397 @@
 	RoadMap::RoadMap(RenderWindow* window_, double screen_w, double screen_h, Color menuColor_, TextureManager* t_manager_)
 		: window(window_), screen_height(screen_h), screen_width(screen_w), menuColor(menuColor_), t_manager(t_manager_){
 		state = PAGE_STATE::PAGE_CLOSED;
-		cb_handler = new CallbacksHandler();
-		inventory = new Inventory();
+
 		initFont();
 		initBackground();
 		menu_timer.restart();
+
+		cb_handler = new CallbacksHandler();
+		warehouse = new Warehouse();
 		
+		all_static_items = new Group(0, 0, screen_width, screen_height);
 		level_selection = new PopUpWindow(screen_width, screen_height, 800, 800, window);
 		shop = new PopUpWindow(screen_width, screen_height, 1000, 800, window);
-		all_static_items = new Group(screen_width, screen_height, Vector2f(0, 0));
+		inventory = new PopUpWindow(screen_width, screen_height, 1000, 800, window);
+
 		///////////////////////////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////////////////////////
+
 		all_static_items->createElementLine();
 		CRect<float>* tmp = all_static_items->calculatePFNII(100, 15, 0);
-		Group* t0 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
+		Group* asi_g0_top = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
 		delete tmp;
-		all_static_items->addIElement((InterfaceItem*)t0, 0);
+		all_static_items->addIElement((InterfaceItem*)asi_g0_top, 0);
 		
-		t0->createElementLine();
-		tmp = t0->calculatePFNII(20, 100, 0);
-		Group* t01 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
+		asi_g0_top->createElementLine();
+		tmp = asi_g0_top->calculatePFNII(20, 100, 0);
+		Group* asi_g0_g0_left = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
 		delete tmp;
-		t0->addIElement((InterfaceItem*)t01, 0);
+		asi_g0_top->addIElement((InterfaceItem*)asi_g0_g0_left, 0);
 
-		t01->createElementLine();
-		t01->addButton(240, 80, 40, font, "SHOP", Color::White, Color::White, Color(14, 178, 12, 255), Color(14, 178, 12, 255), true, 10, 0);
-		cb_handler->addCallback(t01->getButtonState(10), BUTTON_STATE::BTN_ACTIVE, 0, &PopUpWindow::setPUWStateO, shop);
+		asi_g0_g0_left->createElementLine();
+		asi_g0_g0_left->addButton(240, 80, 40, font, "SHOP", Color::White, Color::White,
+			Color(14, 178, 12, 255), Color(14, 178, 12, 255), true, 10, 0);
+		cb_handler->addCallback(asi_g0_g0_left->getButtonState(10), BUTTON_STATE::BTN_ACTIVE, 0,
+			&PopUpWindow::setPUWStateO, shop);
 
-		tmp = t0->calculatePFNII(60, 100, 0);
-		Group* t02 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
+		tmp = asi_g0_top->calculatePFNII(60, 100, 0);
+		Group* asi_g0_g1_center = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
 		delete tmp;
-		t0->addIElement((InterfaceItem*)t02, 0);
+		asi_g0_top->addIElement((InterfaceItem*)asi_g0_g1_center, 0);
 
-		t02->createElementLine();
-		tmp = t02->calculatePFNII(5, 100, 0);
-		ResourceInfo* ri0 = new ResourceInfo(tmp->first, tmp->second, inventory->getItemInfo("Coin").first,
-			inventory->getItemInfo("Coin").second, 30, font, t_manager, 0, "Coin", false);
-		t02->addIElement((InterfaceItem*)ri0, 0);
+		asi_g0_g1_center->createElementLine();
+		tmp = asi_g0_g1_center->calculatePFNII(5, 100, 0);
+		ResourceInfo* asi_g0_g1_ri0_left = new ResourceInfo(tmp->first, tmp->second, warehouse->getItemInfo("currency", "coin").first,
+			warehouse->getItemInfo("currency", "coin").second, 30, font, t_manager, 0, "Coin", false);
+		asi_g0_g1_center->addIElement((InterfaceItem*)asi_g0_g1_ri0_left, 0);
 		delete tmp;
 
-		tmp = t02->calculatePFNII(5, 100, 0);
-		ResourceInfo* ri1 = new ResourceInfo(tmp->first, tmp->second, inventory->getItemInfo("BSplinter").first,
-			inventory->getItemInfo("BSplinter").second, 30, font, t_manager, 0, "BSplinter", false);
-		t02->addIElement((InterfaceItem*)ri1, 0);
+		tmp = asi_g0_g1_center->calculatePFNII(5, 100, 0);
+		ResourceInfo* asi_g0_g1_ri1_center = new ResourceInfo(tmp->first, tmp->second, warehouse->getItemInfo("currency", "b_splinter").first,
+			warehouse->getItemInfo("currency", "b_splinter").second, 30, font, t_manager, 0, "BSplinter", false);
+		asi_g0_g1_center->addIElement((InterfaceItem*)asi_g0_g1_ri1_center, 0);
 		delete tmp;
 		
-		tmp = t02->calculatePFNII(5, 100, 0);
-		ResourceInfo* ri2 = new ResourceInfo(tmp->first, tmp->second, inventory->getItemInfo("RSplinter").first,
-			inventory->getItemInfo("RSplinter").second, 30, font, t_manager, 0, "RSplinter", false);
-		t02->addIElement((InterfaceItem*)ri2, 0);
+		tmp = asi_g0_g1_center->calculatePFNII(5, 100, 0);
+		ResourceInfo* asi_g0_g1_ri2_right = new ResourceInfo(tmp->first, tmp->second, warehouse->getItemInfo("currency", "r_splinter").first,
+			warehouse->getItemInfo("currency", "r_splinter").second, 30, font, t_manager, 0, "RSplinter", false);
+		asi_g0_g1_center->addIElement((InterfaceItem*)asi_g0_g1_ri2_right, 0);
 		delete tmp;
 
-		tmp = t0->calculatePFNII(20, 100, 0);
-		Group* t03 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
+		tmp = asi_g0_top->calculatePFNII(20, 100, 0);
+		Group* asi_g0_g2_right = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
 		delete tmp;
-		t0->addIElement((InterfaceItem*)t03, 0);
+		asi_g0_top->addIElement((InterfaceItem*)asi_g0_g2_right, 0);
 		
-		t03->createElementLine();
-		t03->addButton(80, 80, 40, font, "", menuColor, Color::White, Color(108, 82, 59, 255)
+		asi_g0_g2_right->createElementLine();
+		asi_g0_g2_right->addButton(80, 80, 40, font, "", menuColor, Color::White, Color(108, 82, 59, 255)
 			, Color(163, 118, 76, 255), t_manager, 0, "ArrowBack", true, 9, 0);
-		cb_handler->addCallback(t03->getButtonState(9), BUTTON_STATE::BTN_ACTIVE, 0, &RoadMap::closeRoadMap, this);
+		cb_handler->addCallback(asi_g0_g2_right->getButtonState(9), BUTTON_STATE::BTN_ACTIVE, 0, &RoadMap::closeRoadMap, this);
 		
-		t01->setAlignment("left 30", "center 0");
-		t02->setAlignment("center 160", "center 0");
-		t03->setAlignment("right 30", "center 0");
-		t0->setAlignment("space between 0", "top 0");
-		///////////////////////////////////////////////////////////////////////////
+		asi_g0_g0_left->setAlignment("left 30", "center 0");
+		asi_g0_g1_center->setAlignment("center 160", "center 0");
+		asi_g0_g2_right->setAlignment("right 30", "center 0");
+		asi_g0_top->setAlignment("space between 0", "top 0");
+
 		all_static_items->createElementLine();
 		tmp = all_static_items->calculatePFNII(100, 50, 0);
-		Group* t1 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
+		Group* asi_g1_center = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
 		delete tmp;
-		all_static_items->addIElement((InterfaceItem*)t1, 1);
+		all_static_items->addIElement((InterfaceItem*)asi_g1_center, 1);
 		
-		t1->createElementLine();
-		tmp = t1->calculatePFNII(30, 100, 0);
-		Reviewer* r0 = new Reviewer(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
+		asi_g1_center->createElementLine();
+		tmp = asi_g1_center->calculatePFNII(30, 100, 0);
+		Reviewer* asi_g1_r0_center = new Reviewer(tmp->first, tmp->second, tmp->third, tmp->fourth);
 		delete tmp;
-		t1->addButton(100, 100, 40, font, "", menuColor, Color::White, Color(239, 135, 6, 255)
+		asi_g1_center->addButton(100, 100, 40, font, "", menuColor, Color::White, Color(239, 135, 6, 255)
 			, Color(255, 185, 12), t_manager, 0, "ArrowL", true, 0, 0);
-		cb_handler->addCallback(t1->getButtonState(0), BUTTON_STATE::BTN_ACTIVE, -1, &Reviewer::changeCurrentImage, r0);
-		t1->addIElement((InterfaceItem*)r0, 0);
-		t1->addButton(100, 100, 40, font, "", menuColor, Color::White, Color(239, 135, 6, 255)
+		cb_handler->addCallback(asi_g1_center->getButtonState(0), BUTTON_STATE::BTN_ACTIVE, -1,
+			&Reviewer::changeCurrentImage, asi_g1_r0_center);
+		asi_g1_center->addIElement((InterfaceItem*)asi_g1_r0_center, 0);
+		asi_g1_center->addButton(100, 100, 40, font, "", menuColor, Color::White, Color(239, 135, 6, 255)
 			, Color(255, 185, 12), t_manager, 0, "ArrowR", true, 1, 0);
-		cb_handler->addCallback(t1->getButtonState(1), BUTTON_STATE::BTN_ACTIVE, 1, &Reviewer::changeCurrentImage, r0);
-		//tmp = t0->calculatePFNII(5, 100, 0);
+		cb_handler->addCallback(asi_g1_center->getButtonState(1), BUTTON_STATE::BTN_ACTIVE, 1,
+			&Reviewer::changeCurrentImage, asi_g1_r0_center);
 
-		//ResourceInfo* ri0 = new ResourceInfo(tmp->first, tmp->second, (int*)u, 700, 20, font, t_manager, 0, "Coin");
-		//t0->addIElement((InterfaceItem*)ri0, 0);
-		r0->addAnimatedImage(t_manager, 4, "Hero1", IntRect(0, 0, 54, 70), 6);
-		r0->addAnimatedImage(t_manager, 4, "Hero2", IntRect(0, 0, 63, 68), 1);
-		t1->setAlignment("center 0", "center 0");
+		asi_g1_r0_center->addAnimatedImage(t_manager, 4, "Hero1", IntRect(0, 0, 54, 70), 6);
+		asi_g1_r0_center->addAnimatedImage(t_manager, 4, "Hero2", IntRect(0, 0, 63, 68), 1);
+		asi_g1_center->setAlignment("center 0", "center 0");
 
-		
-		/////////////////////////////////////////////////////////////////////////////
 		all_static_items->createElementLine();
 		tmp= all_static_items->calculatePFNII(100, 20, 0);
-		Group* t2 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
+		Group* asi_g2_bottom = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
 		delete tmp;
-		all_static_items->addIElement((InterfaceItem*)t2, 2);
+		all_static_items->addIElement((InterfaceItem*)asi_g2_bottom, 2);
 
-		t2->createElementLine();
-		t2->addButton(400, 120, 40, font, "INVENTORY", Color::White, Color::White, Color(212, 24, 22, 255), Color(212, 24, 22, 255), true, 2, 0);
-		t2->addButton(400, 120, 40, font, "PLAY", Color::White, Color::White, Color(43, 95, 194, 255), Color(43, 95, 194, 255), true, 3, 0);
-		cb_handler->addCallback(t2->getButtonState(3), BUTTON_STATE::BTN_ACTIVE, 0, &PopUpWindow::setPUWStateO, level_selection);
-		t2->setAlignment("space between 200", "center 0");
+		asi_g2_bottom->createElementLine();
+		asi_g2_bottom->addButton(400, 120, 40, font, "INVENTORY", Color::White, Color::White,
+			Color(212, 24, 22, 255), Color(212, 24, 22, 255), true, 2, 0);
+		cb_handler->addCallback(asi_g2_bottom->getButtonState(2), BUTTON_STATE::BTN_ACTIVE, 0,
+			&PopUpWindow::setPUWStateO, inventory);
+		asi_g2_bottom->addButton(400, 120, 40, font, "PLAY", Color::White, Color::White,
+			Color(43, 95, 194, 255), Color(43, 95, 194, 255), true, 3, 0);
+		cb_handler->addCallback(asi_g2_bottom->getButtonState(3), BUTTON_STATE::BTN_ACTIVE, 0,
+			&PopUpWindow::setPUWStateO, level_selection);
+		asi_g2_bottom->setAlignment("space between 200", "center 0");
 
 		all_static_items->setAlignment("center 0", "bottom 0");
-		t0->changePositionY(-120);
+		asi_g0_top->changePositionY(-120);
+
 		///////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////
+
 		level_selection->addBackground(screen_width, screen_height, Color(59, 66, 73, 87));
 		level_selection->createGroupLine();
 		tmp = level_selection->calculatePFNG(100, 100, 0);
-		Group* l0= new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
+		Group* ls= new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
 		delete tmp;
 
-		l0->addGroupName("Select level", 50, font);
-		l0->createElementLine();
-		tmp = l0->calculatePFNII(100, 30, 0);
-		Group* l1=new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
+		ls->addGroupName("Select level", 50, font);
+		ls->createElementLine();
+		tmp = ls->calculatePFNII(100, 30, 0);
+		Group* ls_g0_top=new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
 		delete tmp;
 
-		l0->addIElement((InterfaceItem*)l1, 0);
-		l1->addGroupName("Static levels", 30, font);
-		l1->createElementLine();
-		l1->addButton(100, 100, 40, font, "1", menuColor, Color::White, Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 4, 0);
-		level_selection->addCallback(l1->getButtonState(4), BUTTON_STATE::BTN_ACTIVE, 4, &RoadMap::openLevel, this);
-		l1->setAlignment("center 20", "center 0");
-		///////////////////////////////////////////////////////////////////////////
-		l0->createElementLine();
-		tmp = l0->calculatePFNII(100, 30, 0);
-		Group* l2 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
+		ls->addIElement((InterfaceItem*)ls_g0_top, 0);
+		ls_g0_top->addGroupName("Static levels", 30, font);
+		ls_g0_top->createElementLine();
+		ls_g0_top->addButton(100, 100, 40, font, "1", menuColor, Color::White, Color(43, 43, 120, 255),
+			Color(43, 43, 120, 255), false, 4, 0);
+		level_selection->addCallback(ls_g0_top->getButtonState(4), BUTTON_STATE::BTN_ACTIVE, 4,
+			&RoadMap::openLevel, this);
+		ls_g0_top->setAlignment("center 20", "center 0");
+
+		ls->createElementLine();
+		tmp = ls->calculatePFNII(100, 30, 0);
+		Group* ls_g1_center = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
 		delete tmp;
 
-		l0->addIElement((InterfaceItem*)l2, 1);
-		l2->addGroupName("Infinite levels", 30, font);
-		l2->createElementLine();
-		l2->addButton(100, 100, 40, font, "1", menuColor, Color::White, Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 5, 0);
-		l2->addButton(100, 100, 40, font, "2", menuColor, Color::White, Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 6, 0);
-		l2->addButton(100, 100, 40, font, "3", menuColor, Color::White, Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 7, 0);
-		level_selection->addCallback(l2->getButtonState(5), BUTTON_STATE::BTN_ACTIVE, 1, &RoadMap::openLevel, this);
-		level_selection->addCallback(l2->getButtonState(6), BUTTON_STATE::BTN_ACTIVE, 2, &RoadMap::openLevel, this);
-		level_selection->addCallback(l2->getButtonState(7), BUTTON_STATE::BTN_ACTIVE, 3, &RoadMap::openLevel, this);
-		l2->setAlignment("center 20", "center 0");
-		///////////////////////////////////////////////////////////////////////////
-		l0->createElementLine();
-		tmp = l0->calculatePFNII(100, 30, 0);
-		Group* l3 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
+		ls->addIElement((InterfaceItem*)ls_g1_center, 1);
+		ls_g1_center->addGroupName("Infinite levels", 30, font);
+		ls_g1_center->createElementLine();
+		ls_g1_center->addButton(100, 100, 40, font, "1", menuColor, Color::White, Color(43, 43, 120, 255),
+			Color(43, 43, 120, 255), false, 5, 0);
+		ls_g1_center->addButton(100, 100, 40, font, "2", menuColor, Color::White, Color(43, 43, 120, 255),
+			Color(43, 43, 120, 255), false, 6, 0);
+		ls_g1_center->addButton(100, 100, 40, font, "3", menuColor, Color::White, Color(43, 43, 120, 255),
+			Color(43, 43, 120, 255), false, 7, 0);
+		level_selection->addCallback(ls_g1_center->getButtonState(5), BUTTON_STATE::BTN_ACTIVE, 1,
+			&RoadMap::openLevel, this);
+		level_selection->addCallback(ls_g1_center->getButtonState(6), BUTTON_STATE::BTN_ACTIVE, 2,
+			&RoadMap::openLevel, this);
+		level_selection->addCallback(ls_g1_center->getButtonState(7), BUTTON_STATE::BTN_ACTIVE, 3,
+			&RoadMap::openLevel, this);
+		ls_g1_center->setAlignment("center 20", "center 0");
+
+		ls->createElementLine();
+		tmp = ls->calculatePFNII(100, 30, 0);
+		Group* ls_g2_bottom = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
 		delete tmp;
 
-		l0->addIElement((InterfaceItem*)l3, 2);
-		l3->createElementLine();
-		l3->addButton(300, 100, 40, font, "CLOSE", menuColor, Color::White, Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 8, 0);
-		level_selection->addCallback(l3->getButtonState(8), BUTTON_STATE::BTN_ACTIVE, 0, &PopUpWindow::setPUWStateC, level_selection);
-		l3->setAlignment("center 0", "bottom 0");
+		ls->addIElement((InterfaceItem*)ls_g2_bottom, 2);
+		ls_g2_bottom->createElementLine();
+		ls_g2_bottom->addButton(300, 100, 40, font, "CLOSE", menuColor, Color::White,
+			Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 8, 0);
+		level_selection->addCallback(ls_g2_bottom->getButtonState(8), BUTTON_STATE::BTN_ACTIVE, 0,
+			&PopUpWindow::setPUWStateC, level_selection);
+		ls_g2_bottom->setAlignment("center 0", "bottom 0");
 
-		l0->setAlignment("center 0", "space around 0");
-		level_selection->addGroup(l0, 0);
+		ls->setAlignment("center 0", "space around 0");
+		level_selection->addGroup(ls, 0);
+
 		///////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////
+
 		shop->addLabel(screen_width, screen_height, "Shop", font, 60, 10);
 		shop->addBackground(screen_width, screen_height, Color(59, 66, 73, 87));
 		shop->createGroupLine();
 
 		tmp = shop->calculatePFNG(100, 100, 0);
-		Group* sh0 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
+		Group* s = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
 		delete tmp;
-		shop->addGroup(sh0, 0);
+		shop->addGroup(s, 0);
 
-		sh0->createElementLine();
-		tmp = sh0->calculatePFNII(85, 100, 0);
-		TabContainer* tc0 = new TabContainer(tmp->first, tmp->second, tmp->third, tmp->fourth);
+		s->createElementLine();
+		tmp = s->calculatePFNII(85, 100, 0);
+		TabContainer* s_tc0_left = new TabContainer(tmp->first, tmp->second, tmp->third, tmp->fourth);
 		delete tmp;
-		sh0->addIElement((InterfaceItem*)tc0, 0);
+		s->addIElement((InterfaceItem*)s_tc0_left, 0);
 		
+		Group* s_tc0_0 = new Group(s_tc0_left->getGlobalBounds().left, s_tc0_left->getGlobalBounds().top, 
+			s_tc0_left->getGlobalBounds().width, s_tc0_left->getGlobalBounds().height);
+		s_tc0_left->addTab(s_tc0_0);
+		s_tc0_0->createElementLine();
+
+		tmp = s_tc0_0->calculatePFNII(25, 45, 0);
+		Group* s_tc0_0_pc0_g=new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
+		ProductCard* s_tc0_0_pc0 = new ProductCard(5, 1, 1, warehouse->getItemInfo("ammunition", "simple_arrow").first);
+		s_tc0_0_pc0->setGroup(s_tc0_0_pc0_g, Color(61, 85, 132, 255));
+		s_tc0_0_pc0->setCurrency(warehouse->getItemInfo("currency", "coin").first);
+		s_tc0_0->addIElement((InterfaceItem*)s_tc0_0_pc0, 0);
+		delete tmp;
+
+		s_tc0_0_pc0_g->createElementLine();
+		tmp = s_tc0_0_pc0_g->calculatePFNII(85, 55, 0);
+		Group* s_tc0_0_pc0_g_g0_top = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
+		s_tc0_0_pc0_g->addIElement((InterfaceItem*)s_tc0_0_pc0_g_g0_top, 0);
+		delete tmp;
+
+		s_tc0_0_pc0_g_g0_top->createElementLine();
+		tmp = s_tc0_0_pc0_g_g0_top->calculatePFNII(100, 100, 0);
+		Reviewer* s_tc0_0_pc0_g_g0_r = new Reviewer(tmp->first, tmp->second, tmp->third, tmp->fourth);
+		s_tc0_0_pc0_g_g0_r->addStaticImage(t_manager, 0, "Arrow1", IntRect(0, 0, 40, 5));
+		s_tc0_0_pc0_g_g0_top->addIElement((InterfaceItem*)s_tc0_0_pc0_g_g0_r, 0);
+		s_tc0_0_pc0_g_g0_top->setBColor(Color(173, 173, 173, 255));
+		delete tmp;
+
+		s_tc0_0_pc0_g->createElementLine();
+		tmp = s_tc0_0_pc0_g->calculatePFNII(85, 10, 0);
+		ResourceInfo* s_tc0_0_pc0_g_ii1_center = new ResourceInfo(tmp->first, tmp->second,
+			s_tc0_0_pc0->getPrice(), 0, 24, font, t_manager, 0, "Coin", true);
+		s_tc0_0_pc0_g->addIElement((InterfaceItem*)s_tc0_0_pc0_g_ii1_center, 1);
+		delete tmp;
+
+		tmp = s_tc0_0_pc0_g->calculatePFNII(85, 20, 0);
+		s_tc0_0_pc0_g->createElementLine();
+		s_tc0_0_pc0_g->addButton(tmp->third, tmp->fourth-1, 30, font, "BUY", Color::White,
+			Color::White, Color(239, 135, 6, 255), Color(239, 135, 6, 255), false, 14, 2);
+		shop->addCallback(s_tc0_0_pc0_g->getButtonState(14), BUTTON_STATE::BTN_ACTIVE, 0,
+			&ProductCard::buy, s_tc0_0_pc0);
+		delete tmp;
+
+		s_tc0_0_pc0->addNotification(30, font, Color::White);
+		s_tc0_0_pc0->setAlignment("center 0", "space around");
+		s_tc0_0->setAlignment("left 20", "top 20");
+
+		Group* s_tc0_1 = new Group(s_tc0_left->getGlobalBounds().left, s_tc0_left->getGlobalBounds().top, 
+			s_tc0_left->getGlobalBounds().width, s_tc0_left->getGlobalBounds().height);
+		s_tc0_left->addTab(s_tc0_1);
+		s_tc0_1->createElementLine();
+
+		s_tc0_1->addButton(300, 60, 20, font, "UPGRADE", menuColor, Color::White,
+			Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 5, 0);
+
+		tmp = s->calculatePFNII(15, 100, 0);
+		Group* s_g1_right = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
+		s->addIElement((InterfaceItem*)s_g1_right, 0);
+
+		s_g1_right->createElementLine();
+		s_g1_right->addButton(tmp->third, 60, 20, font, "BUY", menuColor, Color::White,
+			Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 11, 0);
+		shop->addCallback(s_g1_right->getButtonState(11), BUTTON_STATE::BTN_ACTIVE, 0,
+			&TabContainer::changeCurrentTab, s_tc0_left);
+		s_g1_right->createElementLine();
+		s_g1_right->addButton(tmp->third, 60, 20, font, "UPGRADE", menuColor, Color::White,
+			Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 12, 1);
+		shop->addCallback(s_g1_right->getButtonState(12), BUTTON_STATE::BTN_ACTIVE, 1,
+			&TabContainer::changeCurrentTab, s_tc0_left);
+		s_g1_right->createElementLine();
+		s_g1_right->addButton(tmp->third, 60, 20, font, "CLOSE", menuColor, Color::White,
+			Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 13, 2);
+		shop->addCallback(s_g1_right->getButtonState(13), BUTTON_STATE::BTN_ACTIVE, 0,
+			&PopUpWindow::setPUWStateC, shop);
+		s_g1_right->setAlignment("center 0", "top 5");
+		delete tmp;
+
 		///////////////////////////////////////////////////////////////////////////
-		Group* tb0 = new Group(tc0->getGlobalBounds().width, tc0->getGlobalBounds().height,
-			Vector2f(tc0->getGlobalBounds().left, tc0->getGlobalBounds().top));
-		tc0->addTab(tb0);
-		tb0->createElementLine();
+		///////////////////////////////////////////////////////////////////////////  14
 
-		tmp = tb0->calculatePFNII(30, 48, 0);
-		Group* tb01=new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
-		ProductCard* prc0 = new ProductCard(5, 2, inventory->getItemInfo("Arrow").first);
-		prc0->setGroup(tb01, Color(61, 85, 132, 255));
-		prc0->setCurrency(inventory->getItemInfo("Coin").first);
-		tb0->addIElement((InterfaceItem*)prc0, 0);
+		inventory->addLabel(screen_width, screen_height, "Inventory", font, 60, 10);
+		inventory->addBackground(screen_width, screen_height, Color(59, 66, 73, 87));
+		inventory->createGroupLine();
+
+		tmp = inventory->calculatePFNG(100, 100, 0);
+		Group* i = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
 		delete tmp;
+		inventory->addGroup(i, 0);
 
-		tb01->createElementLine();
-		tmp = tb01->calculatePFNII(85, 55, 0);
-		Group* tb001 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
-		tb01->addIElement((InterfaceItem*)tb001, 0);
+		i->createElementLine();
+		tmp = i->calculatePFNII(85, 100, 0);
+		TabContainer* i_tc0_left = new TabContainer(tmp->first, tmp->second, tmp->third, tmp->fourth);
 		delete tmp;
+		i->addIElement((InterfaceItem*)i_tc0_left, 0);
 
-		tb001->createElementLine();
-		tmp = tb001->calculatePFNII(100, 100, 0);
-		Reviewer* r1 = new Reviewer(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
-		r1->addAnimatedImage(t_manager, 0, "Arrow1", IntRect(0, 0, 40, 5), 1);
-		tb001->addIElement((InterfaceItem*)r1, 0);
-		tb001->setBColor(Color(173, 173, 173, 255));
+		Group* i_tc0_0 = new Group(i_tc0_left->getGlobalBounds().left, i_tc0_left->getGlobalBounds().top,
+			i_tc0_left->getGlobalBounds().width, i_tc0_left->getGlobalBounds().height);
+		i_tc0_left->addTab(i_tc0_0);
+
+		for (int in = 0; in < 5; in++) {
+			i_tc0_0->createElementLine();
+			for (int jn = 0; jn < 6; jn++) {
+				tmp = i_tc0_0->calculatePFNII(15, 18, in);
+				Group* temp = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
+				delete tmp;
+				i_tc0_0->addIElement((InterfaceItem*)temp, in);
+				temp->setBColor(Color::Red);
+			}
+		}
+		i_tc0_0->setAlignment("space around", "space around");
+
+		Group* i_tc0_1 = new Group(i_tc0_left->getGlobalBounds().left, i_tc0_left->getGlobalBounds().top,
+			i_tc0_left->getGlobalBounds().width, i_tc0_left->getGlobalBounds().height);
+		i_tc0_left->addTab(i_tc0_1);
+
+		for (int in = 0; in < 5; in++) {
+			i_tc0_1->createElementLine();
+			for (int jn = 0; jn < 6; jn++) {
+				tmp = i_tc0_1->calculatePFNII(15, 18, in);
+				Group* temp = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
+				delete tmp;
+				i_tc0_1->addIElement((InterfaceItem*)temp, in);
+				temp->setBColor(Color::Cyan);
+			}
+		}
+		i_tc0_1->setAlignment("space around", "space around");
+
+		Group* i_tc0_2 = new Group(i_tc0_left->getGlobalBounds().left, i_tc0_left->getGlobalBounds().top,
+			i_tc0_left->getGlobalBounds().width, i_tc0_left->getGlobalBounds().height);
+		i_tc0_left->addTab(i_tc0_2);
+
+		for (int in = 0; in < 5; in++) {
+			i_tc0_2->createElementLine();
+			for (int jn = 0; jn < 6; jn++) {
+				tmp = i_tc0_2->calculatePFNII(15, 18, in);
+				Group* temp = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
+				delete tmp;
+				i_tc0_2->addIElement((InterfaceItem*)temp, in);
+				temp->setBColor(Color::Green);
+			}
+		}
+		i_tc0_2->setAlignment("space around", "space around");
+
+		Group* i_tc0_3 = new Group(i_tc0_left->getGlobalBounds().left, i_tc0_left->getGlobalBounds().top,
+			i_tc0_left->getGlobalBounds().width, i_tc0_left->getGlobalBounds().height);
+		i_tc0_left->addTab(i_tc0_3);
+
+		for (int in = 0; in < 5; in++) {
+			i_tc0_3->createElementLine();
+			for (int jn = 0; jn < 6; jn++) {
+				tmp = i_tc0_3->calculatePFNII(15, 18, in);
+				Group* temp = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
+				delete tmp;
+				i_tc0_3->addIElement((InterfaceItem*)temp, in);
+				temp->setBColor(Color::Magenta);
+			}
+		}
+		i_tc0_3->setAlignment("space around", "space around");
+
+		tmp = i->calculatePFNII(15, 100, 0);
+		Group* i_g1_right = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
+		i->addIElement((InterfaceItem*)i_g1_right, 0);
+
+		i_g1_right->createElementLine();
+		i_g1_right->addButton(tmp->third, 60, 20, font, "WEAPONS", menuColor, Color::White,
+			Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 15, 0);
+		inventory->addCallback(i_g1_right->getButtonState(15), BUTTON_STATE::BTN_ACTIVE, 0,
+			&TabContainer::changeCurrentTab, i_tc0_left);
+
+		i_g1_right->createElementLine();
+		i_g1_right->addButton(tmp->third, 60, 20, font, "AMMO", menuColor, Color::White,
+			Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 16, 1);
+		inventory->addCallback(i_g1_right->getButtonState(16), BUTTON_STATE::BTN_ACTIVE, 1,
+			&TabContainer::changeCurrentTab, i_tc0_left);
+
+		i_g1_right->createElementLine();
+		i_g1_right->addButton(tmp->third, 60, 20, font, "POTIONS", menuColor, Color::White,
+			Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 17, 2);
+		inventory->addCallback(i_g1_right->getButtonState(17), BUTTON_STATE::BTN_ACTIVE, 2,
+			&TabContainer::changeCurrentTab, i_tc0_left);
+
+		i_g1_right->createElementLine();
+		i_g1_right->addButton(tmp->third, 60, 20, font, "OTHER", menuColor, Color::White,
+			Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 18, 3);
+		inventory->addCallback(i_g1_right->getButtonState(18), BUTTON_STATE::BTN_ACTIVE, 3,
+			&TabContainer::changeCurrentTab, i_tc0_left);
+
+		i_g1_right->createElementLine();
+		i_g1_right->addButton(tmp->third, 60, 20, font, "CLOSE", menuColor, Color::White,
+			Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 19, 4);
+		inventory->addCallback(i_g1_right->getButtonState(19), BUTTON_STATE::BTN_ACTIVE, 0,
+			&PopUpWindow::setPUWStateC, inventory);
+
 		delete tmp;
-
-		tb01->createElementLine();
-		tmp = tb01->calculatePFNII(85, 10, 0);
-		ResourceInfo* ii0 = new ResourceInfo(tmp->first, tmp->second, prc0->getPrice(), 0, 24, font, t_manager, 0, "Coin", true);
-		tb01->addIElement((InterfaceItem*)ii0, 1);
-		delete tmp;
-
-		tmp = tb01->calculatePFNII(85, 20, 0);
-		tb01->createElementLine();
-		tb01->addButton(tmp->third, tmp->fourth-1, 30, font, "BUY", Color::White, Color::White, Color(239, 135, 6, 255), Color(239, 135, 6, 255), false, 14, 2);
-		shop->addCallback(tb01->getButtonState(14), BUTTON_STATE::BTN_ACTIVE, 0, &ProductCard::buy, prc0);
-		//shop->addCallback(prc0->getPurchaseState(), PURCHASE::PURCHASE_DONE, 0, &ImageInfo::setText, ii0);
-		delete tmp;
-
-		prc0->setAlignment("center 0", "space around");
-		tb0->setAlignment("left 10", "top 10");
-		///////////////////////////////////////////////////////////////////////////
-		Group* tb1 = new Group(tc0->getGlobalBounds().width, tc0->getGlobalBounds().height,
-			Vector2f(tc0->getGlobalBounds().left, tc0->getGlobalBounds().top));
-		tc0->addTab(tb1);
-		tb1->createElementLine();
-
-		tb1->addButton(300, 60, 20, font, "UPGRADE", menuColor, Color::White, Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 5, 0);
-
-		///////////////////////////////////////////////////////////////////////////
-		tmp = sh0->calculatePFNII(15, 100, 0);
-		Group* btn0 = new Group(tmp->third, tmp->fourth, Vector2f(tmp->first, tmp->second));
-		sh0->addIElement((InterfaceItem*)btn0, 0);
-
-		btn0->createElementLine();
-		btn0->addButton(tmp->third, 60, 20, font, "BUY", menuColor, Color::White, Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 11, 0);
-		shop->addCallback(btn0->getButtonState(11), BUTTON_STATE::BTN_ACTIVE, 0, &TabContainer::changeCurrentTab, tc0);
-		btn0->createElementLine();
-		btn0->addButton(tmp->third, 60, 20, font, "UPGRADE", menuColor, Color::White, Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 12, 1);
-		shop->addCallback(btn0->getButtonState(12), BUTTON_STATE::BTN_ACTIVE, 1, &TabContainer::changeCurrentTab, tc0);
-		btn0->createElementLine();
-		btn0->addButton(tmp->third, 60, 20, font, "CLOSE", menuColor, Color::White, Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 13, 2);
-		shop->addCallback(btn0->getButtonState(13), BUTTON_STATE::BTN_ACTIVE, 0, &PopUpWindow::setPUWStateC, shop);
-		btn0->setAlignment("center 0", "top 5");
-		delete tmp;
+		i_g1_right->setAlignment("center 0", "top 5");
 	}
 
 	void RoadMap::initFont(){
@@ -280,9 +431,9 @@
 
 	void RoadMap::update(){
 		window->setView(View(FloatRect(0, 0, screen_width, screen_height)));
-
 		if (level_selection->getState() == POP_UP_WINDOW_STATE::PUW_CLOSED &&
-			shop->getState() == POP_UP_WINDOW_STATE::PUW_CLOSED) {
+			shop->getState() == POP_UP_WINDOW_STATE::PUW_CLOSED && 
+			inventory->getState() == POP_UP_WINDOW_STATE::PUW_CLOSED) {
 			all_static_items->update(Vector2f(Mouse::getPosition(*window)), FloatRect(window->getView().getCenter(), Vector2f(screen_width, screen_height)));
 		}
 		cb_handler->update();
@@ -315,6 +466,10 @@
 		if (shop->getState() == POP_UP_WINDOW_STATE::PUW_OPENED) {
 			shop->update(FloatRect(window->getView().getCenter(), Vector2f(screen_width, screen_height)));
 			shop->render();
+		}
+		if (inventory->getState() == POP_UP_WINDOW_STATE::PUW_OPENED) {
+			inventory->update(FloatRect(window->getView().getCenter(), Vector2f(screen_width, screen_height)));
+			inventory->render();
 		}
 		window->display();
 	}
