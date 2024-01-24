@@ -861,11 +861,10 @@ void WolfBoss::update_movement()
 				Shot_timer.restart();
 				if (boss_state_TORMENT)boss_state = BOSS_STATE::PUNCH;
 			}
-			if (Shot_timer.getElapsedTime().asSeconds() >= 0.8F)
-			{
+			
 				shot();
 				shot();
-			}
+			
 
 
 			break;
@@ -1179,7 +1178,13 @@ void WolfBoss::reset_step()
 
 void WolfBoss::shot()
 {
-	if (outside_sting() || sting())player_info->changeHP(-attack_ - (rand() % 10));
+	if(att_timer.getElapsedTime().asSeconds()>=0.9f)
+	{
+		if ((outside_sting() || sting()) && boss_state == BOSS_STATE::DOUBLE_KICK)player_info->changeHP(-attack_ - (rand() % 10) -attack_);
+		else if (outside_sting() || sting())player_info->changeHP(-attack_ - (rand() % 10));
+		att_timer.restart();
+	}
+	
 }
 
 void WolfBoss::attack()

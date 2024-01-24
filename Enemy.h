@@ -122,6 +122,8 @@ public:
 
 
 	//virtual
+	virtual bool outside_sting();
+
 	virtual PL_SIDE getPlayerSide(float playerX, float enemyX);
 	virtual void jump(const float dir_y);
 	virtual void walk(const float dir_x);

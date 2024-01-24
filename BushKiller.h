@@ -48,7 +48,7 @@ public:
 	void update_physics() override;
 	void jump(const float dir_y) override;
 	void reset_Timer();
-	bool outside_sting();
+	bool outside_sting() override;
 	void looks();
 	void changeHP(short) override;
 	void draw_leaf( sf::RenderTarget& target);

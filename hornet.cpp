@@ -28,7 +28,7 @@ hornet::hornet(TileMap& map, GeneralInfo* player_info): Enemy(map, player_info),
 {
 	hornet::init_texture();
 	hornet::init_sprite();
-	hornet::setAt(50);
+	hornet::setAt(20);
 	hornet::setHP(50);
 	hp_damage_i = HP;
 	hornet_state = HORNET_STATE::IDLE;
@@ -50,113 +50,110 @@ void hornet::update_movement()
 	{
 		hornet_state = HORNET_STATE::TAKING_DAMAGE;
 	}
-	clear_shot();
 
 
 	switch (hornet_state)
 	{
-
 	case HORNET_STATE::IDLE:
-	{
-		std::cout << "IDLE\n";
-
-		animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
-		looks();
-		if (DEATH_timer.getElapsedTime().asSeconds() >= 0.5f)
 		{
-			direction_calculation();
-			hornet_state = HORNET_STATE::FLYING;
-			DEATH_timer.restart();
-		}
+			std::cout << "IDLE\n";
+			hornet_state_past = hornet_state;
+			animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
+			looks();
+			if (DEATH_timer.getElapsedTime().asSeconds() >= 0.5f)
+			{
+				direction_calculation();
+				hornet_state = HORNET_STATE::FLYING;
+				DEATH_timer.restart();
+			}
 
-		break;
-	}
+			break;
+		}
 
 
 	case HORNET_STATE::FLYING:
-	{
-		animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;
-		looks();
-		std::cout << "FLYING\n";
-		if (sting())
 		{
-			hornet_state = HORNET_STATE::ATTACKING;
-		}
-			if(IDLE_timer.getElapsedTime().asSeconds()>=2.F)
+			animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;
+			looks();
+			hornet_state_past = hornet_state;
+
+			std::cout << "FLYING\n";
+			if (sting())
+			{
+				hornet_state = HORNET_STATE::ATTACKING;
+			}
+			if (IDLE_timer.getElapsedTime().asSeconds() >= 2.F)
 			{
 				hornet_state = HORNET_STATE::IDLE;
 				IDLE_timer.restart();
 			}
-		walk(moving);
-		break;
-	}
-	
-	case HORNET_STATE::ATTACKING:
-	{
-		std::cout << "ATTACKING\n";
-		looks();
-		displacement.x = 0.f;
-		displacement.y = 0.f;
-		animation_state = ENEMY_ANIMATION_STATES::ENEMY_PUNCH;
-		reset_Timer();
-		if (IDLE_timer.getElapsedTime().asSeconds() >= 0.8f)
-		{
-			hornet_state = HORNET_STATE::FLYING;
+			walk(moving);
+			break;
 		}
-		
+
+	case HORNET_STATE::ATTACKING:
+		{
+			std::cout << "ATTACKING\n";
+			looks();
+			displacement.x = 0.f;
+			displacement.y = 0.f;
+			animation_state = ENEMY_ANIMATION_STATES::ENEMY_PUNCH;
+			reset_Timer();
 			attack();
-		
+
+			if (IDLE_timer.getElapsedTime().asSeconds() >= 0.8f)
+			{
+				hornet_state = HORNET_STATE::FLYING;
+			}
 
 
-		//walk(moving);
-		break;
-	}
+			//walk(moving);
+			break;
+		}
 
 
 	case HORNET_STATE::TAKING_DAMAGE:
-	{
-		std::cout << "TAKING_DAMAGE\n";
-
-		animation_state = ENEMY_ANIMATION_STATES::ENEMY_TAKING_DAMAGE;
-		reset_Timer();
-		looks();
-		displacement.x = 0.f;
-		displacement.y = 0.f;
-		if (HP <= 0)
 		{
-			hp_damage_i = HP;
-			hornet_state = HORNET_STATE::DEATH;
+			std::cout << "TAKING_DAMAGE\n";
+
+			animation_state = ENEMY_ANIMATION_STATES::ENEMY_TAKING_DAMAGE;
+			reset_Timer();
+			looks();
+			displacement.x = 0.f;
+			displacement.y = 0.f;
+			if (HP <= 0)
+			{
+				hp_damage_i = HP;
+				hornet_state = HORNET_STATE::DEATH;
+				break;
+			}
+			if (hp_damage_i > HP)
+			{
+				HORNET_TAKING_DAMAGE_TIMER.restart();
+				hp_damage_i = HP;
+			}
+			if (HORNET_TAKING_DAMAGE_TIMER.getElapsedTime().asSeconds() >= 1.0f)
+			{
+				hornet_state = HORNET_STATE::IDLE;
+			}
+
 			break;
 		}
-		if (hp_damage_i > HP)
-		{
-			HORNET_TAKING_DAMAGE_TIMER.restart();
-			hp_damage_i = HP;
-		}
-		if (HORNET_TAKING_DAMAGE_TIMER.getElapsedTime().asSeconds() >= 1.0f)
-		{
-			hornet_state = HORNET_STATE::IDLE;
-		}
-
-		break;
-	}
 
 
 	case HORNET_STATE::DEATH:
-	{
-		std::cout << "DEATH\n";
+		{
+			std::cout << "DEATH\n";
 
 
-		reset_Timer();
+			reset_Timer();
 
-		animation_state = ENEMY_ANIMATION_STATES::ENEMY_DEATH;
+			animation_state = ENEMY_ANIMATION_STATES::ENEMY_DEATH;
 
-		walk(moving);
-		break;
-		
+			walk(moving);
+			break;
+		}
 	}
-	}
-
 }
 
 void hornet::update_animation()
@@ -177,7 +174,6 @@ void hornet::update_animation()
 			}
 			else
 			{
-
 				standard_frame.left += 64;
 				if (standard_frame.left >= 576)
 				{
@@ -206,7 +202,6 @@ void hornet::update_animation()
 			}
 			else
 			{
-
 				standard_frame.left += 64;
 				if (standard_frame.left >= 576)
 				{
@@ -237,7 +232,6 @@ void hornet::update_animation()
 			}
 			else
 			{
-
 				standard_frame.left += 64;
 				if (standard_frame.left >= 320)
 				{
@@ -267,7 +261,6 @@ void hornet::update_animation()
 			}
 			else
 			{
-
 				standard_frame.left += 64;
 				if (standard_frame.left >= 768)
 				{
@@ -297,7 +290,6 @@ void hornet::update_animation()
 			}
 			else
 			{
-
 				standard_frame.left += 64;
 				if (standard_frame.left >= 448)
 				{
@@ -320,10 +312,10 @@ void hornet::update_animation()
 
 void hornet::shot()
 {
-	if(ATTACKING_timer.getElapsedTime().asSeconds()>=0.1f)
+	if (ATTACKING_timer.getElapsedTime().asSeconds() >= 0.5f)
 	{
 		player_info->changeHP(-attack_ - (rand() % 5));
-
+		ATTACKING_timer.restart();
 	}
 }
 
@@ -349,15 +341,15 @@ void hornet::walk(const float dir_x)
 	acceleration = 0.5;
 	direction_calculation();
 	looks();
-	if (looks_to_the_left) {
-
+	if (looks_to_the_left)
+	{
 		displacement.x = acceleration * moveX * dir_x;
 		displacement.y = acceleration * moveY * dir_x;
-
-	}else
+	}
+	else
 	{
 		displacement.x = acceleration * moveX * (-dir_x);
-		displacement.y = acceleration * moveY *( -dir_x);
+		displacement.y = acceleration * moveY * (-dir_x);
 	}
 	if (std::abs(displacement.x) > displacement_max)
 	{
@@ -375,7 +367,6 @@ void hornet::reset_Timer()
 	{
 		DEATH_timer.restart();
 		blow_timer.restart();
-		ATTACKING_timer.restart();
 		hornet_state_past = hornet_state;
 	}
 	if (animation_state_past != animation_state)
@@ -397,17 +388,17 @@ void hornet::reset_Timer()
 void hornet::changeHP(short i)
 {
 	if (hornet_state != HORNET_STATE::TAKING_DAMAGE)Enemy::changeHP(i);
-
 }
 
 void hornet::update_physics()
 
 
 {
-	if (hornet_state == HORNET_STATE::DEATH) {
+	if (hornet_state == HORNET_STATE::DEATH)
+	{
 		displacement.y += 1.f * gravity;
 	}
-	
+
 	//displacement *= deceleration;
 
 
@@ -471,11 +462,8 @@ void hornet::attack()
 
 void hornet::clear_shot()
 {
-	ATTACKING_timer.restart();
 }
 
 void hornet::reset_attention()
 {
-	ATTACKING_timer.restart();
 }
-

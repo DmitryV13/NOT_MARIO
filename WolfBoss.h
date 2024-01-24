@@ -32,6 +32,7 @@ class WolfBoss : public Enemy
 	Clock BOSS_TAKING_DAMAGE_TIMER;
 	Clock Shot_timer;
 	Clock DEATH_timer;
+	Clock att_timer;
 
 
 	bool jump_flag{true};
@@ -69,7 +70,7 @@ public:
 	void jump(const float dir_y) override;
 	void shot_HOWL();
 	void reset_Timer();
-	bool outside_sting();
+	bool outside_sting() override;
 	void looks();
 	void changeHP(short) override;
 

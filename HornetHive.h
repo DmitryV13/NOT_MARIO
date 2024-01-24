@@ -48,7 +48,9 @@ public:
 	void attack() override;
 	void clear_shot() override;
 	void reset_attention() override;
-	
+	void changeHP(short) override;
+	void update_physics() override;
+
 
 
 };

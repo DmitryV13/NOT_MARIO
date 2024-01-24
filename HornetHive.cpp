@@ -21,7 +21,7 @@ void HornetHive::init_sprite()
 
 
 	//Enemy_S.setTexture(Wolf_Boss_t_);
-	current_frame = IntRect(0, 0, 64, 50);
+	current_frame = IntRect(0,0, 64, 50);
 	Enemy_S.setTextureRect(current_frame);
 }
 
@@ -31,7 +31,7 @@ HornetHive::HornetHive(TileMap& map, GeneralInfo* player_info):Enemy(map, player
 	HornetHive::init_texture();
 	HornetHive::init_sprite();
 	HornetHive::setAt(0);
-	HornetHive::setHP(50);
+	HornetHive::setHP(30);
 	hp_damage_i = HP;
 	hornet_state = HORNET_HIVE_STATE::IDLE;
 	hornet_hive_state_past = HORNET_HIVE_STATE::TAKING_DAMAGE;
@@ -43,7 +43,6 @@ void HornetHive::update_movement()
 
 
 	set_position_AR(get_position().x, get_position().y);
-	std::cout << HP << " \n";
 	if (HP <= 0)
 	{
 		hornet_state = HORNET_HIVE_STATE::DEATH;
@@ -220,6 +219,60 @@ void HornetHive::reset_attention()
 {
 }
 
+void HornetHive::changeHP(short i)
+{
+	if(hornet_state!=HORNET_HIVE_STATE::TAKING_DAMAGE && hornet_state!=HORNET_HIVE_STATE::DEATH)Enemy::changeHP(i);
+}
+
+void HornetHive::update_physics()
+{
+	// gravity
+	displacement.y += 1.f * gravity;
+	if (std::abs(displacement.y) > velocity_max_y)
+	{
+		displacement.y = velocity_max_y * ((displacement.y > 0.f) ? 1.f : -1.f);
+	}
+	if (std::abs(displacement.x) > displacement_max)
+	{
+		displacement.x = displacement_max * ((displacement.x > 0.f) ? 1.f : -1.f);
+	}
+	//jumping
+	if (jump_tile)
+	{
+		displacement.y -= jump_velocity;
+		//jumping onto a block
+		displacement.x += moving * acceleration;
+		//jump deceleratin
+		jump_velocity *= 0.96;
+	}
+	// deceleration
+	displacement *= deceleration;
+
+	// limits
+	if (jump_tile && search_for_enemies())
+	{
+		displacement.x = 2 * moving * displacement_max;
+	}
+	if (update_collision_x())
+	{
+		displacement.x = 0.f;
+	}
+	if (update_collision_y())
+	{
+		displacement.y = 0.f;
+	}
+	//step counter
+	if (displacement.x > 0 && displacement_max == 1.f)
+		step_right++;
+	if (displacement.x < 0 && displacement_max == 1.f)
+		step_left++;
+	//if (player_contact())displacement.x *= 1.3f;
+
+	Enemy_S.move(displacement);
+	observation_area.move(displacement);
+	set_position_AR(get_position().x, get_position().y);
+}
+
 bool HornetHive::HIVE_LIFE() const
 {
 	return HP >= 1;
@@ -235,7 +288,7 @@ void HornetHive::set_position_AR(const float x, const float y)
 	anim_area.setPosition(
 		x - (anim_area.getGlobalBounds().width - (anim_area.getGlobalBounds().width / 2) - (Enemy_S.
 			getGlobalBounds().width / 2)),
-		(y - (anim_area.getGlobalBounds().height - Enemy_S.getGlobalBounds().height)+20));
+		(y - (anim_area.getGlobalBounds().height - Enemy_S.getGlobalBounds().height-4)));
 
 	Enemy_S.setPosition(x, y);
 }

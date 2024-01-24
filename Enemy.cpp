@@ -352,6 +352,7 @@ void Enemy::update_physics()
 
 	Enemy_S.move(displacement);
 	observation_area.move(displacement);
+	anim_area.move(displacement);
 }
 
 // collision x
@@ -509,6 +510,12 @@ bool Enemy::canMoveForward() const
 
 
 	return false; // Враг не может двигаться вперед
+}
+bool Enemy::outside_sting()
+{
+	FloatRect en = get_global_bounds_anim();
+	FloatRect pl = player_info->getGlobalBounds();
+	return en.intersects(pl);
 }
 
 bool Enemy::hit_a_wall() const
