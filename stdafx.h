@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <random>
 #include <cmath>
+#include <fstream>
 #include <functional>
 
 using std::vector;

@@ -137,9 +137,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimObject.cpp" />
     <ClCompile Include="AnimatedImage.cpp" />
     <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="Bow.cpp" />
+    <ClCompile Include="Chest.cpp" />
+    <ClCompile Include="MovingAnimObject.cpp" />
+    <ClCompile Include="MovingObject.cpp" />
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="CallbacksHandler.cpp" />
     <ClCompile Include="ComposedIMG.cpp" />
     <ClCompile Include="CRect.cpp" />
@@ -183,12 +188,12 @@
     <ClCompile Include="MyView.cpp" />
     <ClCompile Include="NOT_MARIO.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Switch.cpp" />
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="TabContainer.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileAnim.cpp" />
-    <ClCompile Include="TileBox.cpp" />
     <ClCompile Include="TileFactory.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="WarehouseItem.cpp" />
@@ -196,9 +201,12 @@
     <ClCompile Include="WolfBoss.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimObject.h" />
     <ClInclude Include="AnimatedImage.h" />
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="Bow.h" />
+    <ClInclude Include="Chest.h" />
+    <ClInclude Include="MENU_STATE.h" />
     <ClInclude Include="BUTTON_STATE.h" />
     <ClInclude Include="CallbacksHandler.h" />
     <ClInclude Include="ComposedIMG.h" />
@@ -216,6 +224,9 @@
     <ClInclude Include="Notification.h" />
     <ClInclude Include="PAGE_STATE.h" />
     <ClInclude Include="POP_UP_WINDOW_STATE.h" />
+    <ClInclude Include="MovingAnimObject.h" />
+    <ClInclude Include="MovingObject.h" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="ORIENTATION.h" />
     <ClInclude Include="PopUpWindow.h" />
     <ClInclude Include="ProductCard.h" />
@@ -247,12 +258,12 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="MyView.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Switch.h" />
     <ClInclude Include="Sword.h" />
     <ClInclude Include="TabContainer.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileAnim.h" />
-    <ClInclude Include="TileBox.h" />
     <ClInclude Include="TileFactory.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="WarehouseItem.h" />

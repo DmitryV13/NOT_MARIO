@@ -8,11 +8,11 @@
         this->interaction = 0;
         this->texture_size_W = 0;
         this->texture_size_H = 0;
-        this->association = ' ';
+        this->association = '`';
     
     }
     
-    Tile::Tile(std::string Name, short int inter, short int texture_size_w, short int texture_size_h, char ass){
+    Tile::Tile(std::string Name, short int inter, float texture_size_w, float texture_size_h, char ass){
         this->tileName = Name;
         this->texture_size_W = texture_size_w;
         this->texture_size_H = texture_size_h;

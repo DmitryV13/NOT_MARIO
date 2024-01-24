@@ -9,8 +9,8 @@ protected:
 	std::string tileName;
 	sf::Texture tile_T;
 	sf::Sprite	tile_S;
-	short int texture_size_W;
-	short int texture_size_H;
+	float texture_size_W;
+	float texture_size_H;
 	short int interaction;
 	char association;
 	bool player;
@@ -20,7 +20,7 @@ protected:
 public:
 
 	Tile();
-	Tile(std::string Name, short int inter, short int texture_size_w, short int texture_size_h, char ass);
+	Tile(std::string Name, short int inter, float texture_size_w, float texture_size_h, char ass);
 	virtual ~Tile();
 	sf::Sprite render_tile(int i, int j);
 	bool give_player_info();

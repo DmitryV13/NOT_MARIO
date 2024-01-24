@@ -1,40 +1,52 @@
 #pragma once
 #include "Tile.h"
-#include "TileBox.h"
 #include "TileAnim.h"
 #include "TileFactory.h"
-#include <vector>
-#include <stack>
+#include "Object.h"
+#include "AnimObject.h"
+#include "MovingAnimObject.h"
+#include "MovingObject.h"
+#include "Chest.h"
+#include "Switch.h"
+
 
 
 class TileMap {
 private:
-
+	
 	sf::Texture background_T;
 	sf::Sprite backround_S;
 
-	std::vector<std::vector<std::vector<Tile*>>> tilemap;
-
+	Tile ****tilemap;
+	std::vector<Object*> object;
 	std::unordered_map<char, Tile*> tile_list;
 	std::unordered_map<char, Tile*> tile_list_back;
 	std::unordered_map<char, Tile*> tile_list_front;
-	std::vector<Tile*> tilebox;
-
-	float sizeTexture;
+	
 	float mapW;
 	float mapH;
+	float sizeTexture;
 
-	float coefficient_X = 1;
-	float coefficient_Y = 1;
+	float coefficient_X;
+	float coefficient_Y;
 
 	std::stack<std::pair<float, float>> enemy_position;
 	void init_pos_enemy();
 
+	void writeFile();
 
 	void init_background();
 	void init_coeff(sf::IntRect pos);
 
 	void init_tilemap(float mapW, float mapH);
+	void init_level(short int level);
+
+	void init_objects(short int level);
+	void init_animObjects(short int level);
+	void init_movingObjects(short int level);
+	void init_movingAnimObjects(short int level);
+	void init_switch(short int level);
+	void init_chest(short int level);
 
 	void init_tile_list();
 	void init_tile_list_back();
@@ -43,7 +55,8 @@ private:
 	Tile* give_tile(char letter);
 	Tile* give_tile_back(char letter);
 	Tile* give_tile_front(char letter);
-	Tile* init_tile_box(char letter);
+
+	void first_renderObject(sf::RenderTarget& target);
 
 public:
 	TileMap(short level);
