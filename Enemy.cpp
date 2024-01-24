@@ -62,14 +62,16 @@ Enemy::Enemy(TileMap& map, GeneralInfo* player_info_)
 	blow_timer.restart();
 	//player_ = &pl;
 	sandbox = &map;
+	hp_bar = new HealthBarEnemy();
 	init_variables();
 	init_animation();
 	Enemy::init_physics();
+
 	//start_position = generate_random_start_position(sandbox->getMapWidth(), sandbox->getMapHeight());
 	start_position = sandbox->cord_enemy();
 
 	set_position(start_position.x, start_position.y);
-
+	hp_bar->SET_ST_HP(HP);
 	//set_position(1300,600);
 }
 
@@ -85,6 +87,16 @@ const FloatRect Enemy::get_global_bounds() const
 const FloatRect Enemy::get_global_bounds_anim() const
 {
 	return anim_area.getGlobalBounds();
+}
+
+short Enemy::getHP()
+{
+	return HP;
+}
+
+void Enemy::updateHP_bar()
+{
+	hp_bar->update(anim_area);
 }
 
 
@@ -119,13 +131,16 @@ void Enemy::render(sf::RenderTarget& target)
 {
 	target.draw(anim_area);
 	target.draw(Enemy_S);
+	hp_bar->render(target);
 }
 
 void Enemy::update()
 {
+
 	update_movement();
 	update_animation();
 	update_physics();
+	updateHP_bar();
 }
 
 void Enemy::reset_animation_timer()
@@ -469,6 +484,7 @@ void Enemy::jump_towards_player()
 void Enemy::changeHP(short attackPl)
 {
 	HP -= attackPl;
+	hp_bar->setHP_cur(HP);
 }
 
 void Enemy::setHP(short hp)

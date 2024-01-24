@@ -78,7 +78,7 @@ void Player::initVariables(){
     void Player::render(RenderTarget& target){
         if (info->getHP() <= 0) {
             alive = false;
-            animationState == PLAYER_ANIMATION_STATES::DEAD;
+            animationState = PLAYER_ANIMATION_STATES::DEAD;
             currentFrame.top = 310;
             currentFrame.left = 288;
             currentFrame.width = 48;
@@ -397,7 +397,7 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         //std::cout << HP << std::endl;
         if (info->getHP() <= 0) {
             alive = false;
-            animationState == PLAYER_ANIMATION_STATES::DEAD;
+            animationState = PLAYER_ANIMATION_STATES::DEAD;
             currentFrame.top = 320;
             currentFrame.left = 288;
             currentFrame.width = 48;

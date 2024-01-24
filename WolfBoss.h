@@ -73,6 +73,7 @@ public:
 	bool outside_sting() override;
 	void looks();
 	void changeHP(short) override;
+	void updateHP_bar() override;
 
 
 	sf::Vector2f calculateRandomPosition(const sf::FloatRect& playerBounds, int jumpDistance);

@@ -3,6 +3,7 @@
 #include "TileMap.h"
 #include "laser_weapon.h"
 #include "GeneralInfo.h"
+#include "HealthBarEnemy.h"
 #include "killer_leaf.h"
 
 using sf::Sprite;
@@ -48,7 +49,6 @@ protected:
 	TileMap* sandbox;
 	GeneralInfo* player_info;
 
-
 	Texture Enemy_T;
 	Sprite Enemy_S;
 	Sprite observation_area;
@@ -59,6 +59,7 @@ protected:
 	Clock animation_timer;
 	Clock blow_timer;
 
+	HealthBarEnemy* hp_bar;
 
 	short animation_state;
 	short animation_state_past;
@@ -119,7 +120,8 @@ public:
 	bool hit_a_wall() const;
 	bool canJumpForward() const;
 	const FloatRect get_global_bounds_anim() const;
-
+	short getHP();
+	virtual void updateHP_bar() ;
 
 	//virtual
 	virtual bool outside_sting();

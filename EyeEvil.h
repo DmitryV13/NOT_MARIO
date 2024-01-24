@@ -49,6 +49,7 @@ public:
 	//int laser_length();
 	void reset_Timer();
 	void changeHP(short) override;
+	 void updateHP_bar() override;
 
 
 private:

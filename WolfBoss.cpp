@@ -565,6 +565,12 @@ void WolfBoss::changeHP(short i)
 		boss_state == BOSS_STATE::MOVING|| boss_state == BOSS_STATE::SLEEP|| boss_state == BOSS_STATE::RETREATING )Enemy::changeHP(i);
 }
 
+void WolfBoss::updateHP_bar()
+{
+	hp_bar->update(Enemy_S);
+
+}
+
 
 void WolfBoss::update_movement()
 {
