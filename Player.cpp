@@ -33,7 +33,7 @@
         player_S.setTextureRect(currentFrame);
         //initial position
         //player_S.setPosition(4266, 250);
-       player_S.setPosition(153, 2746);
+       player_S.setPosition(100, 2600);
 
     }
 
