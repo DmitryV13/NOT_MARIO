@@ -3,7 +3,7 @@
 #include "PLAYER_ANIMATION_SATES.h"
 #include "TileMap.h"
 #include "kusaka.h"
-#include "Eye_evil.h"
+#include "EyeEvil.h"
 #include "WolfBoss.h"
 #include "RedMutant.h"
 

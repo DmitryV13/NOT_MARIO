@@ -3,6 +3,8 @@
 #include "TileMap.h"
 #include "laser_weapon.h"
 #include "GeneralInfo.h"
+#include "HealthBarEnemy.h"
+#include "killer_leaf.h"
 
 using sf::Sprite;
 using sf::RenderWindow;
@@ -22,9 +24,18 @@ enum ENEMY_ANIMATION_STATES
 	ENEMY_ATTENTION,
 	ENEMY_SHOT,
 	ENEMY_SLEEP,
-	ENEMY_BITE
-
+	ENEMY_BITE,
+	ENEMY_DEATH,
+	ENEMY_TAKING_DAMAGE,
+	ENEMY_RUN,
+	ENEMY_TELEPORT,
+	ENEMY_PUNCH,
+	ENEMY_DOUBLE_KICK,
+	ENEMY_HOWL,
+	ENEMY_HIT_EARTH,
+	ENEMY_AWAKENING
 };
+
 enum class PL_SIDE
 {
 	LEFT,
@@ -36,18 +47,24 @@ class Enemy
 {
 protected:
 	TileMap* sandbox;
-
 	GeneralInfo* player_info;
 
 	Texture Enemy_T;
 	Sprite Enemy_S;
 	Sprite observation_area;
+	Sprite anim_area;
 	IntRect current_frame;
 	IntRect current_area;
+	IntRect standard_frame;
 	Clock animation_timer;
 	Clock blow_timer;
+
+	HealthBarEnemy* hp_bar;
+
 	short animation_state;
+	short animation_state_past;
 	bool animation_switch;
+	short hp_damage_i;
 	short HP;
 	short attack_;
 	short count_shot;
@@ -70,14 +87,15 @@ protected:
 	float jump_velocity;
 	bool on_ground;
 	//enemy
-	virtual void init_physics();
 	void init_animation();
 	void init_variables();
-	//virtual
-	virtual void init_texture() = 0;
-	virtual void init_sprite() = 0;
 	void setAt(short at);
 	void setHP(short hp);
+	//virtual
+	virtual void init_physics();
+	virtual void init_texture() = 0;
+	virtual void init_sprite() = 0;
+
 public:
 	//Enemy
 	bool looks_to_the_left;
@@ -95,18 +113,24 @@ public:
 	bool update_collision_x_jump();
 	bool update_collision_y();
 	void reset_animation_timer();
-	virtual void walk(const float dir_x);
-	virtual void jump(const float dir_y);
 	bool player_contact();
 	auto sting() -> bool;
-	PL_SIDE getPlayerSide(float playerX, float enemyX);
 	bool isPlayerInRadius(const sf::FloatRect& observationArea, const sf::FloatRect& playerBounds, float radius);
-
-
-	virtual void jump_towards_player();
-	virtual void changeHP(short);
+	bool canMoveForward() const;
+	bool hit_a_wall() const;
+	bool canJumpForward() const;
+	const FloatRect get_global_bounds_anim() const;
+	short getHP();
+	virtual void updateHP_bar() ;
 
 	//virtual
+	virtual bool outside_sting();
+
+	virtual PL_SIDE getPlayerSide(float playerX, float enemyX);
+	virtual void jump(const float dir_y);
+	virtual void walk(const float dir_x);
+	virtual void changeHP(short);
+	virtual void jump_towards_player();
 	virtual void reset_attention() = 0;
 	virtual ~Enemy() = default;
 	virtual void shot() = 0;

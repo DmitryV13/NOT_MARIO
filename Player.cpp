@@ -32,7 +32,9 @@
         currentFrame = IntRect(2, 80, 48, 70);
         player_S.setTextureRect(currentFrame);
         //initial position
-        player_S.setPosition(102, 2600);
+        //player_S.setPosition(4266, 250);
+       player_S.setPosition(153, 2746);
+
     }
 
     void Player::initWeapon(const vector<vector<Enemy*>*>& enemies) {
@@ -84,6 +86,7 @@
             animationTimer.restart();
             player_S.setTextureRect(currentFrame);
         }
+        //std::cout << getPosition().x << " " <<getPosition().y<<"\n";
         target.draw(player_S);
         weapons[chosen_weapon]->render(target);
         renderProjectiles(target);
@@ -396,7 +399,7 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         info->changeHP(z);
         if (info->getHP() <= 0) {
             alive = false;
-            animationState == PLAYER_ANIMATION_STATES::DEAD;
+            animationState = PLAYER_ANIMATION_STATES::DEAD;
             currentFrame.top = 320;
             currentFrame.left = 288;
             currentFrame.width = 48;

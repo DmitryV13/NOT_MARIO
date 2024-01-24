@@ -141,6 +141,7 @@
     <ClCompile Include="AnimatedImage.cpp" />
     <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="Bow.cpp" />
+    <ClCompile Include="BushKiller.cpp" />
     <ClCompile Include="Chest.cpp" />
     <ClCompile Include="MovingAnimObject.cpp" />
     <ClCompile Include="MovingObject.cpp" />
@@ -151,6 +152,10 @@
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GeneralInfo.cpp" />
     <ClCompile Include="Group.cpp" />
+    <ClCompile Include="HealthBarEnemy.cpp" />
+    <ClCompile Include="hornet.cpp" />
+    <ClCompile Include="HornetHive.cpp" />
+    <ClCompile Include="killer_leaf.cpp" />
     <ClCompile Include="BasicImage.cpp" />
     <ClCompile Include="ImageButton.cpp" />
     <ClCompile Include="ImageInfo.cpp" />
@@ -171,7 +176,7 @@
     <ClCompile Include="ResourceInfo.cpp" />
     <ClCompile Include="Reviewer.cpp" />
     <ClCompile Include="RoadMap.cpp" />
-    <ClCompile Include="Eye_evil.cpp" />
+    <ClCompile Include="EyeEvil.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="MainMenuOption.cpp" />
     <ClCompile Include="InterfaceItem.cpp" />
@@ -205,6 +210,7 @@
     <ClInclude Include="AnimatedImage.h" />
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="Bow.h" />
+    <ClInclude Include="BushKiller.h" />
     <ClInclude Include="Chest.h" />
     <ClInclude Include="MENU_STATE.h" />
     <ClInclude Include="BUTTON_STATE.h" />
@@ -214,6 +220,10 @@
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GeneralInfo.h" />
     <ClInclude Include="Group.h" />
+    <ClInclude Include="HealthBarEnemy.h" />
+    <ClInclude Include="hornet.h" />
+    <ClInclude Include="HornetHive.h" />
+    <ClInclude Include="killer_leaf.h" />
     <ClInclude Include="BasicImage.h" />
     <ClInclude Include="ImageButton.h" />
     <ClInclude Include="ImageInfo.h" />
@@ -244,7 +254,7 @@
     <ClInclude Include="ResourceInfo.h" />
     <ClInclude Include="Reviewer.h" />
     <ClInclude Include="RoadMap.h" />
-    <ClInclude Include="Eye_evil.h" />
+    <ClInclude Include="EyeEvil.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="MainMenuOption.h" />
     <ClInclude Include="InterfaceItem.h" />

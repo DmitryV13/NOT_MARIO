@@ -1,17 +1,20 @@
 #pragma once
+#include "BushKiller.h"
 #include "GAME_STATE.h"
 #include "BUTTON_STATE.h"
 #include "POP_UP_WINDOW_STATE.h"
 #include "Player.h"
 #include "TileMap.h"
 #include "MyView.h"
-#include "Eye_evil.h"
+#include "EyeEvil.h"
 #include "kusaka.h"
 #include "RedMutant.h"
 #include "WolfBoss.h"
 #include "ScaleParametrBar.h"
 #include "Enemy.h"
 #include "PopUpWindow.h"
+#include "hornet.h"
+#include "HornetHive.h"
 
 using namespace::sf;
 
@@ -28,11 +31,16 @@ private:
 	MyView myView;
 	//Cursor* cursor;
 
-	Eye_evil* evil_Ball;
-	vector<Eye_evil*>* evil_ball_vector;
+	EyeEvil* evil_Ball;
+	vector<BushKiller*>* bush_killers_vector;
+	vector<EyeEvil*>* evil_ball_vector;
 	vector<kusaka*>* Kusaka_vector;
-	vector<RedMutant*>* chubacabras_vector_;
+	vector<RedMutant*>* Red_Mutant_vector_;
 	vector<WolfBoss*>* boss_vector;
+	vector<hornet*>* hornet_vector;
+	vector<HornetHive*>* hornet_hives_vector;
+
+
 	int num_of_enemy_{ 12 };
 	short regime;
 	double screenWidth;
@@ -53,6 +61,7 @@ private:
 	void init_Kusaka();
 	void init_chubacabra();
 	void init_Wolf_boss();
+	void init_BushKiller();
 	void init_enemy();
 public:
 	Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level, Color menuColor);
@@ -67,9 +76,12 @@ public:
 	void updatePlayer();
 	void updateView();
 	void updateCursor();
+
+	void update_Enemy();
 	void updateEvilBall();
 	void update_Kusaka();
-	void update_chubacabra();
+	void update_BushKiller();
+	void update_Red_Mutant();
 	void update_Wolf_boss();
 	void updateGameMenu();
 	void updateGameState();
@@ -81,9 +93,12 @@ public:
 	void renderMap();
 	void renderCursor();
 	void render();
+
+	void renderEnemy();
 	void renderEvilBall();
 	void render_Kusaka();
 	void render_chubacabra();
+	void render_BushKiller();
 	void render_Wolf_boss();
 	void render_shot();
 	void renderLifeBar();
