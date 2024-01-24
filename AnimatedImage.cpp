@@ -1,6 +1,12 @@
 #include "stdafx.h"
 #include "AnimatedImage.h"
 
+	AnimatedImage::AnimatedImage(TextureManager* t_manager, Warehouse* w_object, string name)
+	: BasicImage(t_manager, w_object, name){
+		current_frame = w_object->getWarehouseItem(name)->getSpriteInfo().first;
+		frames_number = w_object->getWarehouseItem(name)->getSpriteInfo().second;
+	}
+	
 	AnimatedImage::AnimatedImage(TextureManager* t_manager, int index, string name, IntRect first_frame, short frames_number_)
 		: BasicImage(t_manager, index, name, first_frame)
 		, frames_number(frames_number_), current_frame(first_frame){

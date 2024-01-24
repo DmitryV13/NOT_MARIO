@@ -20,7 +20,9 @@ public:
 	FloatRect getGlobalBounds() override;
 
 	void addAnimatedImage(TextureManager* t_manager, int index, string name, IntRect first_frame, short frames_number_);
+	void addAnimatedImage(TextureManager* t_manager, Warehouse* w_object, string name);
 	void addStaticImage(TextureManager* t_manager, int index, string name, IntRect first_frame);
+	void addStaticImage(TextureManager* t_manager, Warehouse* w_object, string name);
 	void setPosition(Vector2f position_);
 	void setPositionX(float x) override;
 	void setPositionY(float y) override;

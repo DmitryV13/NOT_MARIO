@@ -1,14 +1,16 @@
 #include "stdafx.h"
 #include "Level.h"
 
-Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level, Color menuColor)
+Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level, Color menuColor, TextureManager* t_manager_, Warehouse* warehouse_)
 	: window(window_)
-	  , screenWidth(screenWidth_)
-	  , screenHeight(screenHeight_)
-	  , myView(sandbox, screenWidth_, screenHeight_)
-	  , sandbox(level)
-	  , game_state(GAME_STATE::FINISHED)
-	  , regime(2)
+	, t_manager(t_manager_)
+	, warehouse(warehouse_)
+	, screenWidth(screenWidth_)
+	, screenHeight(screenHeight_)
+	, myView(sandbox, screenWidth_, screenHeight_)
+	, sandbox(level)
+	, game_state(GAME_STATE::FINISHED)
+	, regime(2)
 {
 	//1-random generation, 2-set positions
 
@@ -46,20 +48,20 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 
 	life_bar = new ScaleParametrBar();
 
-	initPlayer();
-		menu_timer.restart();
-		if(regime == -1)
-		{
-			//initEvilBall();
-			//init_Kusaka();
-			//init_chubacabra();
-			//init_Wolf_boss();
-			//initWeapons();
-		}else if(level == 4)
-		{
-			//init_enemy();
-			//initWeapons();
-		}
+	initPlayer(level);
+	menu_timer.restart();
+	if(regime == -1)
+	{
+		//initEvilBall();
+		//init_Kusaka();
+		//init_chubacabra();
+		//init_Wolf_boss();
+		//initWeapons();
+	}else if(level == 4)
+	{
+		//init_enemy();
+		//initWeapons();
+	}
 	
 }
 
@@ -315,9 +317,14 @@ void Level::updateLifeBar()
 	life_bar->update(myView.getCurrentViewCords(), screenWidth, screenHeight);
 }
 
-void Level::initPlayer()
+void Level::initPlayer(short level)
 {
-	player = new Player(sandbox);
+	if (level < 4) {
+		player = new Player(sandbox);
+	}
+	else {
+		player = new Player(sandbox, Vector2f(150, 2600));
+	}
 }
 
 void Level::initView()

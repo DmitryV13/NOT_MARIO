@@ -3,6 +3,11 @@
 
 	BasicImage::BasicImage(){
 	}
+
+	BasicImage::BasicImage(TextureManager* t_manager, Warehouse* w_object, string name){
+		image.setTexture(t_manager->getTexture(w_object->getWarehouseItem(name)->getTMInfo().first, name));
+		image.setTextureRect(w_object->getWarehouseItem(name)->getSpriteInfo().first);
+	}
 	
 	BasicImage::BasicImage(TextureManager* t_manager, int index, string name, IntRect frame){
 		image.setTexture(t_manager->getTexture(index, name));

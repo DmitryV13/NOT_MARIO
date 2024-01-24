@@ -56,11 +56,13 @@ private:
     void initVariables();
     void initTexture();
     void initSprite();
+    void initSprite(Vector2f position);
     //void initWeapon();
     void initAnimation();
     void initPhysics();
 public:
     Player(TileMap& map);
+    Player(TileMap& map, Vector2f position);
     void initWeapon(const vector<vector<Enemy*>*>& enemies);
     IntRect get_pl_frame();
     // accessors

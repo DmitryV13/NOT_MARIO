@@ -11,6 +11,16 @@
         initPhysics();
     }
 
+    Player::Player(TileMap& map, Vector2f position){
+        sandbox = &map;
+        initVariables();
+        initTexture();
+        initSprite(position);
+        //initWeapon();
+        initAnimation();
+        initPhysics();
+    }
+
     IntRect Player::get_pl_frame()
     {
         return currentFrame;
@@ -32,9 +42,16 @@
         currentFrame = IntRect(2, 80, 48, 70);
         player_S.setTextureRect(currentFrame);
         //initial position
-        //player_S.setPosition(4266, 250);
-       player_S.setPosition(100, 2600);
+        player_S.setPosition(10, 10);
 
+    }
+
+    void Player::initSprite(Vector2f position){
+        player_S.setTexture(player_T);
+        currentFrame = IntRect(2, 80, 48, 70);
+        player_S.setTextureRect(currentFrame);
+        //initial position
+        player_S.setPosition(position);
     }
 
     void Player::initWeapon(const vector<vector<Enemy*>*>& enemies) {

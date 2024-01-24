@@ -1,5 +1,6 @@
 #pragma once
 #include "TextureManager.h"
+#include "Warehouse.h"
 
 using namespace::sf;
 
@@ -10,6 +11,7 @@ protected:
 	Vector2f position;
 public:
 	BasicImage();
+	BasicImage(TextureManager* t_manager, Warehouse* w_object, string name);
 	BasicImage(TextureManager* t_manager, int index, string name, IntRect frame);
 
 	FloatRect getLocalBounds();

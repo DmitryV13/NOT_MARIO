@@ -15,15 +15,21 @@
 #include "PopUpWindow.h"
 #include "hornet.h"
 #include "HornetHive.h"
+#include "TextureManager.h"
+#include "Warehouse.h"
 
 using namespace::sf;
 
 class Level{
 private:
 	RenderWindow* window;
+
 	PopUpWindow* pause_menu;
 	ScaleParametrBar* life_bar;
 	Clock menu_timer;
+
+	TextureManager* t_manager;
+	Warehouse* warehouse;
 
 	Event event;
 	Player* player;
@@ -55,7 +61,7 @@ private:
 	//short* hp;
 
 	//void initWindow();
-	void initPlayer();
+	void initPlayer(short level);
 	void initView();
 	void initEvilBall();
 	void init_Kusaka();
@@ -64,7 +70,7 @@ private:
 	void init_BushKiller();
 	void init_enemy();
 public:
-	Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level, Color menuColor);
+	Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level, Color menuColor, TextureManager* t_manager_, Warehouse* warehouse_);
 	~Level();
 
 	void finishGame(float q);
