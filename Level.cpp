@@ -54,11 +54,11 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 			//init_Kusaka();
 			//init_chubacabra();
 			//init_Wolf_boss();
-			initWeapons();
+			//initWeapons();
 		}else if(level == 4)
 		{
 			//init_enemy();
-			initWeapons();
+			//initWeapons();
 		}
 	
 }
@@ -68,26 +68,8 @@ Level::~Level()
 	delete player;
 	
 	delete life_bar;
-	/*delete evil_Ball;
-	for (auto& enemy : *evil_ball_vector)
-	{
-		delete enemy;
-	}
-	evil_ball_vector->clear();
-	for (auto& enemy : *Kusaka_vector)
-	{
-		delete enemy;
-	}
-	Kusaka_vector->clear();*/
-	/*for (auto& enemy : *Red_Mutant_vector_)
-	{
-		delete enemy;
-	}
-	Red_Mutant_vector_->clear();*/
-	//for (auto& enemy : *boss_vector) {
-	//	delete enemy;
-	//}
-	//boss_vector->clear();
+	
+	boss_vector->clear();
 }
 
 	void Level::finishGame(float q){
@@ -153,22 +135,22 @@ void Level::init_BushKiller()
 
 void Level::init_enemy()
 {
-	//Kusaka_vector = new vector<kusaka*>();
-	//evil_ball_vector = new vector<EyeEvil*>();
-	//Red_Mutant_vector_ = new vector<RedMutant*>();
-	//boss_vector = new vector<WolfBoss*>();
-	//bush_killers_vector = new vector<BushKiller*>();
-	//hornet_vector = new vector<hornet*>();
-	//hornet_hives_vector = new vector<HornetHive*>();
+	Kusaka_vector = new vector<kusaka*>();
+	evil_ball_vector = new vector<EyeEvil*>();
+	Red_Mutant_vector_ = new vector<RedMutant*>();
+	boss_vector = new vector<WolfBoss*>();
+	bush_killers_vector = new vector<BushKiller*>();
+	hornet_vector = new vector<hornet*>();
+	hornet_hives_vector = new vector<HornetHive*>();
 
-	//evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
-	//evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
-	//evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
-	//evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
-	//boss_vector->push_back(new WolfBoss(sandbox, player->getGeneralInfo()));
-	//hornet_hives_vector->push_back(new HornetHive(sandbox, player->getGeneralInfo()));
+	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
+	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
+	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
+	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
+	boss_vector->push_back(new WolfBoss(sandbox, player->getGeneralInfo()));
+	hornet_hives_vector->push_back(new HornetHive(sandbox, player->getGeneralInfo()));
 
-	//bush_killers_vector->push_back(new BushKiller(sandbox, player->getGeneralInfo()));
+	bush_killers_vector->push_back(new BushKiller(sandbox, player->getGeneralInfo()));
 	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
 	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
 	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
@@ -346,8 +328,8 @@ void Level::update()
 {
 	updatePlayer();
 
-		/*updateEvilBall();
-		update_Kusaka();*/
+		//updateEvilBall();
+		//update_Kusaka();
 		updateView();
 		updateCursor();
 		updateMap();
