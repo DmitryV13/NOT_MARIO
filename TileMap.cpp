@@ -33,6 +33,12 @@ void TileMap::free_memory()
 
 void TileMap::init_pos_enemy()
 {
+
+	enemy_position.push({ 989.f,2800.f });
+	enemy_position.push({ 920.f,2890.f });
+	enemy_position.push({ 1020.f,2890.f });
+
+
 	enemy_position.push({ 1079.f,1270.f });
 	enemy_position.push({ 6105.f,2740.f });
 	enemy_position.push({ 5525.f,2100.f });
@@ -41,9 +47,7 @@ void TileMap::init_pos_enemy()
 	enemy_position.push({ 1993.f,2920.f });
 
 
-	enemy_position.push({ 989.f,2800.f });
-	enemy_position.push({ 920.f,2890.f });
-	enemy_position.push({ 1020.f,2890.f });
+
 
 	enemy_position.push({ 2020.f,2920.f });
 

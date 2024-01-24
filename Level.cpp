@@ -43,70 +43,32 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 	pause_menu->addCallback(t0->getButtonState(2), (short)BUTTON_STATE::BTN_ACTIVE, 0, &Level::finishGame, this);
 	pause_menu->addGroup(t0, 0);
 
-	game_menu = new GameMenu(window, sandbox.getMapWidth(), sandbox.getMapHeight(), screenWidth, screenHeight,
-	                         &game_state, menuColor);
+
 	life_bar = new ScaleParametrBar();
 
 	initPlayer();
 		menu_timer.restart();
 		if(regime == -1)
 		{
-			initEvilBall();
-			init_Kusaka();
-			init_chubacabra();
-			init_Wolf_boss();
+			//initEvilBall();
+			//init_Kusaka();
+			//init_chubacabra();
+			//init_Wolf_boss();
 			initWeapons();
 		}else if(level == 4)
 		{
-			init_enemy();
+			//init_enemy();
 			initWeapons();
 		}
-		
-	}
 	
-	Level::~Level(){
-		delete player;
-		delete life_bar;
-		delete evil_Ball;
-		for (auto& enemy : *evil_ball_vector) {
-			delete enemy;
-		}
-		evil_ball_vector->clear();
-		for (auto& enemy : *Kusaka_vector) {
-			delete enemy;
-		}
-		Kusaka_vector->clear();
-		for (auto& enemy : *chubacabras_vector_) {
-			delete enemy;
-		}
-		chubacabras_vector_->clear();
-		//for (auto& enemy : *boss_vector) {
-		//	delete enemy;
-		//}
-		//boss_vector->clear();
-	}
-	menu_timer.restart();
-	if (regime == -1)
-	{
-		initEvilBall();
-		init_Kusaka();
-		init_chubacabra();
-		init_Wolf_boss();
-		initWeapons();
-	}
-	else if (level == 4)
-	{
-		init_enemy();
-		initWeapons();
-	}
 }
 
 Level::~Level()
 {
 	delete player;
-	delete game_menu;
+	
 	delete life_bar;
-	delete evil_Ball;
+	/*delete evil_Ball;
 	for (auto& enemy : *evil_ball_vector)
 	{
 		delete enemy;
@@ -116,12 +78,12 @@ Level::~Level()
 	{
 		delete enemy;
 	}
-	Kusaka_vector->clear();
-	for (auto& enemy : *Red_Mutant_vector_)
+	Kusaka_vector->clear();*/
+	/*for (auto& enemy : *Red_Mutant_vector_)
 	{
 		delete enemy;
 	}
-	Red_Mutant_vector_->clear();
+	Red_Mutant_vector_->clear();*/
 	//for (auto& enemy : *boss_vector) {
 	//	delete enemy;
 	//}
@@ -178,7 +140,6 @@ void Level::init_Wolf_boss()
 	}
 }
 
-	void Level::init_enemy()
 void Level::init_BushKiller()
 {
 	bush_killers_vector = new vector<BushKiller*>();
@@ -189,57 +150,45 @@ void Level::init_BushKiller()
 	}
 }
 
+
 void Level::init_enemy()
 {
-	Kusaka_vector = new vector<kusaka*>();
-	evil_ball_vector = new vector<EyeEvil*>();
-	Red_Mutant_vector_ = new vector<RedMutant*>();
-	boss_vector = new vector<WolfBoss*>();
-	bush_killers_vector = new vector<BushKiller*>();
-	hornet_vector = new vector<hornet*>();
-	hornet_hives_vector = new vector<HornetHive*>();
+	//Kusaka_vector = new vector<kusaka*>();
+	//evil_ball_vector = new vector<EyeEvil*>();
+	//Red_Mutant_vector_ = new vector<RedMutant*>();
+	//boss_vector = new vector<WolfBoss*>();
+	//bush_killers_vector = new vector<BushKiller*>();
+	//hornet_vector = new vector<hornet*>();
+	//hornet_hives_vector = new vector<HornetHive*>();
 
-	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
-	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
-	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
-	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
-	boss_vector->push_back(new WolfBoss(sandbox, player->getGeneralInfo()));
-	hornet_hives_vector->push_back(new HornetHive(sandbox, player->getGeneralInfo()));
+	//evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
+	//evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
+	//evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
+	//evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
+	//boss_vector->push_back(new WolfBoss(sandbox, player->getGeneralInfo()));
+	//hornet_hives_vector->push_back(new HornetHive(sandbox, player->getGeneralInfo()));
 
+	//bush_killers_vector->push_back(new BushKiller(sandbox, player->getGeneralInfo()));
+	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
+	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
+	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
+	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
+	///Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
+	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
+	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
+	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
+	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
+	//evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
+	//evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
+	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
+	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
+	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
+	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
 }
 
-	void Level::initWeapons() {
-		player->initWeapon({ reinterpret_cast<vector<Enemy*>*>(Kusaka_vector)
-			, reinterpret_cast<vector<Enemy*>*>(evil_ball_vector)
-			, reinterpret_cast<vector<Enemy*>*>(chubacabras_vector_)
-			, reinterpret_cast<vector<Enemy*>*>(boss_vector) });
-	}
 	
-	void Level::updateEvilBall()
-	{
-	for (auto& enemy : *evil_ball_vector)
-		{
-			(enemy)->update();
-			//(*evil_ball_vector)[i]->update();
-
-	bush_killers_vector->push_back(new BushKiller(sandbox, player->getGeneralInfo()));
-
-	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
-	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
-	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
-	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
-	////Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
-	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
-	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
-	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
-	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
-	//evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
-	//evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
-	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
-	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
-	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
-	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
-}
+	
+	
 
 void Level::updateEvilBall()
 {
@@ -348,11 +297,7 @@ void Level::update_Wolf_boss()
 	void Level::updateGameMenu(){
 		pause_menu->update(myView.getCurrentViewCords());
 	}
-void Level::updateGameMenu()
-{
-	game_menu->update(myView.getCurrentViewCords());
-	pause_menu->update(myView.getCurrentViewCords());
-}
+
 
 void Level::updateGameState()
 {
@@ -401,65 +346,21 @@ void Level::update()
 {
 	updatePlayer();
 
-		updateEvilBall();
-		update_Kusaka();
-		update_chubacabra();
-		update_Wolf_boss();
-
+		/*updateEvilBall();
+		update_Kusaka();*/
 		updateView();
 		updateCursor();
 		updateMap();
 		updateLifeBar();
-	}
-	//*player_gl_b = player->getGlobalBounds();
-	//*player_pos = player->getPosition();
-	//*player_vel = player->getVelocity();
-	update_Enemy();
-	updateEvilBall();
-	update_Kusaka();
-	update_Red_Mutant();
-	update_Wolf_boss();
-	update_BushKiller();
-	updateView();
+	
+	//update_Enemy();
+	//update_Red_Mutant();
+	//update_Wolf_boss();
+	//update_BushKiller();
 	updateCursor();
-	updateMap();
-	updateLifeBar();
 }
 
-	void Level::updateEvents(){
-		while (window->pollEvent(event)) {
-			if (event.type == Event::KeyReleased) {
-
-				if (event.key.code == Keyboard::D) {
-					player->resetAnimationTimer();
-				}
-				if (event.key.code == Keyboard::A) {
-					player->resetAnimationTimer();
-				}
-				if (event.key.code == Keyboard::W) {
-					player->resetAnimationTimer();
-					player->resetIsFlying();
-				}
-				if (event.key.code == Keyboard::S) {
-					player->resetAnimationTimer();
-				}
-				if (event.key.code == Keyboard::Space) {
-					player->resetAnimationTimer();
-					player->resetNTHJump();
-				}
-			}
-			if (event.type == sf::Event::MouseWheelScrolled) {
-				if (game_state == GAME_STATE::CONTINUES) {
-					if (event.mouseWheelScroll.delta > 0) {
-						player->change_weapon(1);
-					}
-					else {
-						player->change_weapon(-1);
-					}
-				}
-			}
-		}
-	}
+	
 void Level::updateEvents()
 {
 	while (window->pollEvent(event))
@@ -509,11 +410,7 @@ void Level::updateView()
 	myView.updateView(player->getGlobalBounds());
 }
 
-	void Level::updateCursor() {
-		//sf::Vector2f p(sf::Mouse::getPosition(window));
-		//cursor->update(sf::Vector2f(sf::Mouse::getPosition(window)));
-		//std::cout << p.x << "  " << p.y<< std::endl;
-	}
+	
 	
 	void Level::renderGameMenu(){
 		pause_menu->render();
@@ -571,12 +468,6 @@ void Level::update_Enemy()
 	
 }
 
-void Level::renderGameMenu()
-{
-	//game_menu->render();
-	pause_menu->render();
-	//window->display();
-}
 
 void Level::renderPLayer()
 {
@@ -605,13 +496,13 @@ void Level::render()
 
 	renderMap();
 	renderPLayer();
-	renderEnemy();
-	renderEvilBall();
-	render_Kusaka();
-	render_chubacabra();
-	render_BushKiller();
-	render_shot();
-	render_Wolf_boss();
+	//renderEnemy();
+	//renderEvilBall();
+	//render_Kusaka();
+	//render_chubacabra();
+	//render_BushKiller();
+	//render_shot();
+	//render_Wolf_boss();
 
 	sandbox.second_render(*window, myView.getCurrentViewCords());
 	renderCursor();
@@ -715,21 +606,7 @@ void Level::renderLifeBar()
 	life_bar->render(window);
 }
 
-	void Level::start(){
-		//if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-		//	int y = 0;
-		//}
-		game_state = GAME_STATE::CONTINUES;
-		while (game_state != GAME_STATE::FINISHED) {
-			updateGameState();
-			updateEvents();
-			//this bug has a beneficial effect
-			if (game_state != GAME_STATE::PAUSED) {
-				update();
-			}
-			render();
-		}
-	}
+	
 void Level::start()
 {
 	//if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
