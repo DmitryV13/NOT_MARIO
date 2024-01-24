@@ -97,24 +97,6 @@
     <Filter Include="Source Files\GameObjects\Alive\Player">
       <UniqueIdentifier>{5e20e6ea-00f7-4130-8852-f0301757ebe5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Map\Tile">
-      <UniqueIdentifier>{8328346d-2fca-401b-955f-99e3d34f174a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\GameObjects\Alive\Enemy">
-      <UniqueIdentifier>{8a916792-ac36-43c9-a077-520069494a44}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\GameObjects\Alive\Player">
-      <UniqueIdentifier>{b07a8c8a-d3f5-4e4c-a9b3-25b9ef3427b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\GameObjects\Alive\Enemy\Weapons">
-      <UniqueIdentifier>{efa035b5-f627-4127-8ab5-f8fe135d7af4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GUI\Pages">
-      <UniqueIdentifier>{82424bf7-a522-4fe2-810c-f49e3e060e81}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\GUI\Pages">
-      <UniqueIdentifier>{d966aea3-413c-4bf2-bbd5-5172fb12fdd4}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyView.cpp">
@@ -176,9 +158,6 @@
     </ClCompile>
     <ClCompile Include="Arrow.cpp">
       <Filter>Source Files\GameObjects\Artificial\Weapons\RangedWeapon</Filter>
-    </ClCompile>
-    <ClCompile Include="TileBox.cpp">
-      <Filter>Source Files\Map\Tile</Filter>
     </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>Source Files\Map\Tile</Filter>
@@ -282,6 +261,24 @@
     <ClCompile Include="BasicImage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Source Files\Map\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimObject.cpp">
+      <Filter>Source Files\Map\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingObject.cpp">
+      <Filter>Source Files\Map\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingAnimObject.cpp">
+      <Filter>Source Files\Map\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Chest.cpp">
+      <Filter>Source Files\Map\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Switch.cpp">
+      <Filter>Source Files\Map\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Exit.h">
@@ -353,104 +350,14 @@
     <ClInclude Include="ORIENTATION.h">
       <Filter>Header Files\Enums</Filter>
     </ClInclude>
-    <ClInclude Include="POP_UP_WINDOW_STATE.h">
-      <Filter>Header Files\Enums</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
+    <ClInclude Include="TileAnim.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ComposedIMG.h">
-      <Filter>Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>Header Files\Map\Tile</Filter>
     </ClInclude>
     <ClInclude Include="TileBox.h">
-      <Filter>Header Files\Map\Tile</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TileAnim.h">
-      <Filter>Header Files\Map\Tile</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Header Files\GameObjects\Alive\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files\GameObjects\Alive\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Eye_evil.h">
-      <Filter>Header Files\GameObjects\Alive\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="RedMutant.h">
-      <Filter>Header Files\GameObjects\Alive\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="CRect.h">
-      <Filter>Header Files\ServiceClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="kusaka.h">
-      <Filter>Header Files\GameObjects\Alive\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="WolfBoss.h">
-      <Filter>Header Files\GameObjects\Alive\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="laser_weapon.h">
-      <Filter>Header Files\GameObjects\Alive\Enemy\Weapons</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureManager.h">
-      <Filter>Header Files\ServiceClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="PopUpWindow.h">
-      <Filter>Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Label.h">
-      <Filter>Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneralInfo.h">
-      <Filter>Header Files\GameObjects\Alive\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Group.h">
-      <Filter>Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="InterfaceItem.h">
-      <Filter>Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="ScaleParametrBar.h">
-      <Filter>Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="BUTTON_STATE.h">
+    <ClInclude Include="MENU_STATE.h">
       <Filter>Header Files\Enums</Filter>
-    </ClInclude>
-    <ClInclude Include="INTERFACE_ITEM_TYPE.h">
-      <Filter>Header Files\Enums</Filter>
-    </ClInclude>
-    <ClInclude Include="PAGE_STATE.h">
-      <Filter>Header Files\Enums</Filter>
-    </ClInclude>
-    <ClInclude Include="SliderControl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FontManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CallbacksHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Reviewer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimatedImage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageButton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceInfo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Warehouse.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TabContainer.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ImageInfo.h">
       <Filter>Header Files</Filter>
@@ -472,6 +379,30 @@
     </ClInclude>
     <ClInclude Include="BasicImage.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files\Map\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="TileAnim.h">
+      <Filter>Header Files\Map\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Header Files\Map\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimObject.h">
+      <Filter>Header Files\Map\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingObject.h">
+      <Filter>Header Files\Map\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingAnimObject.h">
+      <Filter>Header Files\Map\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Chest.h">
+      <Filter>Header Files\Map\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Switch.h">
+      <Filter>Header Files\Map\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
