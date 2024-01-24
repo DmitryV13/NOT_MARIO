@@ -1,90 +1,21 @@
 #include "stdafx.h"
 #include "TileMap.h"
 
-TileMap::TileMap(short level) : sizeTexture(64), mapH(50), mapW(200)
+TileMap::TileMap(short level) : sizeTexture(64), mapH(50), mapW(100)
 {
 	init_background();
 	init_tile_list();
 	init_tile_list_back();
 	init_tile_list_front();
-	
+	init_tilemap(mapH, mapW);
+	init_level(level);
+	init_objects(level);
+	init_animObjects(level);
+	init_movingObjects(level);
+	init_movingAnimObjects(level);
+	init_switch(level);
+	init_chest(level);
 	init_pos_enemy();
-
-	int a = 1;
-	int b = level;
-
-	if (b==4)
-	{
-		mapH = 50;
-		mapW = 100;
-		TileFactory factory(mapH, mapW, 1, b);
-		init_tilemap(mapH, mapW);
-		char tmp_letter;
-		for (int i = 0; i < mapH; i++)
-		{
-			for (int j = 0; j < mapW; j++)
-			{
-				for (int k = 0; k < 3; k++)
-				{
-					tmp_letter = factory.give_letter(i, j, k);
-					if (tmp_letter == '[' || tmp_letter == ']')
-					{
-						tilemap[i][j][1] = init_tile_box(tmp_letter);
-						continue;
-					}
-					if (k == 0)
-					{
-						tilemap[i][j][k] = give_tile_back(tmp_letter);
-						continue;
-					}
-					if (k == 1)
-					{
-						tilemap[i][j][k] = give_tile(tmp_letter);
-						continue;
-					}
-					if (k == 2)
-					{
-						tilemap[i][j][k] = give_tile_front(tmp_letter);
-						continue;
-					}
-				}
-			}
-		}
-	}
-	else
-	{
-		TileFactory factory(mapH, mapW, 0, b);
-
-		char tmp_letter;
-		for (int i = 0; i < mapH; i++)
-		{
-			for (int j = 0; j < mapW; j++)
-			{
-				tmp_letter = factory.give_generation_letter(i, j);
-				if (tmp_letter != 'W' && tmp_letter != 'w')
-				{
-					tilemap[i][j][0] = give_tile_back(' ');
-					tilemap[i][j][1] = give_tile(tmp_letter);
-					tilemap[i][j][2] = give_tile_front(' ');
-					continue;
-				}
-				if (tmp_letter == 'W')
-				{
-					tilemap[i][j][0] = give_tile_back(tmp_letter);
-					tilemap[i][j][1] = give_tile(' ');
-					tilemap[i][j][2] = give_tile_front(tmp_letter);
-					continue;
-				}
-				if (tmp_letter == 'w')
-				{
-					tilemap[i][j][0] = give_tile_back(tmp_letter);
-					tilemap[i][j][1] = give_tile(' ');
-					tilemap[i][j][2] = give_tile_front(tmp_letter);
-					continue;
-				}
-			}
-		}
-	}
 }
 
 TileMap::~TileMap()
@@ -94,10 +25,10 @@ TileMap::~TileMap()
 
 void TileMap::free_memory()
 {
+	for (auto& it : object) delete it;
 	for (auto& it : tile_list) delete it.second;
-	for (auto& it : tile_list_front) delete it.second;
 	for (auto& it : tile_list_back) delete it.second;
-	for (auto& it : tilebox) delete it;
+	for (auto& it : tile_list_front) delete it.second;
 }
 
 void TileMap::init_pos_enemy()
@@ -116,6 +47,11 @@ void TileMap::init_pos_enemy()
 	enemy_position.push({ 380.f,1540.f });
 	
 
+
+}
+
+void TileMap::writeFile()
+{
 
 }
 
@@ -148,15 +84,244 @@ void TileMap::init_coeff(sf::IntRect pos)
 
 void TileMap::init_tilemap(float mapH, float mapW)
 {
-	tilemap.resize(mapH);
-	for (auto& innerVector_1 : tilemap)
-	{
-		innerVector_1.resize(mapW);
-		for (auto& innerVector_2 : innerVector_1)
-		{
-			innerVector_2.resize(3);
+	tilemap = new Tile ***[mapH];
+	for (int i = 0; i < mapH; ++i) {
+		tilemap[i] = new Tile **[mapW];
+		for (int j = 0; j < mapW; ++j) {
+			tilemap[i][j] = new Tile *[3];
 		}
 	}
+}
+
+void TileMap::init_level(short int level)
+{
+	if (level >= 4) {
+		std::string level_ = std::to_string(level-3);
+		std::string path = "D:/Visual Studio!/Проект Нот Марио/Maps/level"+level_+"/level.txt";
+		std::ifstream fin;
+		fin.open(path);
+		if (!fin.is_open()) {
+			std::cout << "Error: the file is not open or not found " << std::endl;
+			return;
+		}
+		char tmp_letter;
+		for (int i = 0; i < mapH; i++)
+		{
+			for (int j = 0; j < mapW; j++)
+			{
+				for (int k = 0; k < 3; k++)
+				{
+					fin >> tmp_letter;
+					if (k == 0)
+					{
+						tilemap[i][j][k] = give_tile_back(tmp_letter);
+						continue;
+					}
+					if (k == 1)
+					{
+						;
+						tilemap[i][j][k] = give_tile(tmp_letter);
+						continue;
+					}
+					if (k == 2)
+					{
+						tilemap[i][j][k] = give_tile_front(tmp_letter);
+						continue;
+					}
+				}
+			}
+		}
+		fin.close();
+		return;
+	}
+	TileFactory factory(mapH, mapW, level);
+	char tmp_letter;
+	for (int i = 0; i < mapH; i++)
+	{
+		for (int j = 0; j < mapW; j++)
+		{
+			tmp_letter = factory.give_generation_letter(i, j);
+			if (tmp_letter != 'W' && tmp_letter != 'w')
+			{
+				tilemap[i][j][0] = give_tile_back('`');
+				tilemap[i][j][1] = give_tile(tmp_letter);
+				tilemap[i][j][2] = give_tile_front('`');
+				continue;
+			}
+			if (tmp_letter == 'W')
+			{
+				tilemap[i][j][0] = give_tile_back(tmp_letter);
+				tilemap[i][j][1] = give_tile('`');
+				tilemap[i][j][2] = give_tile_front(tmp_letter);
+				continue;
+			}
+			if (tmp_letter == 'w')
+			{
+				tilemap[i][j][0] = give_tile_back(tmp_letter);
+				tilemap[i][j][1] = give_tile('`');
+				tilemap[i][j][2] = give_tile_front(tmp_letter);
+				continue;
+			}
+		}
+	}
+}
+
+void TileMap::init_objects(short int level)
+{
+	std::string level_ = std::to_string(level-3);
+	std::string path = "D:/Visual Studio!/Проект Нот Марио/Maps/level"+level_+"/Object.txt";
+	std::ifstream fin;
+	fin.open(path);
+	if (!fin.is_open()) {
+		std::cout << "Error: the file is not open or not found " << std::endl;
+		return;
+	}
+	std::string objectName;
+	float pos_x, pos_y;
+	short size_w, size_h;
+
+	while (fin >> objectName >> pos_x >> pos_y >> size_w >> size_h)
+	{
+		object.push_back(new MovingObject{ objectName, pos_x, pos_y, OBJECT, size_w, size_h});
+	}
+
+	fin.close();
+}
+
+void TileMap::init_animObjects(short int level)
+{
+	std::string level_ = std::to_string(level-3);
+	std::string path = "D:/Visual Studio!/Проект Нот Марио/Maps/level"+level_+"/AnimObject.txt";
+	std::ifstream fin;
+	fin.open(path);
+	if (!fin.is_open()) {
+		std::cout << "Error: the file is not open or not found " << std::endl;
+		return;
+	}
+	std::string objectName;
+	float pos_x, pos_y, anim_t;
+	short size_w, size_h, anim_f, anim_q;
+
+	while (fin >> objectName >> pos_x >> pos_y >> size_w >> size_h >> anim_f >> anim_q >> anim_t)
+	{
+		object.push_back(new AnimObject{ objectName, pos_x, pos_y, ANIM_OBJECT, size_w, size_h, anim_f, anim_q, anim_t});
+	}
+	fin.close();
+}
+
+void TileMap::init_movingObjects(short int level)
+{
+	std::string level_ = std::to_string(level-3);
+	std::string path = "D:/Visual Studio!/Проект Нот Марио/Maps/level"+level_+"/MovingObject.txt";
+	std::ifstream fin;
+	fin.open(path);
+	if (!fin.is_open()) {
+		std::cout << "Error: the file is not open or not found " << std::endl;
+		return;
+	}
+	std::string objectName;
+	float pos_x, pos_y;
+	short size_w, size_h;
+	float move_l, move_r, move_u, move_d, speed;
+
+	while (fin >> objectName >> pos_x >> pos_y >> size_w >> size_h >> move_l >> move_r >> move_u >> move_d >> speed)
+	{
+		object.push_back(new MovingObject{ objectName, pos_x, pos_y, MOVING_OBJECT, size_w, size_h, move_l, move_r, move_u, move_d, speed });
+	}
+	
+	fin.close();
+}
+
+void TileMap::init_movingAnimObjects(short int level)
+{
+	std::string level_ = std::to_string(level-3);
+	std::string path = "D:/Visual Studio!/Проект Нот Марио/Maps/level"+level_+"/MovingAnimObject.txt";
+	std::ifstream fin;
+	fin.open(path);
+	if (!fin.is_open()) {
+		std::cout << "Error: the file is not open or not found " << std::endl;
+		return;
+	}
+	std::string objectName;
+	float pos_x, pos_y;
+	short size_w, size_h, anim_f, anim_q;
+	float anim_t, move_l, move_r, move_u, move_d, speed;
+
+	while (fin >> objectName >> pos_x >> pos_y >> size_w >> size_h >> anim_f >> anim_q >> anim_t >> move_l >> move_r >> move_u >> move_d >> speed)
+	{
+		object.push_back(new MovingAnimObject{ objectName, pos_x, pos_y, MOVING_ANIM_OBJECT, size_w, size_h, anim_f, anim_q, anim_t, move_l, move_r, move_u, move_d, speed });
+	}
+	fin.close();
+}
+
+void TileMap::init_switch(short int level)
+{
+	std::string level_ = std::to_string(level-3);
+	std::vector<Object*> tmpObject;
+	std::string path_ = "D:/Visual Studio!/Проект Нот Марио/Maps/level"+level_+"/forSwitch.txt";
+	std::ifstream fin_;
+	fin_.open(path_);
+	if (!fin_.is_open()) {
+		std::cout << "Error: the file is not open or not found " << std::endl;
+		return;
+	}
+	std::string objectName_;
+	float pos_x_, pos_y_;
+	short size_w_, size_h_;
+	float move_l_, move_r_, move_u_, move_d_, speed_;
+
+	while (fin_ >> objectName_ >> pos_x_ >> pos_y_ >> size_w_ >> size_h_ >> move_l_ >> move_r_ >> move_u_ >> move_d_ >> speed_)
+	{
+		tmpObject.push_back(new MovingObject{ objectName_, pos_x_, pos_y_, MOVING_OBJECT, size_w_, size_h_, move_l_, move_r_, move_u_, move_d_, speed_});
+	}
+
+	fin_.close();
+
+	std::string path = "D:/Visual Studio!/Проект Нот Марио/Maps/level"+level_+"/Switch.txt";
+	std::ifstream fin;
+	fin.open(path);
+	if (!fin.is_open()) {
+		std::cout << "Error: the file is not open or not found " << std::endl;
+		return;
+	}
+	std::string objectName;
+	float pos_x, pos_y, anim_t;
+	short size_w, size_h, anim_f, anim_q;
+	auto it = tmpObject.begin();
+
+	while (fin >> objectName >> pos_x >> pos_y >> size_w >> size_h >> anim_f >> anim_q >> anim_t)
+	{
+		if (it != tmpObject.end()) {
+			object.push_back(new Switch{ objectName, pos_x, pos_y, SWITCH, size_w, size_h, anim_f, anim_q, anim_t, *it });
+			++it;
+		}
+		object.push_back(new Switch{ objectName, pos_x, pos_y, SWITCH, size_w, size_h, anim_f, anim_q, anim_t});
+	}
+	fin.close();
+	for (auto it : tmpObject) object.push_back(it);
+	tmpObject.clear();
+}
+
+void TileMap::init_chest(short int level)
+{
+	std::string level_ = std::to_string(level-3);
+	std::string path = "D:/Visual Studio!/Проект Нот Марио/Maps/level"+level_+"/Chest.txt";
+	std::ifstream fin;
+	fin.open(path);
+	if (!fin.is_open()) {
+		std::cout << "Error: the file is not open or not found " << std::endl;
+		return;
+	}
+	std::string objectName;
+	float pos_x, pos_y, anim_t;
+	short size_w, size_h, anim_f, anim_q;
+
+	while (fin >> objectName >> pos_x >> pos_y >> size_w >> size_h >> anim_f >> anim_q >> anim_t)
+	{
+		object.push_back(new Chest{ objectName, pos_x, pos_y, CHEST, size_w, size_h, anim_f, anim_q, anim_t });
+	}
+
+	fin.close();
 }
 
 void TileMap::init_tile_list()
@@ -174,7 +339,7 @@ void TileMap::init_tile_list()
 	tile_list['r'] = new Tile("ground7", 1, sizeTexture, sizeTexture, 'r');
 	tile_list['W'] = new TileAnim("water_top_layer", 2, sizeTexture, sizeTexture, 'W', 64, 4, 0.5);
 	tile_list['w'] = new TileAnim("water_down_layer", 2, sizeTexture, sizeTexture, 'w', 64, 4, 0.5);
-	tile_list[' '] = new Tile();
+	tile_list['`'] = new Tile();
 
 	//Функциональные и декоративыне блоки.
 	tile_list['.'] = new Tile("ladder1", 0, sizeTexture, sizeTexture, '.');
@@ -224,14 +389,6 @@ void TileMap::init_tile_list_front()
 	tile_list_front['o'] = new Tile("bush", 0, sizeTexture, sizeTexture, 'o');
 }
 
-Tile* TileMap::init_tile_box(char letter)
-{
-	std::string name = "chest";
-	name += letter;
-	tilebox.push_back(new TileBox(name, 0, sizeTexture, sizeTexture, letter, 64, 4, 0.3));
-	return *--tilebox.end();
-}
-
 Tile* TileMap::give_tile(char letter)
 {
 	auto it = tile_list.find(letter);
@@ -239,7 +396,7 @@ Tile* TileMap::give_tile(char letter)
 	{
 		return it->second;
 	}
-	return tile_list[' '];
+	return tile_list['`'];
 }
 
 Tile* TileMap::give_tile_back(char letter)
@@ -249,7 +406,7 @@ Tile* TileMap::give_tile_back(char letter)
 	{
 		return it->second;
 	}
-	return tile_list[' '];
+	return tile_list['`'];
 }
 
 Tile* TileMap::give_tile_front(char letter)
@@ -259,7 +416,17 @@ Tile* TileMap::give_tile_front(char letter)
 	{
 		return it->second;
 	}
-	return tile_list[' '];
+	return tile_list['`'];
+}
+
+void TileMap::first_renderObject(sf::RenderTarget& target)
+{
+	for (auto& it : object) {
+		it->render_object(target);
+		it->animation_object();
+		it->moveHorizont();
+		it->moveVertically();
+	}
 }
 
 void TileMap::background_render(sf::RenderTarget& target, sf::FloatRect view_cords)
@@ -305,6 +472,8 @@ void TileMap::first_render(sf::RenderTarget& target, sf::FloatRect view_cords)
 			}
 		}
 	}
+	first_renderObject(target);
+	
 }
 
 void TileMap::second_render(sf::RenderTarget& target, sf::FloatRect view_cords)
@@ -349,12 +518,7 @@ void TileMap::update(sf::RenderTarget& target, sf::FloatRect view_cords)
 	{
 		it.second->tile_animation();
 	}
-	for (auto& it : tilebox)
-	{
-		it->box_animation();
-	}
 }
-
 
 float TileMap::getMapWidth()
 {
@@ -389,7 +553,7 @@ bool TileMap::outOfMap(int i, int j)
 
 void TileMap::add_tile(int i, int j, char association)
 {
-	if (tilemap[i][j][1] == tile_list[' '])
+	if (tilemap[i][j][1] == tile_list['`'])
 	{
 		tilemap[i][j][1] = tile_list[association];
 	}
@@ -397,16 +561,21 @@ void TileMap::add_tile(int i, int j, char association)
 
 void TileMap::delete_tile(int i, int j, char association)
 {
-	if (tilemap[i][j][0] != tile_list[' '])
+	if (tilemap[i][j][0] != tile_list['`'])
 	{
-		tilemap[i][j][1] = tile_list[' '];
+		tilemap[i][j][1] = tile_list['`'];
 		return;
 	}
-	tilemap[i][j][1] = tile_list[' '];
+	tilemap[i][j][1] = tile_list['`'];
 	tilemap[i][j][0] = give_tile_back(association);
 }
 
 bool TileMap::isOccupied(int i, int j)
 {
 	return tilemap[i][j][1]->give_player_info();
+}
+
+void TileMap::updatePlayerPresence(int indexI[], int indexJ[])
+{
+
 }

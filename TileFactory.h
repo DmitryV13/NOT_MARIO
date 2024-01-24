@@ -1,6 +1,5 @@
 #pragma once
 #include <random>
-
 #include "Tile.h"
 #include "random"
 class coord;
@@ -59,11 +58,6 @@ private:
 
 public:
 
-    TileFactory(float temp_W, float temp_H, short int type_map, short int level);
-
-    char give_letter(int i, int j, int k);
+    TileFactory(float temp_W, float temp_H, short int level);
     char give_generation_letter(int i, int j);
-
-    std::vector<std::vector<std::vector<char>>> temlate_1;
-
 };

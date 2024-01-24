@@ -103,6 +103,15 @@
     <Filter Include="Source Files\GameObjects\Alive\Player">
       <UniqueIdentifier>{5e20e6ea-00f7-4130-8852-f0301757ebe5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Map\Objects">
+      <UniqueIdentifier>{fdf99e11-a01e-4a60-a9c5-69c4d6cfe388}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Map\Tile">
+      <UniqueIdentifier>{ee6ac6b3-2b14-474e-a342-9bc87d9c996e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Map\Objects">
+      <UniqueIdentifier>{00a32e45-2993-4068-817b-a8ce5c410a71}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyView.cpp">
@@ -171,9 +180,6 @@
     <ClCompile Include="Arrow.cpp">
       <Filter>Source Files\GameObjects\Artificial\Weapons\RangedWeapon</Filter>
     </ClCompile>
-    <ClCompile Include="TileBox.cpp">
-      <Filter>Source Files\Map\Tile</Filter>
-    </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>Source Files\Map\Tile</Filter>
     </ClCompile>
@@ -206,6 +212,24 @@
     </ClCompile>
     <ClCompile Include="ScaleParametrBar.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Source Files\Map\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimObject.cpp">
+      <Filter>Source Files\Map\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingObject.cpp">
+      <Filter>Source Files\Map\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingAnimObject.cpp">
+      <Filter>Source Files\Map\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Chest.cpp">
+      <Filter>Source Files\Map\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Switch.cpp">
+      <Filter>Source Files\Map\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -251,9 +275,6 @@
     <ClInclude Include="Setting.h">
       <Filter>Header Files\GUI\Tabs</Filter>
     </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>Header Files\Map</Filter>
-    </ClInclude>
     <ClInclude Include="TileFactory.h">
       <Filter>Header Files\Map</Filter>
     </ClInclude>
@@ -293,12 +314,6 @@
     <ClInclude Include="ORIENTATION.h">
       <Filter>Header Files\Enums</Filter>
     </ClInclude>
-    <ClInclude Include="TileAnim.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TileBox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MENU_STATE.h">
       <Filter>Header Files\Enums</Filter>
     </ClInclude>
@@ -322,6 +337,30 @@
     </ClInclude>
     <ClInclude Include="ScaleParametrBar.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files\Map\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="TileAnim.h">
+      <Filter>Header Files\Map\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Header Files\Map\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimObject.h">
+      <Filter>Header Files\Map\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingObject.h">
+      <Filter>Header Files\Map\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingAnimObject.h">
+      <Filter>Header Files\Map\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Chest.h">
+      <Filter>Header Files\Map\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Switch.h">
+      <Filter>Header Files\Map\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
