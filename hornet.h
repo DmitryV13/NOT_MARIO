@@ -41,9 +41,6 @@ public:
 	HORNET_STATE hornet_state;
 
 
-	//vector<laser_weapon> laser;
-	laser_weapon* laser{ nullptr };
-	laser_weapon* laserFL{ nullptr };
 	explicit hornet(TileMap& map, GeneralInfo* player_info);
 	~hornet() override = default;
 	void update_movement() override;

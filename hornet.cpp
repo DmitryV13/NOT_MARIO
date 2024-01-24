@@ -28,7 +28,7 @@ hornet::hornet(TileMap& map, GeneralInfo* player_info): Enemy(map, player_info),
 {
 	hornet::init_texture();
 	hornet::init_sprite();
-	hornet::setAt(20);
+	hornet::setAt(50);
 	hornet::setHP(50);
 	hp_damage_i = HP;
 	hornet_state = HORNET_STATE::IDLE;
@@ -320,9 +320,9 @@ void hornet::update_animation()
 
 void hornet::shot()
 {
-	if(ATTACKING_timer.getElapsedTime().asSeconds()>=2)
+	if(ATTACKING_timer.getElapsedTime().asSeconds()>=0.1f)
 	{
-		if(sting())player_info->changeHP(-attack_ - (rand() % 5));
+		player_info->changeHP(-attack_ - (rand() % 5));
 
 	}
 }

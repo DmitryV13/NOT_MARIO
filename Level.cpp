@@ -175,12 +175,15 @@ void Level::init_enemy()
 	boss_vector = new vector<WolfBoss*>();
 	bush_killers_vector = new vector<BushKiller*>();
 	hornet_vector = new vector<hornet*>();
+	hornet_hives_vector = new vector<HornetHive*>();
+
 	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
 	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
 	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
 	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo()));
 	boss_vector->push_back(new WolfBoss(sandbox, player->getGeneralInfo()));
-	hornet_vector->push_back(new hornet(sandbox, player->getGeneralInfo()));
+	hornet_hives_vector->push_back(new HornetHive(sandbox, player->getGeneralInfo()));
+
 
 	bush_killers_vector->push_back(new BushKiller(sandbox, player->getGeneralInfo()));
 
@@ -431,6 +434,7 @@ void Level::updateCursor()
 
 void Level::update_Enemy()
 {
+	
 	auto it = hornet_vector->begin();
 	while (it != hornet_vector->end())
 	{
@@ -446,6 +450,32 @@ void Level::update_Enemy()
 			++it;
 		}
 	}
+
+	auto it1 = hornet_hives_vector->begin();
+	while (it1 != hornet_hives_vector->end())
+	{
+		(*it1)->update();
+		if((*it1)->hornet_state == HORNET_HIVE_STATE::DEATH && (*it1)->cout_hornet>0)
+		{
+			(*it1)->cout_hornet = 0;
+			hornet_vector->push_back(new hornet(sandbox, player->getGeneralInfo()));
+			hornet_vector->push_back(new hornet(sandbox, player->getGeneralInfo()));
+			hornet_vector->push_back(new hornet(sandbox, player->getGeneralInfo()));
+
+
+		}
+		if ((*it1)->hornet_state == HORNET_HIVE_STATE::DEATH && (*it1)->DEATH_timer.getElapsedTime().asSeconds() >= 4.1f)
+		{
+			delete* it1;
+			it1 = hornet_hives_vector->erase(it1);
+		}
+		else
+		{
+			++it1;
+		}
+	}
+
+	
 }
 
 void Level::renderGameMenu()
@@ -510,7 +540,12 @@ void Level::renderEnemy()
 
 	{
 		enemy->render(*window);
-		//(*evil_ball_vector)[i]->render(*window);
+	}
+
+	for (auto& enemy : *hornet_hives_vector)
+
+	{
+		enemy->render(*window);
 	}
 }
 
@@ -612,7 +647,8 @@ void Level::initWeapons()
 			reinterpret_cast<vector<Enemy*>*>(Kusaka_vector), reinterpret_cast<vector<Enemy*>*>(evil_ball_vector),
 			reinterpret_cast<vector<Enemy*>*>(Red_Mutant_vector_), reinterpret_cast<vector<Enemy*>*>(boss_vector),
 			reinterpret_cast<vector<Enemy*>*>(bush_killers_vector),
-			reinterpret_cast<vector<Enemy*>*>(hornet_vector)
+			reinterpret_cast<vector<Enemy*>*>(hornet_vector),
+			reinterpret_cast<vector<Enemy*>*>(hornet_hives_vector)
 		}
 	);
 }

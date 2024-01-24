@@ -13,6 +13,7 @@
 #include "Enemy.h"
 #include "PopUpWindow.h"
 #include "hornet.h"
+#include "HornetHive.h"
 
 using namespace::sf;
 
@@ -37,6 +38,8 @@ private:
 	vector<RedMutant*>* Red_Mutant_vector_;
 	vector<WolfBoss*>* boss_vector;
 	vector<hornet*>* hornet_vector;
+	vector<HornetHive*>* hornet_hives_vector;
+
 
 	int num_of_enemy_{ 12 };
 	short regime;

@@ -237,6 +237,9 @@
     <ClCompile Include="hornet.cpp">
       <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="HornetHive.cpp">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemy.h">
@@ -384,6 +387,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="hornet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HornetHive.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
