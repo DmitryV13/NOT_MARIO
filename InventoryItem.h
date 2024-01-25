@@ -27,6 +27,7 @@ public:
 	FloatRect getLocalBounds() override;
 	FloatRect getGlobalBounds() override;
 
+	void setPosition(Vector2f new_position);
 	void setPositionX(float x) override;
 	void setPositionY(float y) override;
 

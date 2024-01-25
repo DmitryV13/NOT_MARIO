@@ -8,7 +8,7 @@ Warehouse::Warehouse(){
 	warehouse["currency"].push_back(new WarehouseItem("RSplinter", 10, 1000, true, 0, IntRect(0, 0, 7, 11), 1));
 
 	warehouse["ammunition"] = vector<WarehouseItem*>();
-	warehouse["ammunition"].push_back(new WarehouseItem("Arrow1", 10, 0, true, 0, IntRect(0, 0, 40, 5), 1));
+	warehouse["ammunition"].push_back(new WarehouseItem("Arrow1", "Arrow", 10, 0, true, 0, IntRect(0, 0, 40, 5), 1));
 
 	warehouse["heroes"] = vector<WarehouseItem*>();
 	warehouse["heroes"].push_back(new WarehouseItem("Hero1", 1, 1, true, 4, IntRect(0, 0, 54, 70), 6));

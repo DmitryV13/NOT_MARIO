@@ -8,6 +8,10 @@
 	WarehouseItem::WarehouseItem(string name_, int amount_, int max_, bool access_, int index_, IntRect cords_, int frame_numbers_)
 		:amount(amount_), max(max_), access(access_), name(name_), t_index(index_), cords(cords_), frame_numbers(frame_numbers_) {
 	}
+
+	WarehouseItem::WarehouseItem(string name_, string name_for_user_, int amount_, int max_, bool access_, int index_, IntRect cords_, int frame_numbers_)
+		:amount(amount_), max(max_), access(access_), name(name_), name_for_user(name_for_user_), t_index(index_), cords(cords_), frame_numbers(frame_numbers_) {
+	}
 	
 	WarehouseItem::~WarehouseItem(){
 	}
@@ -26,6 +30,10 @@
 
 	string WarehouseItem::getName(){
 		return name;
+	}
+
+	string WarehouseItem::getNameFU(){
+		return name_for_user;
 	}
 
 	bool WarehouseItem::isAccessible(){

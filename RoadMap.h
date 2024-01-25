@@ -10,6 +10,7 @@
 #include "Warehouse.h"
 #include "TabContainer.h"
 #include "ProductCard.h"
+#include "InventoryItem.h"
 
 using namespace sf;
 

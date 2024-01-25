@@ -78,28 +78,49 @@
 		shape.setFillColor(Color(0,0,0,0));
 	}
 
-	void ResourceInfo::addInfo(TextureManager* t_manager, Warehouse* w_object, string name){
+	void ResourceInfo::addInfo(TextureManager* t_manager, Warehouse* w_object, string name, bool x){
 		resource = w_object->getWarehouseItem(name)->getInfo().first;
-		src_img.setTexture(t_manager->getTexture(w_object->getWarehouseItem(name)->getTMInfo().first, name));
+		if (x) {
+			prev = "x";
+		}
+		else {
+			prev = "";
+		}
 		max = w_object->getWarehouseItem(name)->getInfo().second == 0 ? "" : "/" + std::to_string(w_object->getWarehouseItem(name)->getInfo().second);
-		text.setString(std::to_string(*resource) + max);
+		text.setString(prev + std::to_string(*resource) + max);
 		text.setFillColor(Color::White);
-		src_img.setScale(
-			(text.getGlobalBounds().height * 2) / src_img.getGlobalBounds().height,
-			(text.getGlobalBounds().height * 2) / src_img.getGlobalBounds().height
-		);
 
-		shape.setSize(Vector2f(
-			src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 + text.getGlobalBounds().width,
-			text.getGlobalBounds().height * 2)
-		);
+		if (!self_align) {
+			shape.setSize(Vector2f(
+				text.getGlobalBounds().width * 2,
+				text.getGlobalBounds().height * 2)
+			);
 
-		src_img.setPosition(shape.getPosition());
+			text.setPosition(
+				shape.getPosition().x - text.getLocalBounds().left + text.getGlobalBounds().width/2,
+				shape.getPosition().y + text.getLocalBounds().top + text.getGlobalBounds().height/2
+			);
+		}
+		else {
+			src_img.setTexture(t_manager->getTexture(w_object->getWarehouseItem(name)->getTMInfo().first, name));
+			src_img.setScale(
+				(text.getGlobalBounds().height * 2) / src_img.getGlobalBounds().height,
+				(text.getGlobalBounds().height * 2) / src_img.getGlobalBounds().height
+			);
 
-		text.setPosition(
-			shape.getPosition().x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
-			shape.getPosition().y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
-		);
+			shape.setSize(Vector2f(
+				src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 + text.getGlobalBounds().width,
+				text.getGlobalBounds().height * 2)
+			);
+
+			src_img.setPosition(shape.getPosition());
+
+			text.setPosition(
+				shape.getPosition().x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
+				shape.getPosition().y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
+			);
+		}
+
 
 		shape.setFillColor(Color(0, 0, 0, 0));
 	}
@@ -110,7 +131,7 @@
 			shape.getPosition().y + view_cords.top - view_cords.height / 2)
 		);
 		if (resource) {
-			text.setString(std::to_string(*resource) + max);
+			text.setString(prev + std::to_string(*resource) + max);
 			if (self_align) {
 				shape.setSize(Vector2f(
 					src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 + text.getGlobalBounds().width,
@@ -122,6 +143,17 @@
 				text.setPosition(
 					shape.getPosition().x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
 					shape.getPosition().y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
+				);
+			}
+			else {
+				shape.setSize(Vector2f(
+					text.getGlobalBounds().width * 2,
+					text.getGlobalBounds().height * 2)
+				);
+
+				text.setPosition(
+					shape.getPosition().x - text.getLocalBounds().left + text.getGlobalBounds().width / 2,
+					shape.getPosition().y + text.getLocalBounds().top + text.getGlobalBounds().height / 2
 				);
 			}
 		}

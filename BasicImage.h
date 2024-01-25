@@ -6,6 +6,7 @@ using namespace::sf;
 
 class BasicImage{
 protected:
+	RectangleShape shape;
 	Sprite image;
 	short scale;
 	Vector2f position;
@@ -22,6 +23,7 @@ public:
 
 	void setPosition(float x, float y);
 	void setScale(float scale_);
+	void setBColor(Color color);
 
 	virtual void update(Vector2f mouse_pos, FloatRect view_cords);
 	void render(RenderTarget* target);

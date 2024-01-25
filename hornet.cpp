@@ -55,7 +55,6 @@ Enemy(map, player_info_,pos_x,pos_y ), player_info_(player_info)
 
 void hornet::update_movement()
 {
-	std::cout << HP << " \n";
 	if (HP <= 0)
 	{
 		hornet_state = HORNET_STATE::DEATH;
@@ -71,7 +70,6 @@ void hornet::update_movement()
 	{
 	case HORNET_STATE::IDLE:
 		{
-			std::cout << "IDLE\n";
 			hornet_state_past = hornet_state;
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
 			looks();
@@ -92,7 +90,6 @@ void hornet::update_movement()
 			looks();
 			hornet_state_past = hornet_state;
 
-			std::cout << "FLYING\n";
 			if (sting())
 			{
 				hornet_state = HORNET_STATE::ATTACKING;
@@ -108,7 +105,6 @@ void hornet::update_movement()
 
 	case HORNET_STATE::ATTACKING:
 		{
-			std::cout << "ATTACKING\n";
 			looks();
 			displacement.x = 0.f;
 			displacement.y = 0.f;
@@ -129,7 +125,6 @@ void hornet::update_movement()
 
 	case HORNET_STATE::TAKING_DAMAGE:
 		{
-			std::cout << "TAKING_DAMAGE\n";
 
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_TAKING_DAMAGE;
 			reset_Timer();
@@ -158,7 +153,6 @@ void hornet::update_movement()
 
 	case HORNET_STATE::DEATH:
 		{
-			std::cout << "DEATH\n";
 
 
 			reset_Timer();

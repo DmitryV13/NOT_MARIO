@@ -105,7 +105,9 @@
         }
         //std::cout << getPosition().x << " " <<getPosition().y<<"\n";
         target.draw(player_S);
+        if (alive) {
         weapons[chosen_weapon]->render(target);
+        }
         renderProjectiles(target);
     }
 

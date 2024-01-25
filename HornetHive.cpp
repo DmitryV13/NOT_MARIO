@@ -72,7 +72,6 @@ void HornetHive::update_movement()
 
 	case HORNET_HIVE_STATE::IDLE:
 	{
-		std::cout << "IDLE\n";
 
 		animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
 
@@ -81,7 +80,6 @@ void HornetHive::update_movement()
 
 	case HORNET_HIVE_STATE::TAKING_DAMAGE:
 	{
-		std::cout << "TAKING_DAMAGE\n";
 
 		animation_state = ENEMY_ANIMATION_STATES::ENEMY_TAKING_DAMAGE;
 		reset_Timer();
@@ -109,7 +107,6 @@ void HornetHive::update_movement()
 
 	case HORNET_HIVE_STATE::DEATH:
 	{
-		std::cout << "DEATH\n";
 
 
 		reset_Timer();
