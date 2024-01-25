@@ -19,6 +19,9 @@ Warehouse::Warehouse(){
 	warehouse["potions"].push_back(new WarehouseItem("HealthPotion", 1, 0, true, 5, IntRect(0, 0, 19, 39), 5));
 	warehouse["potions"].push_back(new WarehouseItem("PoisonPotion", 1, 0, true, 5, IntRect(0, 0, 19, 39), 5));
 	warehouse["potions"].push_back(new WarehouseItem("SpeedPotion", 1, 0, true, 5, IntRect(0, 0, 19, 39), 5));
+
+	warehouse["other"] = vector<WarehouseItem*>();
+	warehouse["other"].push_back(new WarehouseItem("Transparent", 1, 0, true, 0, IntRect(0, 0, 0, 0), 1));
 	}
 	
 	pair<int*, int> Warehouse::getItemInfo(string item_type, string item_name){

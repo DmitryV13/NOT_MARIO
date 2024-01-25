@@ -547,6 +547,6 @@
 		//target->draw(g1);
 		// 
 		
-		//target->draw(g2);
-		//target->draw(g0);
+		target->draw(g2);
+		target->draw(g0);
 	}

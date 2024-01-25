@@ -443,7 +443,11 @@
 	}
 
 	void RoadMap::openLevel(float level_index){
-		Level* level = new Level(window, screen_width, screen_height, static_cast<int>(level_index), menuColor, t_manager, warehouse);
+		Level* level;
+		if(level_index<4)
+			level = new Level(window, screen_width, screen_height, static_cast<int>(level_index), menuColor, t_manager, warehouse, -1);
+		else
+			level = new Level(window, screen_width, screen_height, static_cast<int>(level_index), menuColor, t_manager, warehouse, 1);
 		level->start();
 		delete level;
 		menu_timer.restart();

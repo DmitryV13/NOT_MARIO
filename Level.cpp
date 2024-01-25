@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Level.h"
 
-Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level, Color menuColor, TextureManager* t_manager_, Warehouse* warehouse_)
+Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level, Color menuColor, TextureManager* t_manager_, Warehouse* warehouse_, short regime_)
 	: window(window_)
 	, t_manager(t_manager_)
 	, warehouse(warehouse_)
@@ -10,10 +10,10 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 	, myView(sandbox, screenWidth_, screenHeight_)
 	, sandbox(level)
 	, game_state(GAME_STATE::FINISHED)
-	, regime(2)
+	, regime(regime_)
 {
 	//1-random generation, 2-set positions
-
+	std::cout<<regime;
 	Font* font = new Font();
 	if (!font->loadFromFile("Fonts/Pixel.ttf"))
 	{

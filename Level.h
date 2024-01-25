@@ -70,7 +70,7 @@ private:
 	void init_BushKiller();
 	void init_enemy();
 public:
-	Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level, Color menuColor, TextureManager* t_manager_, Warehouse* warehouse_);
+	Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level, Color menuColor, TextureManager* t_manager_, Warehouse* warehouse_, short regime_);
 	~Level();
 
 	void finishGame(float q);
