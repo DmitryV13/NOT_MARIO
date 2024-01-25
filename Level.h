@@ -15,6 +15,7 @@
 #include "PopUpWindow.h"
 #include "hornet.h"
 #include "HornetHive.h"
+#include "TextureManager.h"
 #include "Warehouse.h"
 
 using namespace::sf;
@@ -22,9 +23,13 @@ using namespace::sf;
 class Level{
 private:
 	RenderWindow* window;
+
 	PopUpWindow* pause_menu;
 	ScaleParametrBar* life_bar;
 	Clock menu_timer;
+
+	TextureManager* t_manager;
+	Warehouse* warehouse;
 
 	Event event;
 	Player* player;
@@ -39,8 +44,6 @@ private:
 	vector<WolfBoss*>* boss_vector;
 	vector<hornet*>* hornet_vector;
 	vector<HornetHive*>* hornet_hives_vector;
-	TextureManager* t_manager;
-	Warehouse* warehouse;
 
 	int num_of_enemy_{ 12 };
 	short regime;
@@ -56,7 +59,7 @@ private:
 	//short* hp;
 
 	//void initWindow();
-	void initPlayer();
+	void initPlayer(short level);
 	void initView();
 	void init_enemy();
 	void random_init_enemy();

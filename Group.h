@@ -4,7 +4,7 @@
 #include "ImageButton.h"
 
 class Group : public InterfaceItem{
-private:
+protected:
 	//Objects for visualization
 	RectangleShape g0;
 	RectangleShape g1;

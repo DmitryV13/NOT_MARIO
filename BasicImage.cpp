@@ -1,12 +1,28 @@
 #include "stdafx.h"
 #include "BasicImage.h"
 
-	BasicImage::BasicImage(){
+BasicImage::BasicImage()
+{
+}
+
+BasicImage::BasicImage(float x, float y){
+		position.x = x;
+		position.y = y;
+	}
+
+	BasicImage::BasicImage(TextureManager* t_manager, Warehouse* w_object, string name){
+		image.setTexture(t_manager->getTexture(w_object->getWarehouseItem(name)->getTMInfo().first, name));
+		image.setTextureRect(w_object->getWarehouseItem(name)->getSpriteInfo().first);
 	}
 	
 	BasicImage::BasicImage(TextureManager* t_manager, int index, string name, IntRect frame){
 		image.setTexture(t_manager->getTexture(index, name));
 		image.setTextureRect(frame);
+	}
+
+	void BasicImage::addInfo(TextureManager* t_manager, Warehouse* w_object, string name){
+		image.setTexture(t_manager->getTexture(w_object->getWarehouseItem(name)->getTMInfo().first, name));
+		image.setTextureRect(w_object->getWarehouseItem(name)->getSpriteInfo().first);
 	}
 	
 	FloatRect BasicImage::getLocalBounds(){

@@ -3,15 +3,17 @@
 
 Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level, Color menuColor, TextureManager* t_manager_, Warehouse* warehouse_, short regime_)
 	: window(window_)
-	  , screenWidth(screenWidth_)
-	  , screenHeight(screenHeight_)
-	  , myView(sandbox, screenWidth_, screenHeight_)
-	  , sandbox(level)
-	  , game_state(GAME_STATE::FINISHED)
-	  , regime(regime_)
+	, t_manager(t_manager_)
+	, warehouse(warehouse_)
+	, screenWidth(screenWidth_)
+	, screenHeight(screenHeight_)
+	, myView(sandbox, screenWidth_, screenHeight_)
+	, sandbox(level)
+	, game_state(GAME_STATE::FINISHED)
+	, regime(regime_)
 {
 	//1-random generation, 2-set positions
-
+	std::cout<<regime;
 	Font* font = new Font();
 	if (!font->loadFromFile("Fonts/Pixel.ttf"))
 	{
@@ -74,6 +76,12 @@ Level::~Level()
 		}
 		hornet_vector->clear();
 		delete hornet_vector;
+	
+	//boss_vector->clear();
+}
+
+	void Level::finishGame(float q){
+		game_state = GAME_STATE::FINISHED;
 	}
 
 	if (hornet_hives_vector != nullptr)
@@ -281,9 +289,14 @@ void Level::updateLifeBar()
 	life_bar->update(myView.getCurrentViewCords(), screenWidth, screenHeight);
 }
 
-void Level::initPlayer()
+void Level::initPlayer(short level)
 {
-	player = new Player(sandbox);
+	if (level < 4) {
+		player = new Player(sandbox);
+	}
+	else {
+		player = new Player(sandbox, Vector2f(150, 2600));
+	}
 }
 
 void Level::initView()

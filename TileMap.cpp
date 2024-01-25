@@ -16,6 +16,7 @@ TileMap::TileMap(short level) : sizeTexture(64), mapH(50), mapW(100)
 	init_switch(level);
 	init_chest(level);
 	init_pos_enemy();
+	//for (auto& it : object) it->useObject();
 }
 
 TileMap::~TileMap()
@@ -194,7 +195,7 @@ void TileMap::init_objects(short int level)
 
 	while (fin >> objectName >> pos_x >> pos_y >> size_w >> size_h)
 	{
-		object.push_back(new MovingObject{ objectName, pos_x, pos_y, OBJECT, size_w, size_h});
+		object.push_back(new MovingObject{ objectName, pos_x, pos_y, size_w, size_h});
 	}
 
 	fin.close();
@@ -216,7 +217,7 @@ void TileMap::init_animObjects(short int level)
 
 	while (fin >> objectName >> pos_x >> pos_y >> size_w >> size_h >> anim_f >> anim_q >> anim_t)
 	{
-		object.push_back(new AnimObject{ objectName, pos_x, pos_y, ANIM_OBJECT, size_w, size_h, anim_f, anim_q, anim_t});
+		object.push_back(new AnimObject{ objectName, pos_x, pos_y, size_w, size_h, anim_f, anim_q, anim_t});
 	}
 	fin.close();
 }
@@ -238,7 +239,7 @@ void TileMap::init_movingObjects(short int level)
 
 	while (fin >> objectName >> pos_x >> pos_y >> size_w >> size_h >> move_l >> move_r >> move_u >> move_d >> speed)
 	{
-		object.push_back(new MovingObject{ objectName, pos_x, pos_y, MOVING_OBJECT, size_w, size_h, move_l, move_r, move_u, move_d, speed });
+		object.push_back(new MovingObject{ objectName, pos_x, pos_y, size_w, size_h, move_l, move_r, move_u, move_d, speed });
 	}
 	
 	fin.close();
@@ -261,7 +262,7 @@ void TileMap::init_movingAnimObjects(short int level)
 
 	while (fin >> objectName >> pos_x >> pos_y >> size_w >> size_h >> anim_f >> anim_q >> anim_t >> move_l >> move_r >> move_u >> move_d >> speed)
 	{
-		object.push_back(new MovingAnimObject{ objectName, pos_x, pos_y, MOVING_ANIM_OBJECT, size_w, size_h, anim_f, anim_q, anim_t, move_l, move_r, move_u, move_d, speed });
+		object.push_back(new MovingAnimObject{ objectName, pos_x, pos_y, size_w, size_h, anim_f, anim_q, anim_t, move_l, move_r, move_u, move_d, speed });
 	}
 	fin.close();
 }
@@ -284,7 +285,7 @@ void TileMap::init_switch(short int level)
 
 	while (fin_ >> objectName_ >> pos_x_ >> pos_y_ >> size_w_ >> size_h_ >> move_l_ >> move_r_ >> move_u_ >> move_d_ >> speed_)
 	{
-		tmpObject.push_back(new MovingObject{ objectName_, pos_x_, pos_y_, MOVING_OBJECT, size_w_, size_h_, move_l_, move_r_, move_u_, move_d_, speed_});
+		tmpObject.push_back(new MovingObject{ objectName_, pos_x_, pos_y_, size_w_, size_h_, move_l_, move_r_, move_u_, move_d_, speed_});
 	}
 
 	fin_.close();
@@ -304,10 +305,10 @@ void TileMap::init_switch(short int level)
 	while (fin >> objectName >> pos_x >> pos_y >> size_w >> size_h >> anim_f >> anim_q >> anim_t)
 	{
 		if (it != tmpObject.end()) {
-			object.push_back(new Switch{ objectName, pos_x, pos_y, SWITCH, size_w, size_h, anim_f, anim_q, anim_t, *it });
+			object.push_back(new Switch{ objectName, pos_x, pos_y, size_w, size_h, anim_f, anim_q, anim_t, *it });
 			++it;
 		}
-		object.push_back(new Switch{ objectName, pos_x, pos_y, SWITCH, size_w, size_h, anim_f, anim_q, anim_t});
+		object.push_back(new Switch{ objectName, pos_x, pos_y, size_w, size_h, anim_f, anim_q, anim_t});
 	}
 	fin.close();
 	for (auto it : tmpObject) object.push_back(it);
@@ -330,7 +331,7 @@ void TileMap::init_chest(short int level)
 
 	while (fin >> objectName >> pos_x >> pos_y >> size_w >> size_h >> anim_f >> anim_q >> anim_t)
 	{
-		object.push_back(new Chest{ objectName, pos_x, pos_y, CHEST, size_w, size_h, anim_f, anim_q, anim_t });
+		object.push_back(new Chest{ objectName, pos_x, pos_y, size_w, size_h, anim_f, anim_q, anim_t });
 	}
 
 	fin.close();
@@ -590,4 +591,9 @@ bool TileMap::isOccupied(int i, int j)
 void TileMap::updatePlayerPresence(int indexI[], int indexJ[])
 {
 
+}
+
+vector<Object*>& TileMap::getObjects()
+{
+	return object;
 }

@@ -10,11 +10,15 @@ private:
 	float speed;
 	bool flagMoveH;
 	bool flagMoveV;
+	bool DirectionLeft;
+	bool DirectionRight;
+	bool DirectionUp;
+	bool DirectionDown;
 
 public:
 	MovingObject();
-	MovingObject(std::string name, float position_x, float position_y, OBJECT_TYPE interaction, short int size_W, short int size_H);
-	MovingObject(std::string name, float position_x, float position_y, OBJECT_TYPE interaction, short int size_W, short int size_H
+	MovingObject(std::string name, float position_x, float position_y, short int size_W, short int size_H);
+	MovingObject(std::string name, float position_x, float position_y, short int size_W, short int size_H
 		, float move_l, float move_r, float move_u, float move_d, float speed);
 	bool moveLeft() override;
 	bool moveRight() override;
@@ -22,5 +26,6 @@ public:
 	bool moveUp() override;
 	bool moveDown() override;
 	void moveVertically() override;
+	std::pair<float, float> getVelocity() override;
 };
 

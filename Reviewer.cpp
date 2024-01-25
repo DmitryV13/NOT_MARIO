@@ -30,11 +30,43 @@
 		);
 	}
 
+	void Reviewer::addAnimatedImage(TextureManager* t_manager, Warehouse* w_object, string name){
+		if (images.empty()) {
+			current_image = 0;
+		}
+		images.push_back(new AnimatedImage(t_manager, w_object, name));
+		short scale = (max_width / images[images.size() - 1]->getLocalBounds().width) <
+			(max_height / images[images.size() - 1]->getLocalBounds().height) ?
+			(max_width / images[images.size() - 1]->getLocalBounds().width) :
+			(max_height / images[images.size() - 1]->getLocalBounds().height);
+		images[images.size() - 1]->setScale(scale);
+		images[images.size() - 1]->setPosition(
+			position.x + (max_width - images[images.size() - 1]->getGlobalBounds().width) / 2,
+			position.y + (max_height - images[images.size() - 1]->getGlobalBounds().height) / 2
+		);
+	}
+
 	void Reviewer::addStaticImage(TextureManager* t_manager, int index, string name, IntRect first_frame){
 		if (images.empty()) {
 			current_image = 0;
 		}
 		images.push_back(new BasicImage(t_manager, index, name, first_frame));
+		short scale = (max_width / images[images.size() - 1]->getLocalBounds().width) <
+			(max_height / images[images.size() - 1]->getLocalBounds().height) ?
+			(max_width / images[images.size() - 1]->getLocalBounds().width) :
+			(max_height / images[images.size() - 1]->getLocalBounds().height);
+		images[images.size() - 1]->setScale(scale);
+		images[images.size() - 1]->setPosition(
+			position.x + (max_width - images[images.size() - 1]->getGlobalBounds().width) / 2,
+			position.y + (max_height - images[images.size() - 1]->getGlobalBounds().height) / 2
+		);
+	}
+
+	void Reviewer::addStaticImage(TextureManager* t_manager, Warehouse* w_object, string name){
+		if (images.empty()) {
+			current_image = 0;
+		}
+		images.push_back(new BasicImage(t_manager, w_object, name));
 		short scale = (max_width / images[images.size() - 1]->getLocalBounds().width) <
 			(max_height / images[images.size() - 1]->getLocalBounds().height) ?
 			(max_width / images[images.size() - 1]->getLocalBounds().width) :

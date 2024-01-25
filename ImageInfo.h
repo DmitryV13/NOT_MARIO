@@ -1,5 +1,6 @@
 #pragma once
 #include "TextureManager.h"
+#include "Warehouse.h"
 #include "InterfaceItem.h"
 #include "INTERFACE_ITEM_TYPE.h"
 

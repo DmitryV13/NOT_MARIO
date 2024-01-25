@@ -45,20 +45,20 @@
 
 		asi_g0_g1_center->createElementLine();
 		tmp = asi_g0_g1_center->calculatePFNII(5, 100, 0);
-		ResourceInfo* asi_g0_g1_ri0_left = new ResourceInfo(tmp->first, tmp->second, warehouse->getItemInfo("currency", "coin").first,
-			warehouse->getItemInfo("currency", "coin").second, 30, font, t_manager, 0, "Coin", false);
+		ResourceInfo* asi_g0_g1_ri0_left = new ResourceInfo(tmp->first, tmp->second, warehouse->getItemInfo("currency", "Coin").first,
+			warehouse->getItemInfo("currency", "Coin").second, 30, font, t_manager, 0, "Coin", false);
 		asi_g0_g1_center->addIElement((InterfaceItem*)asi_g0_g1_ri0_left, 0);
 		delete tmp;
 
 		tmp = asi_g0_g1_center->calculatePFNII(5, 100, 0);
-		ResourceInfo* asi_g0_g1_ri1_center = new ResourceInfo(tmp->first, tmp->second, warehouse->getItemInfo("currency", "b_splinter").first,
-			warehouse->getItemInfo("currency", "b_splinter").second, 30, font, t_manager, 0, "BSplinter", false);
+		ResourceInfo* asi_g0_g1_ri1_center = new ResourceInfo(tmp->first, tmp->second, warehouse->getItemInfo("currency", "BSplinter").first,
+			warehouse->getItemInfo("currency", "BSplinter").second, 30, font, t_manager, 0, "BSplinter", false);
 		asi_g0_g1_center->addIElement((InterfaceItem*)asi_g0_g1_ri1_center, 0);
 		delete tmp;
 		
 		tmp = asi_g0_g1_center->calculatePFNII(5, 100, 0);
-		ResourceInfo* asi_g0_g1_ri2_right = new ResourceInfo(tmp->first, tmp->second, warehouse->getItemInfo("currency", "r_splinter").first,
-			warehouse->getItemInfo("currency", "r_splinter").second, 30, font, t_manager, 0, "RSplinter", false);
+		ResourceInfo* asi_g0_g1_ri2_right = new ResourceInfo(tmp->first, tmp->second, warehouse->getItemInfo("currency", "RSplinter").first,
+			warehouse->getItemInfo("currency", "RSplinter").second, 30, font, t_manager, 0, "RSplinter", false);
 		asi_g0_g1_center->addIElement((InterfaceItem*)asi_g0_g1_ri2_right, 0);
 		delete tmp;
 
@@ -97,8 +97,8 @@
 		cb_handler->addCallback(asi_g1_center->getButtonState(1), BUTTON_STATE::BTN_ACTIVE, 1,
 			&Reviewer::changeCurrentImage, asi_g1_r0_center);
 
-		asi_g1_r0_center->addAnimatedImage(t_manager, 4, "Hero1", IntRect(0, 0, 54, 70), 6);
-		asi_g1_r0_center->addAnimatedImage(t_manager, 4, "Hero2", IntRect(0, 0, 63, 68), 1);
+		asi_g1_r0_center->addAnimatedImage(t_manager, warehouse, "Hero1");
+		asi_g1_r0_center->addAnimatedImage(t_manager, warehouse, "Hero2");
 		asi_g1_center->setAlignment("center 0", "center 0");
 
 		all_static_items->createElementLine();
@@ -208,9 +208,9 @@
 
 		tmp = s_tc0_0->calculatePFNII(25, 45, 0);
 		Group* s_tc0_0_pc0_g=new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
-		ProductCard* s_tc0_0_pc0 = new ProductCard(5, 1, 1, warehouse->getItemInfo("ammunition", "simple_arrow").first);
+		ProductCard* s_tc0_0_pc0 = new ProductCard(5, 1, 1, warehouse->getItemInfo("ammunition", "Arrow1").first);
 		s_tc0_0_pc0->setGroup(s_tc0_0_pc0_g, Color(61, 85, 132, 255));
-		s_tc0_0_pc0->setCurrency(warehouse->getItemInfo("currency", "coin").first);
+		s_tc0_0_pc0->setCurrency(warehouse->getItemInfo("currency", "Coin").first);
 		s_tc0_0->addIElement((InterfaceItem*)s_tc0_0_pc0, 0);
 		delete tmp;
 
@@ -223,7 +223,7 @@
 		s_tc0_0_pc0_g_g0_top->createElementLine();
 		tmp = s_tc0_0_pc0_g_g0_top->calculatePFNII(100, 100, 0);
 		Reviewer* s_tc0_0_pc0_g_g0_r = new Reviewer(tmp->first, tmp->second, tmp->third, tmp->fourth);
-		s_tc0_0_pc0_g_g0_r->addStaticImage(t_manager, 0, "Arrow1", IntRect(0, 0, 40, 5));
+		s_tc0_0_pc0_g_g0_r->addStaticImage(t_manager, warehouse, "Arrow1");
 		s_tc0_0_pc0_g_g0_top->addIElement((InterfaceItem*)s_tc0_0_pc0_g_g0_r, 0);
 		s_tc0_0_pc0_g_g0_top->setBColor(Color(173, 173, 173, 255));
 		delete tmp;
@@ -444,7 +444,7 @@
 
 	void RoadMap::openLevel(float level_index){
 		Level* level;
-		if (level_index < 4)
+		if(level_index<4)
 			level = new Level(window, screen_width, screen_height, static_cast<int>(level_index), menuColor, t_manager, warehouse, -1);
 		else
 			level = new Level(window, screen_width, screen_height, static_cast<int>(level_index), menuColor, t_manager, warehouse, 1);
