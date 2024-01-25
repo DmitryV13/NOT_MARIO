@@ -1,19 +1,20 @@
 #include "stdafx.h"
 #include "Level.h"
 
-Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level, Color menuColor, TextureManager* t_manager_, Warehouse* warehouse_, short regime_)
+Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level, Color menuColor,
+             TextureManager* t_manager_, Warehouse* warehouse_, short regime_)
 	: window(window_)
-	, t_manager(t_manager_)
-	, warehouse(warehouse_)
-	, screenWidth(screenWidth_)
-	, screenHeight(screenHeight_)
-	, myView(sandbox, screenWidth_, screenHeight_)
-	, sandbox(level)
-	, game_state(GAME_STATE::FINISHED)
-	, regime(regime_)
+	  , t_manager(t_manager_)
+	  , warehouse(warehouse_)
+	  , screenWidth(screenWidth_)
+	  , screenHeight(screenHeight_)
+	  , myView(sandbox, screenWidth_, screenHeight_)
+	  , sandbox(level)
+	  , game_state(GAME_STATE::FINISHED)
+	  , regime(regime_)
 {
 	//1-random generation, 2-set positions
-	std::cout<<regime;
+	std::cout << regime;
 	Font* font = new Font();
 	if (!font->loadFromFile("Fonts/Pixel.ttf"))
 	{
@@ -48,7 +49,7 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 
 	life_bar = new ScaleParametrBar();
 
-	initPlayer();
+	initPlayer(level);
 	menu_timer.restart();
 	if (regime == -1)
 	{
@@ -57,7 +58,6 @@ Level::Level(RenderWindow* window_, double screenWidth_, double screenHeight_, s
 	else if (level == 4)
 	{
 		init_enemy();
-		
 	}
 	initWeapons();
 }
@@ -76,13 +76,10 @@ Level::~Level()
 		}
 		hornet_vector->clear();
 		delete hornet_vector;
-	
-	//boss_vector->clear();
-}
 
-	void Level::finishGame(float q){
-		game_state = GAME_STATE::FINISHED;
+		//boss_vector->clear();
 	}
+
 
 	if (hornet_hives_vector != nullptr)
 	{
@@ -143,8 +140,6 @@ Level::~Level()
 		boss_vector->clear();
 		delete boss_vector;
 	}
-
-
 }
 
 void Level::finishGame(float q)
@@ -168,14 +163,14 @@ void Level::init_enemy()
 	hornet_vector = new vector<hornet*>();
 	hornet_hives_vector = new vector<HornetHive*>();
 
-	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo(),1));
-	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo(),2));
-	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo(),2));
-	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo(),2));
-	boss_vector->push_back(new WolfBoss(sandbox, player->getGeneralInfo(),2));
-	hornet_hives_vector->push_back(new HornetHive(sandbox, player->getGeneralInfo(),2));
+	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo(), 1));
+	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo(), 2));
+	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo(), 2));
+	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo(), 2));
+	boss_vector->push_back(new WolfBoss(sandbox, player->getGeneralInfo(), 2));
+	hornet_hives_vector->push_back(new HornetHive(sandbox, player->getGeneralInfo(), 2));
 
-	bush_killers_vector->push_back(new BushKiller(sandbox, player->getGeneralInfo(),2));
+	bush_killers_vector->push_back(new BushKiller(sandbox, player->getGeneralInfo(), 2));
 	//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
 	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
 	//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
@@ -198,7 +193,7 @@ void Level::random_init_enemy()
 	evil_ball_vector = new vector<EyeEvil*>();
 	for (int i = 0; i < num_of_enemy_; i++)
 	{
-		EyeEvil* enemy = new EyeEvil(sandbox, player->getGeneralInfo(),1);
+		EyeEvil* enemy = new EyeEvil(sandbox, player->getGeneralInfo(), 1);
 		evil_ball_vector->push_back(enemy);
 	}
 
@@ -206,14 +201,14 @@ void Level::random_init_enemy()
 	Kusaka_vector = new vector<kusaka*>();
 	for (int i = 0; i < num_of_enemy_; i++)
 	{
-		kusaka* enemy = new kusaka(sandbox, player->getGeneralInfo(),1);
+		kusaka* enemy = new kusaka(sandbox, player->getGeneralInfo(), 1);
 		Kusaka_vector->push_back(enemy);
 	}
 
 	Red_Mutant_vector_ = new vector<RedMutant*>();
 	for (int i = 0; i < num_of_enemy_; i++)
 	{
-		RedMutant* enemy = new RedMutant(sandbox, player->getGeneralInfo(),1);
+		RedMutant* enemy = new RedMutant(sandbox, player->getGeneralInfo(), 1);
 		Red_Mutant_vector_->push_back(enemy);
 	}
 
@@ -229,7 +224,7 @@ void Level::random_init_enemy()
 	bush_killers_vector = new vector<BushKiller*>();
 	for (int i = 0; i < num_of_enemy_; i++)
 	{
-		auto* enemy = new BushKiller(sandbox, player->getGeneralInfo(),1);
+		auto* enemy = new BushKiller(sandbox, player->getGeneralInfo(), 1);
 		bush_killers_vector->push_back(enemy);
 	}
 
@@ -238,14 +233,14 @@ void Level::random_init_enemy()
 
 	for (int i = 0; i < num_of_enemy_; i++)
 	{
-		hornet_hives_vector->push_back(new HornetHive(sandbox, player->getGeneralInfo(),1));
+		hornet_hives_vector->push_back(new HornetHive(sandbox, player->getGeneralInfo(), 1));
 	}
 
 	hornet_vector = new vector<hornet*>();
 
 	for (int i = 0; i < num_of_enemy_; i++)
 	{
-		hornet_vector->push_back(new hornet(sandbox, player->getGeneralInfo(),1));
+		hornet_vector->push_back(new hornet(sandbox, player->getGeneralInfo(), 1));
 	}
 }
 
@@ -291,10 +286,12 @@ void Level::updateLifeBar()
 
 void Level::initPlayer(short level)
 {
-	if (level < 4) {
+	if (level < 4)
+	{
 		player = new Player(sandbox);
 	}
-	else {
+	else
+	{
 		player = new Player(sandbox, Vector2f(150, 2600));
 	}
 }
@@ -412,9 +409,12 @@ void Level::update_Enemy()
 			if ((*it1)->hornet_state == HORNET_HIVE_STATE::DEATH && (*it1)->cout_hornet > 0)
 			{
 				(*it1)->cout_hornet = 0;
-				hornet_vector->push_back(new hornet(sandbox, player->getGeneralInfo(), (*it1)->get_position().x + 64, (*it1)->get_position().y - 35));
-				hornet_vector->push_back(new hornet(sandbox, player->getGeneralInfo(), (*it1)->get_position().x, (*it1)->get_position().y - 64));
-				hornet_vector->push_back(new hornet(sandbox, player->getGeneralInfo(), (*it1)->get_position().x - 30, (*it1)->get_position().y - 35));
+				hornet_vector->push_back(new hornet(sandbox, player->getGeneralInfo(), (*it1)->get_position().x + 64,
+				                                    (*it1)->get_position().y - 35));
+				hornet_vector->push_back(new hornet(sandbox, player->getGeneralInfo(), (*it1)->get_position().x,
+				                                    (*it1)->get_position().y - 64));
+				hornet_vector->push_back(new hornet(sandbox, player->getGeneralInfo(), (*it1)->get_position().x - 30,
+				                                    (*it1)->get_position().y - 35));
 			}
 			if ((*it1)->hornet_state == HORNET_HIVE_STATE::DEATH && (*it1)->DEATH_timer.getElapsedTime().asSeconds() >=
 				4.1f)
@@ -499,7 +499,7 @@ void Level::update_Enemy()
 		}
 	}
 
-	if ( boss_vector != nullptr && !boss_vector->empty())
+	if (boss_vector != nullptr && !boss_vector->empty())
 	{
 		for (auto& enemy : *boss_vector)
 
@@ -555,58 +555,67 @@ void Level::render()
 
 void Level::renderEnemy()
 {
-	if(hornet_vector != nullptr)for (auto& enemy : *hornet_vector)
+	if (hornet_vector != nullptr)
+		for (auto& enemy : *hornet_vector)
 
-	{
-		enemy->render(*window);
-	}
-
-	if(hornet_hives_vector!= nullptr)for (auto& enemy : *hornet_hives_vector)
-
-	{
-		enemy->render(*window);
-	}
-
-	if(evil_ball_vector!= nullptr)for (auto& enemy : *evil_ball_vector)
-
-	{
-		enemy->render(*window);
-	}
-
-	if(Kusaka_vector!=nullptr)for (auto& enemy : *Kusaka_vector)
-	{
-		enemy->render(*window);
-	}
-
-	if(Red_Mutant_vector_!=nullptr)for (auto& enemy : *Red_Mutant_vector_)
-	{
-		enemy->render(*window);
-	}
-
-	if(bush_killers_vector!=nullptr)for (auto& enemy : *bush_killers_vector)
-	{
-		enemy->render(*window);
-	}
-
-	if(boss_vector!=nullptr)for (auto& enemy : *boss_vector)
-	{
-		enemy->render(*window);
-	}
-
-	if(evil_ball_vector!= nullptr)for (auto& enemy : *evil_ball_vector)
-	{
-		if (enemy->laser_existence())
 		{
-			enemy->draw_laser(1, *window);
+			enemy->render(*window);
 		}
-	}
-	if(bush_killers_vector!=nullptr)for (auto& enemy : *bush_killers_vector)
-	{
-		if (!enemy->leaf_empty())
+
+	if (hornet_hives_vector != nullptr)
+		for (auto& enemy : *hornet_hives_vector)
+
 		{
-			enemy->draw_leaf(*window);
+			enemy->render(*window);
 		}
-	}
+
+	if (evil_ball_vector != nullptr)
+		for (auto& enemy : *evil_ball_vector)
+
+		{
+			enemy->render(*window);
+		}
+
+	if (Kusaka_vector != nullptr)
+		for (auto& enemy : *Kusaka_vector)
+		{
+			enemy->render(*window);
+		}
+
+	if (Red_Mutant_vector_ != nullptr)
+		for (auto& enemy : *Red_Mutant_vector_)
+		{
+			enemy->render(*window);
+		}
+
+	if (bush_killers_vector != nullptr)
+		for (auto& enemy : *bush_killers_vector)
+		{
+			enemy->render(*window);
+		}
+
+	if (boss_vector != nullptr)
+		for (auto& enemy : *boss_vector)
+		{
+			enemy->render(*window);
+		}
+
+	if (evil_ball_vector != nullptr)
+		for (auto& enemy : *evil_ball_vector)
+		{
+			if (enemy->laser_existence())
+			{
+				enemy->draw_laser(1, *window);
+			}
+		}
+	if (bush_killers_vector != nullptr)
+		for (auto& enemy : *bush_killers_vector)
+		{
+			if (!enemy->leaf_empty())
+			{
+				enemy->draw_leaf(*window);
+			}
+		}
 }
 
 
