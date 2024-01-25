@@ -1,0 +1,5 @@
+Arrow1               9 0 0 1            0 0 40 5
+ManaPotion           2 0 5 1            0 0 19 39
+HealthPotion         1 0 5 1            0 0 19 39
+PoisonPotion         5 0 5 1            0 0 19 39
+SpeedPotion          1 0 5 1            0 0 19 39

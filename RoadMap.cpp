@@ -117,7 +117,7 @@
 		cb_handler->addCallback(asi_g2_bottom->getButtonState(3), BUTTON_STATE::BTN_ACTIVE, 0,
 			&PopUpWindow::setPUWStateO, level_selection);
 		asi_g2_bottom->setAlignment("space between 200", "center 0");
-
+		
 		all_static_items->setAlignment("center 0", "bottom 0");
 		asi_g0_top->changePositionY(-120);
 
