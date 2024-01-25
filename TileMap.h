@@ -8,6 +8,7 @@
 #include "MovingObject.h"
 #include "Chest.h"
 #include "Switch.h"
+#include "WarehouseItem.h"
 
 
 
