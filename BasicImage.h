@@ -17,6 +17,7 @@ public:
 	BasicImage(TextureManager* t_manager, int index, string name, IntRect frame);
 
 	void addInfo(TextureManager* t_manager, Warehouse* w_object, string name);
+	void addInfo(TextureManager* t_manager, WarehouseItem* w_item);
 
 	FloatRect getLocalBounds();
 	FloatRect getGlobalBounds();

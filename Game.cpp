@@ -28,6 +28,11 @@
 		initOptions();
 		initBackgroundTexture();
 		initBackgroundSprite();
+		//////////////////////////////////
+
+		
+
+		//////////////////////////////////
 	}
 
 	void Game::initWindow(){

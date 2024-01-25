@@ -23,7 +23,6 @@
 			position.x + (width - image->getGlobalBounds().width) / 2,
 			position.y + (width - image->getGlobalBounds().height) / 2
 		);
-		image->setBColor(Color::Magenta);
 
 		text.setString(w_object->getWarehouseItem(name)->getNameFU());
 		text.setFillColor(Color::White);
@@ -33,6 +32,31 @@
 		));
 
 		r_info->addInfo(t_manager, w_object, name, true);
+		r_info->setPosition(Vector2f(
+			position.x + width - r_info->getGlobalBounds().width,
+			text.getGlobalBounds().top - r_info->getGlobalBounds().height
+		));
+	}
+
+	void InventoryItem::addItemInfo(TextureManager* t_manager, WarehouseItem* w_item){
+		image->addInfo(t_manager, w_item);
+
+		short scale = (width / image->getLocalBounds().width);
+		image->setScale(scale);
+		image->setPosition(
+			position.x + (width - image->getGlobalBounds().width) / 2,
+			position.y + (width - image->getGlobalBounds().height) / 2
+		);
+		image->setBColor(Color::Magenta);
+
+		text.setString(w_item->getNameFU());
+		text.setFillColor(Color::White);
+		text.setPosition(Vector2f(
+			position.x + width - r_info->getGlobalBounds().width,
+			position.y + width - r_info->getGlobalBounds().height
+		));
+
+		r_info->addInfo(t_manager, w_item, true);
 		r_info->setPosition(Vector2f(
 			position.x + width - r_info->getGlobalBounds().width,
 			text.getGlobalBounds().top - r_info->getGlobalBounds().height

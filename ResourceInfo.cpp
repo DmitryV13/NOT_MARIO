@@ -4,16 +4,16 @@
 	ResourceInfo::ResourceInfo(){
 	}
 
-	ResourceInfo::ResourceInfo(float x, float y, Font* font, int text_size, bool self_align_){
-		self_align = self_align_;
+	ResourceInfo::ResourceInfo(float x, float y, Font* font, int text_size, bool image_){
+		image = image_;
 		shape.setPosition(x, y);
 		text.setFont(*font);
 		text.setCharacterSize(text_size);
 	}
 	
 	ResourceInfo::ResourceInfo(float x, float y, int text_size, Font* font
-		, TextureManager* t_manager, Warehouse* w_object, string name, bool self_align_)
-		: self_align(self_align_) {
+		, TextureManager* t_manager, Warehouse* w_object, string name, bool image_)
+		: image(image_) {
 		resource = w_object->getWarehouseItem(name)->getInfo().first;
 		src_img.setTexture(t_manager->getTexture(w_object->getWarehouseItem(name)->getTMInfo().first, name));
 
@@ -47,7 +47,7 @@
 
 	ResourceInfo::ResourceInfo(float x, float y, int* resource_, int max_v, int text_size, Font* font
 		, TextureManager* t_manager, int index, string name, bool self_align_)
-		: resource(resource_), self_align(self_align_){
+		: resource(resource_), image(self_align_){
 		src_img.setTexture(t_manager->getTexture(index, name));
 
 		shape.setPosition(x, y);
@@ -90,7 +90,7 @@
 		text.setString(prev + std::to_string(*resource) + max);
 		text.setFillColor(Color::White);
 
-		if (!self_align) {
+		if (!image) {
 			shape.setSize(Vector2f(
 				text.getGlobalBounds().width * 2,
 				text.getGlobalBounds().height * 2)
@@ -125,6 +125,53 @@
 		shape.setFillColor(Color(0, 0, 0, 0));
 	}
 
+	void ResourceInfo::addInfo(TextureManager* t_manager, WarehouseItem* w_item, bool x){
+		resource = w_item->getInfo().first;
+		if (x) {
+			prev = "x";
+		}
+		else {
+			prev = "";
+		}
+		max = w_item->getInfo().second == 0 ? "" : "/" + std::to_string(w_item->getInfo().second);
+		text.setString(prev + std::to_string(*resource) + max);
+		text.setFillColor(Color::White);
+
+		if (!image) {
+			shape.setSize(Vector2f(
+				text.getGlobalBounds().width * 2,
+				text.getGlobalBounds().height * 2)
+			);
+
+			text.setPosition(
+				shape.getPosition().x - text.getLocalBounds().left + text.getGlobalBounds().width / 2,
+				shape.getPosition().y + text.getLocalBounds().top + text.getGlobalBounds().height / 2
+			);
+		}
+		else {
+			src_img.setTexture(t_manager->getTexture(w_item->getTMInfo().first, w_item->getTMInfo().second));
+			src_img.setScale(
+				(text.getGlobalBounds().height * 2) / src_img.getGlobalBounds().height,
+				(text.getGlobalBounds().height * 2) / src_img.getGlobalBounds().height
+			);
+
+			shape.setSize(Vector2f(
+				src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 + text.getGlobalBounds().width,
+				text.getGlobalBounds().height * 2)
+			);
+
+			src_img.setPosition(shape.getPosition());
+
+			text.setPosition(
+				shape.getPosition().x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
+				shape.getPosition().y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
+			);
+		}
+
+
+		shape.setFillColor(Color(0, 0, 0, 0));
+	}
+
 	void ResourceInfo::update(Vector2f mouse_pos, FloatRect view_cords){
 		setPosition
 		(Vector2f(shape.getPosition().x + view_cords.left - view_cords.width / 2,
@@ -132,7 +179,7 @@
 		);
 		if (resource) {
 			text.setString(prev + std::to_string(*resource) + max);
-			if (self_align) {
+			if (image) {
 				shape.setSize(Vector2f(
 					src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 + text.getGlobalBounds().width,
 					text.getGlobalBounds().height * 2)
@@ -150,7 +197,7 @@
 					text.getGlobalBounds().width * 2,
 					text.getGlobalBounds().height * 2)
 				);
-
+			
 				text.setPosition(
 					shape.getPosition().x - text.getLocalBounds().left + text.getGlobalBounds().width / 2,
 					shape.getPosition().y + text.getLocalBounds().top + text.getGlobalBounds().height / 2

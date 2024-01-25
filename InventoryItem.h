@@ -23,6 +23,7 @@ public:
 	InventoryItem(float x, float y, float width_, float height_, int text_size_, Font* font);
 
 	void addItemInfo(TextureManager* t_manager, Warehouse* w_object, string name);
+	void addItemInfo(TextureManager* t_manager, WarehouseItem* w_item);
 
 	FloatRect getLocalBounds() override;
 	FloatRect getGlobalBounds() override;

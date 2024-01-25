@@ -30,6 +30,12 @@
 		image.setTextureRect(w_object->getWarehouseItem(name)->getSpriteInfo().first);
 		shape.setSize(Vector2f(image.getTextureRect().width, image.getTextureRect().height));
 	}
+
+	void BasicImage::addInfo(TextureManager* t_manager, WarehouseItem* w_item){
+		image.setTexture(t_manager->getTexture(w_item->getTMInfo().first, w_item->getTMInfo().second));
+		image.setTextureRect(w_item->getSpriteInfo().first);
+		shape.setSize(Vector2f(image.getTextureRect().width, image.getTextureRect().height));
+	}
 	
 	FloatRect BasicImage::getLocalBounds(){
 		return image.getLocalBounds();

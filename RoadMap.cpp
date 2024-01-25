@@ -46,19 +46,19 @@
 		asi_g0_g1_center->createElementLine();
 		tmp = asi_g0_g1_center->calculatePFNII(5, 100, 0);
 		ResourceInfo* asi_g0_g1_ri0_left = new ResourceInfo(tmp->first, tmp->second, warehouse->getItemInfo("currency", "Coin").first,
-			warehouse->getItemInfo("currency", "Coin").second, 30, font, t_manager, 0, "Coin", false);
+			warehouse->getItemInfo("currency", "Coin").second, 30, font, t_manager, 0, "Coin", true);
 		asi_g0_g1_center->addIElement((InterfaceItem*)asi_g0_g1_ri0_left, 0);
 		delete tmp;
 
 		tmp = asi_g0_g1_center->calculatePFNII(5, 100, 0);
 		ResourceInfo* asi_g0_g1_ri1_center = new ResourceInfo(tmp->first, tmp->second, warehouse->getItemInfo("currency", "BSplinter").first,
-			warehouse->getItemInfo("currency", "BSplinter").second, 30, font, t_manager, 0, "BSplinter", false);
+			warehouse->getItemInfo("currency", "BSplinter").second, 30, font, t_manager, 0, "BSplinter", true);
 		asi_g0_g1_center->addIElement((InterfaceItem*)asi_g0_g1_ri1_center, 0);
 		delete tmp;
 		
 		tmp = asi_g0_g1_center->calculatePFNII(5, 100, 0);
 		ResourceInfo* asi_g0_g1_ri2_right = new ResourceInfo(tmp->first, tmp->second, warehouse->getItemInfo("currency", "RSplinter").first,
-			warehouse->getItemInfo("currency", "RSplinter").second, 30, font, t_manager, 0, "RSplinter", false);
+			warehouse->getItemInfo("currency", "RSplinter").second, 30, font, t_manager, 0, "RSplinter", true);
 		asi_g0_g1_center->addIElement((InterfaceItem*)asi_g0_g1_ri2_right, 0);
 		delete tmp;
 
