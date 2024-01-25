@@ -34,7 +34,9 @@ public:
 	//vector<laser_weapon> laser;
 	laser_weapon* laser{nullptr};
 	laser_weapon* laserFL{nullptr};
-	explicit EyeEvil(TileMap& map, GeneralInfo* player_info);
+	explicit EyeEvil(TileMap& map, GeneralInfo* player_info,short);
+	EyeEvil(TileMap& map, GeneralInfo* player_info_, float, float);
+
 	~EyeEvil() override = default;
 	void update_movement() override;
 	void update_animation() override;

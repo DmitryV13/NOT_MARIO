@@ -34,7 +34,9 @@ class BushKiller: public Enemy
 	void init_physics() override;
 
 public:
-	explicit BushKiller(TileMap& map, GeneralInfo* player_info);
+	explicit BushKiller(TileMap& map, GeneralInfo* player_info,short);
+	BushKiller(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y);
+
 	~BushKiller() override = default;
 	void update_movement() override;
 	void look(float direction);

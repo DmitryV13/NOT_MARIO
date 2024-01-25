@@ -38,7 +38,9 @@ public:
 	bool HIVE_LIFE() const;
 	void set_position_AR(const float x, const float y);
 
-	explicit HornetHive(TileMap& map, GeneralInfo* player_info);
+	explicit HornetHive(TileMap& map, GeneralInfo* player_info,short);
+	HornetHive(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y);
+
 	~HornetHive() override = default;
 	void update_movement() override;
 	void update_animation() override;

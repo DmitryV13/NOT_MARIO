@@ -24,7 +24,22 @@ void hornet::init_sprite()
 	Enemy_S.setTextureRect(current_frame);
 }
 
-hornet::hornet(TileMap& map, GeneralInfo* player_info): Enemy(map, player_info), player_info_(player_info)
+hornet::hornet(TileMap& map, GeneralInfo* player_info,short regime): Enemy(map, player_info,regime), player_info_(player_info)
+{
+	hornet::init_texture();
+	hornet::init_sprite();
+	hornet::setAt(20);
+	hornet::setHP(50);
+	hp_damage_i = HP;
+	hornet_state = HORNET_STATE::IDLE;
+	hornet_state_past = HORNET_STATE::FLYING;
+	IDLE_timer.restart();
+	ATTACKING_timer.restart();
+	DEATH_timer.restart();
+}
+
+hornet::hornet(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y):
+Enemy(map, player_info_,pos_x,pos_y ), player_info_(player_info)
 {
 	hornet::init_texture();
 	hornet::init_sprite();

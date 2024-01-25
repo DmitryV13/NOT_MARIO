@@ -2,8 +2,23 @@
 #include "EyeEvil.h"
 
 
-EyeEvil::EyeEvil(TileMap& map, GeneralInfo* player_info)
-	: Enemy(map, player_info)
+EyeEvil::EyeEvil(TileMap& map, GeneralInfo* player_info,short regime)
+	: Enemy(map, player_info,regime)
+{
+	{
+		EyeEvil::init_texture();
+		EyeEvil::init_sprite();
+		EyeEvil::setAt(20);
+		EyeEvil::setHP(1000);
+		hp_damage_i = HP;
+		eye_state = eye_state_past = EYE_EVIL_STATE::IDLE;
+		IDLE_timer.restart();
+		ATTACKING_timer.restart();
+		DEATH_timer.restart();
+	}
+}
+EyeEvil::EyeEvil(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y) :
+	Enemy(map, player_info_, pos_x, pos_y)
 {
 	{
 		EyeEvil::init_texture();

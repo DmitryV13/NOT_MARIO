@@ -1,8 +1,26 @@
 #include "stdafx.h"
 #include "kusaka.h"
 
-kusaka::kusaka(TileMap& map, GeneralInfo* player_info)
-	: Enemy(map, player_info)
+kusaka::kusaka(TileMap& map, GeneralInfo* player_info,short regime)
+	: Enemy(map, player_info,regime)
+{
+	{
+		kusaka::init_texture();
+		kusaka::init_sprite();
+		kusaka::setAt(20);
+		kusaka::setHP(1000);
+		kusaka_state = KUSAKA_STATE::KUSAKA_SLEEP;
+		hp_damage_i = HP;
+		kusaka_state_past = kusaka_state;
+		KUSAKA_TAKING_DAMAGE_TIMER.restart();
+		IDLE_timer.restart();
+		DEATH_timer.restart();
+		count_jm = 0;
+	}
+}
+
+kusaka::kusaka(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y) :
+	Enemy(map, player_info_, pos_x, pos_y)
 {
 	{
 		kusaka::init_texture();

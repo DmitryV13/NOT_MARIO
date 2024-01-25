@@ -2,8 +2,19 @@
 #include "WolfBoss.h"
 
 
-WolfBoss::WolfBoss(TileMap& map, GeneralInfo* player_info)
-	: Enemy(map, player_info)
+WolfBoss::WolfBoss(TileMap& map, GeneralInfo* player_info,short regime)
+	: Enemy(map, player_info,regime)
+{
+	WolfBoss::init_texture();
+	WolfBoss::init_sprite();
+	WolfBoss::init_physics();
+	WolfBoss::setAt(50);
+	WolfBoss::setHP(5000);
+	hp_damage_i = HP;
+}
+
+WolfBoss::WolfBoss(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y) :
+	Enemy(map, player_info_, pos_x, pos_y)
 {
 	WolfBoss::init_texture();
 	WolfBoss::init_sprite();

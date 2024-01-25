@@ -6,7 +6,7 @@
         initVariables();
         initTexture();
         initSprite();
-        //initWeapon();
+       // initWeapon();
         initAnimation();
         initPhysics();
     }
@@ -88,8 +88,8 @@
         }
         //std::cout << getPosition().x << " " <<getPosition().y<<"\n";
         target.draw(player_S);
-        //weapons[chosen_weapon]->render(target);
-        //renderProjectiles(target);
+        weapons[chosen_weapon]->render(target);
+        renderProjectiles(target);
     }
 
     void Player::renderProjectiles(RenderTarget& target){
@@ -153,8 +153,8 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         info->setGlobalBounds(player_S.getGlobalBounds());
         info->setPosition(player_S.getPosition());
 
-        //updateWeapon(window, view_cords);
-        //updateProjectiles();
+        updateWeapon(window, view_cords);
+        updateProjectiles();
         //std::cout << player_S.getPosition().x << "  " << player_S.getPosition().y << std::endl;
         //std::cout << info->getVelocity().x << "  " << info->getVelocity().y << std::endl;
         //std::cout << velocity.x << "  " << velocity.y << std::endl;

@@ -56,7 +56,9 @@ class WolfBoss : public Enemy
 	void init_physics() override;
 
 public:
-	explicit WolfBoss(TileMap& map, GeneralInfo* player_info);
+	explicit WolfBoss(TileMap& map, GeneralInfo* player_info,short);
+	WolfBoss(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y);
+
 	~WolfBoss() override = default;
 	void update_movement() override;
 	void update_animation() override;

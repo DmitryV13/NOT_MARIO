@@ -15,6 +15,7 @@
 #include "PopUpWindow.h"
 #include "hornet.h"
 #include "HornetHive.h"
+#include "Warehouse.h"
 
 using namespace::sf;
 
@@ -31,7 +32,6 @@ private:
 	MyView myView;
 	//Cursor* cursor;
 
-	EyeEvil* evil_Ball;
 	vector<BushKiller*>* bush_killers_vector;
 	vector<EyeEvil*>* evil_ball_vector;
 	vector<kusaka*>* Kusaka_vector;
@@ -39,7 +39,8 @@ private:
 	vector<WolfBoss*>* boss_vector;
 	vector<hornet*>* hornet_vector;
 	vector<HornetHive*>* hornet_hives_vector;
-
+	TextureManager* t_manager;
+	Warehouse* warehouse;
 
 	int num_of_enemy_{ 12 };
 	short regime;
@@ -57,14 +58,10 @@ private:
 	//void initWindow();
 	void initPlayer();
 	void initView();
-	void initEvilBall();
-	void init_Kusaka();
-	void init_chubacabra();
-	void init_Wolf_boss();
-	void init_BushKiller();
 	void init_enemy();
+	void random_init_enemy();
 public:
-	Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level, Color menuColor);
+	Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level, Color menuColor, TextureManager* t_manager_, Warehouse* warehouse_, short regime_);
 	~Level();
 
 	void finishGame(float q);
@@ -78,11 +75,6 @@ public:
 	void updateCursor();
 
 	void update_Enemy();
-	void updateEvilBall();
-	void update_Kusaka();
-	void update_BushKiller();
-	void update_Red_Mutant();
-	void update_Wolf_boss();
 	void updateGameMenu();
 	void updateGameState();
 	void updateMap();
@@ -95,12 +87,6 @@ public:
 	void render();
 
 	void renderEnemy();
-	void renderEvilBall();
-	void render_Kusaka();
-	void render_chubacabra();
-	void render_BushKiller();
-	void render_Wolf_boss();
-	void render_shot();
 	void renderLifeBar();
 
 	void start();

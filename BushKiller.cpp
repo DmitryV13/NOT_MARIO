@@ -2,9 +2,21 @@
 #include "BushKiller.h"
 
 
-BushKiller::BushKiller(TileMap& map, GeneralInfo* player_info)
-	: Enemy(map, player_info)
+BushKiller::BushKiller(TileMap& map, GeneralInfo* player_info,short regime)
+	: Enemy(map, player_info,regime)
 
+{
+	BushKiller::init_texture();
+	BushKiller::init_sprite();
+	BushKiller::init_physics();
+	BushKiller::setAt(20);
+	BushKiller::setHP(100);
+	hp_damage_i = HP;
+	
+}
+
+BushKiller::BushKiller(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y) :
+	Enemy(map, player_info_, pos_x, pos_y)
 {
 	BushKiller::init_texture();
 	BushKiller::init_sprite();

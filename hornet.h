@@ -41,7 +41,9 @@ public:
 	HORNET_STATE hornet_state;
 
 
-	explicit hornet(TileMap& map, GeneralInfo* player_info);
+	explicit hornet(TileMap& map, GeneralInfo* player_info,short);
+	hornet(TileMap& map, GeneralInfo* player_info_, float, float);
+
 	~hornet() override = default;
 	void update_movement() override;
 	void update_animation() override;

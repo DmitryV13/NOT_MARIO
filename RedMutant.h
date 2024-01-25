@@ -39,7 +39,8 @@ public:
 	RED_MUTANT_STATE red_mutant_state_past;
 	Clock DEATH_timer;
 	sf::Vector2f calculateRandomPosition(const sf::FloatRect& playerBounds, int radius);
-	explicit RedMutant(TileMap& map, GeneralInfo* player_info);
+	explicit RedMutant(TileMap& map, GeneralInfo* player_info,short);
+	RedMutant(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y);
 
 	~RedMutant() override = default;
 	void reset_Timer();

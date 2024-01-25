@@ -56,23 +56,36 @@ void Enemy::init_variables()
 	animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
 }
 
-Enemy::Enemy(TileMap& map, GeneralInfo* player_info_)
+Enemy::Enemy(TileMap& map, GeneralInfo* player_info_,short regime)
 	: player_info(player_info_)
 {
 	blow_timer.restart();
-	//player_ = &pl;
 	sandbox = &map;
 	hp_bar = new HealthBarEnemy();
 	init_variables();
 	init_animation();
 	Enemy::init_physics();
 
-	//start_position = generate_random_start_position(sandbox->getMapWidth(), sandbox->getMapHeight());
-	start_position = sandbox->cord_enemy();
+	if(regime == 1)start_position = generate_random_start_position(sandbox->getMapWidth(), sandbox->getMapHeight());
+	if(regime == 2)start_position = sandbox->cord_enemy();
 
 	set_position(start_position.x, start_position.y);
 	hp_bar->SET_ST_HP(HP);
-	//set_position(1300,600);
+}
+
+Enemy::Enemy(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y)
+	: player_info(player_info_)
+{
+	blow_timer.restart();
+	sandbox = &map;
+	hp_bar = new HealthBarEnemy();
+	init_variables();
+	init_animation();
+	Enemy::init_physics();
+
+
+	set_position(pos_x, pos_y);
+	hp_bar->SET_ST_HP(HP);
 }
 
 sf::Vector2f Enemy::get_position() const

@@ -26,7 +26,7 @@ void HornetHive::init_sprite()
 }
 
 
-HornetHive::HornetHive(TileMap& map, GeneralInfo* player_info):Enemy(map, player_info), player_info_(player_info)
+HornetHive::HornetHive(TileMap& map, GeneralInfo* player_info,short regime):Enemy(map, player_info,regime), player_info_(player_info)
 {
 	HornetHive::init_texture();
 	HornetHive::init_sprite();
@@ -38,6 +38,18 @@ HornetHive::HornetHive(TileMap& map, GeneralInfo* player_info):Enemy(map, player
 	DEATH_timer.restart();
 }
 
+HornetHive::HornetHive(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y) :
+	Enemy(map, player_info_, pos_x, pos_y)
+{
+	HornetHive::init_texture();
+	HornetHive::init_sprite();
+	HornetHive::setAt(0);
+	HornetHive::setHP(30);
+	hp_damage_i = HP;
+	hornet_state = HORNET_HIVE_STATE::IDLE;
+	hornet_hive_state_past = HORNET_HIVE_STATE::TAKING_DAMAGE;
+	DEATH_timer.restart();
+}
 void HornetHive::update_movement()
 {
 

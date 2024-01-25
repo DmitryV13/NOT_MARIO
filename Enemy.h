@@ -101,7 +101,8 @@ public:
 	bool looks_to_the_left;
 	bool looks_to_the_right;
 	sf::Vector2f generate_random_start_position(int mapWidth, int mapHeight);
-	Enemy(TileMap& map, GeneralInfo* player_info_);
+	Enemy(TileMap& map, GeneralInfo* player_info_,short);
+	Enemy(TileMap& map, GeneralInfo* player_info_, float,float);
 	const bool& get_animation_switch();
 	sf::Vector2f get_position() const;
 	const FloatRect get_global_bounds() const;

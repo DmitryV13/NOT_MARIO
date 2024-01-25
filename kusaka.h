@@ -27,7 +27,9 @@ public:
 	bool jump_flag{true};
 	short count_jm;
 
-	explicit kusaka(TileMap& map, GeneralInfo* player_info);
+	explicit kusaka(TileMap& map, GeneralInfo* player_info,short);
+	kusaka(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y);
+
 	~kusaka() override = default;
 	void update_movement() override;
 	void update_animation() override;

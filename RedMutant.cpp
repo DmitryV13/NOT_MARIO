@@ -1,8 +1,27 @@
 #include "stdafx.h"
 #include "RedMutant.h"
 
-RedMutant::RedMutant(TileMap& map, GeneralInfo* player_info)
-	: Enemy(map, player_info)
+RedMutant::RedMutant(TileMap& map, GeneralInfo* player_info,short regime)
+	: Enemy(map, player_info,regime)
+{
+	{
+		RedMutant::init_texture();
+		RedMutant::init_sprite();
+		RedMutant::setAt(25);
+		RedMutant::setHP(2000);
+		red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;
+		hp_damage_i = HP;
+		red_mutant_state_past = red_mutant_state;
+		RED_MUTANT_TAKING_DAMAGE_TIMER.restart();
+		IDLE_timer.restart();
+		DEATH_timer.restart();
+		Shot_timer.restart();
+		count_jm = 0;
+	}
+}
+
+RedMutant::RedMutant(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y) :
+	Enemy(map, player_info_, pos_x, pos_y)
 {
 	{
 		RedMutant::init_texture();
