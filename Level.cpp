@@ -167,6 +167,8 @@ void Level::init_enemy()
 	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo(), 2));
 	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo(), 2));
 	evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo(), 2));
+	Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo(),2));
+
 	boss_vector->push_back(new WolfBoss(sandbox, player->getGeneralInfo(), 2));
 	hornet_hives_vector->push_back(new HornetHive(sandbox, player->getGeneralInfo(), 2));
 

@@ -53,6 +53,7 @@ public:
 	bool search_for_enemies() override;
 	void reset_attention() override;
 	void changeHP(short) override;
+	void updateHP_bar() override;
 
 	bool plStan();
 };

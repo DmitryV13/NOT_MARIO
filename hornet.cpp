@@ -36,6 +36,7 @@ hornet::hornet(TileMap& map, GeneralInfo* player_info,short regime): Enemy(map, 
 	IDLE_timer.restart();
 	ATTACKING_timer.restart();
 	DEATH_timer.restart();
+	hp_bar->SET_ST_HP(HP);
 }
 
 hornet::hornet(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y):
@@ -51,6 +52,7 @@ Enemy(map, player_info_,pos_x,pos_y ), player_info_(player_info)
 	IDLE_timer.restart();
 	ATTACKING_timer.restart();
 	DEATH_timer.restart();
+	hp_bar->SET_ST_HP(HP);
 }
 
 void hornet::update_movement()

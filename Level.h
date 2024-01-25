@@ -45,7 +45,7 @@ private:
 	vector<hornet*>* hornet_vector;
 	vector<HornetHive*>* hornet_hives_vector;
 
-	int num_of_enemy_{ 12 };
+	int num_of_enemy_{ 5 };
 	short regime;
 	double screenWidth;
 	double screenHeight;

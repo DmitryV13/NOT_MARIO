@@ -36,6 +36,7 @@ HornetHive::HornetHive(TileMap& map, GeneralInfo* player_info,short regime):Enem
 	hornet_state = HORNET_HIVE_STATE::IDLE;
 	hornet_hive_state_past = HORNET_HIVE_STATE::TAKING_DAMAGE;
 	DEATH_timer.restart();
+	hp_bar->SET_ST_HP(HP);
 }
 
 HornetHive::HornetHive(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y) :
@@ -49,6 +50,7 @@ HornetHive::HornetHive(TileMap& map, GeneralInfo* player_info_, float pos_x, flo
 	hornet_state = HORNET_HIVE_STATE::IDLE;
 	hornet_hive_state_past = HORNET_HIVE_STATE::TAKING_DAMAGE;
 	DEATH_timer.restart();
+	hp_bar->SET_ST_HP(HP);
 }
 void HornetHive::update_movement()
 {

@@ -11,6 +11,7 @@ WolfBoss::WolfBoss(TileMap& map, GeneralInfo* player_info,short regime)
 	WolfBoss::setAt(50);
 	WolfBoss::setHP(5000);
 	hp_damage_i = HP;
+	hp_bar->SET_ST_HP(HP);
 }
 
 WolfBoss::WolfBoss(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y) :
@@ -22,6 +23,7 @@ WolfBoss::WolfBoss(TileMap& map, GeneralInfo* player_info_, float pos_x, float p
 	WolfBoss::setAt(50);
 	WolfBoss::setHP(5000);
 	hp_damage_i = HP;
+	hp_bar->SET_ST_HP(HP);
 }
 
 void WolfBoss::init_physics()
@@ -622,29 +624,28 @@ void WolfBoss::update_movement()
 			reset_Timer();
 			//retreat_counter++;
 			displacement.x = 0.f;
-			if (IDLE_timer.getElapsedTime().asSeconds() >= 1.5f)
-			{
-				PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
-				if (playerSide == PL_SIDE::LEFT)
-				{
-					looks_to_the_left = true;
-					looks_to_the_right = false;
-					if (moving > 0)moving *= -1.f;
-				}
-				else
-				{
-					looks_to_the_left = false;
-					looks_to_the_right = true;
-					if (moving < 0)moving *= -1.f;
-				}
-
-				//retreat_counter = 0;
-			}
-			if (IDLE_timer.getElapsedTime().asSeconds() >= 2.7f)
-			{
+			//if (IDLE_timer.getElapsedTime().asSeconds() >= 1.5f)
+			//{
+			//	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
+			//	if (playerSide == PL_SIDE::LEFT)
+			//	{
+			//		looks_to_the_left = true;
+			//		looks_to_the_right = false;
+			//		if (moving > 0)moving *= -1.f;
+			//	}
+			//	else
+			//	{
+			//		looks_to_the_left = false;
+			//		looks_to_the_right = true;
+			//		if (moving < 0)moving *= -1.f;
+			//	}
+			//	IDLE_timer.restart();
+			//	//retreat_counter = 0;
+			//}
+			
 				boss_state = BOSS_STATE::ATTACKING;
-				IDLE_timer.restart();
-			}
+				
+			
 
 			break;
 		}
@@ -773,6 +774,7 @@ void WolfBoss::update_movement()
 				reset_Timer();
 				//jump_towardsS_player();
 				//count_anger++;
+				if (!pl_cont_jump && Jumping_att_timer.getElapsedTime().asSeconds() >= 0.4)boss_state = BOSS_STATE::IDLE;
 				if (Jumping_att_timer.getElapsedTime().asSeconds() >= 0.2f && !pl_cont_jump)
 				{
 					jump(1.7F);
@@ -826,7 +828,7 @@ void WolfBoss::update_movement()
 				BOSS_TAKING_DAMAGE_TIMER.restart();
 				hp_damage_i = HP;
 			}
-			if (BOSS_TAKING_DAMAGE_TIMER.getElapsedTime().asSeconds() >= 0.2f)
+			if (BOSS_TAKING_DAMAGE_TIMER.getElapsedTime().asSeconds() >= 0.01f)
 			{
 				boss_state = BOSS_STATE::IDLE;
 			}
@@ -963,11 +965,11 @@ void WolfBoss::update_movement()
 			reset_Timer();
 			looks();
 			retreat_counter++;
-			displacement.x = 0;
+			displacement.x = 0; shot_HOWL();
 			//std::cout << "HOWL\n";
 			if (Shot_timer.getElapsedTime().asSeconds() >= 4.2f)
 			{
-				shot_HOWL();
+				
 				boss_state = BOSS_STATE::IDLE;
 				Shot_timer.restart();
 			}
@@ -1412,4 +1414,5 @@ void WolfBoss::jump(const float dir_y)
 
 void WolfBoss::shot_HOWL()
 {
+	player_info->setStanTime(5.6);
 }

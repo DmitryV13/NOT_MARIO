@@ -12,6 +12,7 @@ BushKiller::BushKiller(TileMap& map, GeneralInfo* player_info,short regime)
 	BushKiller::setAt(20);
 	BushKiller::setHP(100);
 	hp_damage_i = HP;
+	hp_bar->SET_ST_HP(HP);
 	
 }
 
@@ -24,6 +25,7 @@ BushKiller::BushKiller(TileMap& map, GeneralInfo* player_info_, float pos_x, flo
 	BushKiller::setAt(20);
 	BushKiller::setHP(100);
 	hp_damage_i = HP;
+	hp_bar->SET_ST_HP(HP);
 }
 
 void BushKiller::init_physics()

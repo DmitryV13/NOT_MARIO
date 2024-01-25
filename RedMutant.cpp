@@ -17,9 +17,14 @@ RedMutant::RedMutant(TileMap& map, GeneralInfo* player_info,short regime)
 		DEATH_timer.restart();
 		Shot_timer.restart();
 		count_jm = 0;
+		hp_bar->SET_ST_HP(HP);
 	}
 }
+void RedMutant::updateHP_bar()
+{
+	hp_bar->update(Enemy_S);
 
+}
 RedMutant::RedMutant(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y) :
 	Enemy(map, player_info_, pos_x, pos_y)
 {
@@ -36,6 +41,7 @@ RedMutant::RedMutant(TileMap& map, GeneralInfo* player_info_, float pos_x, float
 		DEATH_timer.restart();
 		Shot_timer.restart();
 		count_jm = 0;
+		hp_bar->SET_ST_HP(HP);
 	}
 }
 
