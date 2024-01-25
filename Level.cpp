@@ -646,9 +646,24 @@ void Level::start()
 
 void Level::initWeapons()
 {
+	if(regime == -1)
+	{
+		player->initWeapon({
+			reinterpret_cast<vector<Enemy*>*>(Kusaka_vector),
+			reinterpret_cast<vector<Enemy*>*>(evil_ball_vector),
+			reinterpret_cast<vector<Enemy*>*>(Red_Mutant_vector_),
+			reinterpret_cast<vector<Enemy*>*>(bush_killers_vector),
+			reinterpret_cast<vector<Enemy*>*>(hornet_vector),
+			reinterpret_cast<vector<Enemy*>*>(hornet_hives_vector)
+			}
+		);
+	}
+	else 
 	player->initWeapon({
-			reinterpret_cast<vector<Enemy*>*>(Kusaka_vector), reinterpret_cast<vector<Enemy*>*>(evil_ball_vector),
-			reinterpret_cast<vector<Enemy*>*>(Red_Mutant_vector_), reinterpret_cast<vector<Enemy*>*>(boss_vector),
+			reinterpret_cast<vector<Enemy*>*>(Kusaka_vector),
+			reinterpret_cast<vector<Enemy*>*>(evil_ball_vector),
+			reinterpret_cast<vector<Enemy*>*>(Red_Mutant_vector_),
+			reinterpret_cast<vector<Enemy*>*>(boss_vector),
 			reinterpret_cast<vector<Enemy*>*>(bush_killers_vector),
 			reinterpret_cast<vector<Enemy*>*>(hornet_vector),
 			reinterpret_cast<vector<Enemy*>*>(hornet_hives_vector)
