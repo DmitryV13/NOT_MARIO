@@ -575,6 +575,7 @@ void BushKiller::update_movement()
 			if (Shot_timer.getElapsedTime().asSeconds() >= 0.9F)
 			{
 				shot();
+				player_info->setStanTime(1.f);
 			}
 		
 

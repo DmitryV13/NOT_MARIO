@@ -170,6 +170,8 @@ void Level::init_enemy()
 	Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo(),2));
 
 	boss_vector->push_back(new WolfBoss(sandbox, player->getGeneralInfo(), 2));
+	bush_killers_vector->push_back(new BushKiller(sandbox, player->getGeneralInfo(), 2));
+
 	hornet_hives_vector->push_back(new HornetHive(sandbox, player->getGeneralInfo(), 2));
 
 	bush_killers_vector->push_back(new BushKiller(sandbox, player->getGeneralInfo(), 2));
