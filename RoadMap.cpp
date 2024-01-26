@@ -46,19 +46,19 @@
 		asi_g0_g1_center->createElementLine();
 		tmp = asi_g0_g1_center->calculatePFNII(5, 100, 0);
 		ResourceInfo* asi_g0_g1_ri0_left = new ResourceInfo(tmp->first, tmp->second, warehouse->getItemInfo("currency", "Coin").first,
-			warehouse->getItemInfo("currency", "Coin").second, 30, font, t_manager, 0, "Coin", false);
+			warehouse->getItemInfo("currency", "Coin").second, 30, font, t_manager, 0, "Coin", true);
 		asi_g0_g1_center->addIElement((InterfaceItem*)asi_g0_g1_ri0_left, 0);
 		delete tmp;
 
 		tmp = asi_g0_g1_center->calculatePFNII(5, 100, 0);
 		ResourceInfo* asi_g0_g1_ri1_center = new ResourceInfo(tmp->first, tmp->second, warehouse->getItemInfo("currency", "BSplinter").first,
-			warehouse->getItemInfo("currency", "BSplinter").second, 30, font, t_manager, 0, "BSplinter", false);
+			warehouse->getItemInfo("currency", "BSplinter").second, 30, font, t_manager, 0, "BSplinter", true);
 		asi_g0_g1_center->addIElement((InterfaceItem*)asi_g0_g1_ri1_center, 0);
 		delete tmp;
 		
 		tmp = asi_g0_g1_center->calculatePFNII(5, 100, 0);
 		ResourceInfo* asi_g0_g1_ri2_right = new ResourceInfo(tmp->first, tmp->second, warehouse->getItemInfo("currency", "RSplinter").first,
-			warehouse->getItemInfo("currency", "RSplinter").second, 30, font, t_manager, 0, "RSplinter", false);
+			warehouse->getItemInfo("currency", "RSplinter").second, 30, font, t_manager, 0, "RSplinter", true);
 		asi_g0_g1_center->addIElement((InterfaceItem*)asi_g0_g1_ri2_right, 0);
 		delete tmp;
 
@@ -117,7 +117,7 @@
 		cb_handler->addCallback(asi_g2_bottom->getButtonState(3), BUTTON_STATE::BTN_ACTIVE, 0,
 			&PopUpWindow::setPUWStateO, level_selection);
 		asi_g2_bottom->setAlignment("space between 200", "center 0");
-
+		
 		all_static_items->setAlignment("center 0", "bottom 0");
 		asi_g0_top->changePositionY(-120);
 
@@ -304,6 +304,7 @@
 			for (int jn = 0; jn < 6; jn++) {
 				tmp = i_tc0_0->calculatePFNII(15, 18, in);
 				Group* temp = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
+
 				delete tmp;
 				i_tc0_0->addIElement((InterfaceItem*)temp, in);
 				temp->setBColor(Color::Red);
@@ -331,14 +332,20 @@
 			i_tc0_left->getGlobalBounds().width, i_tc0_left->getGlobalBounds().height);
 		i_tc0_left->addTab(i_tc0_2);
 
+		auto ammo = warehouse->getWarehouseItems("potions");
 		for (int in = 0; in < 5; in++) {
 			i_tc0_2->createElementLine();
 			for (int jn = 0; jn < 6; jn++) {
+				int index_ = in * 4 + jn;
 				tmp = i_tc0_2->calculatePFNII(15, 18, in);
-				Group* temp = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
+				InventoryItem* temp_i = new InventoryItem(tmp->first, tmp->second, tmp->third, tmp->fourth,
+					15, font);
+				if (index_ < ammo.size()) {
+					temp_i->addItemInfo(t_manager, ammo[index_]);
+				}
+				temp_i->setBColor(Color(118, 118, 118, 255));
 				delete tmp;
-				i_tc0_2->addIElement((InterfaceItem*)temp, in);
-				temp->setBColor(Color::Green);
+				i_tc0_2->addIElement((InterfaceItem*)temp_i, in);
 			}
 		}
 		i_tc0_2->setAlignment("space around", "space around");
@@ -347,14 +354,20 @@
 			i_tc0_left->getGlobalBounds().width, i_tc0_left->getGlobalBounds().height);
 		i_tc0_left->addTab(i_tc0_3);
 
+		auto potions = warehouse->getWarehouseItems("ammunition");
 		for (int in = 0; in < 5; in++) {
 			i_tc0_3->createElementLine();
 			for (int jn = 0; jn < 6; jn++) {
+				int index_ = in * 4 + jn;
 				tmp = i_tc0_3->calculatePFNII(15, 18, in);
-				Group* temp = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
+				InventoryItem* temp_i = new InventoryItem(tmp->first, tmp->second, tmp->third, tmp->fourth,
+					15, font);
+				if (index_ < potions.size()) {
+					temp_i->addItemInfo(t_manager, potions[index_]);
+				}
+				temp_i->setBColor(Color(118, 118, 118, 255));
 				delete tmp;
-				i_tc0_3->addIElement((InterfaceItem*)temp, in);
-				temp->setBColor(Color::Magenta);
+				i_tc0_3->addIElement((InterfaceItem*)temp_i, in);
 			}
 		}
 		i_tc0_3->setAlignment("space around", "space around");

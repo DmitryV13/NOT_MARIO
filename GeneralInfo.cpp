@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "GeneralInfo.h"
 
-    GeneralInfo::GeneralInfo(short HP_): HP(HP_), stan_time(0.f){
+    GeneralInfo::GeneralInfo(int HP_, int mana_)
+        : HP(HP_), mana(mana_), max_mana(mana), max_HP(HP), stan_time(0.f), mana_is_used(false){
     }
     
     const Vector2f GeneralInfo::getVelocity() const{
@@ -10,6 +11,23 @@
 
     const short GeneralInfo::getHP() const{
         return HP;;
+    }
+
+    int* GeneralInfo::getHp(){
+        return &HP;
+    }
+
+    int* GeneralInfo::getMana()
+    {
+        return &mana;
+    }
+
+    int GeneralInfo::getMaxMana(){
+        return max_mana;
+    }
+
+    const int GeneralInfo::getMaxHP(){
+        return max_HP;
     }
 
     const FloatRect GeneralInfo::getGlobalBounds() const{
@@ -32,6 +50,16 @@
         velocity.y += y;
     }
 
+    bool GeneralInfo::changeMana(int x){
+        if (mana + x < 0)
+            return false;
+        mana += x;
+        if (mana >= max_mana) {
+            mana = max_mana;
+        }
+        return true;
+    }
+
     void GeneralInfo::setVelocityX(float x){
         velocity.x = x;
     }
@@ -48,10 +76,18 @@
         HP += z;
     }
 
+    bool GeneralInfo::isManaUsed(){
+        return mana_is_used;
+    }
+
     void GeneralInfo::setGlobalBounds(FloatRect new_gb){
         globalBounds = new_gb;
     }
 
     void GeneralInfo::setPosition(Vector2f new_position){
         position = new_position;
+    }
+
+    void GeneralInfo::setManaUtilisation(bool used){
+        mana_is_used = used;
     }

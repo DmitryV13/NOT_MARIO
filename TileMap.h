@@ -8,6 +8,7 @@
 #include "MovingObject.h"
 #include "Chest.h"
 #include "Switch.h"
+#include "WarehouseItem.h"
 
 
 
@@ -70,6 +71,8 @@ public:
 	float getMapWidth();
 	float getMapHeight();
 	float getSizeTexture();
+
+	short getInteraction(int i, int j);
 	bool isBlock(int i, int j);
 	bool outOfMap(int i, int j);
 

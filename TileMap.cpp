@@ -39,16 +39,12 @@ void TileMap::init_pos_enemy()
 	enemy_position.push({ 920.f,2890.f });
 	enemy_position.push({ 1020.f,2890.f });
 
-
 	enemy_position.push({ 1079.f,1270.f });
 	enemy_position.push({ 6105.f,2740.f });
 	enemy_position.push({ 5525.f,2100.f });
 	enemy_position.push({ 6091.f,2230.f });
 	enemy_position.push({ 4613.f,2740.f });
 	enemy_position.push({ 1993.f,2920.f });
-
-
-
 
 	enemy_position.push({ 2020.f,2920.f });
 
@@ -58,8 +54,6 @@ void TileMap::init_pos_enemy()
 	enemy_position.push({ 1100.f,1590.f });
 	enemy_position.push({ 790.f,1590.f });
 	enemy_position.push({ 380.f,1540.f });
-	
-
 
 }
 
@@ -327,11 +321,11 @@ void TileMap::init_chest(short int level)
 	}
 	std::string objectName;
 	float pos_x, pos_y, anim_t;
-	short size_w, size_h, anim_f, anim_q;
+	short size_w, size_h, anim_f, anim_q, filling;
 
-	while (fin >> objectName >> pos_x >> pos_y >> size_w >> size_h >> anim_f >> anim_q >> anim_t)
+	while (fin >> objectName >> pos_x >> pos_y >> size_w >> size_h >> anim_f >> anim_q >> anim_t >> filling)
 	{
-		object.push_back(new Chest{ objectName, pos_x, pos_y, size_w, size_h, anim_f, anim_q, anim_t });
+		object.push_back(new Chest{ objectName, pos_x, pos_y, size_w, size_h, anim_f, anim_q, anim_t, filling});
 	}
 
 	fin.close();
@@ -588,9 +582,12 @@ bool TileMap::isOccupied(int i, int j)
 	return tilemap[i][j][1]->give_player_info();
 }
 
-void TileMap::updatePlayerPresence(int indexI[], int indexJ[])
-{
+void TileMap::updatePlayerPresence(int indexI[], int indexJ[]){
 
+}
+
+short TileMap::getInteraction(int i, int j){
+	return tilemap[i][j][1]->get_interaction();
 }
 
 vector<Object*>& TileMap::getObjects()

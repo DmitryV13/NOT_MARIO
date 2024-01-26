@@ -19,10 +19,11 @@
 			current_image = 0;
 		}
 		images.push_back(new AnimatedImage(t_manager, index, name, first_frame, frames_number_));
-		short scale = (max_width / images[images.size() - 1]->getLocalBounds().width) <
+		float scale = (max_width / images[images.size() - 1]->getLocalBounds().width) <
 			(max_height / images[images.size() - 1]->getLocalBounds().height) ?
 			(max_width / images[images.size() - 1]->getLocalBounds().width) :
 			(max_height / images[images.size() - 1]->getLocalBounds().height);
+
 		images[images.size() - 1]->setScale(scale);
 		images[images.size() - 1]->setPosition(
 			position.x + (max_width - images[images.size() - 1]->getGlobalBounds().width) / 2,
@@ -110,8 +111,8 @@
 	}
 
 	void Reviewer::update(Vector2f mouse_pos, FloatRect view_cords){
-		setPosition
-		(Vector2f(position.x + view_cords.left - view_cords.width / 2,
+		setPosition(Vector2f(
+			position.x + view_cords.left - view_cords.width / 2,
 			position.y + view_cords.top - view_cords.height / 2)
 		);
 		if (!images.empty()) {

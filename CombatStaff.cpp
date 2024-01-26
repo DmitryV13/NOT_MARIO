@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "CombatStaff.h"
 
-    CombatStaff::CombatStaff(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_, const vector<vector<Enemy*>*>& enemies_)
-        :enemies(enemies_), sandbox(sandbox_) {
+    CombatStaff::CombatStaff(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_, 
+        const vector<vector<Enemy*>*>& enemies_, GeneralInfo* p_info_)
+        :enemies(enemies_), sandbox(sandbox_), p_info(p_info_) {
         initTexture();
         initSprite(player_position, player_bounds);
         initVariables();
@@ -104,14 +105,19 @@
     }
 
     void CombatStaff::updateProjectiles(){
+        bool erased = false;
         for (int i = 0; i < projectiles.size(); i++) {
             projectiles[i]->update();
+            erased = false;
             if (projectiles[i]->updateHit()) {
-                
-            }
-            if (projectiles[i]->updateCollision()) {
-                delete *(projectiles.begin()+i);
                 projectiles.erase(projectiles.begin() + i);
+                    erased = true;
+            }
+            if (!erased) {
+                if (projectiles[i]->updateCollision()) {
+                    delete* (projectiles.begin() + i);
+                    projectiles.erase(projectiles.begin() + i);
+                }
             }
         }
     }
@@ -125,12 +131,17 @@
                     delete projectiles[0];
                     projectiles.erase(projectiles.begin());
                 }
-                projectiles.push_back(new Projectile(staff_S.getPosition()
-                    , Vector2f(mouse_pos.x + (view_cords.left - view_cords.width / 2)
-                        , mouse_pos.y + (view_cords.top - view_cords.height / 2)), sandbox
-                    , enemies));
-
+                if (p_info->changeMana(-8)) {
+                    projectiles.push_back(new Projectile(staff_S.getPosition()
+                        , Vector2f(mouse_pos.x + (view_cords.left - view_cords.width / 2)
+                            , mouse_pos.y + (view_cords.top - view_cords.height / 2)), sandbox
+                        , enemies));
+                    p_info->setManaUtilisation(true);
+                }
             }
+        }
+        else {
+            p_info->setManaUtilisation(false);
         }
     }
     

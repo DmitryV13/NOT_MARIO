@@ -359,7 +359,6 @@ void RedMutant::update_movement()
 
 	case RED_MUTANT_STATE::RED_MUTANT_TELEPORT:
 		{
-			std::cout << "TELEPORT\n";
 			reset_Timer();
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_TELEPORT;
 			if (Shot_timer.getElapsedTime().asSeconds() >= 0.3f)
@@ -397,7 +396,6 @@ void RedMutant::update_movement()
 
 	default:
 		{
-			std::cout << "default\n";
 
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
 			red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;

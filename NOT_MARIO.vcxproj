@@ -142,8 +142,10 @@
     <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="Bow.cpp" />
     <ClCompile Include="BushKiller.cpp" />
-    <ClCompile Include="CheckoutGroup.cpp" />
+    <ClCompile Include="CheckboxItem.cpp" />
     <ClCompile Include="Chest.cpp" />
+    <ClCompile Include="Form.cpp" />
+    <ClCompile Include="FormItem.cpp" />
     <ClCompile Include="MovingAnimObject.cpp" />
     <ClCompile Include="MovingObject.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -181,7 +183,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="MainMenuOption.cpp" />
     <ClCompile Include="InterfaceItem.cpp" />
-    <ClCompile Include="ScaleParametrBar.cpp" />
+    <ClCompile Include="ScaleParameterBar.cpp" />
     <ClCompile Include="Setting.cpp" />
     <ClCompile Include="kusaka.cpp" />
     <ClCompile Include="laser_weapon.cpp" />
@@ -212,8 +214,11 @@
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="Bow.h" />
     <ClInclude Include="BushKiller.h" />
-    <ClInclude Include="CheckoutGroup.h" />
+    <ClInclude Include="CheckboxItem.h" />
     <ClInclude Include="Chest.h" />
+    <ClInclude Include="Form.h" />
+    <ClInclude Include="FormItem.h" />
+    <ClInclude Include="FORM_ITEM_STATE.h" />
     <ClInclude Include="MENU_STATE.h" />
     <ClInclude Include="BUTTON_STATE.h" />
     <ClInclude Include="CallbacksHandler.h" />

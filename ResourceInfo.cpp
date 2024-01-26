@@ -4,20 +4,24 @@
 	ResourceInfo::ResourceInfo(){
 	}
 
-	ResourceInfo::ResourceInfo(float x, float y, Font* font, int text_size, bool self_align_){
-		self_align = self_align_;
-		shape.setPosition(x, y);
+	ResourceInfo::ResourceInfo(float x, float y, Font* font, int text_size, bool image_){
+		image = image_;
+		position.x = x;
+		position.y = y;
+		shape.setPosition(position);
 		text.setFont(*font);
 		text.setCharacterSize(text_size);
 	}
 	
 	ResourceInfo::ResourceInfo(float x, float y, int text_size, Font* font
-		, TextureManager* t_manager, Warehouse* w_object, string name, bool self_align_)
-		: self_align(self_align_) {
+		, TextureManager* t_manager, Warehouse* w_object, string name, bool image_)
+		: image(image_) {
+		position.x = x;
+		position.y = y;
 		resource = w_object->getWarehouseItem(name)->getInfo().first;
 		src_img.setTexture(t_manager->getTexture(w_object->getWarehouseItem(name)->getTMInfo().first, name));
 
-		shape.setPosition(x, y);
+		shape.setPosition(position);
 		max = w_object->getWarehouseItem(name)->getInfo().second == 0 ? "" : "/" + std::to_string(w_object->getWarehouseItem(name)->getInfo().second);
 		text.setFont(*font);
 		text.setString(std::to_string(*resource) + max);
@@ -38,8 +42,8 @@
 		src_img.setPosition(shape.getPosition());
 
 		text.setPosition(
-			shape.getPosition().x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
-			shape.getPosition().y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
+			position.x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
+			position.y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
 		);
 
 		shape.setFillColor(Color(0, 0, 0, 0));
@@ -47,10 +51,11 @@
 
 	ResourceInfo::ResourceInfo(float x, float y, int* resource_, int max_v, int text_size, Font* font
 		, TextureManager* t_manager, int index, string name, bool self_align_)
-		: resource(resource_), self_align(self_align_){
+		: resource(resource_), image(self_align_){
 		src_img.setTexture(t_manager->getTexture(index, name));
-
-		shape.setPosition(x, y);
+		position.x = x;
+		position.y = y;
+		shape.setPosition(position);
 		max = max_v==0?"": "/" + std::to_string(max_v);
 		text.setFont(*font);
 		text.setString(std::to_string(*resource) + max);
@@ -71,57 +76,141 @@
 		src_img.setPosition(shape.getPosition());
 
 		text.setPosition(
-			shape.getPosition().x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
-			shape.getPosition().y + text.getLocalBounds().height/2 - text.getLocalBounds().top
+			position.x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
+			position.y + text.getLocalBounds().height/2 - text.getLocalBounds().top
 		);
 
 		shape.setFillColor(Color(0,0,0,0));
 	}
 
-	void ResourceInfo::addInfo(TextureManager* t_manager, Warehouse* w_object, string name){
+	void ResourceInfo::addInfo(TextureManager* t_manager, Warehouse* w_object, string name, bool x){
 		resource = w_object->getWarehouseItem(name)->getInfo().first;
-		src_img.setTexture(t_manager->getTexture(w_object->getWarehouseItem(name)->getTMInfo().first, name));
+		if (x) {
+			prev = "x";
+		}
+		else {
+			prev = "";
+		}
 		max = w_object->getWarehouseItem(name)->getInfo().second == 0 ? "" : "/" + std::to_string(w_object->getWarehouseItem(name)->getInfo().second);
-		text.setString(std::to_string(*resource) + max);
+		text.setString(prev + std::to_string(*resource) + max);
 		text.setFillColor(Color::White);
-		src_img.setScale(
-			(text.getGlobalBounds().height * 2) / src_img.getGlobalBounds().height,
-			(text.getGlobalBounds().height * 2) / src_img.getGlobalBounds().height
-		);
 
-		shape.setSize(Vector2f(
-			src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 + text.getGlobalBounds().width,
-			text.getGlobalBounds().height * 2)
-		);
+		if (!image) {
+			shape.setSize(Vector2f(
+				text.getGlobalBounds().width * 2,
+				text.getGlobalBounds().height * 2)
+			);
 
-		src_img.setPosition(shape.getPosition());
+			text.setPosition(
+				position.x - text.getLocalBounds().left + text.getGlobalBounds().width/2,
+				position.y - text.getLocalBounds().top + text.getGlobalBounds().height/2
+			);
+		}
+		else {
+			src_img.setTexture(t_manager->getTexture(w_object->getWarehouseItem(name)->getTMInfo().first, name));
+			src_img.setScale(
+				(text.getGlobalBounds().height * 2) / src_img.getGlobalBounds().height,
+				(text.getGlobalBounds().height * 2) / src_img.getGlobalBounds().height
+			);
 
-		text.setPosition(
-			shape.getPosition().x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
-			shape.getPosition().y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
-		);
+			shape.setSize(Vector2f(
+				src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 + text.getGlobalBounds().width,
+				text.getGlobalBounds().height * 2)
+			);
+
+			src_img.setPosition(shape.getPosition());
+
+			text.setPosition(
+				position.x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
+				position.y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
+			);
+		}
+
+
+		shape.setFillColor(Color(0, 0, 0, 0));
+	}
+
+	void ResourceInfo::addInfo(TextureManager* t_manager, WarehouseItem* w_item, bool x){
+		resource = w_item->getInfo().first;
+		if (x) {
+			prev = "x";
+		}
+		else {
+			prev = "";
+		}
+		string h= prev + std::to_string(*resource) + max;
+		max = w_item->getInfo().second == 0 ? "" : "/" + std::to_string(w_item->getInfo().second);
+		text.setString(prev + std::to_string(*resource) + max);
+		text.setFillColor(Color::White);
+
+		if (!image) {
+			shape.setSize(Vector2f(
+				text.getGlobalBounds().width * 2,
+				text.getGlobalBounds().height * 2)
+			);
+
+			text.setPosition(
+				position.x - text.getLocalBounds().left + text.getGlobalBounds().width / 2,
+				position.y - text.getLocalBounds().top + text.getGlobalBounds().height / 2
+			);
+		}
+		else {
+			src_img.setTexture(t_manager->getTexture(w_item->getTMInfo().first, w_item->getTMInfo().second));
+			src_img.setScale(
+				(text.getGlobalBounds().height * 2) / src_img.getGlobalBounds().height,
+				(text.getGlobalBounds().height * 2) / src_img.getGlobalBounds().height
+			);
+
+			shape.setSize(Vector2f(
+				src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 + text.getGlobalBounds().width,
+				text.getGlobalBounds().height * 2)
+			);
+
+			src_img.setPosition(position);
+
+			text.setPosition(
+				position.x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
+				position.y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
+			);
+		}
+
 
 		shape.setFillColor(Color(0, 0, 0, 0));
 	}
 
 	void ResourceInfo::update(Vector2f mouse_pos, FloatRect view_cords){
-		setPosition
-		(Vector2f(shape.getPosition().x + view_cords.left - view_cords.width / 2,
-			shape.getPosition().y + view_cords.top - view_cords.height / 2)
+		shape.setPosition(Vector2f(
+			position.x + view_cords.left - view_cords.width / 2,
+			position.y + view_cords.top - view_cords.height / 2)
 		);
+
 		if (resource) {
-			text.setString(std::to_string(*resource) + max);
-			if (self_align) {
+			text.setString(prev + std::to_string(*resource) + max);
+			if (image) {
 				shape.setSize(Vector2f(
 					src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 + text.getGlobalBounds().width,
 					text.getGlobalBounds().height * 2)
 				);
 
-				src_img.setPosition(shape.getPosition());
+				src_img.setPosition(Vector2f(
+					position.x + view_cords.left - view_cords.width / 2,
+					position.y + view_cords.top - view_cords.height / 2)
+				);
 
 				text.setPosition(
-					shape.getPosition().x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
-					shape.getPosition().y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
+					view_cords.left - view_cords.width / 2 + position.x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
+					view_cords.top - view_cords.height / 2 + position.y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
+				);
+			}
+			else {
+				shape.setSize(Vector2f(
+					text.getGlobalBounds().width * 2,
+					text.getGlobalBounds().height * 2)
+				);
+			
+				text.setPosition(
+					view_cords.left - view_cords.width / 2 + position.x - text.getLocalBounds().left + text.getGlobalBounds().width / 2,
+					view_cords.top - view_cords.height / 2 + position.y - text.getLocalBounds().top + text.getGlobalBounds().height / 2
 				);
 			}
 		}

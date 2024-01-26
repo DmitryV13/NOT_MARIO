@@ -11,6 +11,7 @@ protected:
 	RectangleShape shape;//*2
 	Text text;
 	Sprite src_img;//*2
+	Vector2f position;
 public:
 	ImageInfo();
 	ImageInfo(float x, float y, string text_, int text_size, Font* font, TextureManager* t_manager, int index, string name);

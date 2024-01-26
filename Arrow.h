@@ -20,6 +20,7 @@ private:
 
 	short side;
 	bool is_flying;
+	bool stuck;
 	float speed;
 	Vector2f dest_pos;
 	Vector2f norm_s;
@@ -37,6 +38,7 @@ public:
 	void setPosition(Vector2f position);
 	void setRotationAngle(float angle);
 	const bool isFlying() const;
+	const bool isStuck() const;
 	bool updateHit();
 
 	void render(RenderTarget& target);
