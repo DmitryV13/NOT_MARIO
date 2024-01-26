@@ -15,6 +15,7 @@
 class TileMap {
 private:
 	
+	int bim = 2;
 	sf::Texture background_T;
 	sf::Sprite backround_S;
 
