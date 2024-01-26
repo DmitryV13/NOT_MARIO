@@ -358,9 +358,9 @@
 				temp->createElementLine();
 				temp->addIElement((InterfaceItem*)temp_i, 0);
 				temp_i->addItemInfo(t_manager, warehouse, "Arrow1");
+				temp_i->setBColor(Color(118, 118, 118, 255));
 				delete tmp;
 				i_tc0_3->addIElement((InterfaceItem*)temp, in);
-				temp->setBColor(Color(118, 118, 118, 255));
 			}
 		}
 		i_tc0_3->setAlignment("space around", "space around");

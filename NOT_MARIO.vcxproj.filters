@@ -111,18 +111,6 @@
     <ClCompile Include="NOT_MARIO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Exit.cpp">
-      <Filter>Source Files\GUI\Pages</Filter>
-    </ClCompile>
-    <ClCompile Include="MainMenuOption.cpp">
-      <Filter>Source Files\GUI\Pages</Filter>
-    </ClCompile>
-    <ClCompile Include="Setting.cpp">
-      <Filter>Source Files\GUI\Pages</Filter>
-    </ClCompile>
-    <ClCompile Include="RoadMap.cpp">
-      <Filter>Source Files\GUI\Pages</Filter>
-    </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>Source Files\Map</Filter>
     </ClCompile>
@@ -170,9 +158,6 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\GameObjects\Alive\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Eye_evil.cpp">
-      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="RedMutant.cpp">
       <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
@@ -261,32 +246,65 @@
     <ClCompile Include="BasicImage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>Source Files\Map\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="AnimObject.cpp">
-      <Filter>Source Files\Map\Objects</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MovingObject.cpp">
-      <Filter>Source Files\Map\Objects</Filter>
+    <ClCompile Include="BushKiller.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MovingAnimObject.cpp">
-      <Filter>Source Files\Map\Objects</Filter>
+    <ClCompile Include="CheckboxItem.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Chest.cpp">
-      <Filter>Source Files\Map\Objects</Filter>
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Form.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FormItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingAnimObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthBarEnemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hornet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HornetHive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="killer_leaf.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Exit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RoadMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EyeEvil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuOption.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Setting.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Switch.cpp">
-      <Filter>Source Files\Map\Objects</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Exit.h">
-      <Filter>Header Files\GUI\Pages</Filter>
-    </ClInclude>
-    <ClInclude Include="RoadMap.h">
-      <Filter>Header Files\GUI\Pages</Filter>
-    </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>Header Files\Map</Filter>
     </ClInclude>
@@ -299,17 +317,11 @@
     <ClInclude Include="MyView.h">
       <Filter>Header Files\ServiceClasses</Filter>
     </ClInclude>
-    <ClInclude Include="MainMenuOption.h">
-      <Filter>Header Files\GUI\Pages</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files\ServiceClasses</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>Header Files\ServiceClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="Setting.h">
-      <Filter>Header Files\GUI\Pages</Filter>
     </ClInclude>
     <ClInclude Include="TileFactory.h">
       <Filter>Header Files\Map</Filter>
@@ -353,9 +365,6 @@
     <ClInclude Include="TileAnim.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TileBox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MENU_STATE.h">
       <Filter>Header Files\Enums</Filter>
     </ClInclude>
@@ -380,34 +389,166 @@
     <ClInclude Include="BasicImage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>Header Files\Map\Tile</Filter>
-    </ClInclude>
     <ClInclude Include="TileAnim.h">
       <Filter>Header Files\Map\Tile</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>Header Files\Map\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="AnimObject.h">
-      <Filter>Header Files\Map\Objects</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MovingObject.h">
-      <Filter>Header Files\Map\Objects</Filter>
+    <ClInclude Include="AnimatedImage.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MovingAnimObject.h">
-      <Filter>Header Files\Map\Objects</Filter>
+    <ClInclude Include="BushKiller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckboxItem.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Chest.h">
-      <Filter>Header Files\Map\Objects</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Form.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FormItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FORM_ITEM_STATE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BUTTON_STATE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CallbacksHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ComposedIMG.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CRect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FontManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneralInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Group.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthBarEnemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hornet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HornetHive.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="killer_leaf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="INTERFACE_ITEM_TYPE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OBJECT_TYPE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Warehouse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Label.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PAGE_STATE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="POP_UP_WINDOW_STATE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingAnimObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PopUpWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RedMutant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Exit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Reviewer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RoadMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EyeEvil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuOption.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InterfaceItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="kusaka.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="laser_weapon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScaleParametrBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Setting.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SliderControl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Switch.h">
-      <Filter>Header Files\Map\Objects</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TabContainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WolfBoss.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NOT_MARIO.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

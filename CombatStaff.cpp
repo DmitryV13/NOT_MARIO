@@ -104,14 +104,19 @@
     }
 
     void CombatStaff::updateProjectiles(){
+        bool erased = false;
         for (int i = 0; i < projectiles.size(); i++) {
             projectiles[i]->update();
+            erased = false;
             if (projectiles[i]->updateHit()) {
-                
-            }
-            if (projectiles[i]->updateCollision()) {
-                delete *(projectiles.begin()+i);
                 projectiles.erase(projectiles.begin() + i);
+                    erased = true;
+            }
+            if (!erased) {
+                if (projectiles[i]->updateCollision()) {
+                    delete* (projectiles.begin() + i);
+                    projectiles.erase(projectiles.begin() + i);
+                }
             }
         }
     }

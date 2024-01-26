@@ -17,6 +17,9 @@
 #include "HornetHive.h"
 #include "TextureManager.h"
 #include "Warehouse.h"
+#include "Form.h"
+#include "CheckboxItem.h"
+#include "OBJECT_TYPE.h"
 
 using namespace::sf;
 
@@ -24,9 +27,13 @@ class Level{
 private:
 	RenderWindow* window;
 
-	PopUpWindow* pause_menu;
 	ScaleParametrBar* life_bar;
 	Clock menu_timer;
+
+	PopUpWindow* pause_menu;
+	PopUpWindow* level_inventory;
+	PopUpWindow* chest_items;
+	Form* form;
 
 	TextureManager* t_manager;
 	Warehouse* warehouse;
@@ -45,6 +52,8 @@ private:
 	vector<hornet*>* hornet_vector;
 	vector<HornetHive*>* hornet_hives_vector;
 
+	short object_available;
+
 	int num_of_enemy_{ 12 };
 	short regime;
 	double screenWidth;
@@ -52,11 +61,6 @@ private:
 
 	short game_state;
 
-
-	//FloatRect* player_gl_b;
-	//Vector2f* player_pos;
-	//Vector2f* player_vel;
-	//short* hp;
 
 	//void initWindow();
 	void initPlayer(short level);
@@ -82,6 +86,7 @@ public:
 	void updateGameState();
 	void updateMap();
 	void updateLifeBar();
+	void updateObjectsCollision();
 
 	void renderGameMenu();
 	void renderPLayer();

@@ -6,7 +6,9 @@
 
 	ResourceInfo::ResourceInfo(float x, float y, Font* font, int text_size, bool image_){
 		image = image_;
-		shape.setPosition(x, y);
+		position.x = x;
+		position.y = y;
+		shape.setPosition(position);
 		text.setFont(*font);
 		text.setCharacterSize(text_size);
 	}
@@ -14,10 +16,12 @@
 	ResourceInfo::ResourceInfo(float x, float y, int text_size, Font* font
 		, TextureManager* t_manager, Warehouse* w_object, string name, bool image_)
 		: image(image_) {
+		position.x = x;
+		position.y = y;
 		resource = w_object->getWarehouseItem(name)->getInfo().first;
 		src_img.setTexture(t_manager->getTexture(w_object->getWarehouseItem(name)->getTMInfo().first, name));
 
-		shape.setPosition(x, y);
+		shape.setPosition(position);
 		max = w_object->getWarehouseItem(name)->getInfo().second == 0 ? "" : "/" + std::to_string(w_object->getWarehouseItem(name)->getInfo().second);
 		text.setFont(*font);
 		text.setString(std::to_string(*resource) + max);
@@ -38,8 +42,8 @@
 		src_img.setPosition(shape.getPosition());
 
 		text.setPosition(
-			shape.getPosition().x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
-			shape.getPosition().y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
+			position.x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
+			position.y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
 		);
 
 		shape.setFillColor(Color(0, 0, 0, 0));
@@ -49,8 +53,9 @@
 		, TextureManager* t_manager, int index, string name, bool self_align_)
 		: resource(resource_), image(self_align_){
 		src_img.setTexture(t_manager->getTexture(index, name));
-
-		shape.setPosition(x, y);
+		position.x = x;
+		position.y = y;
+		shape.setPosition(position);
 		max = max_v==0?"": "/" + std::to_string(max_v);
 		text.setFont(*font);
 		text.setString(std::to_string(*resource) + max);
@@ -71,8 +76,8 @@
 		src_img.setPosition(shape.getPosition());
 
 		text.setPosition(
-			shape.getPosition().x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
-			shape.getPosition().y + text.getLocalBounds().height/2 - text.getLocalBounds().top
+			position.x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
+			position.y + text.getLocalBounds().height/2 - text.getLocalBounds().top
 		);
 
 		shape.setFillColor(Color(0,0,0,0));
@@ -97,8 +102,8 @@
 			);
 
 			text.setPosition(
-				shape.getPosition().x - text.getLocalBounds().left + text.getGlobalBounds().width/2,
-				shape.getPosition().y + text.getLocalBounds().top + text.getGlobalBounds().height/2
+				position.x - text.getLocalBounds().left + text.getGlobalBounds().width/2,
+				position.y - text.getLocalBounds().top + text.getGlobalBounds().height/2
 			);
 		}
 		else {
@@ -116,8 +121,8 @@
 			src_img.setPosition(shape.getPosition());
 
 			text.setPosition(
-				shape.getPosition().x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
-				shape.getPosition().y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
+				position.x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
+				position.y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
 			);
 		}
 
@@ -133,6 +138,7 @@
 		else {
 			prev = "";
 		}
+		string h= prev + std::to_string(*resource) + max;
 		max = w_item->getInfo().second == 0 ? "" : "/" + std::to_string(w_item->getInfo().second);
 		text.setString(prev + std::to_string(*resource) + max);
 		text.setFillColor(Color::White);
@@ -144,8 +150,8 @@
 			);
 
 			text.setPosition(
-				shape.getPosition().x - text.getLocalBounds().left + text.getGlobalBounds().width / 2,
-				shape.getPosition().y + text.getLocalBounds().top + text.getGlobalBounds().height / 2
+				position.x - text.getLocalBounds().left + text.getGlobalBounds().width / 2,
+				position.y - text.getLocalBounds().top + text.getGlobalBounds().height / 2
 			);
 		}
 		else {
@@ -160,11 +166,11 @@
 				text.getGlobalBounds().height * 2)
 			);
 
-			src_img.setPosition(shape.getPosition());
+			src_img.setPosition(position);
 
 			text.setPosition(
-				shape.getPosition().x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
-				shape.getPosition().y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
+				position.x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
+				position.y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
 			);
 		}
 
@@ -173,10 +179,11 @@
 	}
 
 	void ResourceInfo::update(Vector2f mouse_pos, FloatRect view_cords){
-		setPosition
-		(Vector2f(shape.getPosition().x + view_cords.left - view_cords.width / 2,
-			shape.getPosition().y + view_cords.top - view_cords.height / 2)
+		shape.setPosition(Vector2f(
+			position.x + view_cords.left - view_cords.width / 2,
+			position.y + view_cords.top - view_cords.height / 2)
 		);
+
 		if (resource) {
 			text.setString(prev + std::to_string(*resource) + max);
 			if (image) {
@@ -185,11 +192,14 @@
 					text.getGlobalBounds().height * 2)
 				);
 
-				src_img.setPosition(shape.getPosition());
+				src_img.setPosition(Vector2f(
+					position.x + view_cords.left - view_cords.width / 2,
+					position.y + view_cords.top - view_cords.height / 2)
+				);
 
 				text.setPosition(
-					shape.getPosition().x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
-					shape.getPosition().y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
+					view_cords.left - view_cords.width / 2 + position.x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
+					view_cords.top - view_cords.height / 2 + position.y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
 				);
 			}
 			else {
@@ -199,8 +209,8 @@
 				);
 			
 				text.setPosition(
-					shape.getPosition().x - text.getLocalBounds().left + text.getGlobalBounds().width / 2,
-					shape.getPosition().y + text.getLocalBounds().top + text.getGlobalBounds().height / 2
+					view_cords.left - view_cords.width / 2 + position.x - text.getLocalBounds().left + text.getGlobalBounds().width / 2,
+					view_cords.top - view_cords.height / 2 + position.y - text.getLocalBounds().top + text.getGlobalBounds().height / 2
 				);
 			}
 		}

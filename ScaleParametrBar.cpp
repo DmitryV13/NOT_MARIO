@@ -32,7 +32,7 @@
 	}
 
 	void ScaleParametrBar::updateScaleWidth(short new_width){
-		middle_bar.width = static_cast<float>(new_width) / 1000 * 146;
+		middle_bar.width = static_cast<float>(new_width) / 100 * 146;
 	}
 
 	void ScaleParametrBar::render(RenderTarget* target){

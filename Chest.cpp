@@ -3,7 +3,7 @@
 
 void Chest::filled_in()
 {
-    items.resize(8);
+    //items.resize(8);
     std::string fNum = std::to_string(fileNumber);
     std::string path = "Maps/Resourse/Filling"+fNum+".txt";
     std::ifstream fin;
@@ -17,7 +17,7 @@ void Chest::filled_in()
     bool access_ = true;
     while (fin >> name_ >> amount_ >> max_ >> index_ >> frame_numbers >> rectLeft >> rectTop >> rectWidth >> rectHeight)
     {
-        items.push_back(new WarehouseItem{ name_, amount_, max_, access_, index_, sf::IntRect(rectLeft, rectTop, rectWidth, rectWidth), frame_numbers });
+        items.push_back(new WarehouseItem{ name_, amount_, max_, access_, index_, sf::IntRect(rectLeft, rectTop, rectWidth, rectHeight), frame_numbers });
     }
 
     fin.close();

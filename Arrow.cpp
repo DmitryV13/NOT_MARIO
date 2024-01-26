@@ -24,6 +24,7 @@
 	
 	void Arrow::initVariables(){
 		is_flying = false;
+		stuck = false;
 	}
 	
 	void Arrow::update(){
@@ -51,36 +52,12 @@
 		return is_flying;
 	}
 
+	const bool Arrow::isStuck() const{
+		return stuck;
+	}
+
 
 	bool Arrow::updateHit() {
-		//for (auto& enemy : *(enemies[0]))
-		//{
-		//	if (arrow_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
-		//		enemy->changeHP(10);
-		//		return true;
-		//	}
-		//}
-		//for (auto& enemy : *(enemies[1]))
-		//{
-		//	if (arrow_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
-		//		enemy->changeHP(10);
-		//		return true;
-		//	}
-		//}
-		//for (auto& enemy : *(enemies[2]))
-		//{
-		//	if (arrow_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
-		//		enemy->changeHP(10);
-		//		return true;
-		//	}
-		//}
-		//for (auto& enemy : *(enemies[3]))
-		//{
-		//	if (arrow_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
-		//		enemy->changeHP(10);
-		//		return true;
-		//	}
-		//}
 		for (auto enemy_l : enemies)
 		{
 			for(auto enemy : *enemy_l ){
@@ -93,19 +70,6 @@
 
 		return false;
 	}
-
-
-	//bool Arrow::checkHit() {
-	//	for (int i = 0; i < enemies.size(); i++) {
-	//		for (int j = 0; j < enemies[i]->size(); j++) {
-	//			if (arrow_S.getGlobalBounds().intersects((*enemies[i])[j]->get_global_bounds())) {
-	//				(*enemies[i])[j]->changeHP(15);
-	//			}
-	//
-	//		}
-	//	}
-	//	return true;;
-	//}
 	
 	bool Arrow::updateCollision(){
 		for (int i = (arrow_S.getPosition().y - 4) / 64; i < (arrow_S.getPosition().y + 3) / 64; i++) {
@@ -116,6 +80,7 @@
 					if (bul.intersects(til)) {
 						norm_s.x = 0;
 						norm_s.y = 0;
+						stuck = true;
 						return true;
 					}
 				}

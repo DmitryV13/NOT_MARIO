@@ -114,15 +114,18 @@
 	}
 	
 	void Bow::updateProjectiles(){
+		bool erased = false;
 		for (int i = 0; i < arrows.size(); i++) {
+			erased = false;
 			arrows[i]->update();
-			if (arrows[i]->updateHit()) {
-
-			}
-			if (arrows[i]->isFlying()) {
-				arrows[i]->updateCollision();
-				//delete* (arrows.begin() + i);
-				//arrows.erase(arrows.begin() + i);
+			if (arrows[i]->isFlying() && !arrows[i]->isStuck()) {
+				if (arrows[i]->updateHit()) {
+					arrows.erase(arrows.begin() + i);
+					erased = true;
+				}
+				if (!erased) {
+					arrows[i]->updateCollision();
+				}
 			}
 		}
 	}
