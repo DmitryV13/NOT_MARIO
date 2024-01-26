@@ -223,7 +223,7 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         
         
         player_S.move(info->getVelocity());
-        std::cout << "x - " << getPosition().x << ", y - " << getPosition().y << std::endl;
+        //std::cout << "x - " << getPosition().x << ", y - " << getPosition().y << std::endl;
     }
 
     void Player::updateMovement(RenderWindow* window, FloatRect view_cords) {

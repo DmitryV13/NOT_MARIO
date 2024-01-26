@@ -35,6 +35,7 @@ private:
 	PopUpWindow* level_inventory;
 	PopUpWindow* chest_items;
 	Form* form;
+	Object* available_object;
 
 	TextureManager* t_manager;
 	Warehouse* warehouse;

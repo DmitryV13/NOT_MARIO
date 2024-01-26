@@ -26,12 +26,21 @@ Switch::Switch(std::string name, float position_x, float position_y, short int s
 	this->obj = obj;
 }
 
+void Switch::render_object(sf::RenderTarget& target)
+{
+    object_S.setPosition(position_x, position_y);
+    target.draw(object_S);
+    obj->render_object(target);
+}
+
 void Switch::useObject()
 {
 	if (!on) {
 		on = true;
 	}
-	else on = false;
+	else 
+        on = false;
+    std::cout << "call" << std::endl;
 }
 
 void Switch::animation_object()
@@ -41,7 +50,7 @@ void Switch::animation_object()
         if (obj) {
             obj->moveLeft();
             obj->moveUp();
-            obj->animation_object();
+            //obj->animation_object();
         }
         if (animationTimer.getElapsedTime().asSeconds() >= animation_time)
         {
@@ -63,7 +72,7 @@ void Switch::animation_object()
         if (obj) {
             obj->moveRight();
             obj->moveDown();
-            obj->animation_object();
+            //obj->animation_object();
         }
         if (animationTimer.getElapsedTime().asSeconds() >= animation_time)
         {

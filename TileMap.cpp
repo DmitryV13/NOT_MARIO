@@ -102,7 +102,7 @@ void TileMap::init_tilemap(float mapH, float mapW)
 void TileMap::init_level(short int level)
 {
 	if (level >= 4) {
-		std::string level_ = std::to_string(level-bim);
+		std::string level_ = std::to_string(level-3);
 		std::string path = "Maps/level"+level_+"/level.txt";
 		std::ifstream fin;
 		fin.open(path);
@@ -174,7 +174,7 @@ void TileMap::init_level(short int level)
 
 void TileMap::init_objects(short int level)
 {
-	std::string level_ = std::to_string(level-bim);
+	std::string level_ = std::to_string(level-3);
 	std::string path = "Maps/level"+level_+"/Object.txt";
 	std::ifstream fin;
 	fin.open(path);
@@ -196,7 +196,7 @@ void TileMap::init_objects(short int level)
 
 void TileMap::init_animObjects(short int level)
 {
-	std::string level_ = std::to_string(level-bim);
+	std::string level_ = std::to_string(level-3);
 	std::string path = "Maps/level"+level_+"/AnimObject.txt";
 	std::ifstream fin;
 	fin.open(path);
@@ -217,7 +217,7 @@ void TileMap::init_animObjects(short int level)
 
 void TileMap::init_movingObjects(short int level)
 {
-	std::string level_ = std::to_string(level-bim);
+	std::string level_ = std::to_string(level-3);
 	std::string path = "Maps/level"+level_+"/MovingObject.txt";
 	std::ifstream fin;
 	fin.open(path);
@@ -240,7 +240,7 @@ void TileMap::init_movingObjects(short int level)
 
 void TileMap::init_movingAnimObjects(short int level)
 {
-	std::string level_ = std::to_string(level-bim);
+	std::string level_ = std::to_string(level-3);
 	std::string path = "Maps/level"+level_+"/MovingAnimObject.txt";
 	std::ifstream fin;
 	fin.open(path);
@@ -262,7 +262,7 @@ void TileMap::init_movingAnimObjects(short int level)
 
 void TileMap::init_switch(short int level)
 {
-	std::string level_ = std::to_string(level-bim);
+	std::string level_ = std::to_string(level-3);
 	std::vector<Object*> tmpObject;
 	std::string path_ = "Maps/level"+level_+"/forSwitch.txt";
 	std::ifstream fin_;
@@ -304,13 +304,13 @@ void TileMap::init_switch(short int level)
 		object.push_back(new Switch{ objectName, pos_x, pos_y, size_w, size_h, anim_f, anim_q, anim_t});
 	}
 	fin.close();
-	for (auto it : tmpObject) object.push_back(it);
+	//for (auto it : tmpObject) object.push_back(it);
 	tmpObject.clear();
 }
 
 void TileMap::init_chest(short int level)
 {
-	std::string level_ = std::to_string(level-bim);
+	std::string level_ = std::to_string(level-3);
 	std::string path = "Maps/level"+level_+"/Chest.txt";
 	std::ifstream fin;
 	fin.open(path);
