@@ -41,6 +41,7 @@ void Switch::animation_object()
         if (obj) {
             obj->moveLeft();
             obj->moveUp();
+            obj->animation_object();
         }
         if (animationTimer.getElapsedTime().asSeconds() >= animation_time)
         {
@@ -62,6 +63,7 @@ void Switch::animation_object()
         if (obj) {
             obj->moveRight();
             obj->moveDown();
+            obj->animation_object();
         }
         if (animationTimer.getElapsedTime().asSeconds() >= animation_time)
         {

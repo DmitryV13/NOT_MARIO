@@ -16,7 +16,6 @@ TileMap::TileMap(short level) : sizeTexture(64), mapH(50), mapW(100)
 	init_switch(level);
 	init_chest(level);
 	init_pos_enemy();
-	//for (auto& it : object) it->useObject();
 }
 
 TileMap::~TileMap()
@@ -103,7 +102,7 @@ void TileMap::init_tilemap(float mapH, float mapW)
 void TileMap::init_level(short int level)
 {
 	if (level >= 4) {
-		std::string level_ = std::to_string(level-3);
+		std::string level_ = std::to_string(level-bim);
 		std::string path = "Maps/level"+level_+"/level.txt";
 		std::ifstream fin;
 		fin.open(path);
@@ -175,7 +174,7 @@ void TileMap::init_level(short int level)
 
 void TileMap::init_objects(short int level)
 {
-	std::string level_ = std::to_string(level-3);
+	std::string level_ = std::to_string(level-bim);
 	std::string path = "Maps/level"+level_+"/Object.txt";
 	std::ifstream fin;
 	fin.open(path);
@@ -197,7 +196,7 @@ void TileMap::init_objects(short int level)
 
 void TileMap::init_animObjects(short int level)
 {
-	std::string level_ = std::to_string(level-3);
+	std::string level_ = std::to_string(level-bim);
 	std::string path = "Maps/level"+level_+"/AnimObject.txt";
 	std::ifstream fin;
 	fin.open(path);
@@ -218,7 +217,7 @@ void TileMap::init_animObjects(short int level)
 
 void TileMap::init_movingObjects(short int level)
 {
-	std::string level_ = std::to_string(level-3);
+	std::string level_ = std::to_string(level-bim);
 	std::string path = "Maps/level"+level_+"/MovingObject.txt";
 	std::ifstream fin;
 	fin.open(path);
@@ -241,7 +240,7 @@ void TileMap::init_movingObjects(short int level)
 
 void TileMap::init_movingAnimObjects(short int level)
 {
-	std::string level_ = std::to_string(level-3);
+	std::string level_ = std::to_string(level-bim);
 	std::string path = "Maps/level"+level_+"/MovingAnimObject.txt";
 	std::ifstream fin;
 	fin.open(path);
@@ -263,7 +262,7 @@ void TileMap::init_movingAnimObjects(short int level)
 
 void TileMap::init_switch(short int level)
 {
-	std::string level_ = std::to_string(level-3);
+	std::string level_ = std::to_string(level-bim);
 	std::vector<Object*> tmpObject;
 	std::string path_ = "Maps/level"+level_+"/forSwitch.txt";
 	std::ifstream fin_;
@@ -311,7 +310,7 @@ void TileMap::init_switch(short int level)
 
 void TileMap::init_chest(short int level)
 {
-	std::string level_ = std::to_string(level-3);
+	std::string level_ = std::to_string(level-bim);
 	std::string path = "Maps/level"+level_+"/Chest.txt";
 	std::ifstream fin;
 	fin.open(path);
@@ -349,7 +348,7 @@ void TileMap::init_tile_list()
 	tile_list['`'] = new Tile();
 
 	//Функциональные и декоративыне блоки.
-	tile_list['.'] = new Tile("ladder1", 0, sizeTexture, sizeTexture, '.');
+	tile_list['^'] = new Tile("ladder1", 0, sizeTexture, sizeTexture, '.');
 	tile_list['_'] = new Tile("ladder2", 0, sizeTexture, sizeTexture, '_');
 	tile_list['-'] = new Tile("ladder3", 0, sizeTexture, sizeTexture, '-');
 	tile_list['='] = new Tile("ladder4", 0, sizeTexture, sizeTexture, '=');
@@ -361,8 +360,8 @@ void TileMap::init_tile_list()
 	tile_list['2'] = new Tile("tree2", 0, 128, 256, '2');
 	tile_list['3'] = new Tile("tree3", 0, 128, 256, '3');
 	tile_list['4'] = new Tile("tree4", 0, 128, 192, '4');
-	tile_list['^'] = new TileAnim("water_top_layer_back", 2, sizeTexture, sizeTexture, '^', 64, 4, 0.5);
-	tile_list['*'] = new TileAnim("water_down_layer_back", 2, sizeTexture, sizeTexture, '*', 64, 4, 0.5);
+	tile_list['5'] = new Tile("cactus1", 0, sizeTexture, sizeTexture, '5');
+	tile_list['6'] = new Tile("cactus2", 0, sizeTexture, sizeTexture, '6');
 
 
 	//Анимированные блоки
