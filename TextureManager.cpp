@@ -34,6 +34,12 @@
 		if (!textures[0]["Arrow1"].loadFromFile("Textures/Weapons/arrow1.png")) {
 			std::cout << "Error -> TextureManager -> couldn't load Arrow1 texture" << std::endl;
 		}
+		if (!textures[0]["RedScaleBar"].loadFromFile("Textures/GUI/scales/redScale.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load RedScaleBar texture" << std::endl;
+		}
+		if (!textures[0]["BlueScaleBar"].loadFromFile("Textures/GUI/scales/blueScale.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load BlueScaleBar texture" << std::endl;
+		}
 
 		//label 1 (6)
 		textures.push_back(unordered_map<string, Texture>());

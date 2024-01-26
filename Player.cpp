@@ -58,7 +58,7 @@
         weapons.push_back(new Fist());
         weapons.push_back(new Bow(player_S.getPosition(), player_S.getGlobalBounds(), sandbox, enemies));
         weapons.push_back(new Sword(player_S.getPosition(), player_S.getGlobalBounds(), enemies));
-        weapons.push_back(new CombatStaff(player_S.getPosition(), player_S.getGlobalBounds(), sandbox, enemies));
+        weapons.push_back(new CombatStaff(player_S.getPosition(), player_S.getGlobalBounds(), sandbox, enemies, info));
     }
 
     void Player::initAnimation(){
@@ -68,7 +68,7 @@
 
     void Player::initPhysics(){
         stan_timer.restart();
-        info = new GeneralInfo(100);
+        info = new GeneralInfo(100, 80);
         info->setGlobalBounds(player_S.getGlobalBounds());
         info->setPosition(player_S.getPosition());
 
@@ -172,11 +172,12 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         info->setGlobalBounds(player_S.getGlobalBounds());
         info->setPosition(player_S.getPosition());
 
+        if (!info->isManaUsed()) {
+            info->changeMana(1);
+        }
+
         updateWeapon(window, view_cords);
         updateProjectiles();
-        //std::cout << player_S.getPosition().x << "  " << player_S.getPosition().y << std::endl;
-        //std::cout << info->getVelocity().x << "  " << info->getVelocity().y << std::endl;
-        //std::cout << velocity.x << "  " << velocity.y << std::endl;
     }
 }
 
@@ -266,7 +267,9 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         if (!Mouse::isButtonPressed(Mouse::Left)) {
             if (chosen_weapon < weapons.size())
                 weapons[chosen_weapon]->attack(movingDirection, Vector2f(Mouse::getPosition(*window)), view_cords, false);
+            
         }
+        //std::cout << info->isManaUsed() << std::endl;
     }
 
     void Player::updateAnimation(){
@@ -402,6 +405,10 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         animationSwitch = true;
     }
 
+    void Player::setDeceleration(float dec){
+        deceleration = dec;
+    }
+
     void Player::change_weapon(short count){
         if (checkStan())
             return;
@@ -442,6 +449,7 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
                         newPosition.x = j * sandbox->getSizeTexture() + sandbox->getSizeTexture();
                     }
                 }
+                //std::cout << sandbox->getInteraction(i, j) << std::endl;
             }
         }
         player_S.setPosition(newPosition.x, newPosition.y);

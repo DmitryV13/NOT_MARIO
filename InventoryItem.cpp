@@ -136,8 +136,8 @@
 		image->update(mouse_pos, view_cords);
 		r_info->update(mouse_pos, view_cords);
 		text.setPosition(Vector2f(
-			view_cords.left-view_cords.width/2 + position.x + (width - text.getGlobalBounds().width) / 2,
-			view_cords.left - view_cords.width / 2 + position.y + width - text.getGlobalBounds().height
+			view_cords.left-view_cords.width / 2 + position.x + (width - text.getGlobalBounds().width) / 2,
+			view_cords.top - view_cords.height / 2 + position.y + width - text.getGlobalBounds().height
 		));
 		background.setPosition(view_cords.left - view_cords.width / 2 + background.getPosition().x,
 			view_cords.top - view_cords.height / 2 + background.getPosition().y

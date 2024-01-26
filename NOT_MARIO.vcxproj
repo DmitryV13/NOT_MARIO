@@ -183,7 +183,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="MainMenuOption.cpp" />
     <ClCompile Include="InterfaceItem.cpp" />
-    <ClCompile Include="ScaleParametrBar.cpp" />
+    <ClCompile Include="ScaleParameterBar.cpp" />
     <ClCompile Include="Setting.cpp" />
     <ClCompile Include="kusaka.cpp" />
     <ClCompile Include="laser_weapon.cpp" />

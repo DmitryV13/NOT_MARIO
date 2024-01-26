@@ -29,7 +29,7 @@
 		//	}
 		//}
 	
-	
+		all_static_items = new Group(0, 0, screenWidth, screenHeight);
 		pause_menu = new PopUpWindow(screenWidth, screenHeight, 800, 800, window);
 		level_inventory = new PopUpWindow(screenWidth, screenHeight, 600, 1000, window);
 		chest_items = new PopUpWindow(screenWidth, screenHeight, 600, 500, window);
@@ -77,9 +77,6 @@
 		delete tmp;
 		ci->addIElement((InterfaceItem*)ci_f0_top, 0);
 	
-	
-		//auto rt = (ooo)->getItems();
-		//int l = 0;
 		for (int in = 0; in < 2; in++) {
 			ci_f0_top->createElementLine();
 			for (int jn = 0; jn < 4; jn++) {
@@ -112,12 +109,44 @@
 	
 		ci_g1_bottom->setAlignment("space around", "center 0");
 		ci->setAlignment("center 0", "space between 10");
+
 		///////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////
-	
-		life_bar = new ScaleParametrBar();
-	
+
 		initPlayer(level);
+
+		///////////////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////////////
+	
+		all_static_items->createElementLine();
+		tmp = all_static_items->calculatePFNII(20, 30, 0);
+		Group* asi_g0_left = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
+		all_static_items->addIElement((InterfaceItem*)asi_g0_left, 0);
+		delete tmp;
+
+		asi_g0_left->createElementLine();
+		tmp = asi_g0_left->calculatePFNII(100, 15, 0);
+		ScaleParameterBar* asi_spb_top = new ScaleParameterBar(tmp->first, tmp->second, tmp->third, tmp->fourth,
+			player->getGeneralInfo()->getHp(), player->getGeneralInfo()->getMaxHP(), t_manager, warehouse,
+			"RedScaleBar");
+		delete tmp;
+		asi_g0_left->addIElement((InterfaceItem*)asi_spb_top, 0);
+
+		asi_g0_left->createElementLine();
+		tmp = asi_g0_left->calculatePFNII(90, 15, 0);
+		ScaleParameterBar* asi_spb_bottom = new ScaleParameterBar(tmp->first, tmp->second, tmp->third, tmp->fourth,
+			player->getGeneralInfo()->getMana(), player->getGeneralInfo()->getMaxMana(), t_manager, warehouse,
+			"BlueScaleBar");
+		delete tmp;
+		asi_g0_left->addIElement((InterfaceItem*)asi_spb_bottom, 1);
+
+		asi_g0_left->setAlignment("left 0", "top 0");
+		all_static_items->setAlignment("left 10", "top 10");
+		///////////////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////////////
+		life_bar = new ScaleParameterBar();
+	
+		
 		menu_timer.restart();
 		if (regime == -1)
 		{
@@ -346,11 +375,11 @@
 		sandbox.update(*window, myView.getCurrentViewCords());
 	}
 	
-	void Level::updateLifeBar()
-	{
-		life_bar->updateScaleWidth(player->getHP());
-		life_bar->update(myView.getCurrentViewCords(), screenWidth, screenHeight);
-	}
+	//void Level::updateLifeBar()
+	//{
+	//	life_bar->updateScaleWidth(player->getHP());
+	//	life_bar->update(myView.getCurrentViewCords(), screenWidth, screenHeight);
+	//}
 
 	void Level::updateObjectsCollision(){
 		auto objects = sandbox.getObjects();
@@ -401,7 +430,8 @@
 		updateView();
 		updateCursor();
 		updateMap();
-		updateLifeBar();
+		all_static_items->update(Vector2f(Mouse::getPosition(*window)), myView.getCurrentViewCords());
+		//updateLifeBar();
 	
 		update_Enemy();
 	
@@ -644,8 +674,9 @@
 		sandbox.second_render(*window, myView.getCurrentViewCords());
 		renderCursor();
 		window->setView(myView.view);
-	
-		renderLifeBar();
+
+		all_static_items->render(window);
+		//renderLifeBar();
 	
 		if (chest_items->getState() == POP_UP_WINDOW_STATE::PUW_OPENED) {
 			chest_items->update(FloatRect(window->getView().getCenter(), Vector2f(screenWidth, screenHeight)));
@@ -728,7 +759,7 @@
 	
 	void Level::renderLifeBar()
 	{
-		life_bar->render(window);
+		//life_bar->render(window);
 	}
 	
 	

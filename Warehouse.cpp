@@ -15,13 +15,15 @@ Warehouse::Warehouse(){
 	warehouse["heroes"].push_back(new WarehouseItem("Hero2", 1, 1, true, 4, IntRect(0, 0, 63, 68), 1));
 
 	warehouse["potions"] = vector<WarehouseItem*>();
-	warehouse["potions"].push_back(new WarehouseItem("ManaPotion", 1, 0, true, 5, IntRect(0, 0, 19, 39), 5));
-	warehouse["potions"].push_back(new WarehouseItem("HealthPotion", 1, 0, true, 5, IntRect(0, 0, 19, 39), 5));
-	warehouse["potions"].push_back(new WarehouseItem("PoisonPotion", 1, 0, true, 5, IntRect(0, 0, 19, 39), 5));
-	warehouse["potions"].push_back(new WarehouseItem("SpeedPotion", 1, 0, true, 5, IntRect(0, 0, 19, 39), 5));
+	warehouse["potions"].push_back(new WarehouseItem("ManaPotion", "Mana", 1, 0, true, 5, IntRect(0, 0, 19, 39), 5));
+	warehouse["potions"].push_back(new WarehouseItem("HealthPotion", "Health", 1, 0, true, 5, IntRect(0, 0, 19, 39), 5));
+	warehouse["potions"].push_back(new WarehouseItem("PoisonPotion", "Poison", 1, 0, true, 5, IntRect(0, 0, 19, 39), 5));
+	warehouse["potions"].push_back(new WarehouseItem("SpeedPotion", "Speed", 1, 0, true, 5, IntRect(0, 0, 19, 39), 5));
 
 	warehouse["other"] = vector<WarehouseItem*>();
 	warehouse["other"].push_back(new WarehouseItem("Transparent", 1, 0, true, 0, IntRect(0, 0, 0, 0), 1));
+	warehouse["other"].push_back(new WarehouseItem("RedScaleBar", 1, 0, true, 0, IntRect(0, 0, 158, 20), 3));
+	warehouse["other"].push_back(new WarehouseItem("BlueScaleBar", 1, 0, true, 0, IntRect(0, 0, 158, 20), 3));
 	}
 	
 	pair<int*, int> Warehouse::getItemInfo(string item_type, string item_name){
@@ -48,4 +50,8 @@ Warehouse::Warehouse(){
 				}
 			}
 		}
+	}
+
+	vector<WarehouseItem*> Warehouse::getWarehouseItems(string type){
+		return warehouse[type];
 	}

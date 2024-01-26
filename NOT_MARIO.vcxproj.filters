@@ -97,6 +97,12 @@
     <Filter Include="Source Files\GameObjects\Alive\Player">
       <UniqueIdentifier>{5e20e6ea-00f7-4130-8852-f0301757ebe5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GUI\Pages">
+      <UniqueIdentifier>{1ef4461c-d90a-46e5-9348-a64e95f969be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Map\Object">
+      <UniqueIdentifier>{4e835cf8-4216-4889-adac-549acb7c5663}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyView.cpp">
@@ -177,7 +183,7 @@
     <ClCompile Include="PopUpWindow.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="ScaleParametrBar.cpp">
+    <ClCompile Include="ScaleParameterBar.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
     <ClCompile Include="ComposedIMG.cpp">
@@ -207,9 +213,6 @@
     <ClCompile Include="AnimatedImage.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
-    <ClCompile Include="Warehouse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="InterfaceItem.cpp">
       <Filter>Source Files\GUI\Items</Filter>
     </ClCompile>
@@ -228,9 +231,6 @@
     <ClCompile Include="TabContainer.cpp">
       <Filter>Source Files\GUI\Items</Filter>
     </ClCompile>
-    <ClCompile Include="InventoryItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ImageInfo.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
@@ -240,68 +240,74 @@
     <ClCompile Include="ProductCard.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="WarehouseItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BasicImage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BushKiller.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CheckboxItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Chest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Form.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FormItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MovingAnimObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MovingObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HealthBarEnemy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="hornet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HornetHive.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="killer_leaf.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Exit.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RoadMap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EyeEvil.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MainMenuOption.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GUI\Pages</Filter>
     </ClCompile>
     <ClCompile Include="Setting.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GUI\Pages</Filter>
+    </ClCompile>
+    <ClCompile Include="Exit.cpp">
+      <Filter>Source Files\GUI\Pages</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryItem.cpp">
+      <Filter>Source Files\GUI\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Warehouse.cpp">
+      <Filter>Source Files\ServiceClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseItem.cpp">
+      <Filter>Source Files\ServiceClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckboxItem.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Form.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="FormItem.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuOption.cpp">
+      <Filter>Source Files\GUI\Pages</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimObject.cpp">
+      <Filter>Source Files\Map\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicImage.cpp">
+      <Filter>Source Files\ServiceClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Source Files\Map\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingObject.cpp">
+      <Filter>Source Files\Map\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingAnimObject.cpp">
+      <Filter>Source Files\Map\Object</Filter>
     </ClCompile>
     <ClCompile Include="Switch.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Map\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Chest.cpp">
+      <Filter>Source Files\Map\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="BushKiller.cpp">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="EyeEvil.cpp">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthBarEnemy.cpp">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="hornet.cpp">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="HornetHive.cpp">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="killer_leaf.cpp">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

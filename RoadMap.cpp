@@ -332,14 +332,20 @@
 			i_tc0_left->getGlobalBounds().width, i_tc0_left->getGlobalBounds().height);
 		i_tc0_left->addTab(i_tc0_2);
 
+		auto ammo = warehouse->getWarehouseItems("potions");
 		for (int in = 0; in < 5; in++) {
 			i_tc0_2->createElementLine();
 			for (int jn = 0; jn < 6; jn++) {
+				int index_ = in * 4 + jn;
 				tmp = i_tc0_2->calculatePFNII(15, 18, in);
-				Group* temp = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
+				InventoryItem* temp_i = new InventoryItem(tmp->first, tmp->second, tmp->third, tmp->fourth,
+					15, font);
+				if (index_ < ammo.size()) {
+					temp_i->addItemInfo(t_manager, ammo[index_]);
+				}
+				temp_i->setBColor(Color(118, 118, 118, 255));
 				delete tmp;
-				i_tc0_2->addIElement((InterfaceItem*)temp, in);
-				temp->setBColor(Color::Green);
+				i_tc0_2->addIElement((InterfaceItem*)temp_i, in);
 			}
 		}
 		i_tc0_2->setAlignment("space around", "space around");
@@ -348,19 +354,20 @@
 			i_tc0_left->getGlobalBounds().width, i_tc0_left->getGlobalBounds().height);
 		i_tc0_left->addTab(i_tc0_3);
 
+		auto potions = warehouse->getWarehouseItems("ammunition");
 		for (int in = 0; in < 5; in++) {
 			i_tc0_3->createElementLine();
 			for (int jn = 0; jn < 6; jn++) {
+				int index_ = in * 4 + jn;
 				tmp = i_tc0_3->calculatePFNII(15, 18, in);
-				Group* temp = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
 				InventoryItem* temp_i = new InventoryItem(tmp->first, tmp->second, tmp->third, tmp->fourth,
 					15, font);
-				temp->createElementLine();
-				temp->addIElement((InterfaceItem*)temp_i, 0);
-				temp_i->addItemInfo(t_manager, warehouse, "Arrow1");
+				if (index_ < potions.size()) {
+					temp_i->addItemInfo(t_manager, potions[index_]);
+				}
 				temp_i->setBColor(Color(118, 118, 118, 255));
 				delete tmp;
-				i_tc0_3->addIElement((InterfaceItem*)temp, in);
+				i_tc0_3->addIElement((InterfaceItem*)temp_i, in);
 			}
 		}
 		i_tc0_3->setAlignment("space around", "space around");

@@ -27,9 +27,10 @@ class Level{
 private:
 	RenderWindow* window;
 
-	ScaleParametrBar* life_bar;
+	ScaleParameterBar* life_bar;
 	Clock menu_timer;
 
+	Group* all_static_items;
 	PopUpWindow* pause_menu;
 	PopUpWindow* level_inventory;
 	PopUpWindow* chest_items;
@@ -85,7 +86,7 @@ public:
 	void updateGameMenu();
 	void updateGameState();
 	void updateMap();
-	void updateLifeBar();
+	//void updateLifeBar();
 	void updateObjectsCollision();
 
 	void renderGameMenu();

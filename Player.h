@@ -82,6 +82,7 @@ public:
     void resetNTHJump();
     void resetIsFlying();
     void resetAnimationTimer();
+    void setDeceleration(float dec);
     
     void walk(const float dir_x);
     void jump(const float dir_y);

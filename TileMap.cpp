@@ -582,9 +582,12 @@ bool TileMap::isOccupied(int i, int j)
 	return tilemap[i][j][1]->give_player_info();
 }
 
-void TileMap::updatePlayerPresence(int indexI[], int indexJ[])
-{
+void TileMap::updatePlayerPresence(int indexI[], int indexJ[]){
 
+}
+
+short TileMap::getInteraction(int i, int j){
+	return tilemap[i][j][1]->get_interaction();
 }
 
 vector<Object*>& TileMap::getObjects()
