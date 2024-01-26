@@ -25,7 +25,7 @@ HealthBarEnemy::HealthBarEnemy()
 {
 	HealthBarEnemy::init_texture();
 	HealthBarEnemy::init_sprite();
-	procent = 0.083f;
+	procent = 0.0833333333f;
 	manifestation_timer.restart();
 }
 
@@ -34,27 +34,28 @@ void HealthBarEnemy::update_animation()
 {
 	if (HP_cur != HP_PREV)
 	{
-		float healthPercentage = static_cast<float>(HP_cur) / HP_S * 100.0f;
-		float healthChange = HP_PREV - HP_cur;
+		reset_Timer();
+		float hp_pot = HP_S - HP_cur;
 
-		if (healthPercentage>=8.3)
+		float healthPercentage = hp_pot / HP_S;;
+
+		while (healthPercentage > procent)
 		{
-			
-			standard_frame.top += 13;
+			procent += 0.0833333333f;
+			standard_frame.top += 14;
 			standard_frame.left = 0.f;
-			standard_frame.height = 13.f;
+			standard_frame.height = 14.f;
 			standard_frame.width = 90.f;
 
 			HealthBarEnemy_S_.setTextureRect(standard_frame);
-			manifestation_timer.restart();
-
-
-			HP_PREV = HP_cur;
 		}
+
+		HP_PREV = HP_cur;
+
 		
 	}
-	HealthBarEnemy_S_.setTextureRect(standard_frame);
-	manifestation_timer.restart();
+
+
 }
 
 void HealthBarEnemy::reset_Timer()
@@ -85,5 +86,5 @@ void HealthBarEnemy::SET_ST_HP(short HP)
 
 void HealthBarEnemy::render(sf::RenderTarget& target)
 {
-	target.draw(HealthBarEnemy_S_);
+	if(HP_cur!=HP_S && manifestation_timer.getElapsedTime().asSeconds()<=4.f)target.draw(HealthBarEnemy_S_);
 }

@@ -16,6 +16,7 @@ kusaka::kusaka(TileMap& map, GeneralInfo* player_info,short regime)
 		IDLE_timer.restart();
 		DEATH_timer.restart();
 		count_jm = 0;
+		hp_bar->SET_ST_HP(HP);
 	}
 }
 
@@ -34,6 +35,7 @@ kusaka::kusaka(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y
 		IDLE_timer.restart();
 		DEATH_timer.restart();
 		count_jm = 0;
+		hp_bar->SET_ST_HP(HP);
 	}
 }
 

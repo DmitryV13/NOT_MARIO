@@ -143,6 +143,10 @@
 			Color(43, 43, 120, 255), false, 4, 0);
 		level_selection->addCallback(ls_g0_top->getButtonState(4), BUTTON_STATE::BTN_ACTIVE, 4,
 			&RoadMap::openLevel, this);
+		ls_g0_top->addButton(100, 100, 40, font, "2", menuColor, Color::White, Color(43, 43, 120, 255),
+			Color(43, 43, 120, 255), false, 40, 0);
+		level_selection->addCallback(ls_g0_top->getButtonState(40), BUTTON_STATE::BTN_ACTIVE, 5,
+			&RoadMap::openLevel, this);
 		ls_g0_top->setAlignment("center 20", "center 0");
 
 		ls->createElementLine();

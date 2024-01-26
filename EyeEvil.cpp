@@ -15,6 +15,7 @@ EyeEvil::EyeEvil(TileMap& map, GeneralInfo* player_info,short regime)
 		IDLE_timer.restart();
 		ATTACKING_timer.restart();
 		DEATH_timer.restart();
+		hp_bar->SET_ST_HP(HP);
 	}
 }
 EyeEvil::EyeEvil(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y) :
@@ -30,6 +31,7 @@ EyeEvil::EyeEvil(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos
 		IDLE_timer.restart();
 		ATTACKING_timer.restart();
 		DEATH_timer.restart();
+		hp_bar->SET_ST_HP(HP);
 	}
 }
 
