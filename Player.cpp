@@ -173,7 +173,7 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         info->setPosition(player_S.getPosition());
 
         if (!info->isManaUsed()) {
-            info->changeMana(1);
+            info->changeMana(0.2);
         }
 
         updateWeapon(window, view_cords);

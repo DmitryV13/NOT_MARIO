@@ -268,12 +268,12 @@
 		boss_vector->push_back(new WolfBoss(sandbox, player->getGeneralInfo(), 2));
 	
 		bush_killers_vector->push_back(new BushKiller(sandbox, player->getGeneralInfo(), 2));
+		//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo(),2));
+		Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo(),2));
+		Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo(),2));
 		//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
-		//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
-		//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
-		//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
-		///Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
-		//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
+		Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo(),2));
+		Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo(),2));
 		//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
 		//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
 		//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));

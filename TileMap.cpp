@@ -263,7 +263,7 @@ void TileMap::init_movingAnimObjects(short int level)
 void TileMap::init_switch(short int level)
 {
 	std::string level_ = std::to_string(level-3);
-	std::vector<Object*> tmpObject;
+	//std::vector<Object*> tmpObject;
 	std::string path_ = "Maps/level"+level_+"/forSwitch.txt";
 	std::ifstream fin_;
 	fin_.open(path_);
@@ -301,11 +301,13 @@ void TileMap::init_switch(short int level)
 			object.push_back(new Switch{ objectName, pos_x, pos_y, size_w, size_h, anim_f, anim_q, anim_t, *it });
 			++it;
 		}
-		object.push_back(new Switch{ objectName, pos_x, pos_y, size_w, size_h, anim_f, anim_q, anim_t});
+		else {
+			object.push_back(new Switch{ objectName, pos_x, pos_y, size_w, size_h, anim_f, anim_q, anim_t });
+		}
 	}
 	fin.close();
 	//for (auto it : tmpObject) object.push_back(it);
-	tmpObject.clear();
+	//tmpObject.clear();
 }
 
 void TileMap::init_chest(short int level)
