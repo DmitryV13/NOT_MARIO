@@ -361,3 +361,10 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Sword.h
+/Textures/cursor.png
+/Textures/sword.png
+/Textures/Textures_map/map1.png
+/Weapon.cpp
+/Sword.cpp
+/Weapon.h

@@ -2,8 +2,7 @@
 
 #include "TileMap.h"
 
-using sf::View;
-using sf::FloatRect;
+using namespace::sf;
 
 class MyView{
 private:
@@ -26,10 +25,13 @@ private:
 public:
 	View view;
 
-	MyView(TileMap map, double screenWidth_, double screenHeight_);
+	MyView(TileMap& map, double screenWidth_, double screenHeight_);
+
 	void updateView(FloatRect coordinates);
 	void updateLeft(double left);
 	void updateRight(double right);
 	void updateTop(double top);
 	void updateBottom(double bottom);
+
+	FloatRect getCurrentViewCords();
 };

@@ -1,32 +1,39 @@
 #pragma once
+
+#include "PLAYER_ANIMATION_SATES.h"
 #include "Map.h"
 #include "TileMap.h"
+#include "Fist.h"
+#include "Sword.h"
+#include "CombatStaff.h"
+#include "Bow.h"
+#include "kusaka.h"
+#include "EyeEvil.h"
+#include "WolfBoss.h"
+#include "RedMutant.h"
+#include "GeneralInfo.h"
 
-using sf::Sprite;
-using sf::RenderWindow;
-using sf::FloatRect;
-using sf::View;
-using sf::Texture;
-using sf::IntRect;
-using sf::Clock;
+using namespace::sf;
 
 
-enum PLAYER_ANIMATION_STATES{IDLE=0, MOVING_LEFT, MOVING_RIGHT, MOVING_DOWN, MOVING_UP, JUMPING, FALLING};
-
-
-class Player {
+class Player{
 private:
-    TileMap sandbox;
-
+    TileMap* sandbox;
     Texture player_T;
     Sprite player_S;
 
+    vector<Weapon*> weapons;
+    short chosen_weapon;
+
+
     IntRect currentFrame;
+    Clock stan_timer;
     Clock animationTimer;
     short animationState;
     bool animationSwitch;
 
-    sf::Vector2f velocity;
+    GeneralInfo* info;
+    
     float velocityMax;
     float velocityMin;
     float acceleration;
@@ -42,28 +49,31 @@ private:
     short jumpLimit;
     bool isFlying;
     float flyVelocity;
-    //FloatRect coordinates;
-    //double speedX;
-    //double speedY;
-    //double acceleration = 0.0009;
-    //double heightCoeficient = 2;
-    //bool onGround;
-    //double currentFrame;
+
+    bool alive;
+    short movingDirection;
+
     void initVariables();
     void initTexture();
     void initSprite();
+    void initSprite(Vector2f position);
+    //void initWeapon();
     void initAnimation();
     void initPhysics();
-
 public:
-    //Player(Texture& texture, RenderWindow& window_, Map& levelMap_);
     Player(TileMap& map);
-
+    Player(TileMap& map, Vector2f position);
+    void initWeapon(const vector<vector<Enemy*>*>& enemies);
+    IntRect get_pl_frame();
     // accessors
     const bool& getAnimationSwitch();
-    const sf::Vector2f getPosition() const;
+    const Vector2f getPosition() const;
     const FloatRect getGlobalBounds() const;
-    const sf::Vector2f getVelocity() const;
+    const Vector2f getVelocity() const;
+    const short getHP() const;
+    short* getHPp();
+    GeneralInfo* getGeneralInfo();
+
 
     //modifiers
     void resetVelocityY();
@@ -71,24 +81,30 @@ public:
     void resetJumpAccess();
     void resetNTHJump();
     void resetIsFlying();
+    void resetAnimationTimer();
+    void setDeceleration(float dec);
     
-    //void updateMovement(double time, RenderWindow& window);
-    void render(sf::RenderTarget& target);
     void walk(const float dir_x);
     void jump(const float dir_y);
     void fly(const float dir_y);
-    void update();
+
+    bool stan();
+
+    void update(RenderWindow* window, FloatRect view_cords);
     void updatePhysics();
-    void updateMovement();
+    void updateMovement(RenderWindow* window, FloatRect view_cords);
     void updateAnimation();
+    void updateWeapon(RenderWindow* window, FloatRect view_cords);
+    void updateProjectiles();
     bool updateCollisionX();
     bool updateCollisionY();
-    void resetAnimationTimer();
-    
-    //void checkCollisionX();;
-    //void checkCollisionY();
-    //void fallingTest();
-    //void changeFrames(double& time);
-    //void checkingBordersX();
-    //void checkingBordersY();
+    void updateCollision();
+
+    bool checkStan();
+
+    void render(RenderTarget& target);
+    void renderProjectiles(RenderTarget& target);
+
+    void change_weapon(short count);
+    void changeHP(short z);
 };

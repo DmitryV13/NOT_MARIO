@@ -1,0 +1,3 @@
+ManaPotion           2 0 5 1            0 0 19 39
+PoisonPotion         1 0 5 1            0 0 19 39
+SpeedPotion          1 0 5 1            0 0 19 39

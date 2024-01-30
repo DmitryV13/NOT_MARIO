@@ -1,28 +1,64 @@
 #include "stdafx.h"
 #include "Player.h"
 
-    Player::Player(TileMap& map): sandbox(map){
+    Player::Player(TileMap& map){
+        sandbox = &map;
         initVariables();
         initTexture();
         initSprite();
+       // initWeapon();
         initAnimation();
         initPhysics();
     }
 
-    void Player::initVariables(){
-        animationState = PLAYER_ANIMATION_STATES::IDLE;
+    Player::Player(TileMap& map, Vector2f position){
+        sandbox = &map;
+        initVariables();
+        initTexture();
+        initSprite(position);
+        //initWeapon();
+        initAnimation();
+        initPhysics();
     }
 
+    IntRect Player::get_pl_frame()
+    {
+        return currentFrame;
+    }
+    
+    void Player::initVariables(){
+            animationState = PLAYER_ANIMATION_STATES::IDLE_RIGHT;
+            chosen_weapon = 0;
+        }
+
     void Player::initTexture(){
-        if (!player_T.loadFromFile("Textures/hero.png")) {
+        if (!player_T.loadFromFile("Textures/Heroes/hero1.png")) {
             std::cout << "Error -> Player -> couldn't load player texture" << std::endl;
         }
     }
 
     void Player::initSprite(){
         player_S.setTexture(player_T);
-        currentFrame = IntRect(0, 23, 56, 73);
+        currentFrame = IntRect(2, 80, 48, 70);
         player_S.setTextureRect(currentFrame);
+        //initial position
+        player_S.setPosition(10, 10);
+
+    }
+
+    void Player::initSprite(Vector2f position){
+        player_S.setTexture(player_T);
+        currentFrame = IntRect(2, 80, 48, 70);
+        player_S.setTextureRect(currentFrame);
+        //initial position
+        player_S.setPosition(position);
+    }
+
+    void Player::initWeapon(const vector<vector<Enemy*>*>& enemies) {
+        weapons.push_back(new Fist());
+        weapons.push_back(new Bow(player_S.getPosition(), player_S.getGlobalBounds(), sandbox, enemies));
+        weapons.push_back(new Sword(player_S.getPosition(), player_S.getGlobalBounds(), enemies));
+        weapons.push_back(new CombatStaff(player_S.getPosition(), player_S.getGlobalBounds(), sandbox, enemies, info));
     }
 
     void Player::initAnimation(){
@@ -31,7 +67,12 @@
     }
 
     void Player::initPhysics(){
-        velocityMax = 4.f;
+        stan_timer.restart();
+        info = new GeneralInfo(100, 80);
+        info->setGlobalBounds(player_S.getGlobalBounds());
+        info->setPosition(player_S.getPosition());
+
+        velocityMax = 6.f;
         velocityMin = 0.5f;
         acceleration = 1.7f;
         deceleration = 0.77f;//0.77
@@ -47,10 +88,33 @@
 
         isFlying = false;
         flyVelocity = 0;
+
+        alive = true;
+        movingDirection = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
     }
 
-    void Player::render(sf::RenderTarget& target){
+    void Player::render(RenderTarget& target){
+        if (info->getHP() <= 0) {
+            alive = false;
+            animationState == PLAYER_ANIMATION_STATES::DEAD;
+            currentFrame.top = 303;
+            currentFrame.left = 288;
+            currentFrame.width = 48;
+            animationTimer.restart();
+            player_S.setTextureRect(currentFrame);
+        }
+        //std::cout << getPosition().x << " " <<getPosition().y<<"\n";
         target.draw(player_S);
+        if (alive) {
+        weapons[chosen_weapon]->render(target);
+        }
+        renderProjectiles(target);
+    }
+
+    void Player::renderProjectiles(RenderTarget& target){
+        for (int i = 0; i < weapons.size(); i++) {
+            weapons[i]->renderProjectiles(target);
+        }
     }
 
     void Player::resetJumpAccess(){
@@ -62,24 +126,25 @@
 
     void Player::walk(const float dir_x){
         // acceleration
-        velocity.x += dir_x * acceleration;
+        info->changeVelocityX(dir_x * acceleration);
 
         // limits
-        if (std::abs(velocity.x) > velocityMax) {
-            velocity.x = velocityMax * ((velocity.x > 0.f) ? 1.f : -1.f);
+        if (std::abs(info->getVelocity().x) > velocityMax) {
+            info->setVelocityX(velocityMax * ((info->getVelocity().x > 0.f) ? 1.f : -1.f));
         }
        
-        //velocity.y += dir_y * gravity;
     }
 
 
     void Player::jump(const float dir_y) {
         if (onGround) {
+            animationState = PLAYER_ANIMATION_STATES::JUMPING;
             onGround = false;
             isJumping = true;
             jumpCount++;
             jumpVelocity = 7.f;
         } else if (isJumping && jumpCount < jumpLimit && spaceRealeased) {
+            animationState = PLAYER_ANIMATION_STATES::JUMPING;
             spaceRealeased = false;
             jumpCount++;
             jumpVelocity = 7.f;
@@ -92,115 +157,168 @@
         flyVelocity = dir_y * gravity;
     }
 
-    void Player::update(){
-        updateMovement();
+bool Player::stan()
+{
+    if (info->getVelocity().x != 0.f)return false;
+    else return true;
+}
+
+void Player::update(RenderWindow* window, FloatRect view_cords){
+    if (alive && !checkStan()){
+        updateMovement(window, view_cords);
         updateAnimation();
         updatePhysics();
+
+        info->setGlobalBounds(player_S.getGlobalBounds());
+        info->setPosition(player_S.getPosition());
+
+        if (!info->isManaUsed()) {
+            info->changeMana(0.2);
+        }
+
+        updateWeapon(window, view_cords);
+        updateProjectiles();
     }
+}
 
     void Player::updatePhysics(){
-
         // gravity
-        velocity.y += 1.f * gravity;
-        if (std::abs(velocity.y) > velocityMaxY) {
-            velocity.y = velocityMaxY * ((velocity.y > 0.f) ? 1.f : -1.f);
+        info->changeVelocityY(1.f * gravity);
+        if (std::abs(info->getVelocity().y) > velocityMaxY) {
+            info->setVelocityY(velocityMaxY * ((info->getVelocity().y > 0.f) ? 1.f : -1.f));
         }
-
+        
         //jumping
         if (isJumping) {
-            velocity.y -= jumpVelocity;
-            //jump deceleratin
+            info->changeVelocityY(-jumpVelocity);
+            //jump deceleration
             jumpVelocity *= 0.96;      
         }
-
+        
         //flying
-        velocity.y += flyVelocity;
+        info->changeVelocityY(flyVelocity);
         if (flyVelocity < -0.01f) {
             if (!isFlying) {
-                //fly deceleratin
+                //fly deceleration
                 flyVelocity *= 0.96;
             }
         }
         else {
             flyVelocity = 0.f;
         }
-        std::cout << flyVelocity << std::endl;
         // deceleration
-        velocity *= deceleration;
-        
+        info->setVelocityX(info->getVelocity().x * deceleration);
+        info->setVelocityY(info->getVelocity().y * deceleration);
+        // std::cout << "x - " << getPosition().x << ", y - " << getPosition().y << std::endl;
         // limits
-        if (std::abs(velocity.x) < velocityMin || updateCollisionX()) {
-            velocity.x = 0.f;
-        }
-        if (std::abs(velocity.y) < velocityMin || updateCollisionY()) {
-            velocity.y = 0.f;
-        }
-
         
-        player_S.move(velocity);
+        updateCollision();
+        
+        if (std::abs(info->getVelocity().x) < velocityMin || updateCollisionX()) {
+            info->setVelocityX(0.f);
+        }
+        if (std::abs(info->getVelocity().y) < velocityMin || updateCollisionY()) {
+            info->setVelocityY(0.f);
+        }
+        
+        
+        player_S.move(info->getVelocity());
+        //std::cout << "x - " << getPosition().x << ", y - " << getPosition().y << std::endl;
     }
 
-    void Player::updateMovement() {
-        animationState = PLAYER_ANIMATION_STATES::IDLE;
+    void Player::updateMovement(RenderWindow* window, FloatRect view_cords) {
+        if (movingDirection== PLAYER_ANIMATION_STATES::MOVING_RIGHT) {
+            animationState = PLAYER_ANIMATION_STATES::IDLE_RIGHT;
+        }
+        else {
+            animationState = PLAYER_ANIMATION_STATES::IDLE_LEFT;
+        }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            walk(1.f);
+        if (Keyboard::isKeyPressed(Keyboard::D)) {
+            movingDirection = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
+            walk(14.f);
             animationState = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-            walk(-1.f);
+        else if (Keyboard::isKeyPressed(Keyboard::A)) {
+            movingDirection = PLAYER_ANIMATION_STATES::MOVING_LEFT;
+            walk(-14.f);
             animationState = PLAYER_ANIMATION_STATES::MOVING_LEFT;
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+        if (Keyboard::isKeyPressed(Keyboard::W)) {
             onGround = false;
             isJumping = false;
             fly(-1.4f);
             animationState = PLAYER_ANIMATION_STATES::MOVING_UP;
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+        else if (Keyboard::isKeyPressed(Keyboard::S)) {
             //untill water will be done it won't have implementation
             
             //move(0.f, 1.f);
             //animationState = PLAYER_ANIMATION_STATES::MOVING_DOWN;
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+        if (Keyboard::isKeyPressed(Keyboard::Space)) {
             jump(-20.0f);
-            animationState = PLAYER_ANIMATION_STATES::JUMPING;
         }
+        if (Mouse::isButtonPressed(Mouse::Left)) {
+            //std::cout << player_S.getPosition().x << " " << getPosition().y << std::endl;
+            if (chosen_weapon < weapons.size())
+                weapons[chosen_weapon]->attack(movingDirection, Vector2f(Mouse::getPosition(*window)), view_cords, true);
+        }
+        if (!Mouse::isButtonPressed(Mouse::Left)) {
+            if (chosen_weapon < weapons.size())
+                weapons[chosen_weapon]->attack(movingDirection, Vector2f(Mouse::getPosition(*window)), view_cords, false);
+            
+        }
+        //std::cout << info->isManaUsed() << std::endl;
     }
 
     void Player::updateAnimation(){
-        //if (animationState == PLAYER_ANIMATION_STATES::IDLE) {
-        //    if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
-        //        currentFrame.left += 75;
-        //        if (currentFrame.left >= 450.f) {
-        //            currentFrame.left = 0.f;
-        //        }
-        //
-        //        animationTimer.restart();
-        //        player_S.setTextureRect(currentFrame);
-        //    }
-        //}
-        //else 
-        if (animationState == PLAYER_ANIMATION_STATES::MOVING_RIGHT) {
+        if (animationState == PLAYER_ANIMATION_STATES::IDLE_LEFT) {
             if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
-                currentFrame.left += 75;
-                if (currentFrame.left >= 450.f) {
+                currentFrame.top = 80;
+                currentFrame.left += 48;
+                if (currentFrame.left >= 336.f) {
+                    currentFrame.left = 48.f;
+                }
+                currentFrame.width = -48;
+                animationTimer.restart();
+                player_S.setTextureRect(currentFrame);
+            }
+        }else
+            if(animationState == PLAYER_ANIMATION_STATES::IDLE_RIGHT) {
+                if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
+                    currentFrame.top = 80;
+                    currentFrame.left += 48;
+                    if (currentFrame.left >= 288.f) {
+                        currentFrame.left = 0.f;
+                    }
+                    currentFrame.width = 48;
+                    animationTimer.restart();
+                    player_S.setTextureRect(currentFrame);
+                }
+            }
+        else 
+        if (animationState == PLAYER_ANIMATION_STATES::MOVING_RIGHT) {
+            if (animationTimer.getElapsedTime().asSeconds() >= 0.05f || getAnimationSwitch()) {
+                currentFrame.top = 160;
+                currentFrame.left += 48;
+                if (currentFrame.left >= 288.f) {
                     currentFrame.left = 0.f;
                 }
-                currentFrame.width = 56;
+                currentFrame.width = 48;
                 player_S.setTextureRect(currentFrame);
                 animationTimer.restart();
             }
         }
         else if (animationState == PLAYER_ANIMATION_STATES::MOVING_LEFT) {
-            if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
-                currentFrame.left -= 75;
+            if (animationTimer.getElapsedTime().asSeconds() >= 0.05f || getAnimationSwitch()) {
+                currentFrame.top = 160;
+                currentFrame.left -= 48;
                 if (currentFrame.left <= 0.f) {
-                    currentFrame.left = 450.f;
+                    currentFrame.left = 288.f;
                 }
-                currentFrame.width = -56;
+                currentFrame.width = -48;
                 player_S.setTextureRect(currentFrame);
                 animationTimer.restart();
             }
@@ -208,17 +326,32 @@
         
         // OTHER KEY EVENTS
 
-        //else if (animationState == PLAYER_ANIMATION_STATES::MOVING_UP) {
-        //    if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
-        //        currentFrame.left += 75;
-        //        if (currentFrame.left >= 450.f) {
-        //            currentFrame.left = 0.f;
-        //        }
-        //
-        //        animationTimer.restart();
-        //        player_S.setTextureRect(currentFrame);
-        //    }
-        //}
+        else if (animationState == PLAYER_ANIMATION_STATES::MOVING_UP) {
+            if (movingDirection==PLAYER_ANIMATION_STATES::MOVING_RIGHT) {
+                if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
+                    currentFrame.top = 240;
+                    currentFrame.left += 48;
+                    if (currentFrame.left >= 288.f) {
+                        currentFrame.left = 0.f;
+                    }
+                    currentFrame.width = 48;
+                    animationTimer.restart();
+                    player_S.setTextureRect(currentFrame);
+                }
+            }
+            else {
+                if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
+                    currentFrame.top = 240;
+                    currentFrame.left += 48;
+                    if (currentFrame.left >= 336.f) {
+                        currentFrame.left = 48.f;
+                    }
+                    currentFrame.width = -48;
+                    animationTimer.restart();
+                    player_S.setTextureRect(currentFrame);
+                }
+            }
+        }
         //else if (animationState == PLAYER_ANIMATION_STATES::MOVING_DOWN) {
         //    if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
         //        currentFrame.left += 75;
@@ -257,26 +390,67 @@
         }
     }
 
+    void Player::updateWeapon(RenderWindow* window, FloatRect view_cords){
+        if(chosen_weapon<weapons.size())
+        weapons[chosen_weapon]->update(player_S.getPosition(), movingDirection, window, view_cords);
+    }
+
+    void Player::updateProjectiles(){
+        for (int i = 0; i < weapons.size(); i++){
+            weapons[i]->updateProjectiles();
+        }
+    }
+
     void Player::resetAnimationTimer(){
         animationTimer.restart();
         animationSwitch = true;
     }
 
+    void Player::setDeceleration(float dec){
+        deceleration = dec;
+    }
+
+    void Player::change_weapon(short count){
+        if (checkStan())
+            return;
+        chosen_weapon+=count;
+        if (chosen_weapon >= static_cast<short>(weapons.size())) {
+            chosen_weapon = 0;
+        }
+        if (chosen_weapon < 0) {
+            chosen_weapon = weapons.size() - 1;
+        }
+    }
+
+    void Player::changeHP(short z){
+        info->changeHP(z);
+        if (info->getHP() <= 0) {
+            alive = false;
+            animationState = PLAYER_ANIMATION_STATES::DEAD;
+            currentFrame.top = 320;
+            currentFrame.left = 288;
+            currentFrame.width = 48;
+            animationTimer.restart();
+            player_S.setTextureRect(currentFrame);
+        }
+    }
+
     bool Player::updateCollisionX(){
         bool wasCollision = false;
-        sf::Vector2f newPosition(getPosition().x, getPosition().y);
-        for (int i = player_S.getPosition().y / 73; i < (player_S.getPosition().y + player_S.getGlobalBounds().height) / 73; i++) {
-            for (int j = (player_S.getPosition().x + velocity.x) / 73; j < (player_S.getPosition().x + velocity.x + player_S.getGlobalBounds().width) / 73; j++) {
-                if (sandbox.isBlock(i, j)) {
-                    if (velocity.x > 0) {
+        Vector2f newPosition(getPosition().x, getPosition().y);
+        for (int i = player_S.getPosition().y / 64; i < (player_S.getPosition().y + player_S.getGlobalBounds().height) / 64; i++) {
+            for (int j = (player_S.getPosition().x + info->getVelocity().x) / 64; j < (player_S.getPosition().x + info->getVelocity().x + player_S.getGlobalBounds().width) / 64; j++) {
+                if (sandbox->isBlock(i, j)) {
+                    if (info->getVelocity().x > 0) {
                         wasCollision = true;
-                        newPosition.x = j * sandbox.getSizeTexture() - player_S.getGlobalBounds().width;
+                        newPosition.x = j * sandbox->getSizeTexture() - player_S.getGlobalBounds().width;
                     }
-                    if (velocity.x < 0) {
+                    if (info->getVelocity().x < 0) {
                         wasCollision = true;
-                        newPosition.x = j * sandbox.getSizeTexture() + sandbox.getSizeTexture();
+                        newPosition.x = j * sandbox->getSizeTexture() + sandbox->getSizeTexture();
                     }
                 }
+                //std::cout << sandbox->getInteraction(i, j) << std::endl;
             }
         }
         player_S.setPosition(newPosition.x, newPosition.y);
@@ -285,19 +459,19 @@
     
     bool Player::updateCollisionY(){
         bool wasCollision = false;
-        sf::Vector2f newPosition(player_S.getPosition().x, player_S.getPosition().y);
-
-        for (int i = (player_S.getPosition().y + velocity.y) / 73; i < (player_S.getPosition().y + velocity.y + player_S.getGlobalBounds().height) / 73; i++) {
-            for (int j = player_S.getPosition().x / 73; j < (player_S.getPosition().x + player_S.getGlobalBounds().width) / 73; j++) {
-                if (sandbox.isBlock(i, j)) {
-                    if (velocity.y > 0) {
+        Vector2f newPosition(player_S.getPosition().x, player_S.getPosition().y);
+        
+        for (int i = (player_S.getPosition().y + info->getVelocity().y) / 64; i < (player_S.getPosition().y + info->getVelocity().y + player_S.getGlobalBounds().height) / 64; i++) {
+            for (int j = player_S.getPosition().x / 64; j < (player_S.getPosition().x + player_S.getGlobalBounds().width) / 64; j++) {
+                if (sandbox->isBlock(i, j)) {
+                    if (info->getVelocity().y > 0) {
                         wasCollision = true;
-                        newPosition.y = (i * sandbox.getSizeTexture() - player_S.getGlobalBounds().height);
+                        newPosition.y = (i * sandbox->getSizeTexture() - player_S.getGlobalBounds().height);
                         resetJumpAccess();
                     }
-                    if (velocity.y < 0) {
+                    if (info->getVelocity().y < 0) {
                         wasCollision = true;
-                        newPosition.y = i * sandbox.getSizeTexture() + sandbox.getSizeTexture();
+                        newPosition.y = i * sandbox->getSizeTexture() + sandbox->getSizeTexture();
                         //speedY = 0;
                     }
                 }
@@ -305,6 +479,46 @@
         }
         setPosition(newPosition.x, newPosition.y);
         return wasCollision;
+    }
+
+    void Player::updateCollision() {
+        if ((getPosition().y + info->getVelocity().y + getGlobalBounds().height) > sandbox->getMapHeight()) {
+            resetVelocityY();
+            setPosition(
+                getPosition().x,
+                sandbox->getMapHeight() - getGlobalBounds().height);
+            info->setVelocityY(0.f);
+            resetJumpAccess();
+        }
+        if (getPosition().y + info->getVelocity().y < 0.f) {
+            setPosition(
+                getPosition().x,
+                0);
+            info->setVelocityY(0.f);
+        }
+        if ((getPosition().x + info->getVelocity().x + getGlobalBounds().width) > sandbox->getMapWidth()) {
+            setPosition(
+                sandbox->getMapWidth() - getGlobalBounds().width,
+                getPosition().y);
+            info->setVelocityX(0.f);
+        }
+        if (getPosition().x + info->getVelocity().x < 0) {
+            setPosition(
+                0,
+                getPosition().y);
+            info->setVelocityX(0.f);
+        }
+    }
+
+    bool Player::checkStan(){
+        if (stan_timer.getElapsedTime().asSeconds() <= info->getStanTime()) {
+            return true;
+        }
+        else {
+            info->setStanTime(0);
+            stan_timer.restart();
+            return false;
+        }
     }
 
     void Player::resetNTHJump(){
@@ -327,50 +541,31 @@
         return player_S.getGlobalBounds();
     }
 
-    const sf::Vector2f Player::getPosition() const {
+    GeneralInfo* Player::getGeneralInfo(){
+        return info;
+    }
+
+    const Vector2f Player::getPosition() const {
         return player_S.getPosition();
     }
 
-    const sf::Vector2f Player::getVelocity() const {
-        return velocity;
+    //const Vector2f Player::getVelocity() const {
+    //    return velocity;
+    //}
+    //
+    const short Player::getHP() const{
+        return info->getHP();
     }
+    //
+    //short* Player::getHPp()
+    //{
+    //    return &HP;
+    //}
 
     void Player::setPosition(const float x, const float y) {
         player_S.setPosition(x, y);
     }
 
     void Player::resetVelocityY() {
-        velocity.y = 0.f;
+        info->setVelocityY(0.f);
     }
-//   void Player::checkCollisionX() {
-//      for (int i = coordinates.top / 73; i < ((coordinates.top + coordinates.height) / 73); i++)
-//          for (int j = coordinates.left / 73; j < ((coordinates.width + coordinates.left) / 73); j++) {
-//              if (levelMap.TileMap[i][j] != ' ') {
-//                  if (speedX > 0) {
-//                      coordinates.left = j * levelMap.sizeTexture - coordinates.width;
-//                  }
-//                  if (speedX < 0) {
-//                      coordinates.left = j * levelMap.sizeTexture + levelMap.sizeTexture;
-//                  }
-//              }
-//          }
-//  }
-//
-//   void Player::checkCollisionY() {
-//      for (int i = coordinates.top / 73; i < ((coordinates.top + coordinates.height) / 73); i++)
-//          for (int j = coordinates.left / 73; j < ((coordinates.width + coordinates.left) / 73); j++) {
-//              if (levelMap.TileMap[i][j] != ' ') {
-//                  if (speedY > 0) {
-//                      coordinates.top = i * levelMap.sizeTexture - coordinates.height;
-//                      speedY = 0;
-//                      onGround = true;
-//                  }
-//                  if (speedY < 0) {
-//                      coordinates.top = i * levelMap.sizeTexture + levelMap.sizeTexture;
-//                      speedY = 0;
-//                  }
-//              }
-//          }
-//  }
-//
-

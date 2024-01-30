@@ -1,0 +1,10 @@
+#pragma once
+enum OBJECT_TYPE {
+	OBJECT = 0,
+	ANIM_OBJECT,
+	MOVING_OBJECT,
+	MOVING_ANIM_OBJECT,
+	SWITCH,
+	CHEST,
+};
+
