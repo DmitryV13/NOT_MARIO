@@ -1,3 +1,4 @@
+
 #include "stdafx.h"
 #include "Enemy.h"
 
@@ -538,7 +539,7 @@ bool Enemy::canMoveForward() const
 	}
 
 
-	return false; // Враг не может двигаться вперед
+	return false; // пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 }
 bool Enemy::outside_sting()
 {
@@ -606,3 +607,4 @@ bool Enemy::canJumpForward() const
 
 	return false;
 }
+
