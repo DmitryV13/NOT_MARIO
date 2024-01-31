@@ -1,0 +1,12 @@
+#pragma once
+enum class BUSH_KILLER_STATE
+{
+	SLEEP,
+	MOVING,
+	SHOT,
+	PUNCH,
+	DEATH,
+	TAKING_DAMAGE,
+	IDLE,
+	AWAKENING
+};

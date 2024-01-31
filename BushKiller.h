@@ -1,33 +1,23 @@
 #pragma once
 #include "Enemy.h"
+#include "BUSH_KILLER_STATE.h"
 
-enum class BUSH_KILLER_STATE
-{
-	SLEEP,
-	MOVING,
-	SHOT,
-	PUNCH,
-	DEATH,
-	TAKING_DAMAGE,
-	IDLE,
-	AWAKENING
-};
 
 
 
 class BushKiller: public Enemy
 {
-	BUSH_KILLER_STATE bush_state;
-	BUSH_KILLER_STATE bush_state_past;
+	BUSH_KILLER_STATE bush_state_;
+	BUSH_KILLER_STATE bush_state_past_;
+
 	Texture bush_killer_t_;
-	Clock BUSH_TAKING_DAMAGE_TIMER;
-	Clock Shot_timer;
-	Clock DEATH_timer;
-	Clock leaf_spawn;
-	vector<killer_leaf*>killer_leaf_SH;
-	//killer_leaf* killer_leaf_SH{ nullptr };
 
-
+	Clock bush_taking_damage_timer_;
+	Clock shot_timer_;
+	Clock death_timer_;
+	Clock leaf_spawn_;
+	vector<killer_leaf*>killer_leaf_sh_;
+	GeneralInfo* player_info_;
 
 	void init_texture() override;
 	void init_sprite() override;
@@ -37,9 +27,16 @@ public:
 	explicit BushKiller(TileMap& map, GeneralInfo* player_info,short);
 	BushKiller(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y);
 
+	void draw_leaf(sf::RenderTarget& target) const;
+	void look(float direction);
+	void reset_Timer();
+	void looks();
+	void clear_leaf();
+	bool leaf_empty() const;
+	void update_life() const;
+
 	~BushKiller() override = default;
 	void update_movement() override;
-	void look(float direction);
 	void attack() override;
 	void update_animation() override;
 	void clear_shot() override;
@@ -49,14 +46,9 @@ public:
 	void walk(const float dir_x) override;
 	void update_physics() override;
 	void jump(const float dir_y) override;
-	void reset_Timer();
 	bool outside_sting() override;
-	void looks();
 	void changeHP(short) override;
-	void draw_leaf( sf::RenderTarget& target);
-	void clear_leaf();
-	bool leaf_empty();
-	void update_life();
+	
 
 
 

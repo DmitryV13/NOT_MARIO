@@ -308,14 +308,7 @@
 			RedMutant* enemy = new RedMutant(sandbox, player->getGeneralInfo(), 1);
 			Red_Mutant_vector_->push_back(enemy);
 		}
-	
-	
-		/*boss_vector = new vector<WolfBoss*>();
-		for (int i = 0; i < num_of_enemy_; i++)
-		{
-			WolfBoss* enemy = new WolfBoss(sandbox, player->getGeneralInfo(),1);
-			boss_vector->push_back(enemy);
-		}*/
+
 	
 	
 		bush_killers_vector = new vector<BushKiller*>();
@@ -535,7 +528,7 @@
 			{
 				(*it)->update();
 	
-				if ((*it)->hornet_state == HORNET_STATE::DEATH && (*it)->DEATH_timer.getElapsedTime().asSeconds() >= 10.1f)
+				if ((*it)->hornet_state == HORNET_STATE::DEATH && (*it)->death_timer.getElapsedTime().asSeconds() >= 10.1f)
 				{
 					delete*it;
 					it = hornet_vector->erase(it);
@@ -564,7 +557,7 @@
 					hornet_vector->push_back(new hornet(sandbox, player->getGeneralInfo(), (*it1)->get_position().x - 30,
 					                                    (*it1)->get_position().y - 35));
 				}
-				if ((*it1)->hornet_state == HORNET_HIVE_STATE::DEATH && (*it1)->DEATH_timer.getElapsedTime().asSeconds() >=
+				if ((*it1)->hornet_state == HORNET_HIVE_STATE::DEATH && (*it1)->death_timer.getElapsedTime().asSeconds() >=
 					4.1f)
 				{
 					delete*it1;
@@ -584,7 +577,7 @@
 			{
 				(*it2)->update();
 	
-				if ((*it2)->eye_state == EYE_EVIL_STATE::DEATH && (*it2)->DEATH_timer.getElapsedTime().asSeconds() >= 5.1f)
+				if ((*it2)->eye_state == EYE_EVIL_STATE::DEATH && (*it2)->death_timer.getElapsedTime().asSeconds() >= 5.1f)
 				{
 					delete*it2;
 					it2 = evil_ball_vector->erase(it2);
@@ -603,7 +596,7 @@
 			{
 				(*it3)->update();
 	
-				if ((*it3)->kusaka_state == KUSAKA_STATE::KUSAKA_DEATH && (*it3)->DEATH_timer.getElapsedTime().asSeconds()
+				if ((*it3)->kusaka_state == KUSAKA_STATE::KUSAKA_DEATH && (*it3)->death_timer.getElapsedTime().asSeconds()
 					>=
 					5.1f)
 				{

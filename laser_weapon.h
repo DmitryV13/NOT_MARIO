@@ -2,6 +2,7 @@
 #include "Map.h"
 #include "TileMap.h"
 #include "GeneralInfo.h"
+#include "LASER_ANIMATION_STATES.h"
 
 using sf::Sprite;
 using sf::RenderWindow;
@@ -12,33 +13,34 @@ using sf::IntRect;
 using sf::Clock;
 using sf::Vector2f;
 
-enum LASER_ANIMATION_STATES
-{
-	LASER_FIRST = 0,
-	LASER_NEXT
-};
+
 
 class laser_weapon
 {
 protected:
 	TileMap* sandbox;
-	short attack;
+
 	Texture laser_T;
+
 	Sprite laser_S;
 	Sprite laser_area;
+
 	IntRect current_frame;
+
 	Clock animation_timer;
 	Clock laser_timer;
+
+	short attack;
 	short animation_state;
-	bool animation_switch;
-	int first;
-	int next;
-	bool dir_x;
 	short cout_las{ 0 };
 
+	bool animation_switch;
+	bool dir_x;
+
+	int first;
+	int next;
 
 	GeneralInfo* player_info;
-
 
 	void init_texture();
 	void init_sprite();
@@ -55,20 +57,13 @@ public:
 	const FloatRect get_global_bounds() const;
 	void set_position(const float x, const float y);
 	void render(sf::RenderTarget& target);
-	void render_FL(sf::RenderTarget& target);
-
-	//void update(sf::Vector2f);
+	void render_fl(sf::RenderTarget& target);
 	void update();
 	void update_animation();
-	//bool update_collision_x();
 	void reset_animation_timer();
-	//bool update_collision_x(float x);
-	sf::Vector2f calculateEndPosition(float x);
-	bool collision_block(int, int);
+	sf::Vector2f calculate_end_position(float x) const;
+	bool collision_block(int, int) const;
 	bool update_collision_x();
 	void damage(sf::Vector2f, sf::Vector2f);
-
-
-	bool hit_a_wall(const sf::Vector2f& currentPosition, float x) const;
-	//bool search_for_enemies();
+	bool hit_a_wall(const sf::Vector2f& current_position, float x) const;
 };

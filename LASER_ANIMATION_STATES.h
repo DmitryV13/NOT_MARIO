@@ -1,0 +1,6 @@
+#pragma once
+enum LASER_ANIMATION_STATES
+{
+	LASER_FIRST = 0,
+	LASER_NEXT
+};

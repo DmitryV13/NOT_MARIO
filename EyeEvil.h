@@ -1,15 +1,7 @@
 #pragma once
 #include "Enemy.h"
+#include "EYE_EVIL_STATE.h"
 
-enum class EYE_EVIL_STATE
-{
-	IDLE = 0,
-	MOVING,
-	JUMPING,
-	ATTACKING,
-	DEATH,
-	TAKING_DAMAGE
-};
 
 using sf::Sprite;
 using sf::RenderWindow;
@@ -24,18 +16,25 @@ class EyeEvil : public Enemy
 public:
 	EYE_EVIL_STATE eye_state;
 	EYE_EVIL_STATE eye_state_past;
-	Clock IDLE_timer;
-	Clock DEATH_timer;
-	Clock ATTACKING_timer;
+
+	Clock idle_timer;
+	Clock death_timer;
+	Clock attacking_timer;
 
 	bool jump_flag{true};
 
-
-	//vector<laser_weapon> laser;
 	laser_weapon* laser{nullptr};
-	laser_weapon* laserFL{nullptr};
+	laser_weapon* laser_fl{nullptr};
+	GeneralInfo* player_info;
+
+
 	explicit EyeEvil(TileMap& map, GeneralInfo* player_info,short);
 	EyeEvil(TileMap& map, GeneralInfo* player_info_, float, float);
+	void reset_timer();
+	void draw_laser(int, sf::RenderTarget&) const;
+	bool laser_existence() const;
+
+
 
 	~EyeEvil() override = default;
 	void update_movement() override;
@@ -45,13 +44,9 @@ public:
 	void attack() override;
 	bool search_for_enemies() override;
 	void reset_attention() override;
-	void draw_laser(int, sf::RenderTarget&);
-	bool laser_existence();
 	void walk(const float dir_x) override;
-	//int laser_length();
-	void reset_Timer();
 	void changeHP(short) override;
-	 void updateHP_bar() override;
+	void updateHP_bar() override;
 
 
 private:

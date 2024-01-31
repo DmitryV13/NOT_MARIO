@@ -6,7 +6,7 @@ void HornetHive::init_texture()
 {
 	if (!HornetHive_t_.loadFromFile("Textures/Enemies/beehive.png"))
 	{
-		std::cout << "Error -> beehive -> couldn't load beehive texture" << std::endl;
+		std::cout << "Error -> beehive -> couldn't load beehive texture" << '\n';
 	}
 }
 
@@ -26,37 +26,37 @@ void HornetHive::init_sprite()
 }
 
 
-HornetHive::HornetHive(TileMap& map, GeneralInfo* player_info,short regime):Enemy(map, player_info,regime), player_info_(player_info)
+HornetHive::HornetHive(TileMap& map, GeneralInfo* player_info, const short regime):Enemy(map, player_info,regime), player_info_(player_info)
 {
 	HornetHive::init_texture();
 	HornetHive::init_sprite();
-	HornetHive::setAt(0);
-	HornetHive::setHP(30);
+	HornetHive::set_at(0);
+	HornetHive::set_hp(30);
 	hp_damage_i = HP;
 	hornet_state = HORNET_HIVE_STATE::IDLE;
-	hornet_hive_state_past = HORNET_HIVE_STATE::TAKING_DAMAGE;
-	DEATH_timer.restart();
+	hornet_hive_state_past_ = HORNET_HIVE_STATE::TAKING_DAMAGE;
+	death_timer.restart();
 	hp_bar->SET_ST_HP(HP);
 }
 
-HornetHive::HornetHive(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y) :
+HornetHive::HornetHive(TileMap& map, GeneralInfo* player_info_, const float pos_x, const float pos_y) :
 	Enemy(map, player_info_, pos_x, pos_y)
 {
 	HornetHive::init_texture();
 	HornetHive::init_sprite();
-	HornetHive::setAt(0);
-	HornetHive::setHP(30);
+	HornetHive::set_at(0);
+	HornetHive::set_hp(30);
 	hp_damage_i = HP;
 	hornet_state = HORNET_HIVE_STATE::IDLE;
-	hornet_hive_state_past = HORNET_HIVE_STATE::TAKING_DAMAGE;
-	DEATH_timer.restart();
+	hornet_hive_state_past_ = HORNET_HIVE_STATE::TAKING_DAMAGE;
+	death_timer.restart();
 	hp_bar->SET_ST_HP(HP);
 }
 void HornetHive::update_movement()
 {
 
 
-	set_position_AR(get_position().x, get_position().y);
+	set_position_ar(get_position().x, get_position().y);
 	if (HP <= 0)
 	{
 		hornet_state = HORNET_HIVE_STATE::DEATH;
@@ -84,7 +84,7 @@ void HornetHive::update_movement()
 	{
 
 		animation_state = ENEMY_ANIMATION_STATES::ENEMY_TAKING_DAMAGE;
-		reset_Timer();
+		reset_timer();
 		displacement.x = 0.f;
 		displacement.y = 0.f;
 		if (HP <= 0)
@@ -95,10 +95,10 @@ void HornetHive::update_movement()
 		}
 		if (hp_damage_i > HP)
 		{
-			HORNET_TAKING_DAMAGE_TIMER.restart();
+			hornet_taking_damage_timer_.restart();
 			hp_damage_i = HP;
 		}
-		if (HORNET_TAKING_DAMAGE_TIMER.getElapsedTime().asSeconds() >= 1.0f)
+		if (hornet_taking_damage_timer_.getElapsedTime().asSeconds() >= 1.0f)
 		{
 			hornet_state = HORNET_HIVE_STATE::IDLE;
 		}
@@ -111,7 +111,7 @@ void HornetHive::update_movement()
 	{
 
 
-		reset_Timer();
+		reset_timer();
 
 		animation_state = ENEMY_ANIMATION_STATES::ENEMY_DEATH;
 
@@ -195,12 +195,12 @@ bool HornetHive::search_for_enemies()
 }
 
 
-void HornetHive::reset_Timer()
+void HornetHive::reset_timer()
 {
-	if (hornet_hive_state_past != hornet_state)
+	if (hornet_hive_state_past_ != hornet_state)
 	{
-		DEATH_timer.restart();
-		hornet_hive_state_past = hornet_state;
+		death_timer.restart();
+		hornet_hive_state_past_ = hornet_state;
 	}
 	if (animation_state_past != animation_state)
 	{
@@ -230,14 +230,13 @@ void HornetHive::reset_attention()
 {
 }
 
-void HornetHive::changeHP(short i)
+void HornetHive::changeHP(const short i)
 {
 	if(hornet_state!=HORNET_HIVE_STATE::TAKING_DAMAGE && hornet_state!=HORNET_HIVE_STATE::DEATH)Enemy::changeHP(i);
 }
 
 void HornetHive::update_physics()
 {
-	// gravity
 	displacement.y += 1.f * gravity;
 	if (std::abs(displacement.y) > velocity_max_y)
 	{
@@ -247,19 +246,14 @@ void HornetHive::update_physics()
 	{
 		displacement.x = displacement_max * ((displacement.x > 0.f) ? 1.f : -1.f);
 	}
-	//jumping
 	if (jump_tile)
 	{
 		displacement.y -= jump_velocity;
-		//jumping onto a block
 		displacement.x += moving * acceleration;
-		//jump deceleratin
-		jump_velocity *= 0.96;
+		jump_velocity *= 0.96f;
 	}
-	// deceleration
 	displacement *= deceleration;
 
-	// limits
 	if (jump_tile && search_for_enemies())
 	{
 		displacement.x = 2 * moving * displacement_max;
@@ -272,24 +266,22 @@ void HornetHive::update_physics()
 	{
 		displacement.y = 0.f;
 	}
-	//step counter
 	if (displacement.x > 0 && displacement_max == 1.f)
 		step_right++;
 	if (displacement.x < 0 && displacement_max == 1.f)
 		step_left++;
-	//if (player_contact())displacement.x *= 1.3f;
 
 	Enemy_S.move(displacement);
 	observation_area.move(displacement);
-	set_position_AR(get_position().x, get_position().y);
+	set_position_ar(get_position().x, get_position().y);
 }
 
-bool HornetHive::HIVE_LIFE() const
+bool HornetHive::hive_life() const
 {
 	return HP >= 1;
 }
 
-void HornetHive::set_position_AR(const float x, const float y)
+void HornetHive::set_position_ar(const float x, const float y)
 {
 	observation_area.setPosition(
 		x - (observation_area.getGlobalBounds().width - (observation_area.getGlobalBounds().width / 2) - (Enemy_S.

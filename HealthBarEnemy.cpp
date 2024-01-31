@@ -52,10 +52,7 @@ void HealthBarEnemy::update_animation()
 
 		HP_PREV = HP_cur;
 
-		
 	}
-
-
 }
 
 void HealthBarEnemy::reset_Timer()

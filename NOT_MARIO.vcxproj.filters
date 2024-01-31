@@ -103,21 +103,6 @@
     <Filter Include="Source Files\Map\Object">
       <UniqueIdentifier>{4e835cf8-4216-4889-adac-549acb7c5663}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Map\Objects">
-      <UniqueIdentifier>{25100af4-1fc3-41d4-8ff9-54157bbc9f53}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\GUI\Pages">
-      <UniqueIdentifier>{20f523bb-31fc-4e78-87f1-151339db9cb5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Map\Tile">
-      <UniqueIdentifier>{60a735c8-8899-4ffd-b255-bf15b1518132}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\GameObjects\Alive\Player">
-      <UniqueIdentifier>{c1af2cf6-5e78-4a9a-839f-6f190fa674a4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\GameObjects\Alive\Enemies">
-      <UniqueIdentifier>{b7cb1e38-c4ed-4d27-8664-2851655a5d5c}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyView.cpp">
@@ -368,6 +353,9 @@
     <ClInclude Include="Projectile.h">
       <Filter>Header Files\GameObjects\Artificial\Weapons\RangedWeapons</Filter>
     </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Header Files\GUI\Items</Filter>
+    </ClInclude>
     <ClInclude Include="Fist.h">
       <Filter>Header Files\GameObjects\Artificial\Weapons\BareHands</Filter>
     </ClInclude>
@@ -380,188 +368,215 @@
     <ClInclude Include="ORIENTATION.h">
       <Filter>Header Files\Enums</Filter>
     </ClInclude>
+    <ClInclude Include="TileAnim.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="MENU_STATE.h">
       <Filter>Header Files\Enums</Filter>
     </ClInclude>
-    <ClInclude Include="TileAnim.h">
-      <Filter>Header Files\Map\Tile</Filter>
-    </ClInclude>
-    <ClInclude Include="BUTTON_STATE.h">
-      <Filter>Header Files\Enums</Filter>
-    </ClInclude>
-    <ClInclude Include="FORM_ITEM_STATE.h">
-      <Filter>Header Files\Enums</Filter>
-    </ClInclude>
-    <ClInclude Include="INTERFACE_ITEM_TYPE.h">
-      <Filter>Header Files\Enums</Filter>
-    </ClInclude>
-    <ClInclude Include="OBJECT_TYPE.h">
-      <Filter>Header Files\Enums</Filter>
-    </ClInclude>
-    <ClInclude Include="POP_UP_WINDOW_STATE.h">
-      <Filter>Header Files\Enums</Filter>
-    </ClInclude>
-    <ClInclude Include="PAGE_STATE.h">
-      <Filter>Header Files\Enums</Filter>
-    </ClInclude>
-    <ClInclude Include="PURCHASE.h">
-      <Filter>Header Files\Enums</Filter>
-    </ClInclude>
-    <ClInclude Include="CallbacksHandler.h">
-      <Filter>Header Files\ServiceClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="Chest.h">
-      <Filter>Header Files\Map\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimatedImage.h">
-      <Filter>Header Files\ServiceClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimObject.h">
-      <Filter>Header Files\Map\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="BasicImage.h">
-      <Filter>Header Files\ServiceClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="ComposedIMG.h">
-      <Filter>Header Files\ServiceClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="CRect.h">
-      <Filter>Header Files\ServiceClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="FontManager.h">
-      <Filter>Header Files\ServiceClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="Form.h">
-      <Filter>Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Exit.h">
-      <Filter>Header Files\GUI\Pages</Filter>
-    </ClInclude>
-    <ClInclude Include="hornet.h">
-      <Filter>Header Files\GameObjects\Alive\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="MainMenuOption.h">
-      <Filter>Header Files\GUI\Pages</Filter>
-    </ClInclude>
-    <ClInclude Include="Label.h">
-      <Filter>Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="RedMutant.h">
-      <Filter>Header Files\GameObjects\Alive\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="HornetHive.h">
-      <Filter>Header Files\GameObjects\Alive\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneralInfo.h">
-      <Filter>Header Files\GameObjects\Alive\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Group.h">
-      <Filter>Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Header Files\GameObjects\Alive\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="BushKiller.h">
-      <Filter>Header Files\GameObjects\Alive\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files\GameObjects\Alive\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Warehouse.h">
-      <Filter>Header Files\ServiceClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="WolfBoss.h">
-      <Filter>Header Files\GameObjects\Alive\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="SliderControl.h">
-      <Filter>Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="laser_weapon.h">
-      <Filter>Header Files\GameObjects\Alive\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="MovingAnimObject.h">
-      <Filter>Header Files\Map\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="TabContainer.h">
-      <Filter>Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="WarehouseItem.h">
-      <Filter>Header Files\ServiceClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="TileAnim.h">
-      <Filter>Header Files\Map\Tile</Filter>
-    </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>Header Files\Map\Tile</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>Header Files\Map\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Notification.h">
-      <Filter>Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureManager.h">
-      <Filter>Header Files\ServiceClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="PopUpWindow.h">
-      <Filter>Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Reviewer.h">
-      <Filter>Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="HealthBarEnemy.h">
-      <Filter>Header Files\GameObjects\Alive\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="ScaleParametrBar.h">
-      <Filter>Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Switch.h">
-      <Filter>Header Files\Map\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceInfo.h">
-      <Filter>Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Setting.h">
-      <Filter>Header Files\GUI\Pages</Filter>
+    <ClInclude Include="ImageInfo.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ProductCard.h">
-      <Filter>Header Files\GUI</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MovingObject.h">
-      <Filter>Header Files\Map\Objects</Filter>
+    <ClInclude Include="PURCHASE.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ImageButton.h">
-      <Filter>Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="kusaka.h">
-      <Filter>Header Files\GameObjects\Alive\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="EyeEvil.h">
-      <Filter>Header Files\GameObjects\Alive\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="RoadMap.h">
-      <Filter>Header Files\GUI\Pages</Filter>
+    <ClInclude Include="Notification.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="InventoryItem.h">
-      <Filter>Header Files\GUI</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicImage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TileAnim.h">
+      <Filter>Header Files\Map\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedImage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BushKiller.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CheckboxItem.h">
-      <Filter>Header Files\GUI</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="killer_leaf.h">
-      <Filter>Header Files\GameObjects\Alive\Enemies</Filter>
+    <ClInclude Include="Chest.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ImageInfo.h">
-      <Filter>Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>Header Files\GUI</Filter>
+    <ClInclude Include="Form.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FormItem.h">
-      <Filter>Header Files\GUI\Items</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FORM_ITEM_STATE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BUTTON_STATE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CallbacksHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ComposedIMG.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CRect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FontManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneralInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Group.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthBarEnemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hornet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HornetHive.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="killer_leaf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="INTERFACE_ITEM_TYPE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OBJECT_TYPE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Warehouse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Label.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PAGE_STATE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="POP_UP_WINDOW_STATE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingAnimObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PopUpWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RedMutant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Exit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Reviewer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RoadMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EyeEvil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuOption.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="InterfaceItem.h">
-      <Filter>Header Files\GUI\Items</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="kusaka.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="laser_weapon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScaleParametrBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Setting.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SliderControl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Switch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TabContainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WolfBoss.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENEMY_ANIMATION_STATES.h">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="PL_SIDE.h">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="RED_MUTANT_STATE.h">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="BOSS_STATE.h">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="HORNET_STATE.h">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="KUSAKA_STATE.h">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="BUSH_KILLER_STATE.h">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="HORNET_HIVE_STATE.h">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="EYE_EVIL_STATE.h">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="LASER_ANIMATION_STATES.h">
+      <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

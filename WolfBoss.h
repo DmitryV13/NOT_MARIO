@@ -1,55 +1,41 @@
 #pragma once
 #include "Enemy.h"
+#include "BOSS_STATE.h"
 
-enum class BOSS_STATE
-{
-	SLEEP,
-	IDLE,
-	MOVING,
-	JUMPING,
-	ATTACKING,
-	RETREATING,
-	HOWL,
-	PUNCH,
-	DOUBLE_KICK,
-	HIT_EARTH,
-	RUN,
-	DEATH,
-	TORMENT,
-	TAKING_DAMAGE
-};
 
 
 class WolfBoss : public Enemy
 {
-	BOSS_STATE boss_state;
-	BOSS_STATE boss_state_past;
-	bool boss_state_TORMENT;
-	Texture Wolf_Boss_t_;
-	Clock RETREATING_timer;
-	Clock Jumping_att_timer;
-	Clock IDLE_timer;
-	Clock BOSS_TAKING_DAMAGE_TIMER;
-	Clock Shot_timer;
-	Clock DEATH_timer;
-	Clock att_timer;
+	BOSS_STATE boss_state_;
+	BOSS_STATE boss_state_past_;
 
+	Texture wolf_boss_t_;
 
-	bool jump_flag{true};
+	Clock retreating_timer_;
+	Clock jumping_att_timer_;
+	Clock idle_timer_;
+	Clock boss_taking_damage_timer_;
+	Clock shot_timer_;
+	Clock death_timer_;
+	Clock att_timer_;
+
+	GeneralInfo* player_info_;
+
+	bool jump_flag_{true};
+	bool boss_state_torment_;
+	bool player_l_r_[2]{ false };
+	bool awakening_;
+	bool pl_contact_;
+	bool pl_cont_jump_;
+
 	short count_jm;
 	short count_anim{0};
 
-
-	bool player_l_r[2]{false};
-	//int count_anger = 0;
-	int retreat_counter;
-	int max_retreat_duration;
-	bool awakening;
-	bool pl_contact;
-	bool pl_cont_jump;
+	int retreat_counter_;
+	int max_retreat_duration_;
 	int rand_;
-	float distance;
 
+	float distance_;
 
 	void init_texture() override;
 	void init_sprite() override;
@@ -58,6 +44,15 @@ class WolfBoss : public Enemy
 public:
 	explicit WolfBoss(TileMap& map, GeneralInfo* player_info,short);
 	WolfBoss(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y);
+	sf::Vector2f calculate_random_position(int jump_distance) const;
+	PL_SIDE getPlayerSide(float player_x, float enemy_x) override;
+
+	void look(float direction);
+	void bite();
+	void reset_step();
+	void reset_Timer();
+	void looks();
+	void shot_howl() const;
 
 	~WolfBoss() override = default;
 	void update_movement() override;
@@ -70,18 +65,8 @@ public:
 	void walk(const float dir_x) override;
 	void update_physics() override;
 	void jump(const float dir_y) override;
-	void shot_HOWL();
-	void reset_Timer();
 	bool outside_sting() override;
-	void looks();
 	void changeHP(short) override;
 	void updateHP_bar() override;
 
-
-	sf::Vector2f calculateRandomPosition(const sf::FloatRect& playerBounds, int jumpDistance);
-
-	PL_SIDE getPlayerSide(float playerX, float enemyX);
-	void look(float direction);
-	void bite();
-	void reset_step();
 };

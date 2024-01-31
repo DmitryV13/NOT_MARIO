@@ -1,0 +1,10 @@
+#pragma once
+enum class EYE_EVIL_STATE
+{
+	IDLE = 0,
+	MOVING,
+	JUMPING,
+	ATTACKING,
+	DEATH,
+	TAKING_DAMAGE
+};

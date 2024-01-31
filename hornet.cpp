@@ -5,7 +5,7 @@ void hornet::init_texture()
 {
 	if (!hornet_t_.loadFromFile("Textures/Enemies/hornet.png"))
 	{
-		std::cout << "Error -> hornet -> couldn't load hornet texture" << std::endl;
+		std::cout << "Error -> hornet -> couldn't load hornet texture" << '\n';
 	}
 }
 
@@ -24,34 +24,35 @@ void hornet::init_sprite()
 	Enemy_S.setTextureRect(current_frame);
 }
 
-hornet::hornet(TileMap& map, GeneralInfo* player_info,short regime): Enemy(map, player_info,regime), player_info_(player_info)
+hornet::hornet(TileMap& map, GeneralInfo* player_info, const short regime): Enemy(map, player_info, regime),
+                                                                            player_info_(player_info)
 {
 	hornet::init_texture();
 	hornet::init_sprite();
-	hornet::setAt(20);
-	hornet::setHP(50);
+	hornet::set_at(20);
+	hornet::set_hp(50);
 	hp_damage_i = HP;
 	hornet_state = HORNET_STATE::IDLE;
-	hornet_state_past = HORNET_STATE::FLYING;
-	IDLE_timer.restart();
-	ATTACKING_timer.restart();
-	DEATH_timer.restart();
+	hornet_state_past_ = HORNET_STATE::FLYING;
+	idle_timer_.restart();
+	attacking_timer_.restart();
+	death_timer.restart();
 	hp_bar->SET_ST_HP(HP);
 }
 
-hornet::hornet(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y):
+hornet::hornet(TileMap& map, GeneralInfo* player_info_, const float pos_x, const float pos_y):
 Enemy(map, player_info_,pos_x,pos_y ), player_info_(player_info)
 {
 	hornet::init_texture();
 	hornet::init_sprite();
-	hornet::setAt(20);
-	hornet::setHP(50);
+	hornet::set_at(20);
+	hornet::set_hp(50);
 	hp_damage_i = HP;
 	hornet_state = HORNET_STATE::IDLE;
-	hornet_state_past = HORNET_STATE::FLYING;
-	IDLE_timer.restart();
-	ATTACKING_timer.restart();
-	DEATH_timer.restart();
+	hornet_state_past_ = HORNET_STATE::FLYING;
+	idle_timer_.restart();
+	attacking_timer_.restart();
+	death_timer.restart();
 	hp_bar->SET_ST_HP(HP);
 }
 
@@ -72,14 +73,14 @@ void hornet::update_movement()
 	{
 	case HORNET_STATE::IDLE:
 		{
-			hornet_state_past = hornet_state;
+			hornet_state_past_ = hornet_state;
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
 			looks();
-			if (DEATH_timer.getElapsedTime().asSeconds() >= 0.5f)
+			if (death_timer.getElapsedTime().asSeconds() >= 0.5f)
 			{
 				direction_calculation();
 				hornet_state = HORNET_STATE::FLYING;
-				DEATH_timer.restart();
+				death_timer.restart();
 			}
 
 			break;
@@ -90,16 +91,16 @@ void hornet::update_movement()
 		{
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;
 			looks();
-			hornet_state_past = hornet_state;
+			hornet_state_past_ = hornet_state;
 
 			if (sting())
 			{
 				hornet_state = HORNET_STATE::ATTACKING;
 			}
-			if (IDLE_timer.getElapsedTime().asSeconds() >= 2.F)
+			if (idle_timer_.getElapsedTime().asSeconds() >= 2.F)
 			{
 				hornet_state = HORNET_STATE::IDLE;
-				IDLE_timer.restart();
+				idle_timer_.restart();
 			}
 			walk(moving);
 			break;
@@ -114,7 +115,7 @@ void hornet::update_movement()
 			reset_Timer();
 			attack();
 
-			if (IDLE_timer.getElapsedTime().asSeconds() >= 0.8f)
+			if (idle_timer_.getElapsedTime().asSeconds() >= 0.8f)
 			{
 				hornet_state = HORNET_STATE::FLYING;
 			}
@@ -141,10 +142,10 @@ void hornet::update_movement()
 			}
 			if (hp_damage_i > HP)
 			{
-				HORNET_TAKING_DAMAGE_TIMER.restart();
+				hornet_taking_damage_timer_.restart();
 				hp_damage_i = HP;
 			}
-			if (HORNET_TAKING_DAMAGE_TIMER.getElapsedTime().asSeconds() >= 1.0f)
+			if (hornet_taking_damage_timer_.getElapsedTime().asSeconds() >= 1.0f)
 			{
 				hornet_state = HORNET_STATE::IDLE;
 			}
@@ -323,20 +324,19 @@ void hornet::update_animation()
 
 void hornet::shot()
 {
-	if (ATTACKING_timer.getElapsedTime().asSeconds() >= 0.5f)
+	if (attacking_timer_.getElapsedTime().asSeconds() >= 0.5f)
 	{
 		player_info->changeHP(-attack_ - (rand() % 5));
-		ATTACKING_timer.restart();
+		attacking_timer_.restart();
 	}
 }
 
 bool hornet::search_for_enemies()
 {
-	FloatRect look = observation_area.getGlobalBounds();
-	FloatRect pl = player_info->getGlobalBounds();
+	const FloatRect look = observation_area.getGlobalBounds();
+	const FloatRect pl = player_info->getGlobalBounds();
 
 	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
-	//looks();
 	if (look.intersects(pl))
 	{
 		return true;
@@ -354,13 +354,13 @@ void hornet::walk(const float dir_x)
 	looks();
 	if (looks_to_the_left)
 	{
-		displacement.x = acceleration * moveX * dir_x;
-		displacement.y = acceleration * moveY * dir_x;
+		displacement.x = acceleration * move_x_ * dir_x;
+		displacement.y = acceleration * move_y_ * dir_x;
 	}
 	else
 	{
-		displacement.x = acceleration * moveX * (-dir_x);
-		displacement.y = acceleration * moveY * (-dir_x);
+		displacement.x = acceleration * move_x_ * (-dir_x);
+		displacement.y = acceleration * move_y_ * (-dir_x);
 	}
 	if (std::abs(displacement.x) > displacement_max)
 	{
@@ -374,11 +374,11 @@ void hornet::walk(const float dir_x)
 
 void hornet::reset_Timer()
 {
-	if (hornet_state_past != hornet_state)
+	if (hornet_state_past_ != hornet_state)
 	{
-		DEATH_timer.restart();
+		death_timer.restart();
 		blow_timer.restart();
-		hornet_state_past = hornet_state;
+		hornet_state_past_ = hornet_state;
 	}
 	if (animation_state_past != animation_state)
 	{
@@ -396,7 +396,7 @@ void hornet::reset_Timer()
 	}
 }
 
-void hornet::changeHP(short i)
+void hornet::changeHP(const short i)
 {
 	if (hornet_state != HORNET_STATE::TAKING_DAMAGE)Enemy::changeHP(i);
 }
@@ -410,7 +410,6 @@ void hornet::update_physics()
 		displacement.y += 1.f * gravity;
 	}
 
-	//displacement *= deceleration;
 
 
 	if (update_collision_x() || hornet_state == HORNET_STATE::DEATH || sting())
@@ -427,8 +426,8 @@ void hornet::update_physics()
 
 void hornet::looks()
 {
-	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
-	if (playerSide == PL_SIDE::LEFT)
+	const PL_SIDE player_side = getPlayerSide(player_info->getPosition().x, get_position().x);
+	if (player_side == PL_SIDE::LEFT)
 	{
 		looks_to_the_left = true;
 		looks_to_the_right = false;
@@ -444,25 +443,25 @@ void hornet::looks()
 
 void hornet::direction_calculation()
 {
-	float targetX = get_position().x;
-	float targetY = get_position().y;
+	const float target_x = get_position().x;
+	const float target_y = get_position().y;
 
-	float startX = player_info_->getPosition().x;
-	float startY = player_info_->getPosition().y;
+	const float start_x = player_info_->getPosition().x;
+	const float start_y = player_info_->getPosition().y;
 
-	float directionX = targetX - startX;
-	float directionY = targetY - startY;
+	const float direction_x = target_x - start_x;
+	const float direction_y = target_y - start_y;
 
-	float length = std::sqrt(directionX * directionX + directionY * directionY);
+	const float length = std::sqrt(direction_x * direction_x + direction_y * direction_y);
 
 	if (length != 0.0f)
 	{
-		float normalizedDirectionX = directionX / length;
-		float normalizedDirectionY = directionY / length;
+		const float normalized_direction_x = direction_x / length;
+		const float normalized_direction_y = direction_y / length;
 
 
-		moveX = normalizedDirectionX;
-		moveY = normalizedDirectionY;
+		move_x_ = normalized_direction_x;
+		move_y_ = normalized_direction_y;
 	}
 }
 

@@ -1,39 +1,39 @@
 #include "stdafx.h"
 #include "kusaka.h"
 
-kusaka::kusaka(TileMap& map, GeneralInfo* player_info,short regime)
-	: Enemy(map, player_info,regime)
+kusaka::kusaka(TileMap& map, GeneralInfo* player_info, const short regime)
+	: Enemy(map, player_info,regime), player_info_(player_info)
 {
 	{
 		kusaka::init_texture();
 		kusaka::init_sprite();
-		kusaka::setAt(20);
-		kusaka::setHP(1000);
+		kusaka::set_at(20);
+		kusaka::set_hp(1000);
 		kusaka_state = KUSAKA_STATE::KUSAKA_SLEEP;
 		hp_damage_i = HP;
 		kusaka_state_past = kusaka_state;
-		KUSAKA_TAKING_DAMAGE_TIMER.restart();
-		IDLE_timer.restart();
-		DEATH_timer.restart();
+		kusaka_taking_damage_timer.restart();
+		idle_timer.restart();
+		death_timer.restart();
 		count_jm = 0;
 		hp_bar->SET_ST_HP(HP);
 	}
 }
 
-kusaka::kusaka(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y) :
+kusaka::kusaka(TileMap& map, GeneralInfo* player_info_, const float pos_x, const float pos_y) :
 	Enemy(map, player_info_, pos_x, pos_y)
 {
 	{
 		kusaka::init_texture();
 		kusaka::init_sprite();
-		kusaka::setAt(20);
-		kusaka::setHP(1000);
+		kusaka::set_at(20);
+		kusaka::set_hp(1000);
 		kusaka_state = KUSAKA_STATE::KUSAKA_SLEEP;
 		hp_damage_i = HP;
 		kusaka_state_past = kusaka_state;
-		KUSAKA_TAKING_DAMAGE_TIMER.restart();
-		IDLE_timer.restart();
-		DEATH_timer.restart();
+		kusaka_taking_damage_timer.restart();
+		idle_timer.restart();
+		death_timer.restart();
 		count_jm = 0;
 		hp_bar->SET_ST_HP(HP);
 	}
@@ -44,7 +44,7 @@ void kusaka::init_texture()
 {
 	if (!kusaka_t_.loadFromFile("Textures/Enemies/kusaka.png"))
 	{
-		std::cout << "Error -> Enemy_kusaka -> couldn't load enemy_kusaka texture" << std::endl;
+		std::cout << "Error -> Enemy_kusaka -> couldn't load enemy_kusaka texture" << '\n';
 	}
 }
 
@@ -53,15 +53,10 @@ void kusaka::init_sprite()
 	current_area = IntRect(0, 0, 1280, 192);
 	observation_area.setTextureRect(current_area);
 
-
 	anim_area.setTexture(kusaka_t_);
 	standard_frame = IntRect(0, 0, 90, 55);
 	anim_area.setTextureRect(standard_frame);
 
-
-
-	//Enemy_T = init_texture();
-	//Enemy_S.setTexture(kusaka_t_);
 	current_frame = IntRect(0, 0, 64, 55);
 	Enemy_S.setTextureRect(current_frame);
 }
@@ -76,7 +71,7 @@ void kusaka::update_animation()
 			if (looks_to_the_right)
 			{
 				standard_frame.left += 90;
-				if (standard_frame.left >= 810.f)
+				if (standard_frame.left >= 810)
 				{
 					standard_frame.left = 0.f;
 				}
@@ -86,7 +81,7 @@ void kusaka::update_animation()
 			else
 			{
 				standard_frame.left += 90;
-				if (standard_frame.left >= 900.f)
+				if (standard_frame.left >= 900)
 				{
 					standard_frame.left = 90.f;
 				}
@@ -105,7 +100,7 @@ void kusaka::update_animation()
 			if (looks_to_the_right)
 			{
 				standard_frame.left += 90;
-				if (standard_frame.left >= 450.f)
+				if (standard_frame.left >= 450)
 				{
 					standard_frame.left = 0.f;
 				}
@@ -115,7 +110,7 @@ void kusaka::update_animation()
 			else
 			{
 				standard_frame.left += 90;
-				if (standard_frame.left >= 540.f)
+				if (standard_frame.left >= 540)
 				{
 					standard_frame.left = 90.f;
 				}
@@ -134,7 +129,7 @@ void kusaka::update_animation()
 			if (looks_to_the_right)
 			{
 				standard_frame.left += 90;
-				if (standard_frame.left >= 810.f)
+				if (standard_frame.left >= 810)
 				{
 					standard_frame.left = 0.f;
 				}
@@ -144,7 +139,7 @@ void kusaka::update_animation()
 			else
 			{
 				standard_frame.left += 90;
-				if (standard_frame.left >= 900.f)
+				if (standard_frame.left >= 900)
 				{
 					standard_frame.left = 90.f;
 				}
@@ -164,7 +159,7 @@ void kusaka::update_animation()
 			if (looks_to_the_right)
 			{
 				standard_frame.left += 90;
-				if (standard_frame.left >= 810.f)
+				if (standard_frame.left >= 810)
 				{
 					standard_frame.left = 90.f;
 				}
@@ -174,7 +169,7 @@ void kusaka::update_animation()
 			else
 			{
 				standard_frame.left += 90;
-				if (standard_frame.left >= 900.f)
+				if (standard_frame.left >= 900)
 				{
 					standard_frame.left = 90.f;
 				}
@@ -200,7 +195,7 @@ void kusaka::update_animation()
 			if (looks_to_the_right)
 			{
 				standard_frame.left += 90;
-				if (standard_frame.left >= 810.f)
+				if (standard_frame.left >= 810)
 				{
 					standard_frame.left = 0.f;
 				}
@@ -210,7 +205,7 @@ void kusaka::update_animation()
 			else
 			{
 				standard_frame.left += 90;
-				if (standard_frame.left >= 900.f)
+				if (standard_frame.left >= 900)
 				{
 					standard_frame.left = 90.f;
 				}
@@ -230,7 +225,7 @@ void kusaka::update_animation()
 			if (looks_to_the_right)
 			{
 				standard_frame.left += 90;
-				if (standard_frame.left >= 810.f)
+				if (standard_frame.left >= 810)
 				{
 					standard_frame.left = 0.f;
 				}
@@ -240,7 +235,7 @@ void kusaka::update_animation()
 			else
 			{
 				standard_frame.left += 90;
-				if (standard_frame.left >= 900.f)
+				if (standard_frame.left >= 900)
 				{
 					standard_frame.left = 90.f;
 				}
@@ -260,7 +255,7 @@ void kusaka::update_animation()
 			if (looks_to_the_right)
 			{
 				standard_frame.left += 90;
-				if (standard_frame.left >= 450.f)
+				if (standard_frame.left >= 450)
 				{
 					standard_frame.left = 360.f;
 				}
@@ -270,7 +265,7 @@ void kusaka::update_animation()
 			else
 			{
 				standard_frame.left += 90;
-				if (standard_frame.left >= 540.f)
+				if (standard_frame.left >= 540)
 				{
 					standard_frame.left = 450.f;
 				}
@@ -289,7 +284,7 @@ void kusaka::update_animation()
 			if (looks_to_the_right)
 			{
 				standard_frame.left += 90;
-				if (standard_frame.left >= 810.f)
+				if (standard_frame.left >= 810)
 				{
 					standard_frame.left = 0.f;
 				}
@@ -299,7 +294,7 @@ void kusaka::update_animation()
 			else
 			{
 				standard_frame.left += 90;
-				if (standard_frame.left >= 900.f)
+				if (standard_frame.left >= 900)
 				{
 					standard_frame.left = 90.f;
 				}
@@ -318,7 +313,7 @@ void kusaka::update_animation()
 			if (looks_to_the_right)
 			{
 				standard_frame.left += 90;
-				if (standard_frame.left >= 450.f)
+				if (standard_frame.left >= 450)
 				{
 					standard_frame.left = 0.f;
 				}
@@ -328,7 +323,7 @@ void kusaka::update_animation()
 			else
 			{
 				standard_frame.left += 90;
-				if (standard_frame.left >= 540.f)
+				if (standard_frame.left >= 540)
 				{
 					standard_frame.left = 90.f;
 				}
@@ -351,30 +346,19 @@ void kusaka::update_animation()
 void kusaka::shot()
 {
 	animation_state = ENEMY_ANIMATION_STATES::ENEMY_SHOT;
-	//player_->changeHP(-attack_-(rand()%5));
 	player_info->changeHP(-attack_ - (rand() % 5));
 }
 
 
 void kusaka::attack()
 {
-	//if (animation_state != ENEMY_ANIMATION_STATES::ENEMY_SHOT)animation_state = ENEMY_ANIMATION_STATES::ENEMY_ATTENTION;
-	//if (isPlayerInRadius(observation_area.getGlobalBounds(), player_info->getGlobalBounds(), 192))
-	//{
-	//	if (count_jump == 0)
-	//	{
-	//		//jump(1.f);
-	//		jump_towards_player();
-	//		count_jump++;
-	//	}
-	//}
-	//else reset_attention();
+	
 	if (sting())
 	{
 		displacement.x = 0;
 		displacement_max = 1.f;
-		FloatRect en = get_global_bounds();
-		FloatRect pl = player_info->getGlobalBounds();
+		const FloatRect en = get_global_bounds();
+		const FloatRect pl = player_info->getGlobalBounds();
 		if (pl.left < en.left)
 		{
 			if (looks_to_the_right)
@@ -396,7 +380,6 @@ void kusaka::attack()
 		{
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_SHOT;
 			shot();
-			//clear_shot();
 			displacement.x = 0;
 			displacement_max = 1.f;
 
@@ -404,42 +387,6 @@ void kusaka::attack()
 		}
 	}
 	else kusaka_state = KUSAKA_STATE::KUSAKA_IDLE;
-	//else
-	//{
-	//	if (jump_tile || !on_ground)displacement_max = 1.f;
-	//	else displacement_max = 5.f;
-	//	if (player_l_r[0] && displacement.x > 0)
-	//	{
-	//		displacement.x = 0;
-	//		moving = -1.f;
-	//		looks_to_the_right = false;
-	//		looks_to_the_left = true;
-	//	}
-	//	else if (player_l_r[0] && displacement.x < 0)
-	//	{
-	//		displacement.x = 0;
-	//		//moving= 1.f;
-	//		looks_to_the_right = false;
-	//		looks_to_the_left = true;
-	//	}
-	//	else if (player_l_r[1] && displacement.x > 0)
-	//	{
-	//		displacement.x = 0;
-	//		looks_to_the_right = true;
-	//		looks_to_the_left = false;
-	//		//moving = 1.f;
-	//	}
-	//	else
-	//	{
-	//		displacement.x = 0;
-	//		moving = 1.f;
-	//		looks_to_the_right = true;
-	//		looks_to_the_left = false;
-	//	}
-	//	displacement.x += 10 * moving * acceleration;
-	//}
-
-	// displacement.x = 0;
 }
 
 void kusaka::clear_shot()
@@ -449,104 +396,41 @@ void kusaka::clear_shot()
 
 bool kusaka::search_for_enemies()
 {
-	FloatRect look = observation_area.getGlobalBounds();
-	FloatRect pl = player_info->getGlobalBounds();
+	const FloatRect look = observation_area.getGlobalBounds();
+	const FloatRect pl = player_info->getGlobalBounds();
 
-	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
-	if (playerSide == PL_SIDE::RIGHT && look.intersects(pl))
+	const PL_SIDE player_side = getPlayerSide(player_info->getPosition().x, get_position().x);
+	if (player_side == PL_SIDE::RIGHT && look.intersects(pl))
 	{
-		player_l_r[1] = true;
-		player_l_r[0] = false;
+		player_l_r_[1] = true;
+		player_l_r_[0] = false;
 		return true;
 	}
-	else if (playerSide == PL_SIDE::LEFT && look.intersects(pl))
+	else if (player_side == PL_SIDE::LEFT && look.intersects(pl))
 	{
-		player_l_r[0] = true;
-		player_l_r[1] = false;
+		player_l_r_[0] = true;
+		player_l_r_[1] = false;
 		return true;
 	}
 
-	player_l_r[0] = false;
-	player_l_r[1] = false;
+	player_l_r_[0] = false;
+	player_l_r_[1] = false;
 	return false;
-
-
-	// int centerX = get_position().x / 60;
-	// int centerY = get_position().y / 60;
-	//
-	//
-	// for (int i = centerY - 3;  i <= centerY + 3; i++)
-	// {
-	// 	for (int j = centerX - 6; j <= centerX + 6; j++)
-	// 	{
-	// 		if (i >= 0 && i < 40 && j >= 0 && j < TileFactory::m && i < TileFactory::n && i > 0)
-	// 		{
-	// 			if (sandbox->isOccupied(i, j))
-	// 			{
-	// 				return true;
-	// 			}
-	// 		}
-	// 	}
-	// }
-	//
-	// return false;
-
-
-	/*int centerX = get_position().x / 64;
-	int centerY = get_position().y / 64;
-
-
-	for (int i = centerY - 1; i <= centerY + 1; i++)
-	{
-		for (int j = centerX + 1; j <= centerX + 10; j++)
-		{
-			if (i >= 0 && i < sandbox->getMapHeight()/64 && j >= 0 && j < sandbox->getMapWidth()/64)
-			{
-				if (sandbox->isOccupied(i, j))
-				{
-					player_l_r[1] = true;
-					player_l_r[0] = false;
-					return true;
-				}
-			}
-		}
-	}
-
-
-	for (int i = centerY - 1; i <= centerY + 1; i++)
-	{
-		for (int j = centerX - 10; j <= centerX; j++)
-		{
-			if (i >= 0 && i < sandbox->getMapHeight()/64 && j >= 0 && j < sandbox->getMapWidth()/64)
-			{
-				if (sandbox->isOccupied(i, j))
-				{
-					player_l_r[0] = true;
-					player_l_r[1] = false;
-					return true;
-				}
-			}
-		}
-	}
-
-	player_l_r[0] = false;
-	player_l_r[1] = false;
-	return false;*/
 }
 
 void kusaka::reset_attention()
 {
 	displacement_max = 1.f;
 	displacement.x += moving * acceleration;
-	count_jump = 0;
+	count_jump_ = 0;
 }
 
-void kusaka::reset_Timer()
+void kusaka::reset_timer()
 {
 	if (kusaka_state_past != kusaka_state)
 	{
-		IDLE_timer.restart();
-		DEATH_timer.restart();
+		idle_timer.restart();
+		death_timer.restart();
 		kusaka_state_past = kusaka_state;
 	}
 }
@@ -558,7 +442,6 @@ void kusaka::update_movement()
 	{
 		kusaka_state = KUSAKA_STATE::KUSAKA_TAKING_DAMAGE;
 	}
-	//if (!search_for_enemies())clear_shot();
 	switch (kusaka_state)
 	{
 	case KUSAKA_STATE::KUSAKA_IDLE:
@@ -573,7 +456,7 @@ void kusaka::update_movement()
 				kusaka_state = KUSAKA_STATE::KUSAKA_MOVING;
 				break;
 			}
-			reset_Timer();
+			reset_timer();
 
 			if (update_collision_x() && update_collision_x_jump())
 			{
@@ -581,7 +464,7 @@ void kusaka::update_movement()
 				kusaka_state = KUSAKA_STATE::KUSAKA_JUMPING;
 				break;
 			}
-			if (IDLE_timer.getElapsedTime().asSeconds() >= 1.5f)
+			if (idle_timer.getElapsedTime().asSeconds() >= 1.5f)
 			{
 				
 				 if (hit_a_wall())
@@ -597,14 +480,13 @@ void kusaka::update_movement()
 				if (rand() % 2 && !search_for_enemies())kusaka_state = KUSAKA_STATE::KUSAKA_SLEEP;
 
 
-				IDLE_timer.restart();
+				idle_timer.restart();
 			}
 			else
 			{
 				displacement.x = 0;
 				displacement_max = 1.f;
 			}
-			//animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
 
 			break;
 		}
@@ -622,7 +504,7 @@ void kusaka::update_movement()
 				displacement.x *= displacement_max;
 			}
 
-			else if (!canJumpForward() || count_jm > 4)
+			else if (!can_jump_forward() || count_jm > 4)
 			{
 				count_jm = 0;
 				jump_flag = false;
@@ -642,13 +524,13 @@ void kusaka::update_movement()
 			if (search_for_enemies())
 			{
 				kusaka_state = KUSAKA_STATE::KUSAKA_ATTACKING;
-				reset_Timer();
+				reset_timer();
 				break;
 			}
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;
 			if (update_collision_x())
 			{
-				if (canJumpForward())
+				if (can_jump_forward())
 				{
 					jump_flag = true;
 					kusaka_state = KUSAKA_STATE::KUSAKA_JUMPING;
@@ -667,13 +549,12 @@ void kusaka::update_movement()
 			{
 				kusaka_state = KUSAKA_STATE::KUSAKA_RUN;
 			}
-			if (isPlayerInRadius(observation_area.getGlobalBounds(), player_info->getGlobalBounds(), 192))
+			if (is_player_in_radius(observation_area.getGlobalBounds(), player_info->getGlobalBounds(), 192))
 			{
-				if (count_jump == 0)
+				if (count_jump_ == 0)
 				{
-					//jump(1.f);
 					jump_towards_player();
-					count_jump++;
+					count_jump_++;
 					kusaka_state = KUSAKA_STATE::KUSAKA_JUMPING;
 				}
 			}
@@ -684,7 +565,7 @@ void kusaka::update_movement()
 			}
 			if (update_collision_x())
 			{
-				if (canJumpForward())
+				if (can_jump_forward())
 				{
 					jump_flag = true;
 					kusaka_state = KUSAKA_STATE::KUSAKA_JUMPING;
@@ -734,10 +615,10 @@ void kusaka::update_movement()
 			}
 			if (hp_damage_i > HP)
 			{
-				KUSAKA_TAKING_DAMAGE_TIMER.restart();
+				kusaka_taking_damage_timer.restart();
 				hp_damage_i = HP;
 			}
-			if (KUSAKA_TAKING_DAMAGE_TIMER.getElapsedTime().asSeconds() >= 0.5f)
+			if (kusaka_taking_damage_timer.getElapsedTime().asSeconds() >= 0.5f)
 			{
 				kusaka_state = KUSAKA_STATE::KUSAKA_IDLE;
 			}
@@ -753,26 +634,24 @@ void kusaka::update_movement()
 			{
 				if (jump_tile || !on_ground)displacement_max = 1.f;
 				else displacement_max = 5.f;
-				if (player_l_r[0] && displacement.x > 0)
+				if (player_l_r_[0] && displacement.x > 0)
 				{
 					displacement.x = 0;
 					moving = -1.f;
 					looks_to_the_right = false;
 					looks_to_the_left = true;
 				}
-				else if (player_l_r[0] && displacement.x < 0)
+				else if (player_l_r_[0] && displacement.x < 0)
 				{
 					displacement.x = 0;
-					//moving= 1.f;
 					looks_to_the_right = false;
 					looks_to_the_left = true;
 				}
-				else if (player_l_r[1] && displacement.x > 0)
+				else if (player_l_r_[1] && displacement.x > 0)
 				{
 					displacement.x = 0;
 					looks_to_the_right = true;
 					looks_to_the_left = false;
-					//moving = 1.f;
 				}
 				else
 				{
@@ -784,7 +663,6 @@ void kusaka::update_movement()
 				displacement.x += 10 * moving * acceleration;
 			}
 			else kusaka_state = KUSAKA_STATE::KUSAKA_IDLE;
-
 
 			walk(moving);
 			kusaka_state = KUSAKA_STATE::KUSAKA_ATTACKING;
@@ -810,41 +688,6 @@ void kusaka::update_movement()
 			break;
 		}
 	}
-
-
-	/*if (step_right == max_step)
-	{
-		moving *= -1.f;
-		step_right = 0;
-		animation_counter_think = 12;
-	}
-	if (step_left == max_step)
-	{
-		animation_counter_think = 12;
-		moving *= -1.f;
-		step_left = 0;
-	}*/
-
-	//if (on_ground && canMoveForward())
-	//{
-	//	// Враг может двигаться вперед
-	//	moving *= -1.f;
-	//}
-
-	//turning when approaching the map boundaries
-
-
-	//in case of random map generation
-	// std::random_device rd;
-	// std::mt19937 gen(rd());
-	// std::uniform_int_distribution<int> decision_to_think(0, 10000);
-	// int rand = decision_to_think(gen);
-	// if(rand <25)
-	// {
-	// 	animation_counter_think = 12;
-	// 	moving *= -1.f;
-	// }
-	//walk(moving);
 }
 
 void kusaka::walk(const float dir_x)
@@ -860,7 +703,6 @@ void kusaka::walk(const float dir_x)
 		looks_to_the_left = true;
 	}
 
-	//movement on the ground
 	if (on_ground && kusaka_state != KUSAKA_STATE::KUSAKA_IDLE && kusaka_state != KUSAKA_STATE::KUSAKA_TAKING_DAMAGE &&
 		kusaka_state != KUSAKA_STATE::KUSAKA_DEATH
 		&& kusaka_state != KUSAKA_STATE::KUSAKA_SLEEP && kusaka_state != KUSAKA_STATE::KUSAKA_SHOT)
@@ -868,38 +710,36 @@ void kusaka::walk(const float dir_x)
 		displacement.x += dir_x * acceleration;
 	}
 
-	// limits
 	if (std::abs(displacement.x) > displacement_max)
 	{
 		displacement.x = displacement_max * ((displacement.x > 0.f) ? 1.f : -1.f);
 	}
-	//logic when exposing a player
 }
 
 bool kusaka::update_collision_move_x()
 {
-	int blockSize = 64;
-	int totalPixels = 0;
-	int collidedPixels = 0;
+	const int block_size = 64;
+	int total_pixels = 0;
+	int collided_pixels = 0;
 
-	sf::Vector2f startPosition = get_position();
-	sf::Vector2f newPosition = startPosition;
+	const sf::Vector2f start_position = get_position();
+	const sf::Vector2f new_position = start_position;
 
 	for (float y = Enemy_S.getPosition().y; y < Enemy_S.getPosition().y + Enemy_S.getGlobalBounds().height; y++)
 	{
 		for (float x = Enemy_S.getPosition().x; x < Enemy_S.getPosition().x + Enemy_S.getGlobalBounds().width; x++)
 		{
-			int i = static_cast<int>(y / blockSize);
-			int j = static_cast<int>(x / blockSize);
-			++totalPixels;
+			const int i = static_cast<int>(y / block_size);
+			const int j = static_cast<int>(x / block_size);
+			++total_pixels;
 			if (sandbox->outOfMap(i, j) && sandbox->isBlock(i, j))
 			{
-				++collidedPixels;
+				++collided_pixels;
 			}
 		}
 	}
 
-	set_position(newPosition.x, newPosition.y);
+	set_position(new_position.x, new_position.y);
 
-	return (collidedPixels > totalPixels * 0.2);
+	return (collided_pixels > total_pixels * 0.2);
 }

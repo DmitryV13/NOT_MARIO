@@ -2,39 +2,39 @@
 #include "BushKiller.h"
 
 
-BushKiller::BushKiller(TileMap& map, GeneralInfo* player_info,short regime)
-	: Enemy(map, player_info,regime)
+BushKiller::BushKiller(TileMap& map, GeneralInfo* player_info, const short regime)
+	: Enemy(map, player_info,regime), player_info_(player_info)
 
 {
 	BushKiller::init_texture();
 	BushKiller::init_sprite();
 	BushKiller::init_physics();
-	BushKiller::setAt(20);
-	BushKiller::setHP(100);
+	BushKiller::set_at(20);
+	BushKiller::set_hp(100);
 	hp_damage_i = HP;
 	hp_bar->SET_ST_HP(HP);
 	
 }
 
-BushKiller::BushKiller(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y) :
+BushKiller::BushKiller(TileMap& map, GeneralInfo* player_info_, const float pos_x, const float pos_y) :
 	Enemy(map, player_info_, pos_x, pos_y)
 {
 	BushKiller::init_texture();
 	BushKiller::init_sprite();
 	BushKiller::init_physics();
-	BushKiller::setAt(20);
-	BushKiller::setHP(100);
+	BushKiller::set_at(20);
+	BushKiller::set_hp(100);
 	hp_damage_i = HP;
 	hp_bar->SET_ST_HP(HP);
 }
 
 void BushKiller::init_physics()
 {
-	BUSH_TAKING_DAMAGE_TIMER.restart();
-	DEATH_timer.restart();
-	Shot_timer.restart();
-	bush_state = BUSH_KILLER_STATE::SLEEP;
-	bush_state_past = BUSH_KILLER_STATE::IDLE;
+	bush_taking_damage_timer_.restart();
+	death_timer_.restart();
+	shot_timer_.restart();
+	bush_state_ = BUSH_KILLER_STATE::SLEEP;
+	bush_state_past_ = BUSH_KILLER_STATE::IDLE;
 	animation_state = ENEMY_ANIMATION_STATES::ENEMY_SLEEP;
 	animation_state_past = ENEMY_ANIMATION_STATES::ENEMY_SLEEP;
 	displacement_max = 2.5f;
@@ -57,7 +57,7 @@ void BushKiller::init_texture()
 {
 	if (!bush_killer_t_.loadFromFile("Textures/Enemies/bush_killer.png"))
 	{
-		std::cout << "Error -> bush_killer -> couldn't load bush_killer texture" << std::endl;
+		std::cout << "Error -> bush_killer -> couldn't load bush_killer texture" << '\n';
 	}
 }
 
@@ -71,7 +71,6 @@ void BushKiller::init_sprite()
 	anim_area.setTextureRect(standard_frame);
 
 
-	//Enemy_S.setTexture(bush_killer_t_);
 	current_frame = IntRect(0, 0, 60, 60);
 	Enemy_S.setTextureRect(current_frame);
 }
@@ -340,16 +339,15 @@ void BushKiller::update_animation()
 
 void BushKiller::reset_Timer()
 {
-	if (bush_state_past != bush_state)
+	if (bush_state_past_ != bush_state_)
 	{
-		DEATH_timer.restart();
+		death_timer_.restart();
 		blow_timer.restart();
-		Shot_timer.restart();
-		bush_state_past = bush_state;
+		shot_timer_.restart();
+		bush_state_past_ = bush_state_;
 	}
 	if (animation_state_past != animation_state)
 	{
-		//looks();
 		if (looks_to_the_right)
 		{
 			standard_frame.left = 0.f;
@@ -366,15 +364,15 @@ void BushKiller::reset_Timer()
 
 bool BushKiller::outside_sting()
 {
-	FloatRect en = get_global_bounds_anim();
-	FloatRect pl = player_info->getGlobalBounds();
+	const FloatRect en = get_global_bounds_anim();
+	const FloatRect pl = player_info->getGlobalBounds();
 	return en.intersects(pl);
 }
 
 void BushKiller::looks()
 {
-	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
-	if (playerSide == PL_SIDE::LEFT)
+	const PL_SIDE player_side = getPlayerSide(player_info->getPosition().x, get_position().x);
+	if (player_side == PL_SIDE::LEFT)
 	{
 		looks_to_the_left = true;
 		looks_to_the_right = false;
@@ -390,12 +388,12 @@ void BushKiller::looks()
 
 void BushKiller::changeHP(short i)
 {
-	if (bush_state != BUSH_KILLER_STATE::TAKING_DAMAGE)Enemy::changeHP(i);
+	if (bush_state_ != BUSH_KILLER_STATE::TAKING_DAMAGE)Enemy::changeHP(i);
 }
 
-void BushKiller::draw_leaf( sf::RenderTarget& target)
+void BushKiller::draw_leaf( sf::RenderTarget& target) const
 {
-	for(auto dr:killer_leaf_SH)
+	for(const auto dr:killer_leaf_sh_)
 	{
 		dr->render(target);
 	}
@@ -403,24 +401,24 @@ void BushKiller::draw_leaf( sf::RenderTarget& target)
 
 void BushKiller::clear_leaf()
 {
-	killer_leaf_SH.clear();
+	killer_leaf_sh_.clear();
 }
 
-bool BushKiller::leaf_empty()
+bool BushKiller::leaf_empty() const
 {
-	return killer_leaf_SH.empty();
+	return killer_leaf_sh_.empty();
 }
 
-void BushKiller::update_life()
+void BushKiller::update_life() const
 {
-	for (auto cl : killer_leaf_SH)
+	for (auto cl : killer_leaf_sh_)
 	{
 		cl->update();
 	}
 }
 
 
-void BushKiller::look(float direction)
+void BushKiller::look(const float direction)
 {
 	if (direction > 0)
 	{
@@ -436,48 +434,43 @@ void BushKiller::look(float direction)
 
 void BushKiller::attack()
 {
-	if (leaf_spawn.getElapsedTime().asSeconds() >= .4f) {
+	if (leaf_spawn_.getElapsedTime().asSeconds() >= .4f) {
 		vector<float> cord;
 		cord.push_back(get_position().x+get_global_bounds().width/2);
 		cord.push_back(get_position().y+get_global_bounds().height/2 + 10);
 		cord.push_back(player_info->getPosition().x+player_info->getGlobalBounds().width/2);
 		cord.push_back(player_info->getPosition().y+player_info->getGlobalBounds().height/2);
-		killer_leaf_SH.push_back(new killer_leaf(*sandbox, cord, player_info));
-		leaf_spawn.restart();
+		killer_leaf_sh_.push_back(new killer_leaf(*sandbox, cord, player_info));
+		leaf_spawn_.restart();
 	}
 	
 
 }
-
-
 
 void BushKiller::update_movement()
 {
 	update_life();
 	if (HP <= 0)
 	{
-		bush_state = BUSH_KILLER_STATE::DEATH;
+		bush_state_ = BUSH_KILLER_STATE::DEATH;
 		hp_damage_i = HP;
 	}
-	if (hp_damage_i > HP && bush_state != BUSH_KILLER_STATE::DEATH)
+	if (hp_damage_i > HP && bush_state_ != BUSH_KILLER_STATE::DEATH)
 	{
-		bush_state = BUSH_KILLER_STATE::TAKING_DAMAGE;
+		bush_state_ = BUSH_KILLER_STATE::TAKING_DAMAGE;
 	}
-	//if (!search_for_enemies())bush_state = BUSH_KILLER_STATE::SLEEP;
 	clear_shot();
 
 
-	switch (bush_state)
+	switch (bush_state_)
 	{
 	case BUSH_KILLER_STATE::SLEEP:
 		{
-			//looks();
-			//reset_Timer();
 			displacement.x = 0.f;
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_SLEEP;
-			if (isPlayerInRadius(Enemy_S.getGlobalBounds(), player_info->getGlobalBounds(), 500)||bush_state==bush_state_past)
+			if (is_player_in_radius(Enemy_S.getGlobalBounds(), player_info->getGlobalBounds(), 500)||bush_state_==bush_state_past_)
 			{
-				bush_state = BUSH_KILLER_STATE::AWAKENING;
+				bush_state_ = BUSH_KILLER_STATE::AWAKENING;
 			}
 			break;
 		}
@@ -487,10 +480,10 @@ void BushKiller::update_movement()
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
 			reset_Timer();
 			looks();
-			if (DEATH_timer.getElapsedTime().asSeconds() >= 2.0f)
+			if (death_timer_.getElapsedTime().asSeconds() >= 2.0f)
 			{
-				bush_state = BUSH_KILLER_STATE::MOVING;
-				DEATH_timer.restart();
+				bush_state_ = BUSH_KILLER_STATE::MOVING;
+				death_timer_.restart();
 			}
 
 			break;
@@ -499,11 +492,11 @@ void BushKiller::update_movement()
 		{
 		animation_state = ENEMY_ANIMATION_STATES::ENEMY_AWAKENING;
 		reset_Timer();
-			if(DEATH_timer.getElapsedTime().asSeconds()>=2.F)
+			if(death_timer_.getElapsedTime().asSeconds()>=2.F)
 			{
 
-				bush_state = BUSH_KILLER_STATE::IDLE;
-				DEATH_timer.restart();
+				bush_state_ = BUSH_KILLER_STATE::IDLE;
+				death_timer_.restart();
 			}
 			break;
 
@@ -518,7 +511,7 @@ void BushKiller::update_movement()
 			displacement_max = 1.f;
 			if (update_collision_x()||hit_a_wall())
 			{
-				if (canJumpForward())
+				if (can_jump_forward())
 				{
 					jump(1.f);
 					on_ground = false;
@@ -530,11 +523,11 @@ void BushKiller::update_movement()
 		
 			if (sting())
 			{
-				bush_state = BUSH_KILLER_STATE::PUNCH;
+				bush_state_ = BUSH_KILLER_STATE::PUNCH;
 			}
-			if (Shot_timer.getElapsedTime().asSeconds() >= 3.0f)
+			if (shot_timer_.getElapsedTime().asSeconds() >= 3.0f)
 			{
-				bush_state = BUSH_KILLER_STATE::SHOT;
+				bush_state_ = BUSH_KILLER_STATE::SHOT;
 			}
 			walk(moving);
 			break;
@@ -547,16 +540,16 @@ void BushKiller::update_movement()
 			displacement.x = 0.f;
 			if (sting())
 			{
-				bush_state = BUSH_KILLER_STATE::PUNCH;
+				bush_state_ = BUSH_KILLER_STATE::PUNCH;
 			}
-			if (Shot_timer.getElapsedTime().asSeconds() <= 2.F)
+			if (shot_timer_.getElapsedTime().asSeconds() <= 2.F)
 			{
 				attack();
 			}
 			else
 			{
 				clear_shot();
-				bush_state = BUSH_KILLER_STATE::MOVING;
+				bush_state_ = BUSH_KILLER_STATE::MOVING;
 			}
 
 			break;
@@ -567,12 +560,12 @@ void BushKiller::update_movement()
 
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_PUNCH;
 			reset_Timer();
-			if (!sting())bush_state = BUSH_KILLER_STATE::IDLE;
-			if (Shot_timer.getElapsedTime().asSeconds() >= 1.0f)
+			if (!sting())bush_state_ = BUSH_KILLER_STATE::IDLE;
+			if (shot_timer_.getElapsedTime().asSeconds() >= 1.0f)
 			{
-				bush_state = BUSH_KILLER_STATE::MOVING;
+				bush_state_ = BUSH_KILLER_STATE::MOVING;
 			}
-			if (Shot_timer.getElapsedTime().asSeconds() >= 0.9F)
+			if (shot_timer_.getElapsedTime().asSeconds() >= 0.9F)
 			{
 				shot();
 				player_info->setStanTime(1.f);
@@ -594,17 +587,17 @@ void BushKiller::update_movement()
 			if (HP <= 0)
 			{
 				hp_damage_i = HP;
-				bush_state = BUSH_KILLER_STATE::DEATH;
+				bush_state_ = BUSH_KILLER_STATE::DEATH;
 				break;
 			}
 			if (hp_damage_i > HP)
 			{
-				BUSH_TAKING_DAMAGE_TIMER.restart();
+				bush_taking_damage_timer_.restart();
 				hp_damage_i = HP;
 			}
-			if (BUSH_TAKING_DAMAGE_TIMER.getElapsedTime().asSeconds() >= 0.6f)
+			if (bush_taking_damage_timer_.getElapsedTime().asSeconds() >= 0.6f)
 			{
-				bush_state = BUSH_KILLER_STATE::IDLE;
+				bush_state_ = BUSH_KILLER_STATE::IDLE;
 			}
 
 			break;
@@ -631,39 +624,28 @@ void BushKiller::shot()
 
 void BushKiller::clear_shot()
 {
-	if (!killer_leaf_SH.empty())
+	if (!killer_leaf_sh_.empty())
 	{
-
-
-		
-		for(auto cl = 0; cl < killer_leaf_SH.size(); cl++)
+		for(auto cl = 0; cl < killer_leaf_sh_.size(); cl++)
 		{
-			if(killer_leaf_SH[cl]->leaf_existence())
+			if(killer_leaf_sh_[cl]->leaf_existence())
 			{
 				 
-					delete* (killer_leaf_SH.begin() + cl);
-					killer_leaf_SH.erase(killer_leaf_SH.begin() + cl);
+					delete* (killer_leaf_sh_.begin() + cl);
+					killer_leaf_sh_.erase(killer_leaf_sh_.begin() + cl);
 				
 			}
 		}
-		/*for (auto cl = killer_leaf_SH.begin(); cl != killer_leaf_SH.end(); ++cl)
-		{
-			if ((*cl)->leaf_existence())
-			{
-				delete* cl;
-				cl = killer_leaf_SH.erase(cl);
-			}
-		}*/
+		
 	}
 }
 
 bool BushKiller::search_for_enemies()
 {
-	FloatRect look = observation_area.getGlobalBounds();
-	FloatRect pl = player_info->getGlobalBounds();
+	const FloatRect look = observation_area.getGlobalBounds();
+	const FloatRect pl = player_info->getGlobalBounds();
 
-	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
-	//looks();
+	PL_SIDE player_side = getPlayerSide(player_info->getPosition().x, get_position().x);
 	if (look.intersects(pl))
 	{
 		return true;
@@ -674,24 +656,21 @@ bool BushKiller::search_for_enemies()
 
 void BushKiller::reset_attention()
 {
-	bush_state = BUSH_KILLER_STATE::SLEEP;
+	bush_state_ = BUSH_KILLER_STATE::SLEEP;
 }
 
 void BushKiller::walk(const float dir_x)
 {
-	//looks();
 	if (on_ground)
 	{
 		displacement.x += dir_x * acceleration;
 	}
 
-	// limits
 	if (std::abs(displacement.x) > displacement_max)
 	{
 		displacement.x = displacement_max * ((displacement.x > 0.f) ? 1.f : -1.f);
 	}
 
-	//if (displacement.x != 0.0f) { //looks(); }
 }
 
 
@@ -709,7 +688,7 @@ void BushKiller::update_physics()
 		displacement.y -= jump_velocity;
 
 		displacement.x = 2 * moving * displacement_max;
-		jump_velocity *= 0.96;
+		jump_velocity *= 0.96f;
 	}
 	displacement *= deceleration;
 
