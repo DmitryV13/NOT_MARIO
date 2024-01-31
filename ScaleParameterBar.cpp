@@ -5,7 +5,7 @@
 	ScaleParameterBar::ScaleParameterBar(){
 	}
 	
-	ScaleParameterBar::ScaleParameterBar(float x, float y, float width, float height, int* resource_, int max_value_, TextureManager* t_manager, Warehouse* w_object, string name)
+	ScaleParameterBar::ScaleParameterBar(float x, float y, float width, float height, float* resource_, float max_value_, TextureManager* t_manager, Warehouse* w_object, string name)
 		: resource(resource_), max_value(max_value_), position(Vector2f(x, y)){
 		shape.setPosition(position); 
 		shape.setSize(Vector2f(width, height));

@@ -15,12 +15,13 @@
 class TileMap {
 private:
 	
+	int bim = 2;
 	sf::Texture background_T;
 	sf::Sprite backround_S;
 
 	Tile ****tilemap;
 	std::vector<Object*> object;
-
+	std::vector<Object*> tmpObject;
 	std::unordered_map<char, Tile*> tile_list;
 	std::unordered_map<char, Tile*> tile_list_back;
 	std::unordered_map<char, Tile*> tile_list_front;

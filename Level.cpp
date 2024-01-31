@@ -264,16 +264,16 @@
 		evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo(), 2));
 		evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo(), 2));
 		evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo(), 2));
-		boss_vector->push_back(new WolfBoss(sandbox, player->getGeneralInfo(), 2));
 		hornet_hives_vector->push_back(new HornetHive(sandbox, player->getGeneralInfo(), 2));
+		boss_vector->push_back(new WolfBoss(sandbox, player->getGeneralInfo(), 2));
 	
 		bush_killers_vector->push_back(new BushKiller(sandbox, player->getGeneralInfo(), 2));
+		//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo(),2));
+		Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo(),2));
+		Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo(),2));
 		//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
-		//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
-		//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
-		//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
-		///Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
-		//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
+		Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo(),2));
+		Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo(),2));
 		//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
 		//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
 		//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
@@ -383,11 +383,16 @@
 
 	void Level::updateObjectsCollision(){
 		auto objects = sandbox.getObjects();
+		bool was_intersect = false;
 		for (int i = 0; i < objects.size(); i++) {
 			if (objects[i]->getGlobalBounds().intersects(player->getGlobalBounds())) {
+				was_intersect = true;
+				object_available = objects[i]->getOType();
+				available_object = objects[i];
 				if (objects[i]->getOType() == OBJECT_TYPE::CHEST) {
 					object_available = OBJECT_TYPE::CHEST;
 					auto rt = ((Chest*)(objects[i]))->getItems();
+					//available_object = objects[i];
 					for (int in = 0; in < 2; in++) {
 						for (int jn = 0; jn < 4; jn++) {
 							int index_ = in * 4 + jn;
@@ -397,10 +402,11 @@
 							}
 						}
 					}
-
 					break;
 				}
 			}
+		}
+		if (!was_intersect) {
 			object_available = -1;
 		}
 	}
@@ -485,8 +491,18 @@
 			}
 			if (event.type == Event::KeyPressed) {
 				if (event.key.code == Keyboard::E) {
-					if(object_available==OBJECT_TYPE::CHEST)
+					if (object_available == OBJECT_TYPE::CHEST) {
+						std::cout << "chest" << std::endl;
+						available_object->useObject();
 						chest_items->setPUWStateO(0);
+					}
+					if (object_available == OBJECT_TYPE::SWITCH) {
+						std::cout << "switch" << std::endl;
+						available_object->useObject();
+					}
+					else {
+					std::cout << "nothing" << std::endl;
+					}
 				}
 			}
 		}

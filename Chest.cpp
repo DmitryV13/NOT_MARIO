@@ -52,8 +52,11 @@ vector<WarehouseItem*>& Chest::getItems()
 
 void Chest::useObject()
 {
-    if (opened) opened = false;
-    opened = true;
+    if (opened) 
+        opened = false;
+    else
+        opened = true;
+    //std::cout << opened << std::endl;
 }
 
 void Chest::animation_object()

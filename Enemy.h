@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Map.h"
 #include "TileMap.h"
 #include "laser_weapon.h"
@@ -43,8 +44,10 @@ enum class PL_SIDE
 };
 
 
+
 class Enemy
 {
+
 protected:
 	TileMap* sandbox;
 	GeneralInfo* player_info;

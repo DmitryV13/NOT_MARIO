@@ -22,7 +22,7 @@ public:
 	Object();
 	Object(std::string name, float position_x, float position_y, short int size_W, short int size_H);
 	sf::FloatRect getGlobalBounds();
-	void render_object(sf::RenderTarget& target);
+	virtual void render_object(sf::RenderTarget& target);
 	virtual std::pair<float, float> getVelocity();
 	virtual void animation_object();
 	virtual void useObject();

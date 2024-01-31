@@ -8,6 +8,7 @@ TileFactory::TileFactory(float temp_W, float temp_H, short int level) :
     template_H(temp_H),
     level(level)
 {
+    auto start = std::chrono::high_resolution_clock::now();
     if (level == 1) {
         generation_map_Boev(generation_template);
     }
@@ -37,6 +38,9 @@ TileFactory::TileFactory(float temp_W, float temp_H, short int level) :
 
         fill_lakes_with_ground(generation_template);
     }
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duration = end - start;
+    std::cout << "Time taken by function: " << duration.count() << " seconds" << std::endl;
 }
 
 char TileFactory::give_generation_letter(int i, int j)

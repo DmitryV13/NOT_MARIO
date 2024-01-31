@@ -9,8 +9,8 @@ using namespace sf;
 class ScaleParameterBar : public InterfaceItem{
 private:
 	Sprite scale_bar;
-	int* resource;
-	int max_value;
+	float* resource;
+	float max_value;
 
 	IntRect front_bar;
 	IntRect middle_bar;
@@ -21,7 +21,7 @@ private:
 	Vector2f position;
 public:
 	ScaleParameterBar();
-	ScaleParameterBar(float x, float y, float width, float height, int* resource_, int max_value_, TextureManager* t_manager, Warehouse* w_object, string name);
+	ScaleParameterBar(float x, float y, float width, float height, float* resource_, float max_value_, TextureManager* t_manager, Warehouse* w_object, string name);
 	~ScaleParameterBar();
 
 	FloatRect getLocalBounds() override;

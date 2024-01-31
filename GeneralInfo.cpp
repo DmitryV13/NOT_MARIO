@@ -9,24 +9,24 @@
         return velocity;
     }
 
-    const short GeneralInfo::getHP() const{
+    const float GeneralInfo::getHP() const{
         return HP;;
     }
 
-    int* GeneralInfo::getHp(){
+    float* GeneralInfo::getHp(){
         return &HP;
     }
 
-    int* GeneralInfo::getMana()
+    float* GeneralInfo::getMana()
     {
         return &mana;
     }
 
-    int GeneralInfo::getMaxMana(){
+    float GeneralInfo::getMaxMana(){
         return max_mana;
     }
 
-    const int GeneralInfo::getMaxHP(){
+    const float GeneralInfo::getMaxHP(){
         return max_HP;
     }
 
@@ -50,7 +50,7 @@
         velocity.y += y;
     }
 
-    bool GeneralInfo::changeMana(int x){
+    bool GeneralInfo::changeMana(float x){
         if (mana + x < 0)
             return false;
         mana += x;

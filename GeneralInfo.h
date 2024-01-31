@@ -4,10 +4,10 @@ using namespace::sf;
 
 class GeneralInfo{
 private:
-	int HP;
-	const int max_HP;
-	int mana;
-	int max_mana;
+	float HP;
+	const float max_HP;
+	float mana;
+	float max_mana;
 	float stan_time;
 	bool mana_is_used;
 	FloatRect globalBounds;
@@ -17,18 +17,18 @@ public:
 	GeneralInfo(int HP_, int mana_);
 
 	const Vector2f getVelocity() const;
-	const short getHP() const;
-	int* getHp();
-	int* getMana();
-	int getMaxMana();
-	const int getMaxHP();
+	const float getHP() const;
+	float* getHp();
+	float* getMana();
+	float getMaxMana();
+	const float getMaxHP();
 	const FloatRect getGlobalBounds() const;
 	const Vector2f getPosition() const;
 	float getStanTime();
 
 	void changeVelocityX(float x);
 	void changeVelocityY(float y);
-	bool changeMana(int x);
+	bool changeMana(float x);
 
 	void setVelocityX(float x);
 	void setVelocityY(float y);

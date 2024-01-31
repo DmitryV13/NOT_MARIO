@@ -16,7 +16,6 @@ TileMap::TileMap(short level) : sizeTexture(64), mapH(50), mapW(100)
 	init_switch(level);
 	init_chest(level);
 	init_pos_enemy();
-	//for (auto& it : object) it->useObject();
 }
 
 TileMap::~TileMap()
@@ -264,7 +263,7 @@ void TileMap::init_movingAnimObjects(short int level)
 void TileMap::init_switch(short int level)
 {
 	std::string level_ = std::to_string(level-3);
-	std::vector<Object*> tmpObject;
+	//std::vector<Object*> tmpObject;
 	std::string path_ = "Maps/level"+level_+"/forSwitch.txt";
 	std::ifstream fin_;
 	fin_.open(path_);
@@ -302,11 +301,13 @@ void TileMap::init_switch(short int level)
 			object.push_back(new Switch{ objectName, pos_x, pos_y, size_w, size_h, anim_f, anim_q, anim_t, *it });
 			++it;
 		}
-		object.push_back(new Switch{ objectName, pos_x, pos_y, size_w, size_h, anim_f, anim_q, anim_t});
+		else {
+			object.push_back(new Switch{ objectName, pos_x, pos_y, size_w, size_h, anim_f, anim_q, anim_t });
+		}
 	}
 	fin.close();
-	for (auto it : tmpObject) object.push_back(it);
-	tmpObject.clear();
+	//for (auto it : tmpObject) object.push_back(it);
+	//tmpObject.clear();
 }
 
 void TileMap::init_chest(short int level)
@@ -349,7 +350,7 @@ void TileMap::init_tile_list()
 	tile_list['`'] = new Tile();
 
 	//Функциональные и декоративыне блоки.
-	tile_list['.'] = new Tile("ladder1", 0, sizeTexture, sizeTexture, '.');
+	tile_list['^'] = new Tile("ladder1", 0, sizeTexture, sizeTexture, '.');
 	tile_list['_'] = new Tile("ladder2", 0, sizeTexture, sizeTexture, '_');
 	tile_list['-'] = new Tile("ladder3", 0, sizeTexture, sizeTexture, '-');
 	tile_list['='] = new Tile("ladder4", 0, sizeTexture, sizeTexture, '=');
@@ -361,8 +362,8 @@ void TileMap::init_tile_list()
 	tile_list['2'] = new Tile("tree2", 0, 128, 256, '2');
 	tile_list['3'] = new Tile("tree3", 0, 128, 256, '3');
 	tile_list['4'] = new Tile("tree4", 0, 128, 192, '4');
-	tile_list['^'] = new TileAnim("water_top_layer_back", 2, sizeTexture, sizeTexture, '^', 64, 4, 0.5);
-	tile_list['*'] = new TileAnim("water_down_layer_back", 2, sizeTexture, sizeTexture, '*', 64, 4, 0.5);
+	tile_list['5'] = new Tile("cactus1", 0, sizeTexture, sizeTexture, '5');
+	tile_list['6'] = new Tile("cactus2", 0, sizeTexture, sizeTexture, '6');
 
 
 	//Анимированные блоки
