@@ -33,10 +33,10 @@ void BushKiller::init_physics()
 	BUSH_TAKING_DAMAGE_TIMER.restart();
 	DEATH_timer.restart();
 	Shot_timer.restart();
-	bush_state = BUSH_KILLER_STATE::SLEEP;
-	bush_state_past = BUSH_KILLER_STATE::IDLE;
-	animation_state = ENEMY_ANIMATION_STATES::ENEMY_SLEEP;
-	animation_state_past = ENEMY_ANIMATION_STATES::ENEMY_SLEEP;
+	bush_state = ENEMY_STATE::SLEEPING;
+	bush_state_past = ENEMY_STATE::IDLE;
+	animation_state = ENEMY_ANIMATION_STATE::ENEMY_SLEEP;
+	animation_state_past = ENEMY_ANIMATION_STATE::ENEMY_SLEEP;
 	displacement_max = 2.5f;
 	displacement_min = 0.3f;
 	acceleration = 0.4f;
@@ -79,7 +79,7 @@ void BushKiller::init_sprite()
 
 void BushKiller::update_animation()
 {
-	if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_MOVING)
+	if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_MOVING)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.15f || get_animation_switch())
 		{
@@ -109,7 +109,7 @@ void BushKiller::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_IDLE)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_IDLE)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
@@ -142,7 +142,7 @@ void BushKiller::update_animation()
 	}
 	
 
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_SLEEP)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_SLEEP)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.5f || get_animation_switch())
 		{
@@ -173,7 +173,7 @@ void BushKiller::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_PUNCH)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_PUNCH)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
@@ -204,7 +204,7 @@ void BushKiller::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_DEATH)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_DEATH)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
@@ -235,7 +235,7 @@ void BushKiller::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_TAKING_DAMAGE)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_TAKING_DAMAGE)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
@@ -266,7 +266,7 @@ void BushKiller::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_SHOT)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_SHOT)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
@@ -297,7 +297,7 @@ void BushKiller::update_animation()
 			animation_timer.restart();
 		}
 		}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_AWAKENING)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_AWAKENING)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
@@ -373,8 +373,8 @@ bool BushKiller::outside_sting()
 
 void BushKiller::looks()
 {
-	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
-	if (playerSide == PL_SIDE::LEFT)
+	ORIENTATION playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
+	if (playerSide == ORIENTATION::LEFT)
 	{
 		looks_to_the_left = true;
 		looks_to_the_right = false;
@@ -390,7 +390,7 @@ void BushKiller::looks()
 
 void BushKiller::changeHP(short i)
 {
-	if (bush_state != BUSH_KILLER_STATE::TAKING_DAMAGE)Enemy::changeHP(i);
+	if (bush_state != ENEMY_STATE::TAKING_DAMAGE)Enemy::changeHP(i);
 }
 
 void BushKiller::draw_leaf( sf::RenderTarget& target)
@@ -456,53 +456,53 @@ void BushKiller::update_movement()
 	update_life();
 	if (HP <= 0)
 	{
-		bush_state = BUSH_KILLER_STATE::DEATH;
+		bush_state = ENEMY_STATE::DEATH;
 		hp_damage_i = HP;
 	}
-	if (hp_damage_i > HP && bush_state != BUSH_KILLER_STATE::DEATH)
+	if (hp_damage_i > HP && bush_state != ENEMY_STATE::DEATH)
 	{
-		bush_state = BUSH_KILLER_STATE::TAKING_DAMAGE;
+		bush_state = ENEMY_STATE::TAKING_DAMAGE;
 	}
-	//if (!search_for_enemies())bush_state = BUSH_KILLER_STATE::SLEEP;
+	//if (!search_for_enemies())bush_state = ENEMY_STATE::SLEEP;
 	clear_shot();
 
 
 	switch (bush_state)
 	{
-	case BUSH_KILLER_STATE::SLEEP:
+	case ENEMY_STATE::SLEEPING:
 		{
 			//looks();
 			//reset_Timer();
 			displacement.x = 0.f;
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_SLEEP;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_SLEEP;
 			if (isPlayerInRadius(Enemy_S.getGlobalBounds(), player_info->getGlobalBounds(), 500)||bush_state==bush_state_past)
 			{
-				bush_state = BUSH_KILLER_STATE::AWAKENING;
+				bush_state = ENEMY_STATE::AWAKENING;
 			}
 			break;
 		}
-	case BUSH_KILLER_STATE::IDLE:
+	case ENEMY_STATE::IDLE:
 		{
 
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_IDLE;
 			reset_Timer();
 			looks();
 			if (DEATH_timer.getElapsedTime().asSeconds() >= 2.0f)
 			{
-				bush_state = BUSH_KILLER_STATE::MOVING;
+				bush_state = ENEMY_STATE::MOVING;
 				DEATH_timer.restart();
 			}
 
 			break;
 		}
-	case BUSH_KILLER_STATE::AWAKENING:
+	case ENEMY_STATE::AWAKENING:
 		{
-		animation_state = ENEMY_ANIMATION_STATES::ENEMY_AWAKENING;
+		animation_state = ENEMY_ANIMATION_STATE::ENEMY_AWAKENING;
 		reset_Timer();
 			if(DEATH_timer.getElapsedTime().asSeconds()>=2.F)
 			{
 
-				bush_state = BUSH_KILLER_STATE::IDLE;
+				bush_state = ENEMY_STATE::IDLE;
 				DEATH_timer.restart();
 			}
 			break;
@@ -510,9 +510,9 @@ void BushKiller::update_movement()
 		}
 
 
-	case BUSH_KILLER_STATE::MOVING:
+	case ENEMY_STATE::MOVING:
 		{
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_MOVING;
 			reset_Timer();
 			//looks();
 			displacement_max = 1.f;
@@ -530,24 +530,24 @@ void BushKiller::update_movement()
 		
 			if (sting())
 			{
-				bush_state = BUSH_KILLER_STATE::PUNCH;
+				bush_state = ENEMY_STATE::PUNCHING;
 			}
 			if (Shot_timer.getElapsedTime().asSeconds() >= 3.0f)
 			{
-				bush_state = BUSH_KILLER_STATE::SHOT;
+				bush_state = ENEMY_STATE::SHOT;
 			}
 			walk(moving);
 			break;
 		}
-	case BUSH_KILLER_STATE::SHOT:
+	case ENEMY_STATE::SHOT:
 		{
 			looks();
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_SHOT;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_SHOT;
 			reset_Timer();
 			displacement.x = 0.f;
 			if (sting())
 			{
-				bush_state = BUSH_KILLER_STATE::PUNCH;
+				bush_state = ENEMY_STATE::PUNCHING;
 			}
 			if (Shot_timer.getElapsedTime().asSeconds() <= 2.F)
 			{
@@ -556,21 +556,21 @@ void BushKiller::update_movement()
 			else
 			{
 				clear_shot();
-				bush_state = BUSH_KILLER_STATE::MOVING;
+				bush_state = ENEMY_STATE::MOVING;
 			}
 
 			break;
 		}
-	case BUSH_KILLER_STATE::PUNCH:
+	case ENEMY_STATE::PUNCHING:
 		{
 		looks();
 
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_PUNCH;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_PUNCH;
 			reset_Timer();
-			if (!sting())bush_state = BUSH_KILLER_STATE::IDLE;
+			if (!sting())bush_state = ENEMY_STATE::IDLE;
 			if (Shot_timer.getElapsedTime().asSeconds() >= 1.0f)
 			{
-				bush_state = BUSH_KILLER_STATE::MOVING;
+				bush_state = ENEMY_STATE::MOVING;
 			}
 			if (Shot_timer.getElapsedTime().asSeconds() >= 0.9F)
 			{
@@ -583,17 +583,17 @@ void BushKiller::update_movement()
 		}
 
 
-	case BUSH_KILLER_STATE::TAKING_DAMAGE:
+	case ENEMY_STATE::TAKING_DAMAGE:
 		{
 
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_TAKING_DAMAGE;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_TAKING_DAMAGE;
 			reset_Timer();
 			looks();
 
 			if (HP <= 0)
 			{
 				hp_damage_i = HP;
-				bush_state = BUSH_KILLER_STATE::DEATH;
+				bush_state = ENEMY_STATE::DEATH;
 				break;
 			}
 			if (hp_damage_i > HP)
@@ -603,19 +603,19 @@ void BushKiller::update_movement()
 			}
 			if (BUSH_TAKING_DAMAGE_TIMER.getElapsedTime().asSeconds() >= 0.6f)
 			{
-				bush_state = BUSH_KILLER_STATE::IDLE;
+				bush_state = ENEMY_STATE::IDLE;
 			}
 
 			break;
 		}
 
 
-	case BUSH_KILLER_STATE::DEATH:
+	case ENEMY_STATE::DEATH:
 		{
 
 			displacement.x = 0;
 			reset_Timer();
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_DEATH;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_DEATH;
 			break;
 		}
 	}
@@ -661,7 +661,7 @@ bool BushKiller::search_for_enemies()
 	FloatRect look = observation_area.getGlobalBounds();
 	FloatRect pl = player_info->getGlobalBounds();
 
-	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
+	ORIENTATION playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
 	//looks();
 	if (look.intersects(pl))
 	{
@@ -673,7 +673,7 @@ bool BushKiller::search_for_enemies()
 
 void BushKiller::reset_attention()
 {
-	bush_state = BUSH_KILLER_STATE::SLEEP;
+	bush_state = ENEMY_STATE::SLEEPING;
 }
 
 void BushKiller::walk(const float dir_x)

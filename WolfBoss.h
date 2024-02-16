@@ -1,29 +1,10 @@
 #pragma once
 #include "Enemy.h"
 
-enum class BOSS_STATE
-{
-	SLEEP,
-	IDLE,
-	MOVING,
-	JUMPING,
-	ATTACKING,
-	RETREATING,
-	HOWL,
-	PUNCH,
-	DOUBLE_KICK,
-	HIT_EARTH,
-	RUN,
-	DEATH,
-	TORMENT,
-	TAKING_DAMAGE
-};
-
-
 class WolfBoss : public Enemy
 {
-	BOSS_STATE boss_state;
-	BOSS_STATE boss_state_past;
+	ENEMY_STATE boss_state;
+	ENEMY_STATE boss_state_past;
 	bool boss_state_TORMENT;
 	Texture Wolf_Boss_t_;
 	Clock RETREATING_timer;
@@ -80,7 +61,7 @@ public:
 
 	sf::Vector2f calculateRandomPosition(const sf::FloatRect& playerBounds, int jumpDistance);
 
-	PL_SIDE getPlayerSide(float playerX, float enemyX);
+	ORIENTATION getPlayerSide(float playerX, float enemyX);
 	void look(float direction);
 	void bite();
 	void reset_step();

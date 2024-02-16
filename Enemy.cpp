@@ -53,7 +53,7 @@ sf::Vector2f Enemy::generate_random_start_position(int mapWidth, int mapHeight)
 
 void Enemy::init_variables()
 {
-	animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
+	animation_state = ENEMY_ANIMATION_STATE::ENEMY_IDLE;
 }
 
 Enemy::Enemy(TileMap& map, GeneralInfo* player_info_,short regime)
@@ -113,15 +113,15 @@ void Enemy::updateHP_bar()
 }
 
 
-PL_SIDE Enemy::getPlayerSide(float playerX, float enemyX)
+ORIENTATION Enemy::getPlayerSide(float playerX, float enemyX)
 {
 	if (playerX < enemyX)
 	{
-		return PL_SIDE::LEFT;
+		return ORIENTATION::LEFT;
 	}
 	else
 	{
-		return PL_SIDE::RIGHT;
+		return ORIENTATION::RIGHT;
 	}
 }
 
@@ -226,14 +226,14 @@ void Enemy::walk(const float dir_x)
 	{
 		displacement.x = displacement_max * ((displacement.x > 0.f) ? 1.f : -1.f);
 	}
-	if (animation_counter_think > 2 && animation_state != ENEMY_ANIMATION_STATES::ENEMY_ATTENTION)
+	if (animation_counter_think > 2 && animation_state != ENEMY_ANIMATION_STATE::ENEMY_ATTENTION)
 	{
 		displacement.x = 0;
-		animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
+		animation_state = ENEMY_ANIMATION_STATE::ENEMY_IDLE;
 	}
-	else if (displacement.y >= gravity)animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING_DOWN;
-	else if (jump_tile)animation_state = ENEMY_ANIMATION_STATES::ENEMY_JUMPING;
-	else animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;
+	else if (displacement.y >= gravity)animation_state = ENEMY_ANIMATION_STATE::ENEMY_MOVING_DOWN;
+	else if (jump_tile)animation_state = ENEMY_ANIMATION_STATE::ENEMY_JUMPING;
+	else animation_state = ENEMY_ANIMATION_STATE::ENEMY_MOVING;
 
 
 	//logic when exposing a player

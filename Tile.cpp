@@ -12,7 +12,7 @@
     
     }
     
-    Tile::Tile(std::string Name, short int inter, float texture_size_w, float texture_size_h, char ass){
+    Tile::Tile(std::string Name, short int inter, float texture_size_w, float texture_size_h, char ass, TextureManager* t_manager){
         this->tileName = Name;
         this->texture_size_W = texture_size_w;
         this->texture_size_H = texture_size_h;
@@ -20,7 +20,7 @@
         this->player = false;
         this->association = ass;
     
-        init_texture(Name);
+        init_texture(Name, t_manager);
     
     }
 
@@ -32,12 +32,8 @@
         return tile_S;
     }
     
-    void Tile::init_texture(std::string Name){
-        if (!tile_T.loadFromFile("Textures/Textures_map/" + Name + ".png"))
-        {
-            std::cout << "Error -> Tile -> couldn't load texture";
-        }
-        tile_S.setTexture(tile_T);
+    void Tile::init_texture(std::string Name, TextureManager* t_manager){
+        tile_S.setTexture(t_manager->getTexture(6, Name));
         tile_S.setTextureRect(sf::IntRect(0, 0, texture_size_W, texture_size_H));
     }
     

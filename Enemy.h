@@ -5,6 +5,9 @@
 #include "GeneralInfo.h"
 #include "HealthBarEnemy.h"
 #include "killer_leaf.h"
+#include "ENEMY_ANIMATION_STATE.h"
+#include "ORIENTATION.h"
+#include "ENEMY_STATE.h"
 
 using sf::Sprite;
 using sf::RenderWindow;
@@ -13,34 +16,6 @@ using sf::View;
 using sf::Texture;
 using sf::IntRect;
 using sf::Clock;
-
-enum ENEMY_ANIMATION_STATES
-{
-	ENEMY_IDLE = 0,
-	ENEMY_MOVING,
-	ENEMY_MOVING_DOWN,
-	ENEMY_JUMPING,
-	ENEMY_FALLING,
-	ENEMY_ATTENTION,
-	ENEMY_SHOT,
-	ENEMY_SLEEP,
-	ENEMY_BITE,
-	ENEMY_DEATH,
-	ENEMY_TAKING_DAMAGE,
-	ENEMY_RUN,
-	ENEMY_TELEPORT,
-	ENEMY_PUNCH,
-	ENEMY_DOUBLE_KICK,
-	ENEMY_HOWL,
-	ENEMY_HIT_EARTH,
-	ENEMY_AWAKENING
-};
-
-enum class PL_SIDE
-{
-	LEFT,
-	RIGHT
-};
 
 
 class Enemy
@@ -127,7 +102,7 @@ public:
 	//virtual
 	virtual bool outside_sting();
 
-	virtual PL_SIDE getPlayerSide(float playerX, float enemyX);
+	virtual ORIENTATION getPlayerSide(float playerX, float enemyX);
 	virtual void jump(const float dir_y);
 	virtual void walk(const float dir_x);
 	virtual void changeHP(short);

@@ -1,13 +1,12 @@
 #pragma once
 
+#include "TextureManager.h"
+
 using sf::Clock;
 
-class Tile
-{
+class Tile{
 protected:
-
 	std::string tileName;
-	sf::Texture tile_T;
 	sf::Sprite	tile_S;
 	float texture_size_W;
 	float texture_size_H;
@@ -15,12 +14,12 @@ protected:
 	char association;
 	bool player;
 
-	void init_texture(std::string Name);
+	void init_texture(std::string Name, TextureManager* t_manager);
 
 public:
 
 	Tile();
-	Tile(std::string Name, short int inter, float texture_size_w, float texture_size_h, char ass);
+	Tile(std::string Name, short int inter, float texture_size_w, float texture_size_h, char ass, TextureManager* t_manager);
 	virtual ~Tile();
 	sf::Sprite render_tile(int i, int j);
 	bool give_player_info();

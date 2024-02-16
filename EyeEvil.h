@@ -1,16 +1,6 @@
 #pragma once
 #include "Enemy.h"
 
-enum class EYE_EVIL_STATE
-{
-	IDLE = 0,
-	MOVING,
-	JUMPING,
-	ATTACKING,
-	DEATH,
-	TAKING_DAMAGE
-};
-
 using sf::Sprite;
 using sf::RenderWindow;
 using sf::FloatRect;
@@ -22,8 +12,8 @@ using sf::Clock;
 class EyeEvil : public Enemy
 {
 public:
-	EYE_EVIL_STATE eye_state;
-	EYE_EVIL_STATE eye_state_past;
+	ENEMY_STATE eye_state;
+	ENEMY_STATE eye_state_past;
 	Clock IDLE_timer;
 	Clock DEATH_timer;
 	Clock ATTACKING_timer;

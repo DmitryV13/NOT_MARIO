@@ -1,19 +1,6 @@
 #pragma once
 #include "Enemy.h"
 
-enum class RED_MUTANT_STATE
-{
-	RED_MUTANT_IDLE = 0,
-	RED_MUTANT_MOVING,
-	RED_MUTANT_JUMPING,
-	RED_MUTANT_SHOT,
-	RED_MUTANT_DEATH,
-	RED_MUTANT_TAKING_DAMAGE,
-	RED_MUTANT_RUN,
-	RED_MUTANT_ATTACKING,
-	RED_MUTANT_TELEPORT
-};
-
 class RedMutant : public Enemy
 {
 private:
@@ -35,8 +22,8 @@ private:
 	void init_sprite() override;
 
 public:
-	RED_MUTANT_STATE red_mutant_state;
-	RED_MUTANT_STATE red_mutant_state_past;
+	ENEMY_STATE red_mutant_state;
+	ENEMY_STATE red_mutant_state_past;
 	Clock DEATH_timer;
 	sf::Vector2f calculateRandomPosition(const sf::FloatRect& playerBounds, int radius);
 	explicit RedMutant(TileMap& map, GeneralInfo* player_info,short);

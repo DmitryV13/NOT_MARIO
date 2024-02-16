@@ -9,7 +9,7 @@ RedMutant::RedMutant(TileMap& map, GeneralInfo* player_info,short regime)
 		RedMutant::init_sprite();
 		RedMutant::setAt(25);
 		RedMutant::setHP(2000);
-		red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;
+		red_mutant_state = ENEMY_STATE::IDLE;
 		hp_damage_i = HP;
 		red_mutant_state_past = red_mutant_state;
 		RED_MUTANT_TAKING_DAMAGE_TIMER.restart();
@@ -33,7 +33,7 @@ RedMutant::RedMutant(TileMap& map, GeneralInfo* player_info_, float pos_x, float
 		RedMutant::init_sprite();
 		RedMutant::setAt(25);
 		RedMutant::setHP(2000);
-		red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;
+		red_mutant_state = ENEMY_STATE::IDLE;
 		hp_damage_i = HP;
 		red_mutant_state_past = red_mutant_state;
 		RED_MUTANT_TAKING_DAMAGE_TIMER.restart();
@@ -79,23 +79,23 @@ void RedMutant::reset_Timer()
 void RedMutant::update_movement()
 {
 	if (HP <= 0) {
-		red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_DEATH;
+		red_mutant_state = ENEMY_STATE::DEATH;
 		hp_damage_i = HP;
 	}
 	if (hp_damage_i > HP)
 	{
-		red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_TAKING_DAMAGE;
+		red_mutant_state = ENEMY_STATE::TAKING_DAMAGE;
 	}
-	if (sting() && !plStan() && displacement.x != 0.f)red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_TELEPORT;
+	if (sting() && !plStan() && displacement.x != 0.f)red_mutant_state = ENEMY_STATE::TELEPORTING;
 	//if (!search_for_enemies())clear_shot();
 	switch (red_mutant_state)
 	{
-	case RED_MUTANT_STATE::RED_MUTANT_IDLE:
+	case ENEMY_STATE::IDLE:
 		{
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_IDLE;
 			if (search_for_enemies())
 			{
-				red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_ATTACKING;
+				red_mutant_state = ENEMY_STATE::ATTACKING;
 			}
 			reset_Timer();
 			if (update_collision_x())
@@ -103,7 +103,7 @@ void RedMutant::update_movement()
 				if (canJumpForward())
 				{
 					jump_flag = true;
-					red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_JUMPING;
+					red_mutant_state = ENEMY_STATE::E_JUMPING;
 				}
 				else moving *= -1.f;
 			}
@@ -111,13 +111,13 @@ void RedMutant::update_movement()
 			{
 				if (hit_a_wall())
 				{
-					red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_MOVING;
+					red_mutant_state = ENEMY_STATE::MOVING;
 					moving *= -1.f;
-					animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;
+					animation_state = ENEMY_ANIMATION_STATE::ENEMY_MOVING;
 				}
 				else
 				{
-					red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_MOVING;
+					red_mutant_state = ENEMY_STATE::MOVING;
 				}
 
 
@@ -128,14 +128,14 @@ void RedMutant::update_movement()
 				displacement.x = 0;
 				displacement_max = 1.f;
 			}
-			//animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
+			//animation_state = ENEMY_ANIMATION_STATE::ENEMY_IDLE;
 			walk(moving);
 			break;
 		}
-	case RED_MUTANT_STATE::RED_MUTANT_JUMPING:
+	case ENEMY_STATE::E_JUMPING:
 		{
 			reset_Timer();
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_JUMPING;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_JUMPING;
 			
 			if (on_ground && jump_flag)
 			{
@@ -149,51 +149,51 @@ void RedMutant::update_movement()
 			{
 				count_jm = 0;
 				jump_flag = false;
-				red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;
+				red_mutant_state = ENEMY_STATE::IDLE;
 			}
-			if (search_for_enemies())red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_ATTACKING;
+			if (search_for_enemies())red_mutant_state = ENEMY_STATE::ATTACKING;
 
 			walk(moving);
 
 
 			break;
 		}
-	case RED_MUTANT_STATE::RED_MUTANT_MOVING:
+	case ENEMY_STATE::MOVING:
 		{
 			reset_Timer();
 			
-			if (sting() && displacement.x != 0.f)red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_TELEPORT;
+			if (sting() && displacement.x != 0.f)red_mutant_state = ENEMY_STATE::TELEPORTING;
 
 			if (search_for_enemies())
 			{
-				red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_ATTACKING;
+				red_mutant_state = ENEMY_STATE::ATTACKING;
 				//reset_Timer();
 				break;
 			}
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_MOVING;
 			if (update_collision_x())
 			{
 				if (canJumpForward())
 				{
 					jump_flag = true;
-					red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_JUMPING;
+					red_mutant_state = ENEMY_STATE::E_JUMPING;
 				}
 				else moving *= -1.f;
 			}
-			if (rand() % 10 > 5)red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;
+			if (rand() % 10 > 5)red_mutant_state = ENEMY_STATE::IDLE;
 			if (!sting())walk(moving);
 			break;
 		}
-	case RED_MUTANT_STATE::RED_MUTANT_ATTACKING:
+	case ENEMY_STATE::ATTACKING:
 		{	reset_Timer();
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_ATTENTION;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_ATTENTION;
 			
-			if (sting() && displacement.x != 0.f)red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_TELEPORT;
+			if (sting() && displacement.x != 0.f)red_mutant_state = ENEMY_STATE::TELEPORTING;
 			if (search_for_enemies())
 			{
-				red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_RUN;
+				red_mutant_state = ENEMY_STATE::RUNNING;
 			}
-			else red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;
+			else red_mutant_state = ENEMY_STATE::IDLE;
 			//if (isPlayerInRadius(observation_area.getGlobalBounds(), player_info->getGlobalBounds(), 192))
 			//{
 			//	if (count_jump == 0)
@@ -201,20 +201,20 @@ void RedMutant::update_movement()
 			//		//jump(1.f);
 			//		jump_towards_player();
 			//		count_jump++;
-			//		red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_JUMPING;
+			//		red_mutant_state = ENEMY_STATE::RED_MUTANT_JUMPING;
 			//	}
 			//}
 			//else reset_attention();
 			if (sting())
 			{
-				red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_SHOT;
+				red_mutant_state = ENEMY_STATE::SHOT;
 			}
 			if (update_collision_x())
 			{
 				if (canJumpForward())
 				{
 					jump_flag = true;
-					red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_JUMPING;
+					red_mutant_state = ENEMY_STATE::E_JUMPING;
 				}
 				else moving *= -1.f;
 			}
@@ -222,11 +222,11 @@ void RedMutant::update_movement()
 			//walk(moving);
 			break;
 		}
-	case RED_MUTANT_STATE::RED_MUTANT_SHOT:
+	case ENEMY_STATE::SHOT:
 		{
 			FloatRect en = get_global_bounds();
 			FloatRect pl = player_info->getGlobalBounds();
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_SHOT;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_SHOT;
 			reset_Timer();
 
 			if (blow_timer.getElapsedTime().asSeconds() >= 0.2f)
@@ -236,7 +236,7 @@ void RedMutant::update_movement()
 			}
 			if (Shot_timer.getElapsedTime().asSeconds() >= 0.5f)
 			{
-				red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_TELEPORT;
+				red_mutant_state = ENEMY_STATE::TELEPORTING;
 				if (looks_to_the_left)current_frame.width = 60;
 				else current_frame.width = 0;
 				Enemy_S.setTextureRect(current_frame);
@@ -273,29 +273,29 @@ void RedMutant::update_movement()
 				reset_attention();
 				clear_shot();
 
-				red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;
+				red_mutant_state = ENEMY_STATE::IDLE;
 			}
 			walk(moving);
 
 			break;
 		}
 
-	case RED_MUTANT_STATE::RED_MUTANT_DEATH:
+	case ENEMY_STATE::DEATH:
 		{
 
 			reset_Timer();
 			displacement.x = 0;
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_DEATH;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_DEATH;
 			break;
 		}
-	case RED_MUTANT_STATE::RED_MUTANT_TAKING_DAMAGE:
+	case ENEMY_STATE::TAKING_DAMAGE:
 		{
 		reset_Timer();
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_TAKING_DAMAGE;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_TAKING_DAMAGE;
 			if (HP <= 0 )
 			{
 				hp_damage_i = HP;
-				red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_DEATH;
+				red_mutant_state = ENEMY_STATE::DEATH;
 				break;
 			}
 			if (hp_damage_i > HP)
@@ -306,15 +306,15 @@ void RedMutant::update_movement()
 			}
 			if (RED_MUTANT_TAKING_DAMAGE_TIMER.getElapsedTime().asSeconds() >= 0.3f)
 			{
-				red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;
+				red_mutant_state = ENEMY_STATE::IDLE;
 			}
 
 			break;
 		}
-	case RED_MUTANT_STATE::RED_MUTANT_RUN:
+	case ENEMY_STATE::RUNNING:
 		{
 			
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_RUN;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_RUN;
 			if (search_for_enemies())
 			{
 				if (jump_tile || !on_ground)displacement_max = 1.f;
@@ -349,18 +349,18 @@ void RedMutant::update_movement()
 				}
 				displacement.x += 10 * moving * acceleration;
 			}
-			else red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;
+			else red_mutant_state = ENEMY_STATE::IDLE;
 
 
 			walk(moving);
-			red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_ATTACKING;
+			red_mutant_state = ENEMY_STATE::ATTACKING;
 			break;
 		}
 
-	case RED_MUTANT_STATE::RED_MUTANT_TELEPORT:
+	case ENEMY_STATE::TELEPORTING:
 		{
 			reset_Timer();
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_TELEPORT;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_TELEPORT;
 			if (Shot_timer.getElapsedTime().asSeconds() >= 0.3f)
 			{
 				if (teleport)
@@ -381,7 +381,7 @@ void RedMutant::update_movement()
 				if (Shot_timer.getElapsedTime().asSeconds() >= 0.7f)
 				{
 					teleport = true;
-					red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;
+					red_mutant_state = ENEMY_STATE::IDLE;
 
 					Shot_timer.restart();
 				}
@@ -397,8 +397,8 @@ void RedMutant::update_movement()
 	default:
 		{
 
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
-			red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_IDLE;
+			red_mutant_state = ENEMY_STATE::IDLE;
 			break;
 		}
 	}
@@ -485,14 +485,14 @@ void RedMutant::walk(const float dir_x)
 		displacement.x = displacement_max * ((displacement.x > 0.f) ? 1.f : -1.f);
 	}
 	if (sting())displacement.x = 0.f;
-	/*if (animation_counter_think > 2 && animation_state != ENEMY_ANIMATION_STATES::ENEMY_ATTENTION)
+	/*if (animation_counter_think > 2 && animation_state != ENEMY_ANIMATION_STATE::ENEMY_ATTENTION)
 	{
 		displacement.x = 0;
-		animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
+		animation_state = ENEMY_ANIMATION_STATE::ENEMY_IDLE;
 	}
-	else if (displacement.y >= gravity)animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING_DOWN;
-	else if (jump_tile)animation_state = ENEMY_ANIMATION_STATES::ENEMY_JUMPING;
-	else animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;*/
+	else if (displacement.y >= gravity)animation_state = ENEMY_ANIMATION_STATE::ENEMY_MOVING_DOWN;
+	else if (jump_tile)animation_state = ENEMY_ANIMATION_STATE::ENEMY_JUMPING;
+	else animation_state = ENEMY_ANIMATION_STATE::ENEMY_MOVING;*/
 
 
 	//logic when exposing a player
@@ -509,7 +509,7 @@ void RedMutant::walk(const float dir_x)
 
 void RedMutant::update_animation()
 {
-	if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_MOVING)
+	if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_MOVING)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
@@ -547,7 +547,7 @@ void RedMutant::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_TELEPORT)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_TELEPORT)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
@@ -600,7 +600,7 @@ void RedMutant::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_IDLE)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_IDLE)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
@@ -639,7 +639,7 @@ void RedMutant::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_ATTENTION)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_ATTENTION)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
@@ -678,7 +678,7 @@ void RedMutant::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_RUN)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_RUN)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
@@ -718,7 +718,7 @@ void RedMutant::update_animation()
 		}
 	}
 
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_SHOT)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_SHOT)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
@@ -750,7 +750,7 @@ void RedMutant::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_JUMPING)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_JUMPING)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
@@ -787,7 +787,7 @@ void RedMutant::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_TAKING_DAMAGE)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_TAKING_DAMAGE)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
@@ -820,7 +820,7 @@ void RedMutant::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_DEATH)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_DEATH)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
@@ -868,7 +868,7 @@ void RedMutant::update_animation()
 
 void RedMutant::shot()
 {
-	animation_state = ENEMY_ANIMATION_STATES::ENEMY_SHOT;
+	animation_state = ENEMY_ANIMATION_STATE::ENEMY_SHOT;
 	//player_->changeHP(-attack_-(rand()%10));
 	player_info->changeHP(-attack_ - (rand() % 10));
 }
@@ -1021,14 +1021,14 @@ bool RedMutant::search_for_enemies()
 	FloatRect look = observation_area.getGlobalBounds();
 	FloatRect pl = player_info->getGlobalBounds();
 
-	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
-	if (playerSide == PL_SIDE::RIGHT && look.intersects(pl))
+	ORIENTATION playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
+	if (playerSide == ORIENTATION::RIGHT && look.intersects(pl))
 	{
 		player_l_r[1] = true;
 		player_l_r[0] = false;
 		return true;
 	}
-	else if (playerSide == PL_SIDE::LEFT && look.intersects(pl))
+	else if (playerSide == ORIENTATION::LEFT && look.intersects(pl))
 	{
 		player_l_r[0] = true;
 		player_l_r[1] = false;
@@ -1108,7 +1108,7 @@ void RedMutant::reset_attention()
 
 void RedMutant::changeHP(short i)
 {
-	if (red_mutant_state != RED_MUTANT_STATE::RED_MUTANT_TELEPORT)Enemy::changeHP(i);
+	if (red_mutant_state != ENEMY_STATE::TELEPORTING)Enemy::changeHP(i);
 }
 
 bool RedMutant::plStan()

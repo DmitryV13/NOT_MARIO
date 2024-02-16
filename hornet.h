@@ -1,15 +1,6 @@
 #pragma once
 #include "Enemy.h"
 
-enum class HORNET_STATE
-{
-	IDLE = 0,
-	FLYING,
-	ATTACKING,
-	DEATH,
-	TAKING_DAMAGE
-};
-
 using sf::Sprite;
 using sf::RenderWindow;
 using sf::FloatRect;
@@ -22,7 +13,7 @@ class hornet:public Enemy
 private:
 	Texture hornet_t_;
 	
-	HORNET_STATE hornet_state_past;
+	ENEMY_STATE hornet_state_past;
 	Clock IDLE_timer;
 	Clock ATTACKING_timer;
 	Clock HORNET_TAKING_DAMAGE_TIMER;
@@ -38,7 +29,7 @@ private:
 
 public:
 	Clock DEATH_timer;
-	HORNET_STATE hornet_state;
+	ENEMY_STATE hornet_state;
 
 
 	explicit hornet(TileMap& map, GeneralInfo* player_info,short);

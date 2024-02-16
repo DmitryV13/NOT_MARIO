@@ -30,7 +30,7 @@ void WolfBoss::init_physics()
 {
 	
 	boss_state_TORMENT = false;
-	boss_state_past = BOSS_STATE::IDLE;
+	boss_state_past = ENEMY_STATE::IDLE;
 	BOSS_TAKING_DAMAGE_TIMER.restart();
 	
 	IDLE_timer.restart();
@@ -41,8 +41,8 @@ void WolfBoss::init_physics()
 	awakening = false;
 	retreat_counter = 0;
 	max_retreat_duration = 100;
-	boss_state = BOSS_STATE::SLEEP;
-	animation_state_past = ENEMY_ANIMATION_STATES::ENEMY_SLEEP;
+	boss_state = ENEMY_STATE::SLEEPING;
+	animation_state_past = ENEMY_ANIMATION_STATE::ENEMY_SLEEP;
 	displacement_max = 2.5f;
 	attention_counter = 3;
 	displacement_min = 0.3f;
@@ -93,7 +93,7 @@ void WolfBoss::init_sprite()
 
 void WolfBoss::update_animation()
 {
-	if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_MOVING)
+	if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_MOVING)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.15f || get_animation_switch())
 		{
@@ -126,7 +126,7 @@ void WolfBoss::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_IDLE)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_IDLE)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
@@ -159,7 +159,7 @@ void WolfBoss::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_ATTENTION)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_ATTENTION)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.05f || get_animation_switch())
 		{
@@ -194,7 +194,7 @@ void WolfBoss::update_animation()
 		}
 	}
 
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_SLEEP)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_SLEEP)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.5f || get_animation_switch())
 		{
@@ -244,7 +244,7 @@ void WolfBoss::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_JUMPING)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_JUMPING)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.15f || get_animation_switch())
 		{
@@ -278,7 +278,7 @@ void WolfBoss::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_HOWL)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_HOWL)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.25f || get_animation_switch())
 		{
@@ -308,7 +308,7 @@ void WolfBoss::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_PUNCH)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_PUNCH)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
@@ -339,7 +339,7 @@ void WolfBoss::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_DOUBLE_KICK)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_DOUBLE_KICK)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
@@ -370,7 +370,7 @@ void WolfBoss::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_DEATH)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_DEATH)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.9f || get_animation_switch())
 		{
@@ -401,7 +401,7 @@ void WolfBoss::update_animation()
 			animation_timer.restart();
 		}
 		}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_TAKING_DAMAGE)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_TAKING_DAMAGE)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
@@ -432,7 +432,7 @@ void WolfBoss::update_animation()
 			animation_timer.restart();
 		}
 		}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_HIT_EARTH)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_HIT_EARTH)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
@@ -463,7 +463,7 @@ void WolfBoss::update_animation()
 			animation_timer.restart();
 		}
 		}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_RUN)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_RUN)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
@@ -505,15 +505,15 @@ void WolfBoss::update_animation()
 	}
 }
 
-PL_SIDE WolfBoss::getPlayerSide(float playerX, float enemyX)
+ORIENTATION WolfBoss::getPlayerSide(float playerX, float enemyX)
 {
 	if (playerX < enemyX)
 	{
-		return PL_SIDE::LEFT;
+		return ORIENTATION::LEFT;
 	}
 	else
 	{
-		return PL_SIDE::RIGHT;
+		return ORIENTATION::RIGHT;
 	}
 }
 
@@ -557,8 +557,8 @@ bool WolfBoss::outside_sting()
 
 void WolfBoss::looks()
 {
-	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
-	if (playerSide == PL_SIDE::LEFT)
+	ORIENTATION playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
+	if (playerSide == ORIENTATION::LEFT)
 	{
 		looks_to_the_left = true;
 		looks_to_the_right = false;
@@ -574,8 +574,8 @@ void WolfBoss::looks()
 
 void WolfBoss::changeHP(short i)
 {
-	if( boss_state == BOSS_STATE::ATTACKING|| boss_state == BOSS_STATE::HOWL || 
-		boss_state == BOSS_STATE::MOVING|| boss_state == BOSS_STATE::SLEEP|| boss_state == BOSS_STATE::RETREATING )Enemy::changeHP(i);
+	if( boss_state == ENEMY_STATE::ATTACKING|| boss_state == ENEMY_STATE::HOWLING || 
+		boss_state == ENEMY_STATE::MOVING|| boss_state == ENEMY_STATE::SLEEPING|| boss_state == ENEMY_STATE::RETREATING )Enemy::changeHP(i);
 }
 
 void WolfBoss::updateHP_bar()
@@ -590,44 +590,44 @@ void WolfBoss::update_movement()
 
 	if (HP <= 0)
 	{
-		boss_state = BOSS_STATE::DEATH;
+		boss_state = ENEMY_STATE::DEATH;
 		hp_damage_i = HP;
 	}
-	if (hp_damage_i > HP && boss_state != BOSS_STATE::DEATH)
+	if (hp_damage_i > HP && boss_state != ENEMY_STATE::DEATH)
 	{
-		boss_state = BOSS_STATE::TAKING_DAMAGE;
+		boss_state = ENEMY_STATE::TAKING_DAMAGE;
 	}
 	if (!sting())boss_state_TORMENT = false;
 	float distanceToPlayer = std::abs(player_info->getPosition().x - get_position().x);
 	switch (boss_state)
 	{
-	case BOSS_STATE::SLEEP:
+	case ENEMY_STATE::SLEEPING:
 		{
 		looks();
 
 			displacement.x = 0.f;
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_SLEEP;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_SLEEP;
 			if (isPlayerInRadius(observation_area.getGlobalBounds(), player_info->getGlobalBounds(), 300) ||
 				boss_state_past == boss_state)
 			{
 				reset_Timer();
 				if (IDLE_timer.getElapsedTime().asSeconds() >= 1.5f)
 				{
-					boss_state = BOSS_STATE::IDLE;
+					boss_state = ENEMY_STATE::IDLE;
 				}
 			}
 			break;
 		}
-	case BOSS_STATE::IDLE:
+	case ENEMY_STATE::IDLE:
 		{
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_IDLE;
 			reset_Timer();
 			//retreat_counter++;
 			displacement.x = 0.f;
 			//if (IDLE_timer.getElapsedTime().asSeconds() >= 1.5f)
 			//{
-			//	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
-			//	if (playerSide == PL_SIDE::LEFT)
+			//	ORIENTATION playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
+			//	if (playerSide == ORIENTATION::LEFT)
 			//	{
 			//		looks_to_the_left = true;
 			//		looks_to_the_right = false;
@@ -643,16 +643,16 @@ void WolfBoss::update_movement()
 			//	//retreat_counter = 0;
 			//}
 			
-				boss_state = BOSS_STATE::ATTACKING;
+				boss_state = ENEMY_STATE::ATTACKING;
 				
 			
 
 			break;
 		}
 
-	case BOSS_STATE::MOVING:
+	case ENEMY_STATE::MOVING:
 		{
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_MOVING;
 			reset_Timer();
 			looks();
 			displacement_max = 0.8f;
@@ -664,8 +664,8 @@ void WolfBoss::update_movement()
 					look(moving);
 				}
 			}
-			PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
-			if (playerSide == PL_SIDE::LEFT)
+			ORIENTATION playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
+			if (playerSide == ORIENTATION::LEFT)
 			{
 				looks_to_the_left = true;
 				looks_to_the_right = false;
@@ -682,7 +682,7 @@ void WolfBoss::update_movement()
 			//	looks_to_the_left = true;
 			//	looks_to_the_right = false;
 			//	moving *= -1.f;
-			//	//boss_state = BOSS_STATE::RETREATING;
+			//	//boss_state = ENEMY_STATE::RETREATING;
 			//	reset_step();
 			//}
 			//if (step_left == max_step)
@@ -690,35 +690,35 @@ void WolfBoss::update_movement()
 			//	looks_to_the_left = false;
 			//	looks_to_the_right = true;
 			//	moving *= -1.f;
-			//	//boss_state = BOSS_STATE::RETREATING;
+			//	//boss_state = ENEMY_STATE::RETREATING;
 			//	reset_step();
 			//}
 			if (sting())
 			{
 				pl_contact = true;
-				boss_state = BOSS_STATE::PUNCH;
+				boss_state = ENEMY_STATE::PUNCHING;
 			}
 			else reset_attention();
 			/*if (distanceToPlayer > 10 * 60)
 			{
-				boss_state = BOSS_STATE::RETREATING;
+				boss_state = ENEMY_STATE::RETREATING;
 				break;
 			}*/
 			//расширить повороты в сторону игрока, а так же поработать над ограничениями и атакой при приближении
 			walk(moving);
 			break;
 		}
-	case BOSS_STATE::PUNCH:
+	case ENEMY_STATE::PUNCHING:
 		{
 			looks();
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_PUNCH;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_PUNCH;
 			reset_Timer();
 			displacement.x = 0.f;
 			if (Shot_timer.getElapsedTime().asSeconds() >= 1.0f)
 			{
-				boss_state = BOSS_STATE::RETREATING;
+				boss_state = ENEMY_STATE::RETREATING;
 				Shot_timer.restart();
-				if (boss_state_TORMENT)boss_state = BOSS_STATE::DOUBLE_KICK;
+				if (boss_state_TORMENT)boss_state = ENEMY_STATE::DOUBLE_KICK;
 			}
 			if (Shot_timer.getElapsedTime().asSeconds() >= 0.8F)
 			{
@@ -728,10 +728,10 @@ void WolfBoss::update_movement()
 
 			break;
 		}
-	case BOSS_STATE::JUMPING:
+	case ENEMY_STATE::E_JUMPING:
 		{
-			if (animation_state != ENEMY_ANIMATION_STATES::ENEMY_JUMPING)animation_state =
-				ENEMY_ANIMATION_STATES::ENEMY_MOVING;
+			if (animation_state != ENEMY_ANIMATION_STATE::ENEMY_JUMPING)animation_state =
+				ENEMY_ANIMATION_STATE::ENEMY_MOVING;
 
 			if (on_ground)
 			{
@@ -757,7 +757,7 @@ void WolfBoss::update_movement()
 				}*/
 			/*if (distanceToPlayer > 10 * 60)
 			{
-				boss_state = BOSS_STATE::RETREATING;
+				boss_state = ENEMY_STATE::RETREATING;
 				break;
 			}*/
 
@@ -765,16 +765,16 @@ void WolfBoss::update_movement()
 
 			if ((std::abs(player_info->getPosition().x - get_position().x) < 8 * 64) && (std::abs(
 					player_info->getPosition().x - get_position().x) > 5 * 64)
-				&& ((getPlayerSide(player_info->getPosition().x, get_position().x) == PL_SIDE::LEFT &&
+				&& ((getPlayerSide(player_info->getPosition().x, get_position().x) == ORIENTATION::LEFT &&
 						looks_to_the_left) ||
-					(getPlayerSide(player_info->getPosition().x, get_position().x) == PL_SIDE::RIGHT &&
+					(getPlayerSide(player_info->getPosition().x, get_position().x) == ORIENTATION::RIGHT &&
 						looks_to_the_right)) || pl_cont_jump)
 			{
-				animation_state = ENEMY_ANIMATION_STATES::ENEMY_JUMPING;
+				animation_state = ENEMY_ANIMATION_STATE::ENEMY_JUMPING;
 				reset_Timer();
 				//jump_towardsS_player();
 				//count_anger++;
-				if (!pl_cont_jump && Jumping_att_timer.getElapsedTime().asSeconds() >= 0.4)boss_state = BOSS_STATE::IDLE;
+				if (!pl_cont_jump && Jumping_att_timer.getElapsedTime().asSeconds() >= 0.4)boss_state = ENEMY_STATE::IDLE;
 				if (Jumping_att_timer.getElapsedTime().asSeconds() >= 0.2f && !pl_cont_jump)
 				{
 					jump(1.7F);
@@ -803,16 +803,16 @@ void WolfBoss::update_movement()
 					}
 					//Enemy_S.setPosition(get_position().x - (distance),get_position().y);
 					pl_cont_jump = false;
-					boss_state = BOSS_STATE::IDLE;
+					boss_state = ENEMY_STATE::IDLE;
 					Jumping_att_timer.restart();
 				}
 			}
 			else pl_contact = true;
 			break;
 		}
-	case BOSS_STATE::TAKING_DAMAGE:
+	case ENEMY_STATE::TAKING_DAMAGE:
 		{
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_TAKING_DAMAGE;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_TAKING_DAMAGE;
 			reset_Timer();
 			looks();
 			boss_state_TORMENT = false;
@@ -820,7 +820,7 @@ void WolfBoss::update_movement()
 			if (HP <= 0)
 			{
 				hp_damage_i = HP;
-				boss_state = BOSS_STATE::DEATH;
+				boss_state = ENEMY_STATE::DEATH;
 				break;
 			}
 			if (hp_damage_i > HP)
@@ -830,19 +830,19 @@ void WolfBoss::update_movement()
 			}
 			if (BOSS_TAKING_DAMAGE_TIMER.getElapsedTime().asSeconds() >= 0.01f)
 			{
-				boss_state = BOSS_STATE::IDLE;
+				boss_state = ENEMY_STATE::IDLE;
 			}
 
 			break;
 		}
-	case BOSS_STATE::RUN:
+	case ENEMY_STATE::RUNNING:
 		{
 			looks();
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_RUN;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_RUN;
 			reset_Timer();
-			PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
+			ORIENTATION playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
 
-			if (playerSide == PL_SIDE::LEFT)
+			if (playerSide == ORIENTATION::LEFT)
 			{
 				looks_to_the_left = true;
 				looks_to_the_right = false;
@@ -861,24 +861,24 @@ void WolfBoss::update_movement()
 			look(displacement.x);
 			if (sting())
 			{
-				boss_state = BOSS_STATE::DOUBLE_KICK;
+				boss_state = ENEMY_STATE::DOUBLE_KICK;
 				displacement_max = 0.F;
 			}
 
 
 			break;
 		}
-	case BOSS_STATE::DOUBLE_KICK:
+	case ENEMY_STATE::DOUBLE_KICK:
 		{
 
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_DOUBLE_KICK;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_DOUBLE_KICK;
 			reset_Timer();
 			displacement.x = 0.f;
 			if (Shot_timer.getElapsedTime().asSeconds() >= 1.f)
 			{
-				boss_state = BOSS_STATE::RETREATING;
+				boss_state = ENEMY_STATE::RETREATING;
 				Shot_timer.restart();
-				if (boss_state_TORMENT)boss_state = BOSS_STATE::PUNCH;
+				if (boss_state_TORMENT)boss_state = ENEMY_STATE::PUNCHING;
 			}
 			
 				shot();
@@ -888,38 +888,38 @@ void WolfBoss::update_movement()
 
 			break;
 		}
-	case BOSS_STATE::ATTACKING:
+	case ENEMY_STATE::ATTACKING:
 		{
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_ATTENTION;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_ATTENTION;
 			reset_Timer();
 			if (rand_ == 0)
 			{
 				rand_++;
-				boss_state = BOSS_STATE::JUMPING;
+				boss_state = ENEMY_STATE::E_JUMPING;
 			}
 			else if (rand_ == 1)
 			{
 				rand_++;
-				boss_state = BOSS_STATE::MOVING;
+				boss_state = ENEMY_STATE::MOVING;
 			}
 			else if (rand_ == 2)
 			{
 				rand_++;
-				boss_state = BOSS_STATE::RUN;
+				boss_state = ENEMY_STATE::RUNNING;
 			}
 			else if (rand_ == 3)
 			{
 				rand_++;
-				boss_state = BOSS_STATE::HOWL;
+				boss_state = ENEMY_STATE::HOWLING;
 			}
 			else if(rand_ == 4)
 			{
 				rand_++;
-				boss_state = BOSS_STATE::TORMENT;
+				boss_state = ENEMY_STATE::TORMENT;
 			}else
 			{
 				rand_ = 0;
-				boss_state = BOSS_STATE::HIT_EARTH;
+				boss_state = ENEMY_STATE::HITTING_EARTH;
 			}
 
 			//добавить еше укус 
@@ -927,17 +927,17 @@ void WolfBoss::update_movement()
 		}
 
 
-	case BOSS_STATE::RETREATING:
+	case ENEMY_STATE::RETREATING:
 		{
 
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;
-			if (update_collision_x())boss_state = BOSS_STATE::IDLE;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_MOVING;
+			if (update_collision_x())boss_state = ENEMY_STATE::IDLE;
 			reset_Timer();
-			PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
+			ORIENTATION playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
 			displacement_max = 3.f;
 			if (RETREATING_timer.getElapsedTime().asSeconds() <= 4.6f)
 			{
-				if (playerSide == PL_SIDE::RIGHT)
+				if (playerSide == ORIENTATION::RIGHT)
 				{
 					looks_to_the_left = true;
 					looks_to_the_right = false;
@@ -953,15 +953,15 @@ void WolfBoss::update_movement()
 			if (IDLE_timer.getElapsedTime().asSeconds() >= 4.6f)
 			{
 				displacement_max = 1.f;
-				boss_state = BOSS_STATE::IDLE;
+				boss_state = ENEMY_STATE::IDLE;
 				IDLE_timer.restart();
 			}
 			walk(moving);
 			break;
 		}
-	case BOSS_STATE::HOWL:
+	case ENEMY_STATE::HOWLING:
 		{
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_HOWL;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_HOWL;
 			reset_Timer();
 			looks();
 			retreat_counter++;
@@ -970,21 +970,21 @@ void WolfBoss::update_movement()
 			if (Shot_timer.getElapsedTime().asSeconds() >= 4.2f)
 			{
 				
-				boss_state = BOSS_STATE::IDLE;
+				boss_state = ENEMY_STATE::IDLE;
 				Shot_timer.restart();
 			}
 			break;
 		}
-	case BOSS_STATE::TORMENT:
+	case ENEMY_STATE::TORMENT:
 
 		{
 			displacement_max = 7.f;
 			displacement.x *= (displacement_max / 4);
-			if (update_collision_x())boss_state = BOSS_STATE::IDLE;
-			PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
+			if (update_collision_x())boss_state = ENEMY_STATE::IDLE;
+			ORIENTATION playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
 			if (!sting() && retreat_counter == 0)
 			{
-				if (playerSide == PL_SIDE::LEFT)
+				if (playerSide == ORIENTATION::LEFT)
 				{
 					looks_to_the_left = true;
 					looks_to_the_right = false;
@@ -1002,13 +1002,13 @@ void WolfBoss::update_movement()
 					walk(moving);
 				}
 			}
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_RUN;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_RUN;
 			reset_Timer();
 			if (sting())
 			{
 				displacement_max = 1.F;
 				boss_state_TORMENT = true;
-				boss_state = BOSS_STATE::PUNCH;
+				boss_state = ENEMY_STATE::PUNCHING;
 			}
 			/*	if (sting() && retreat_counter < 50)
 				{
@@ -1030,7 +1030,7 @@ void WolfBoss::update_movement()
 				if (retreat_counter > 299)
 				{
 					retreat_counter = 0;
-					boss_state = BOSS_STATE::RETREATING;
+					boss_state = ENEMY_STATE::RETREATING;
 					reset_attention();
 				}*/
 
@@ -1038,24 +1038,24 @@ void WolfBoss::update_movement()
 			break;
 		}
 
-	case BOSS_STATE::DEATH:
+	case ENEMY_STATE::DEATH:
 		{
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_DEATH;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_DEATH;
 			reset_Timer();
 			displacement.x = 0;
 
 			break;
 		}
-	case BOSS_STATE::HIT_EARTH:
+	case ENEMY_STATE::HITTING_EARTH:
 		{
 			looks();
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_HIT_EARTH;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_HIT_EARTH;
 			reset_Timer();
 
 			displacement.x = 0.f;
 			if (Shot_timer.getElapsedTime().asSeconds() >= 1.7f)
 			{
-				boss_state = BOSS_STATE::IDLE;
+				boss_state = ENEMY_STATE::IDLE;
 				Shot_timer.restart();
 			}
 			if (Shot_timer.getElapsedTime().asSeconds() >= 1.5F)
@@ -1184,7 +1184,7 @@ sf::Vector2f WolfBoss::calculateRandomPosition(const sf::FloatRect& playerBounds
 
 void WolfBoss::bite()
 {
-	animation_state = ENEMY_ANIMATION_STATES::ENEMY_BITE;
+	animation_state = ENEMY_ANIMATION_STATE::ENEMY_BITE;
 }
 
 void WolfBoss::reset_step()
@@ -1199,7 +1199,7 @@ void WolfBoss::shot()
 {
 	if(att_timer.getElapsedTime().asSeconds()>=0.9f)
 	{
-		if ((outside_sting() || sting()) && boss_state == BOSS_STATE::DOUBLE_KICK)player_info->changeHP(-attack_ - (rand() % 10) -attack_);
+		if ((outside_sting() || sting()) && boss_state == ENEMY_STATE::DOUBLE_KICK)player_info->changeHP(-attack_ - (rand() % 10) -attack_);
 		else if (outside_sting() || sting())player_info->changeHP(-attack_ - (rand() % 10));
 		att_timer.restart();
 	}
@@ -1285,14 +1285,14 @@ bool WolfBoss::search_for_enemies()
 	FloatRect look = observation_area.getGlobalBounds();
 	FloatRect pl = player_info->getGlobalBounds();
 
-	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
-	if (playerSide == PL_SIDE::RIGHT && look.intersects(pl))
+	ORIENTATION playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
+	if (playerSide == ORIENTATION::RIGHT && look.intersects(pl))
 	{
 		player_l_r[1] = true;
 		player_l_r[0] = false;
 		return true;
 	}
-	else if (playerSide == PL_SIDE::LEFT && look.intersects(pl))
+	else if (playerSide == ORIENTATION::LEFT && look.intersects(pl))
 	{
 		player_l_r[0] = true;
 		player_l_r[1] = false;
@@ -1335,14 +1335,14 @@ void WolfBoss::walk(const float dir_x)
 	}
 
 	if (displacement.x != 0.0f) { look(displacement.x); }
-	/*if (animation_counter_think > 2 && animation_state != ENEMY_ANIMATION_STATES::ENEMY_ATTENTION)
+	/*if (animation_counter_think > 2 && animation_state != ENEMY_ANIMATION_STATE::ENEMY_ATTENTION)
 	{
 		displacement.x = 0;
-		animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
+		animation_state = ENEMY_ANIMATION_STATE::ENEMY_IDLE;
 	}
-	else if (displacement.y >= gravity)animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING_DOWN;
-	else if (jump_tile)animation_state = ENEMY_ANIMATION_STATES::ENEMY_JUMPING;
-	else animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;*/
+	else if (displacement.y >= gravity)animation_state = ENEMY_ANIMATION_STATE::ENEMY_MOVING_DOWN;
+	else if (jump_tile)animation_state = ENEMY_ANIMATION_STATE::ENEMY_JUMPING;
+	else animation_state = ENEMY_ANIMATION_STATE::ENEMY_MOVING;*/
 
 
 	//logic when exposing a player

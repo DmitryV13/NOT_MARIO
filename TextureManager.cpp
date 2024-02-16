@@ -115,6 +115,144 @@
 		if (!textures[5]["SpeedPotion"].loadFromFile("Textures/Textures_map/speed_potion.png")) {
 			std::cout << "Error -> TextureManager -> couldn't load SpeedPotion texture" << std::endl;
 		}
+
+		//tiles
+		////basic
+		textures.push_back(unordered_map<string, Texture>());
+		if (!textures[6]["grass_tile"].loadFromFile("Textures/Textures_map/grass_tile.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load grass_tile texture" << std::endl;
+		}
+		if (!textures[6]["grass_tile_on_the_left"].loadFromFile("Textures/Textures_map/grass_tile_on_the_left.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load grass_tile_on_the_left texture" << std::endl;
+		}
+		if (!textures[6]["grass_tile_on_the_right"].loadFromFile("Textures/Textures_map/grass_tile_on_the_right.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load grass_tile_on_the_right texture" << std::endl;
+		}
+		if (!textures[6]["grass_tile_in_corner_left"].loadFromFile("Textures/Textures_map/grass_tile_in_corner_left.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load grass_tile_in_corner_left texture" << std::endl;
+		}
+		if (!textures[6]["grass_tile_in_corner_right"].loadFromFile("Textures/Textures_map/grass_tile_in_corner_right.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load grass_tile_in_corner_right texture" << std::endl;
+		}
+		if (!textures[6]["earth"].loadFromFile("Textures/Textures_map/earth.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load earth texture" << std::endl;
+		}
+		if (!textures[6]["sand"].loadFromFile("Textures/Textures_map/sand.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load sand texture" << std::endl;
+		}
+		if (!textures[6]["gravel"].loadFromFile("Textures/Textures_map/gravel.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load gravel texture" << std::endl;
+		}
+		if (!textures[6]["ground8"].loadFromFile("Textures/Textures_map/ground8.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load ground8 texture" << std::endl;
+		}
+		if (!textures[6]["ground7"].loadFromFile("Textures/Textures_map/ground7.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load ground7 texture" << std::endl;
+		}
+		if (!textures[6]["water_top_layer"].loadFromFile("Textures/Textures_map/water_top_layer.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load water_top_layer texture" << std::endl;
+		}
+		if (!textures[6]["water_down_layer"].loadFromFile("Textures/Textures_map/water_down_layer.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load water_down_layer texture" << std::endl;
+		}
+
+		////functional and decorative
+		if (!textures[6]["ladder1"].loadFromFile("Textures/Textures_map/ladder1.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load ladder1 texture" << std::endl;
+		}
+		if (!textures[6]["ladder2"].loadFromFile("Textures/Textures_map/ladder2.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load ladder2 texture" << std::endl;
+		}
+		if (!textures[6]["ladder3"].loadFromFile("Textures/Textures_map/ladder3.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load ladder3 texture" << std::endl;
+		}
+		if (!textures[6]["ladder4"].loadFromFile("Textures/Textures_map/ladder4.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load ladder4 texture" << std::endl;
+		}
+		if (!textures[6]["ladder5"].loadFromFile("Textures/Textures_map/ladder5.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load ladder5 texture" << std::endl;
+		}
+		if (!textures[6]["directionSign1"].loadFromFile("Textures/Textures_map/directionSign1.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load directionSign1 texture" << std::endl;
+		}
+		if (!textures[6]["directionSign2"].loadFromFile("Textures/Textures_map/directionSign2.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load directionSign2 texture" << std::endl;
+		}
+		if (!textures[6]["box"].loadFromFile("Textures/Textures_map/box.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load box texture" << std::endl;
+		}
+		if (!textures[6]["tree1"].loadFromFile("Textures/Textures_map/tree1.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load tree1 texture" << std::endl;
+		}
+		if (!textures[6]["tree2"].loadFromFile("Textures/Textures_map/tree2.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load tree2 texture" << std::endl;
+		}
+		if (!textures[6]["tree3"].loadFromFile("Textures/Textures_map/tree3.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load tree3 texture" << std::endl;
+		}
+		if (!textures[6]["tree4"].loadFromFile("Textures/Textures_map/tree4.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load tree4 texture" << std::endl;
+		}
+		if (!textures[6]["cactus1"].loadFromFile("Textures/Textures_map/cactus1.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load cactus1 texture" << std::endl;
+		}
+		if (!textures[6]["cactus2"].loadFromFile("Textures/Textures_map/cactus2.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load cactus2 texture" << std::endl;
+		}
+
+		////animated
+		if (!textures[6]["spikes"].loadFromFile("Textures/Textures_map/spikes.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load spikes texture" << std::endl;
+		}
+		if (!textures[6]["magma"].loadFromFile("Textures/Textures_map/magma.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load magma texture" << std::endl;
+		}
+		if (!textures[6]["health_potion"].loadFromFile("Textures/Textures_map/health_potion.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load health_potion texture" << std::endl;
+		}
+
+		////background
+		if (!textures[6]["grass_tile_back"].loadFromFile("Textures/Textures_map/grass_tile_back.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load grass_tile_back texture" << std::endl;
+		}
+		if (!textures[6]["grass_tile_on_the_left_back"].loadFromFile("Textures/Textures_map/grass_tile_on_the_left_back.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load grass_tile_on_the_left_back texture" << std::endl;
+		}
+		if (!textures[6]["grass_tile_on_the_right_back"].loadFromFile("Textures/Textures_map/grass_tile_on_the_right_back.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load grass_tile_on_the_right_back texture" << std::endl;
+		}
+		if (!textures[6]["grass_tile_in_corner_left_back"].loadFromFile("Textures/Textures_map/grass_tile_in_corner_left_back.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load grass_tile_in_corner_left_back texture" << std::endl;
+		}
+		if (!textures[6]["grass_tile_in_corner_right_back"].loadFromFile("Textures/Textures_map/grass_tile_in_corner_right_back.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load grass_tile_in_corner_right_back texture" << std::endl;
+		}
+		if (!textures[6]["earth_back"].loadFromFile("Textures/Textures_map/earth_back.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load earth_back texture" << std::endl;
+		}
+		if (!textures[6]["sand_back"].loadFromFile("Textures/Textures_map/sand_back.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load sand_back texture" << std::endl;
+		}
+		if (!textures[6]["gravel_back"].loadFromFile("Textures/Textures_map/gravel_back.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load gravel_back texture" << std::endl;
+		}
+		if (!textures[6]["ground8_back"].loadFromFile("Textures/Textures_map/ground8_back.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load ground8_back texture" << std::endl;
+		}
+		if (!textures[6]["ground7_back"].loadFromFile("Textures/Textures_map/ground7_back.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load ground7_back texture" << std::endl;
+		}
+
+		////front filters
+		if (!textures[6]["water_top_layer_back"].loadFromFile("Textures/Textures_map/water_top_layer_back.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load water_top_layer_back texture" << std::endl;
+		}
+		if (!textures[6]["water_down_layer_back"].loadFromFile("Textures/Textures_map/water_down_layer_back.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load water_down_layer_back texture" << std::endl;
+		}
+		if (!textures[6]["bush"].loadFromFile("Textures/Textures_map/bush.png")) {
+			std::cout << "Error -> TextureManager -> couldn't bush texture" << std::endl;
+		}
 	}
 
 	Texture& TextureManager::getTexture(int index, string name)

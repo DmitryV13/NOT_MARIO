@@ -33,8 +33,8 @@ HornetHive::HornetHive(TileMap& map, GeneralInfo* player_info,short regime):Enem
 	HornetHive::setAt(0);
 	HornetHive::setHP(30);
 	hp_damage_i = HP;
-	hornet_state = HORNET_HIVE_STATE::IDLE;
-	hornet_hive_state_past = HORNET_HIVE_STATE::TAKING_DAMAGE;
+	hornet_state = ENEMY_STATE::IDLE;
+	hornet_hive_state_past = ENEMY_STATE::TAKING_DAMAGE;
 	DEATH_timer.restart();
 	hp_bar->SET_ST_HP(HP);
 }
@@ -47,8 +47,8 @@ HornetHive::HornetHive(TileMap& map, GeneralInfo* player_info_, float pos_x, flo
 	HornetHive::setAt(0);
 	HornetHive::setHP(30);
 	hp_damage_i = HP;
-	hornet_state = HORNET_HIVE_STATE::IDLE;
-	hornet_hive_state_past = HORNET_HIVE_STATE::TAKING_DAMAGE;
+	hornet_state = ENEMY_STATE::IDLE;
+	hornet_hive_state_past = ENEMY_STATE::TAKING_DAMAGE;
 	DEATH_timer.restart();
 	hp_bar->SET_ST_HP(HP);
 }
@@ -59,12 +59,12 @@ void HornetHive::update_movement()
 	set_position_AR(get_position().x, get_position().y);
 	if (HP <= 0)
 	{
-		hornet_state = HORNET_HIVE_STATE::DEATH;
+		hornet_state = ENEMY_STATE::DEATH;
 		hp_damage_i = HP;
 	}
-	if (hp_damage_i > HP && hornet_state != HORNET_HIVE_STATE::DEATH)
+	if (hp_damage_i > HP && hornet_state != ENEMY_STATE::DEATH)
 	{
-		hornet_state = HORNET_HIVE_STATE::TAKING_DAMAGE;
+		hornet_state = ENEMY_STATE::TAKING_DAMAGE;
 	}
 	clear_shot();
 
@@ -72,25 +72,25 @@ void HornetHive::update_movement()
 	switch (hornet_state)
 	{
 
-	case HORNET_HIVE_STATE::IDLE:
+	case ENEMY_STATE::IDLE:
 	{
 
-		animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
+		animation_state = ENEMY_ANIMATION_STATE::ENEMY_IDLE;
 
 		break;
 	}
 
-	case HORNET_HIVE_STATE::TAKING_DAMAGE:
+	case ENEMY_STATE::TAKING_DAMAGE:
 	{
 
-		animation_state = ENEMY_ANIMATION_STATES::ENEMY_TAKING_DAMAGE;
+		animation_state = ENEMY_ANIMATION_STATE::ENEMY_TAKING_DAMAGE;
 		reset_Timer();
 		displacement.x = 0.f;
 		displacement.y = 0.f;
 		if (HP <= 0)
 		{
 			hp_damage_i = HP;
-			hornet_state = HORNET_HIVE_STATE::DEATH;
+			hornet_state = ENEMY_STATE::DEATH;
 			break;
 		}
 		if (hp_damage_i > HP)
@@ -100,20 +100,20 @@ void HornetHive::update_movement()
 		}
 		if (HORNET_TAKING_DAMAGE_TIMER.getElapsedTime().asSeconds() >= 1.0f)
 		{
-			hornet_state = HORNET_HIVE_STATE::IDLE;
+			hornet_state = ENEMY_STATE::IDLE;
 		}
 
 		break;
 	}
 
 
-	case HORNET_HIVE_STATE::DEATH:
+	case ENEMY_STATE::DEATH:
 	{
 
 
 		reset_Timer();
 
-		animation_state = ENEMY_ANIMATION_STATES::ENEMY_DEATH;
+		animation_state = ENEMY_ANIMATION_STATE::ENEMY_DEATH;
 
 		break;
 
@@ -124,7 +124,7 @@ void HornetHive::update_movement()
 void HornetHive::update_animation()
 {
 
-	if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_IDLE)
+	if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_IDLE)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.03f || get_animation_switch())
 		{
@@ -139,7 +139,7 @@ void HornetHive::update_animation()
 		}
 	}
 
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_DEATH)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_DEATH)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.3f || get_animation_switch())
 		{
@@ -158,7 +158,7 @@ void HornetHive::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_TAKING_DAMAGE)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_TAKING_DAMAGE)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
@@ -232,7 +232,7 @@ void HornetHive::reset_attention()
 
 void HornetHive::changeHP(short i)
 {
-	if(hornet_state!=HORNET_HIVE_STATE::TAKING_DAMAGE && hornet_state!=HORNET_HIVE_STATE::DEATH)Enemy::changeHP(i);
+	if(hornet_state!=ENEMY_STATE::TAKING_DAMAGE && hornet_state!=ENEMY_STATE::DEATH)Enemy::changeHP(i);
 }
 
 void HornetHive::update_physics()

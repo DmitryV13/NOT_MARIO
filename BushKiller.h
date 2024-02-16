@@ -1,24 +1,11 @@
 #pragma once
 #include "Enemy.h"
 
-enum class BUSH_KILLER_STATE
-{
-	SLEEP,
-	MOVING,
-	SHOT,
-	PUNCH,
-	DEATH,
-	TAKING_DAMAGE,
-	IDLE,
-	AWAKENING
-};
-
-
 
 class BushKiller: public Enemy
 {
-	BUSH_KILLER_STATE bush_state;
-	BUSH_KILLER_STATE bush_state_past;
+	ENEMY_STATE bush_state;
+	ENEMY_STATE bush_state_past;
 	Texture bush_killer_t_;
 	Clock BUSH_TAKING_DAMAGE_TIMER;
 	Clock Shot_timer;

@@ -9,7 +9,7 @@
 #include "Chest.h"
 #include "Switch.h"
 #include "WarehouseItem.h"
-
+#include "TextureManager.h"
 
 
 class TileMap {
@@ -51,9 +51,9 @@ private:
 	void init_switch(short int level);
 	void init_chest(short int level);
 
-	void init_tile_list();
-	void init_tile_list_back();
-	void init_tile_list_front();
+	void init_tile_list(TextureManager* t_manager);
+	void init_tile_list_back(TextureManager* t_manager);
+	void init_tile_list_front(TextureManager* t_manager);
 
 	Tile* give_tile(char letter);
 	Tile* give_tile_back(char letter);
@@ -62,7 +62,7 @@ private:
 	void first_renderObject(sf::RenderTarget& target);
 
 public:
-	TileMap(short level);
+	TileMap(short level, TextureManager* t_manager);
 	~TileMap();
 	void free_memory();
 

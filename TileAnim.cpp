@@ -9,8 +9,8 @@ TileAnim::TileAnim() : Tile()
 
 }
 
-TileAnim::TileAnim(std::string Name, short int inter, float texture_size_w, float texture_size_h, char ass, short int anim_f, short int anim_q, float time)
-    : Tile(Name, inter, texture_size_w, texture_size_h, ass)
+TileAnim::TileAnim(std::string Name, short int inter, float texture_size_w, float texture_size_h, char ass, short int anim_f, short int anim_q, float time, TextureManager* t_manager)
+    : Tile(Name, inter, texture_size_w, texture_size_h, ass, t_manager)
 {
     this->animation_factor = anim_f;
     this->animation_quantity = anim_q;

@@ -1,24 +1,11 @@
 #pragma once
 #include "Enemy.h"
 
-enum class KUSAKA_STATE
-{
-	KUSAKA_IDLE = 0,
-	KUSAKA_MOVING,
-	KUSAKA_JUMPING,
-	KUSAKA_SHOT,
-	KUSAKA_DEATH,
-	KUSAKA_TAKING_DAMAGE,
-	KUSAKA_SLEEP,
-	KUSAKA_RUN,
-	KUSAKA_ATTACKING
-};
-
 class kusaka : public Enemy
 {
 public:
-	KUSAKA_STATE kusaka_state;
-	KUSAKA_STATE kusaka_state_past;
+	ENEMY_STATE kusaka_state;
+	ENEMY_STATE kusaka_state_past;
 
 	Clock IDLE_timer;
 	Clock DEATH_timer;

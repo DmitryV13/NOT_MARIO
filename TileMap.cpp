@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #include "TileMap.h"
 
-TileMap::TileMap(short level) : sizeTexture(64), mapH(50), mapW(100)
+TileMap::TileMap(short level, TextureManager* t_manager) : sizeTexture(64), mapH(50), mapW(100)
 {
 	init_background();
-	init_tile_list();
-	init_tile_list_back();
-	init_tile_list_front();
+	init_tile_list(t_manager);
+	init_tile_list_back(t_manager);
+	init_tile_list_front(t_manager);
 	init_tilemap(mapH, mapW);
 	init_level(level);
 	init_objects(level);
@@ -332,69 +332,69 @@ void TileMap::init_chest(short int level)
 	fin.close();
 }
 
-void TileMap::init_tile_list()
+void TileMap::init_tile_list(TextureManager* t_manager)
 {
 	//Основные блоки
-	tile_list['A'] = new Tile("grass_tile", 1, sizeTexture, sizeTexture, 'A');
-	tile_list['C'] = new Tile("grass_tile_on_the_left", 1, sizeTexture, sizeTexture, 'C');
-	tile_list['D'] = new Tile("grass_tile_on_the_right", 1, sizeTexture, sizeTexture, 'D');
-	tile_list['L'] = new Tile("grass_tile_in_corner_left", 1, sizeTexture, sizeTexture, 'L');
-	tile_list['P'] = new Tile("grass_tile_in_corner_right", 1, sizeTexture, sizeTexture, 'P');
-	tile_list['B'] = new Tile("earth", 1, sizeTexture, sizeTexture, 'B');
-	tile_list['S'] = new Tile("sand", 1, sizeTexture, sizeTexture, 'S');
-	tile_list['G'] = new Tile("gravel", 1, sizeTexture, sizeTexture, 'G');
-	tile_list['l'] = new Tile("ground8", 1, sizeTexture, sizeTexture, 'l');
-	tile_list['r'] = new Tile("ground7", 1, sizeTexture, sizeTexture, 'r');
-	tile_list['W'] = new TileAnim("water_top_layer", 2, sizeTexture, sizeTexture, 'W', 64, 4, 0.5);
-	tile_list['w'] = new TileAnim("water_down_layer", 2, sizeTexture, sizeTexture, 'w', 64, 4, 0.5);
+	tile_list['A'] = new Tile("grass_tile", 1, sizeTexture, sizeTexture, 'A', t_manager);
+	tile_list['C'] = new Tile("grass_tile_on_the_left", 1, sizeTexture, sizeTexture, 'C', t_manager);
+	tile_list['D'] = new Tile("grass_tile_on_the_right", 1, sizeTexture, sizeTexture, 'D', t_manager);
+	tile_list['L'] = new Tile("grass_tile_in_corner_left", 1, sizeTexture, sizeTexture, 'L', t_manager);
+	tile_list['P'] = new Tile("grass_tile_in_corner_right", 1, sizeTexture, sizeTexture, 'P', t_manager);
+	tile_list['B'] = new Tile("earth", 1, sizeTexture, sizeTexture, 'B', t_manager);
+	tile_list['S'] = new Tile("sand", 1, sizeTexture, sizeTexture, 'S', t_manager);
+	tile_list['G'] = new Tile("gravel", 1, sizeTexture, sizeTexture, 'G', t_manager);
+	tile_list['l'] = new Tile("ground8", 1, sizeTexture, sizeTexture, 'l', t_manager);
+	tile_list['r'] = new Tile("ground7", 1, sizeTexture, sizeTexture, 'r', t_manager);
+	tile_list['W'] = new TileAnim("water_top_layer", 2, sizeTexture, sizeTexture, 'W', 64, 4, 0.5, t_manager);
+	tile_list['w'] = new TileAnim("water_down_layer", 2, sizeTexture, sizeTexture, 'w', 64, 4, 0.5, t_manager);
 	tile_list['`'] = new Tile();
 
 	//Функциональные и декоративыне блоки.
-	tile_list['^'] = new Tile("ladder1", 0, sizeTexture, sizeTexture, '.');
-	tile_list['_'] = new Tile("ladder2", 0, sizeTexture, sizeTexture, '_');
-	tile_list['-'] = new Tile("ladder3", 0, sizeTexture, sizeTexture, '-');
-	tile_list['='] = new Tile("ladder4", 0, sizeTexture, sizeTexture, '=');
-	tile_list['+'] = new Tile("ladder5", 0, sizeTexture, sizeTexture, '+');
-	tile_list['>'] = new Tile("directionSign1", 0, sizeTexture, sizeTexture, '>');
-	tile_list['<'] = new Tile("directionSign2", 0, sizeTexture, sizeTexture, '<');
-	tile_list['b'] = new Tile("box", 1, sizeTexture, sizeTexture, 'b');
-	tile_list['1'] = new Tile("tree1", 0, 192, 256, '1');
-	tile_list['2'] = new Tile("tree2", 0, 128, 256, '2');
-	tile_list['3'] = new Tile("tree3", 0, 128, 256, '3');
-	tile_list['4'] = new Tile("tree4", 0, 128, 192, '4');
-	tile_list['5'] = new Tile("cactus1", 0, sizeTexture, sizeTexture, '5');
-	tile_list['6'] = new Tile("cactus2", 0, sizeTexture, sizeTexture, '6');
+	tile_list['^'] = new Tile("ladder1", 0, sizeTexture, sizeTexture, '.', t_manager);
+	tile_list['_'] = new Tile("ladder2", 0, sizeTexture, sizeTexture, '_', t_manager);
+	tile_list['-'] = new Tile("ladder3", 0, sizeTexture, sizeTexture, '-', t_manager);
+	tile_list['='] = new Tile("ladder4", 0, sizeTexture, sizeTexture, '=', t_manager);
+	tile_list['+'] = new Tile("ladder5", 0, sizeTexture, sizeTexture, '+', t_manager);
+	tile_list['>'] = new Tile("directionSign1", 0, sizeTexture, sizeTexture, '>', t_manager);
+	tile_list['<'] = new Tile("directionSign2", 0, sizeTexture, sizeTexture, '<', t_manager);
+	tile_list['b'] = new Tile("box", 1, sizeTexture, sizeTexture, 'b', t_manager);
+	tile_list['1'] = new Tile("tree1", 0, 192, 256, '1', t_manager);
+	tile_list['2'] = new Tile("tree2", 0, 128, 256, '2', t_manager);
+	tile_list['3'] = new Tile("tree3", 0, 128, 256, '3', t_manager);
+	tile_list['4'] = new Tile("tree4", 0, 128, 192, '4', t_manager);
+	tile_list['5'] = new Tile("cactus1", 0, sizeTexture, sizeTexture, '5', t_manager);
+	tile_list['6'] = new Tile("cactus2", 0, sizeTexture, sizeTexture, '6', t_manager);
 
 
 	//Анимированные блоки
-	tile_list['s'] = new TileAnim("spikes", 1, sizeTexture, sizeTexture, 's', 64, 3, 0.1);
-	tile_list['m'] = new TileAnim("magma", 1, sizeTexture, sizeTexture, 'm', 64, 2, 0.5);
-	tile_list['@'] = new TileAnim("health_potion", 0, 19, 39, '@', 19, 5, 0.3);
+	tile_list['s'] = new TileAnim("spikes", 1, sizeTexture, sizeTexture, 's', 64, 3, 0.1, t_manager);
+	tile_list['m'] = new TileAnim("magma", 1, sizeTexture, sizeTexture, 'm', 64, 2, 0.5, t_manager);
+	tile_list['@'] = new TileAnim("health_potion", 0, 19, 39, '@', 19, 5, 0.3, t_manager);
 }
 
-void TileMap::init_tile_list_back()
+void TileMap::init_tile_list_back(TextureManager* t_manager)
 {
 	//Блоки заднего фона, отображаемые при разрушение блока, либо расположенные разработчиком в местах где они необходимы(пещеры, ямы и другое)
-	tile_list_back['A'] = new Tile("grass_tile_back", 0, sizeTexture, sizeTexture, 'A');
-	tile_list_back['C'] = new Tile("grass_tile_on_the_left_back", 0, sizeTexture, sizeTexture, 'C');
-	tile_list_back['D'] = new Tile("grass_tile_on_the_right_back", 0, sizeTexture, sizeTexture, 'D');
-	tile_list_back['L'] = new Tile("grass_tile_in_corner_left_back", 0, sizeTexture, sizeTexture, 'L');
-	tile_list_back['P'] = new Tile("grass_tile_in_corner_right_back", 0, sizeTexture, sizeTexture, 'P');
-	tile_list_back['B'] = new Tile("earth_back", 0, sizeTexture, sizeTexture, 'B');
-	tile_list_back['S'] = new Tile("sand_back", 0, sizeTexture, sizeTexture, 'S');
-	tile_list_back['G'] = new Tile("gravel_back", 0, sizeTexture, sizeTexture, 'G');
-	tile_list_back['l'] = new Tile("ground8_back", 0, sizeTexture, sizeTexture, 'l');
-	tile_list_back['r'] = new Tile("ground7_back", 0, sizeTexture, sizeTexture, 'r');
-	tile_list_back['W'] = new TileAnim("water_top_layer", 2, sizeTexture, sizeTexture, 'W', 64, 4, 0.5);
-	tile_list_back['w'] = new TileAnim("water_down_layer", 2, sizeTexture, sizeTexture, 'w', 64, 4, 0.5);
+	tile_list_back['A'] = new Tile("grass_tile_back", 0, sizeTexture, sizeTexture, 'A', t_manager);
+	tile_list_back['C'] = new Tile("grass_tile_on_the_left_back", 0, sizeTexture, sizeTexture, 'C', t_manager);
+	tile_list_back['D'] = new Tile("grass_tile_on_the_right_back", 0, sizeTexture, sizeTexture, 'D', t_manager);
+	tile_list_back['L'] = new Tile("grass_tile_in_corner_left_back", 0, sizeTexture, sizeTexture, 'L', t_manager);
+	tile_list_back['P'] = new Tile("grass_tile_in_corner_right_back", 0, sizeTexture, sizeTexture, 'P', t_manager);
+	tile_list_back['B'] = new Tile("earth_back", 0, sizeTexture, sizeTexture, 'B', t_manager);
+	tile_list_back['S'] = new Tile("sand_back", 0, sizeTexture, sizeTexture, 'S', t_manager);
+	tile_list_back['G'] = new Tile("gravel_back", 0, sizeTexture, sizeTexture, 'G', t_manager);
+	tile_list_back['l'] = new Tile("ground8_back", 0, sizeTexture, sizeTexture, 'l', t_manager);
+	tile_list_back['r'] = new Tile("ground7_back", 0, sizeTexture, sizeTexture, 'r', t_manager);
+	tile_list_back['W'] = new TileAnim("water_top_layer", 2, sizeTexture, sizeTexture, 'W', 64, 4, 0.5, t_manager);
+	tile_list_back['w'] = new TileAnim("water_down_layer", 2, sizeTexture, sizeTexture, 'w', 64, 4, 0.5, t_manager);
 }
 
-void TileMap::init_tile_list_front()
+void TileMap::init_tile_list_front(TextureManager* t_manager)
 {
 	//Блоки переднего плана, служащие фильтром для погружения игрока в различные структуры на карте(вода, лава и другое)
-	tile_list_front['w'] = new TileAnim("water_down_layer_back", 2, sizeTexture, sizeTexture, 'w', 64, 4, 0.5);
-	tile_list_front['W'] = new TileAnim("water_top_layer_back", 2, sizeTexture, sizeTexture, 'W', 64, 4, 0.5);
-	tile_list_front['o'] = new Tile("bush", 0, sizeTexture, sizeTexture, 'o');
+	tile_list_front['w'] = new TileAnim("water_down_layer_back", 2, sizeTexture, sizeTexture, 'w', 64, 4, 0.5, t_manager);
+	tile_list_front['W'] = new TileAnim("water_top_layer_back", 2, sizeTexture, sizeTexture, 'W', 64, 4, 0.5, t_manager);
+	tile_list_front['o'] = new Tile("bush", 0, sizeTexture, sizeTexture, 'o', t_manager);
 }
 
 Tile* TileMap::give_tile(char letter)

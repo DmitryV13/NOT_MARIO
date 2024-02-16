@@ -216,6 +216,8 @@
     <ClInclude Include="BushKiller.h" />
     <ClInclude Include="CheckboxItem.h" />
     <ClInclude Include="Chest.h" />
+    <ClInclude Include="ENEMY_ANIMATION_STATE.h" />
+    <ClInclude Include="ENEMY_STATE.h" />
     <ClInclude Include="Form.h" />
     <ClInclude Include="FormItem.h" />
     <ClInclude Include="FORM_ITEM_STATE.h" />

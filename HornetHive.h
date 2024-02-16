@@ -9,20 +9,12 @@ using sf::Texture;
 using sf::IntRect;
 using sf::Clock;
 
-enum class HORNET_HIVE_STATE
-{
-	IDLE = 0,
-	DEATH,
-	TAKING_DAMAGE
-};
-
-
 class HornetHive:public Enemy
 {
 private:
 	Texture HornetHive_t_;
 
-	HORNET_HIVE_STATE hornet_hive_state_past;
+	ENEMY_STATE hornet_hive_state_past;
 	Clock HORNET_TAKING_DAMAGE_TIMER;
 	GeneralInfo* player_info_;
 
@@ -33,7 +25,7 @@ private:
 
 public:
 	Clock DEATH_timer;
-	HORNET_HIVE_STATE hornet_state;
+	ENEMY_STATE hornet_state;
 	short cout_hornet{ 3 };
 	bool HIVE_LIFE() const;
 	void set_position_AR(const float x, const float y);

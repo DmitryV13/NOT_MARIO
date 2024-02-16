@@ -138,13 +138,13 @@
 
     void Player::jump(const float dir_y) {
         if (onGround) {
-            animationState = PLAYER_ANIMATION_STATES::JUMPING;
+            animationState = PLAYER_ANIMATION_STATES::P_JUMPING;
             onGround = false;
             isJumping = true;
             jumpCount++;
             jumpVelocity = 7.f;
         } else if (isJumping && jumpCount < jumpLimit && spaceRealeased) {
-            animationState = PLAYER_ANIMATION_STATES::JUMPING;
+            animationState = PLAYER_ANIMATION_STATES::P_JUMPING;
             spaceRealeased = false;
             jumpCount++;
             jumpVelocity = 7.f;

@@ -11,7 +11,7 @@ EyeEvil::EyeEvil(TileMap& map, GeneralInfo* player_info,short regime)
 		EyeEvil::setAt(20);
 		EyeEvil::setHP(1000);
 		hp_damage_i = HP;
-		eye_state = eye_state_past = EYE_EVIL_STATE::IDLE;
+		eye_state = eye_state_past = ENEMY_STATE::IDLE;
 		IDLE_timer.restart();
 		ATTACKING_timer.restart();
 		DEATH_timer.restart();
@@ -27,7 +27,7 @@ EyeEvil::EyeEvil(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos
 		EyeEvil::setAt(20);
 		EyeEvil::setHP(1000);
 		hp_damage_i = HP;
-		eye_state = eye_state_past = EYE_EVIL_STATE::IDLE;
+		eye_state = eye_state_past = ENEMY_STATE::IDLE;
 		IDLE_timer.restart();
 		ATTACKING_timer.restart();
 		DEATH_timer.restart();
@@ -67,7 +67,7 @@ void EyeEvil::reset_Timer()
 
 void EyeEvil::changeHP(short i)
 {
-	if(eye_state != EYE_EVIL_STATE::TAKING_DAMAGE && eye_state != EYE_EVIL_STATE::DEATH)Enemy::changeHP(i);
+	if(eye_state != ENEMY_STATE::TAKING_DAMAGE && eye_state != ENEMY_STATE::DEATH)Enemy::changeHP(i);
 }
 
 void EyeEvil::updateHP_bar()
@@ -78,41 +78,41 @@ void EyeEvil::updateHP_bar()
 
 void EyeEvil::update_movement()
 {
-	if (HP <= 0)eye_state = EYE_EVIL_STATE::DEATH;
-	if (hp_damage_i > HP && eye_state != EYE_EVIL_STATE::DEATH)
+	if (HP <= 0)eye_state = ENEMY_STATE::DEATH;
+	if (hp_damage_i > HP && eye_state != ENEMY_STATE::DEATH)
 	{
-		eye_state = EYE_EVIL_STATE::TAKING_DAMAGE;
+		eye_state = ENEMY_STATE::TAKING_DAMAGE;
 	}
 	if (!search_for_enemies())clear_shot();
 	switch (eye_state)
 	{
-	case EYE_EVIL_STATE::IDLE:
+	case ENEMY_STATE::IDLE:
 		{
 			if (search_for_enemies() && ATTACKING_timer.getElapsedTime().asSeconds() >= 6.1f)
 				eye_state =
-					EYE_EVIL_STATE::ATTACKING;
+					ENEMY_STATE::ATTACKING;
 			reset_Timer();
 			if (hit_a_wall() && update_collision_x_jump())
 				{
 					jump_flag = true;
-					eye_state = EYE_EVIL_STATE::JUMPING;
-					//animation_state = ENEMY_ANIMATION_STATES::ENEMY_JUMPING;
+					eye_state = ENEMY_STATE::E_JUMPING;
+					//animation_state = ENEMY_ANIMATION_STATE::ENEMY_JUMPING;
 				break;
 				}
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_IDLE;
 			if (IDLE_timer.getElapsedTime().asSeconds() >= 1.5f)
 			{
 				
 				 if (hit_a_wall())
 				{
-					eye_state = EYE_EVIL_STATE::MOVING;
+					eye_state = ENEMY_STATE::MOVING;
 
 					moving *= -1.f;
-					animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;
+					animation_state = ENEMY_ANIMATION_STATE::ENEMY_MOVING;
 				}
 				else
 				{
-					eye_state = EYE_EVIL_STATE::MOVING;
+					eye_state = ENEMY_STATE::MOVING;
 				}
 
 
@@ -123,13 +123,13 @@ void EyeEvil::update_movement()
 				displacement.x = 0;
 				displacement_max = 1.f;
 			}
-			//animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
+			//animation_state = ENEMY_ANIMATION_STATE::ENEMY_IDLE;
 
 			break;
 		}
-	case EYE_EVIL_STATE::JUMPING:
+	case ENEMY_STATE::E_JUMPING:
 		{
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_JUMPING;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_JUMPING;
 			eye_state_past = eye_state;
 			if (on_ground && jump_flag)
 			{
@@ -140,37 +140,37 @@ void EyeEvil::update_movement()
 			else if (!canJumpForward() || canMoveForward())
 			{
 				jump_flag = false;
-				eye_state = EYE_EVIL_STATE::IDLE;
+				eye_state = ENEMY_STATE::IDLE;
 			}
 			walk(moving);
 
 
 			break;
 		}
-	case EYE_EVIL_STATE::MOVING:
+	case ENEMY_STATE::MOVING:
 		{
 			eye_state_past = eye_state;
 			if (search_for_enemies())
 			{
-				eye_state = EYE_EVIL_STATE::ATTACKING;
+				eye_state = ENEMY_STATE::ATTACKING;
 				reset_Timer();
 			}
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_MOVING;
 			if (hit_a_wall())
 			{
 				if (canJumpForward())
 				{
 					jump_flag = true;
-					eye_state = EYE_EVIL_STATE::JUMPING;
+					eye_state = ENEMY_STATE::E_JUMPING;
 				}
 				else moving *= -1.f;
 			}
 			walk(moving);
 			break;
 		}
-	case EYE_EVIL_STATE::ATTACKING:
+	case ENEMY_STATE::ATTACKING:
 		{
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_ATTENTION;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_ATTENTION;
 
 
 			if (search_for_enemies() && ATTACKING_timer.getElapsedTime().asSeconds() <= 5.1f)
@@ -182,23 +182,23 @@ void EyeEvil::update_movement()
 				reset_attention();
 				clear_shot();
 				reset_Timer();
-				eye_state = EYE_EVIL_STATE::IDLE;
+				eye_state = ENEMY_STATE::IDLE;
 			}
 			break;
 		}
-	case EYE_EVIL_STATE::DEATH:
+	case ENEMY_STATE::DEATH:
 		{
 			displacement.x = 0;
 			reset_Timer();
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_DEATH;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_DEATH;
 			break;
 		}
-	case EYE_EVIL_STATE::TAKING_DAMAGE:
+	case ENEMY_STATE::TAKING_DAMAGE:
 		{
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_TAKING_DAMAGE;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_TAKING_DAMAGE;
 			if (HP <= 0)
 			{
-				eye_state = EYE_EVIL_STATE::DEATH;
+				eye_state = ENEMY_STATE::DEATH;
 				break;
 			}
 
@@ -208,7 +208,7 @@ void EyeEvil::update_movement()
 			}
 			else
 			{
-				eye_state = EYE_EVIL_STATE::IDLE;
+				eye_state = ENEMY_STATE::IDLE;
 			}
 
 			break;
@@ -216,8 +216,8 @@ void EyeEvil::update_movement()
 
 	default:
 		{
-			animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
-			eye_state = EYE_EVIL_STATE::IDLE;
+			animation_state = ENEMY_ANIMATION_STATE::ENEMY_IDLE;
+			eye_state = ENEMY_STATE::IDLE;
 		}
 	}
 	//decision explorer
@@ -275,11 +275,11 @@ void EyeEvil::update_movement()
 void EyeEvil::walk(const float dir_x)
 {
 	//movement on the ground
-	if (on_ground && eye_state != EYE_EVIL_STATE::IDLE)
+	if (on_ground && eye_state != ENEMY_STATE::IDLE)
 	{
 		displacement.x += dir_x * acceleration;
 	}
-	if (eye_state == EYE_EVIL_STATE::JUMPING)
+	if (eye_state == ENEMY_STATE::E_JUMPING)
 	{
 		displacement_max = 2.2f;
 		displacement.x = 2 * moving * displacement_max;
@@ -291,14 +291,14 @@ void EyeEvil::walk(const float dir_x)
 	{
 		displacement.x = displacement_max * ((displacement.x > 0.f) ? 1.f : -1.f);
 	}
-	if (animation_counter_think > 2 && animation_state != ENEMY_ANIMATION_STATES::ENEMY_ATTENTION)
+	if (animation_counter_think > 2 && animation_state != ENEMY_ANIMATION_STATE::ENEMY_ATTENTION)
 	{
 		displacement.x = 0;
-		animation_state = ENEMY_ANIMATION_STATES::ENEMY_IDLE;
+		animation_state = ENEMY_ANIMATION_STATE::ENEMY_IDLE;
 	}
-	else if (displacement.y >= gravity)animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING_DOWN;
-	else if (jump_tile)animation_state = ENEMY_ANIMATION_STATES::ENEMY_JUMPING;
-	else animation_state = ENEMY_ANIMATION_STATES::ENEMY_MOVING;*/
+	else if (displacement.y >= gravity)animation_state = ENEMY_ANIMATION_STATE::ENEMY_MOVING_DOWN;
+	else if (jump_tile)animation_state = ENEMY_ANIMATION_STATE::ENEMY_JUMPING;
+	else animation_state = ENEMY_ANIMATION_STATE::ENEMY_MOVING;*/
 
 
 	//logic when exposing a player
@@ -306,7 +306,7 @@ void EyeEvil::walk(const float dir_x)
 
 void EyeEvil::update_animation()
 {
-	if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_MOVING)
+	if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_MOVING)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
@@ -335,7 +335,7 @@ void EyeEvil::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_IDLE)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_IDLE)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
@@ -366,7 +366,7 @@ void EyeEvil::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_ATTENTION)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_ATTENTION)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
@@ -406,7 +406,7 @@ void EyeEvil::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_JUMPING)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_JUMPING)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
@@ -437,7 +437,7 @@ void EyeEvil::update_animation()
 		}
 	}
 
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_MOVING_DOWN)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_MOVING_DOWN)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
@@ -467,7 +467,7 @@ void EyeEvil::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_DEATH)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_DEATH)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
@@ -503,7 +503,7 @@ void EyeEvil::update_animation()
 			animation_timer.restart();
 		}
 	}
-	else if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_TAKING_DAMAGE)
+	else if (animation_state == ENEMY_ANIMATION_STATE::ENEMY_TAKING_DAMAGE)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.05f || get_animation_switch())
 		{
@@ -587,8 +587,8 @@ void EyeEvil::shot()
 
 void EyeEvil::attack()
 {
-	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
-	if ((playerSide == PL_SIDE::LEFT && looks_to_the_left) || (playerSide == PL_SIDE::RIGHT && looks_to_the_right))
+	ORIENTATION playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
+	if ((playerSide == ORIENTATION::LEFT && looks_to_the_left) || (playerSide == ORIENTATION::RIGHT && looks_to_the_right))
 	{
 		if (attention_counter == 1)
 		{
@@ -596,7 +596,7 @@ void EyeEvil::attack()
 			shot();
 		}
 
-		animation_state = ENEMY_ANIMATION_STATES::ENEMY_ATTENTION;
+		animation_state = ENEMY_ANIMATION_STATE::ENEMY_ATTENTION;
 
 		if (laser_existence())
 		{
@@ -644,12 +644,12 @@ bool EyeEvil::search_for_enemies()
 {
 	FloatRect en = observation_area.getGlobalBounds();
 	FloatRect pl = player_info->getGlobalBounds();
-	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
-	if (playerSide == PL_SIDE::RIGHT && looks_to_the_right)
+	ORIENTATION playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
+	if (playerSide == ORIENTATION::RIGHT && looks_to_the_right)
 	{
 		return en.intersects(pl);
 	}
-	else if (playerSide == PL_SIDE::LEFT && looks_to_the_left)
+	else if (playerSide == ORIENTATION::LEFT && looks_to_the_left)
 	{
 		return en.intersects(pl);
 	}
