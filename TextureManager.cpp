@@ -34,6 +34,9 @@
 		if (!textures[0]["Arrow1"].loadFromFile("Textures/Weapons/arrow1.png")) {
 			std::cout << "Error -> TextureManager -> couldn't load Arrow1 texture" << std::endl;
 		}
+		if (!textures[0]["projectile1"].loadFromFile("Textures/Weapons/projectile1.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load projectile1 texture" << std::endl;
+		}
 		if (!textures[0]["RedScaleBar"].loadFromFile("Textures/GUI/scales/redScale.png")) {
 			std::cout << "Error -> TextureManager -> couldn't load RedScaleBar texture" << std::endl;
 		}
@@ -252,6 +255,24 @@
 		}
 		if (!textures[6]["bush"].loadFromFile("Textures/Textures_map/bush.png")) {
 			std::cout << "Error -> TextureManager -> couldn't bush texture" << std::endl;
+		}
+
+		//weapons
+		textures.push_back(unordered_map<string, Texture>());
+		if (!textures[7]["sword1"].loadFromFile("Textures/Weapons/sword1.png")) {
+			std::cout << "Error -> TextureManager -> couldn't sword1 texture" << std::endl;
+		}
+		if (!textures[7]["staff1"].loadFromFile("Textures/Weapons/staff1.png")) {
+			std::cout << "Error -> TextureManager -> couldn't staff1 texture" << std::endl;
+		}
+		if (!textures[7]["bow1"].loadFromFile("Textures/Weapons/bow1.png")) {
+			std::cout << "Error -> TextureManager -> couldn't bow1 texture" << std::endl;
+		}
+
+		//enemies
+		textures.push_back(unordered_map<string, Texture>());
+		if (!textures[8]["bush_killer"].loadFromFile("Textures/Enemies/bush_killer.png")) {
+			std::cout << "Error -> TextureManager -> couldn't bush_killer texture" << std::endl;
 		}
 	}
 

@@ -2,21 +2,16 @@
 #include "CombatStaff.h"
 
     CombatStaff::CombatStaff(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_, 
-        const vector<vector<Enemy*>*>& enemies_, GeneralInfo* p_info_)
-        :enemies(enemies_), sandbox(sandbox_), p_info(p_info_) {
-        initTexture();
-        initSprite(player_position, player_bounds);
+        const vector<vector<Enemy*>*>& enemies_, GeneralInfo* p_info_, TextureManager* t_manager_, int index, 
+        string name)
+        :enemies(enemies_), sandbox(sandbox_), p_info(p_info_), t_manager(t_manager_) {
+        initSprite(player_position, player_bounds, index, name);
         initVariables();
     }
-
-    void CombatStaff::initTexture(){
-        if (!staff_T.loadFromFile("Textures/Weapons/staff1.png")) {
-            std::cout << "Error -> Sword -> couldn't load staff texture" << std::endl;
-        }
-    }
     
-    void CombatStaff::initSprite(Vector2f player_position, FloatRect player_bounds){
-        staff_S.setTexture(staff_T);
+    void CombatStaff::initSprite(Vector2f player_position, FloatRect player_bounds, 
+        int index, string name){
+        staff_S.setTexture(t_manager->getTexture(index, name));
         currentFrame = IntRect(0, 0, 18, 71);
         staff_S.setTextureRect(currentFrame);
         staff_S.setOrigin(6, 42);
@@ -135,7 +130,7 @@
                     projectiles.push_back(new Projectile(staff_S.getPosition()
                         , Vector2f(mouse_pos.x + (view_cords.left - view_cords.width / 2)
                             , mouse_pos.y + (view_cords.top - view_cords.height / 2)), sandbox
-                        , enemies));
+                        , enemies, t_manager, 0, "projectile1"));
                     p_info->setManaUtilisation(true);
                 }
             }

@@ -13,10 +13,10 @@ using namespace::sf;
 
 class CombatStaff : public Weapon{
 private:
+	TextureManager* t_manager;
 	GeneralInfo* p_info;
 	TileMap* sandbox;
 
-	Texture staff_T;
 	Sprite staff_S;
 
 	vector<vector<Enemy*>*> enemies;
@@ -33,14 +33,13 @@ private:
 	short side_of_attack;
 	short previous_side;
 
-	void initTexture();
-	void initSprite(Vector2f player_position, FloatRect player_bounds);
+	void initSprite(Vector2f player_position, FloatRect player_bounds, int index, string name);
 	void initVariables();
 	void initAnimation();
 
 public:
 	CombatStaff(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_,
-		const vector<vector<Enemy*>*>& enemies_, GeneralInfo* p_info_);
+		const vector<vector<Enemy*>*>& enemies_, GeneralInfo* p_info_, TextureManager* t_manager_, int index, string name);
 
 	void update(Vector2f player_position, short player_side, RenderWindow* window, FloatRect view_cords) override;
 	void updatePosition(Vector2f player_position, short player_side, RenderWindow* window, FloatRect view_cords);

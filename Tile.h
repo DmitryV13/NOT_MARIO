@@ -11,6 +11,7 @@ protected:
 	float texture_size_W;
 	float texture_size_H;
 	short int interaction;
+	float friction;///////////////////////////
 	char association;
 	bool player;
 

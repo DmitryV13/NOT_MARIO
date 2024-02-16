@@ -19,7 +19,6 @@ using namespace::sf;
 class Player{
 private:
     TileMap* sandbox;
-    Texture player_T;
     Sprite player_S;
 
     vector<Weapon*> weapons;
@@ -54,16 +53,15 @@ private:
     short movingDirection;
 
     void initVariables();
-    void initTexture();
-    void initSprite();
-    void initSprite(Vector2f position);
+    void initSprite(TextureManager* t_manager, int index, string name);
+    void initSprite(Vector2f position, TextureManager* t_manager, int index, string name);
     //void initWeapon();
     void initAnimation();
     void initPhysics();
 public:
-    Player(TileMap& map);
-    Player(TileMap& map, Vector2f position);
-    void initWeapon(const vector<vector<Enemy*>*>& enemies);
+    Player(TileMap& map, TextureManager* t_manager, int index, string name);
+    Player(TileMap& map, Vector2f position, TextureManager* t_manager, int index, string name);
+    void initWeapon(const vector<vector<Enemy*>*>& enemies, TextureManager* t_manager);
     IntRect get_pl_frame();
     // accessors
     const bool& getAnimationSwitch();

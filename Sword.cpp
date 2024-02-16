@@ -3,21 +3,14 @@
 
 
 
-    Sword::Sword(Vector2f player_position, FloatRect player_bounds, const vector<vector<Enemy*>*>& enemies_)
+    Sword::Sword(Vector2f player_position, FloatRect player_bounds, const vector<vector<Enemy*>*>& enemies_, TextureManager* t_manager, int index, string name)
     :enemies(enemies_) {
-        initTexture();
-        initSprite(player_position, player_bounds);
+        initSprite(player_position, player_bounds, t_manager, index, name);
         initVariables();
     }
     
-    void Sword::initTexture() {
-        if (!sword_T.loadFromFile("Textures/Weapons/sword1.png")) {
-            std::cout << "Error -> Sword -> couldn't load sword texture" << std::endl;
-        }
-    }
-    
-    void Sword::initSprite(Vector2f player_position, FloatRect player_bounds) {
-        sword_S.setTexture(sword_T);
+    void Sword::initSprite(Vector2f player_position, FloatRect player_bounds, TextureManager* t_manager, int index, string name) {
+        sword_S.setTexture(t_manager->getTexture(index, name));
         currentFrame = IntRect(0, 0, 92, 112);
         sword_S.setTextureRect(currentFrame);
         // 10 64 sword's grip

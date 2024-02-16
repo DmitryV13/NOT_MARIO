@@ -69,7 +69,7 @@ protected:
 	//virtual
 	virtual void init_physics();
 	virtual void init_texture() = 0;
-	virtual void init_sprite() = 0;
+	virtual void init_sprite(TextureManager* t_manager, int index, string name) = 0;
 
 public:
 	//Enemy

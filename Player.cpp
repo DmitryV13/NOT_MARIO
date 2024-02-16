@@ -1,21 +1,19 @@
 #include "stdafx.h"
 #include "Player.h"
 
-    Player::Player(TileMap& map){
+    Player::Player(TileMap& map, TextureManager* t_manager, int index, string name){
         sandbox = &map;
         initVariables();
-        initTexture();
-        initSprite();
+        initSprite(t_manager, index, name);
        // initWeapon();
         initAnimation();
         initPhysics();
     }
 
-    Player::Player(TileMap& map, Vector2f position){
+    Player::Player(TileMap& map, Vector2f position, TextureManager* t_manager, int index, string name){
         sandbox = &map;
         initVariables();
-        initTexture();
-        initSprite(position);
+        initSprite(position, t_manager, index, name);
         //initWeapon();
         initAnimation();
         initPhysics();
@@ -31,14 +29,8 @@
             chosen_weapon = 0;
         }
 
-    void Player::initTexture(){
-        if (!player_T.loadFromFile("Textures/Heroes/hero1.png")) {
-            std::cout << "Error -> Player -> couldn't load player texture" << std::endl;
-        }
-    }
-
-    void Player::initSprite(){
-        player_S.setTexture(player_T);
+    void Player::initSprite(TextureManager* t_manager, int index, string name){
+        player_S.setTexture(t_manager->getTexture(index, name));
         currentFrame = IntRect(2, 80, 48, 70);
         player_S.setTextureRect(currentFrame);
         //initial position
@@ -46,19 +38,19 @@
 
     }
 
-    void Player::initSprite(Vector2f position){
-        player_S.setTexture(player_T);
+    void Player::initSprite(Vector2f position, TextureManager* t_manager, int index, string name){
+        player_S.setTexture(t_manager->getTexture(index, name));
         currentFrame = IntRect(2, 80, 48, 70);
         player_S.setTextureRect(currentFrame);
         //initial position
         player_S.setPosition(position);
     }
 
-    void Player::initWeapon(const vector<vector<Enemy*>*>& enemies) {
+    void Player::initWeapon(const vector<vector<Enemy*>*>& enemies, TextureManager* t_manager) {
         weapons.push_back(new Fist());
-        weapons.push_back(new Bow(player_S.getPosition(), player_S.getGlobalBounds(), sandbox, enemies));
-        weapons.push_back(new Sword(player_S.getPosition(), player_S.getGlobalBounds(), enemies));
-        weapons.push_back(new CombatStaff(player_S.getPosition(), player_S.getGlobalBounds(), sandbox, enemies, info));
+        weapons.push_back(new Bow(player_S.getPosition(), player_S.getGlobalBounds(), sandbox, enemies, t_manager, 7, "bow1"));
+        weapons.push_back(new Sword(player_S.getPosition(), player_S.getGlobalBounds(), enemies, t_manager, 7, "sword1"));
+        weapons.push_back(new CombatStaff(player_S.getPosition(), player_S.getGlobalBounds(), sandbox, enemies, info, t_manager, 7, "staff1"));
     }
 
     void Player::initAnimation(){

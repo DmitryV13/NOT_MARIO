@@ -4,6 +4,7 @@
 
 class BushKiller: public Enemy
 {
+	TextureManager* t_manager;
 	ENEMY_STATE bush_state;
 	ENEMY_STATE bush_state_past;
 	Texture bush_killer_t_;
@@ -17,12 +18,14 @@ class BushKiller: public Enemy
 
 
 	void init_texture() override;
-	void init_sprite() override;
+	void init_sprite(TextureManager* t_manager_, int index, string name) override;
 	void init_physics() override;
 
 public:
-	explicit BushKiller(TileMap& map, GeneralInfo* player_info,short);
-	BushKiller(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y);
+	explicit BushKiller(TileMap& map, GeneralInfo* player_info, short, TextureManager* t_manager_, 
+		int index, string name);
+	BushKiller(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y, TextureManager* t_manager, 
+		int index, string name);
 
 	~BushKiller() override = default;
 	void update_movement() override;

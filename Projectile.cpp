@@ -1,22 +1,16 @@
 #include "stdafx.h"
 #include "Projectile.h"
 
-	Projectile::Projectile(Vector2f init_pos, Vector2f dest_pos_, TileMap* sandbox_, const vector<vector<Enemy*>*>& enemies_)
+	Projectile::Projectile(Vector2f init_pos, Vector2f dest_pos_, TileMap* sandbox_, 
+		const vector<vector<Enemy*>*>& enemies_, TextureManager* t_manager, int index, string name)
 		:enemies(enemies_), dest_pos(dest_pos_), speed(10), sandbox(sandbox_) {
 		//std::cout << init_pos.x << "  " << init_pos.y << std::endl;
-		initTexture();
-		initSprite(init_pos);
+		initSprite(init_pos, t_manager, index, name);
 		initVariables();
 	}
 	
-	void Projectile::initTexture(){
-		if (!projectile_T.loadFromFile("Textures/Weapons/projectile1.png")) {
-			std::cout << "Error -> Projectile -> couldn't load projectile texture" << std::endl;
-		}
-	}
-	
-	void Projectile::initSprite(Vector2f init_pos){
-		projectile_S.setTexture(projectile_T);
+	void Projectile::initSprite(Vector2f init_pos, TextureManager* t_manager, int index, string name){
+		projectile_S.setTexture(t_manager->getTexture(index, name));
 		projectile_S.setTextureRect(IntRect(0, 0, 18, 18));
 		projectile_S.setScale(2,2);
 		projectile_S.setOrigin(9,9);

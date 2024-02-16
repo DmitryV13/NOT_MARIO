@@ -24,3 +24,4 @@ using std::stack;
 #include <SFML/Window.hpp>
 
 #include "CRect.h"
+#include "TextureManager.h"

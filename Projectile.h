@@ -12,7 +12,6 @@ class Projectile{
 private:
 	TileMap* sandbox;
 
-	Texture projectile_T;
 	Sprite projectile_S;
 
 	vector<vector<Enemy*>*> enemies;
@@ -21,11 +20,11 @@ private:
 	Vector2f dest_pos;
 	Vector2f norm_s;
 
-	void initTexture();
-	void initSprite(Vector2f init_pos);
+	void initSprite(Vector2f init_pos, TextureManager* t_manager, int index, string name);
 	void initVariables();
 public:
-	Projectile(Vector2f init_pos, Vector2f dest_pos, TileMap* sandbox_, const vector<vector<Enemy*>*>& enemies_);
+	Projectile(Vector2f init_pos, Vector2f dest_pos, TileMap* sandbox_, const vector<vector<Enemy*>*>& enemies_, 
+		TextureManager* t_manager, int index, string name);
 
 	void update();
 	bool updateCollision();

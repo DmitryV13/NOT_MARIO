@@ -13,7 +13,6 @@ class Arrow{
 private:
 	TileMap* sandbox;
 
-	Texture arrow_T;
 	Sprite arrow_S;
 
 	vector<vector<Enemy*>*> enemies;
@@ -25,11 +24,11 @@ private:
 	Vector2f dest_pos;
 	Vector2f norm_s;
 
-	void initTexture();
-	void initSprite(Vector2f init_pos);
+	void initSprite(Vector2f init_pos, TextureManager* t_manager, int index, string name);
 	void initVariables();
 public:
-	Arrow(Vector2f init_pos, short side, TileMap* sanbox_, const vector<vector<Enemy*>*>& enemies_);
+	Arrow(Vector2f init_pos, short side, TileMap* sanbox_, const vector<vector<Enemy*>*>& enemies_, 
+		TextureManager* t_manager, int index, string name);
 
 	void update();
 	bool updateCollision();

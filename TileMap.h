@@ -32,6 +32,7 @@ private:
 
 	float coefficient_X;
 	float coefficient_Y;
+	float gravity;////////////////////////////
 
 	std::stack<std::pair<float, float>> enemy_position;
 	void init_pos_enemy();

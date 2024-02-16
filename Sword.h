@@ -11,7 +11,6 @@ using namespace::sf;
 
 class Sword : public Weapon{
 private:
-	Texture sword_T;
 	Sprite sword_S;
 	
 	vector<vector<Enemy*>*> enemies;
@@ -24,13 +23,12 @@ private:
 	short side_of_attack;
 	short previous_side;
 
-	void initTexture();
-	void initSprite(Vector2f player_position, FloatRect player_bounds);
+	void initSprite(Vector2f player_position, FloatRect player_bounds, TextureManager* t_manager, int index, string name);
 	void initVariables();
 	void initAnimation();
 
 public:
-	Sword(Vector2f player_position, FloatRect player_bounds, const vector<vector<Enemy*>*>& enemies_);
+	Sword(Vector2f player_position, FloatRect player_bounds, const vector<vector<Enemy*>*>& enemies_, TextureManager* t_manager, int index, string name);
 
 	void update(Vector2f player_position, short player_side, RenderWindow* window, FloatRect view_cords) override;
 	void updatePosition(Vector2f player_position, short player_side, RenderWindow* window, FloatRect view_cords);

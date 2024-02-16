@@ -1,21 +1,15 @@
 #include "stdafx.h"
 #include "Arrow.h"
 
-	Arrow::Arrow(Vector2f init_pos, short side_ ,TileMap* sandbox_, const vector<vector<Enemy*>*>& enemies_)
+	Arrow::Arrow(Vector2f init_pos, short side_ ,TileMap* sandbox_, const vector<vector<Enemy*>*>& enemies_, 
+		TextureManager* t_manager, int index, string name)
 		:enemies(enemies_), side(side_), speed(10), sandbox(sandbox_) {
-		initTexture();
-		initSprite(init_pos);
+		initSprite(init_pos, t_manager, index, name);
 		initVariables();
 	}
-
-	void Arrow::initTexture(){
-		if (!arrow_T.loadFromFile("Textures/Weapons/arrow1.png")) {
-			std::cout << "Error -> Arrow -> couldn't load arrow texture" << std::endl;
-		}
-	}
 	
-	void Arrow::initSprite(Vector2f init_pos){
-		arrow_S.setTexture(arrow_T);
+	void Arrow::initSprite(Vector2f init_pos, TextureManager* t_manager, int index, string name){
+		arrow_S.setTexture(t_manager->getTexture(index, name));
 		arrow_S.setTextureRect(IntRect(0, 0, 40, 5));
 		arrow_S.setOrigin(18, 2);
 		arrow_S.setScale(1.2, 1.2);

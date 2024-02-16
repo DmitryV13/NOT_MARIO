@@ -415,11 +415,11 @@
 	{
 		if (level < 4)
 		{
-			player = new Player(sandbox);
+			player = new Player(sandbox, t_manager, 4, "Hero1");
 		}
 		else
 		{
-			player = new Player(sandbox, Vector2f(150, 2600));
+			player = new Player(sandbox, Vector2f(150, 2600), t_manager, 4, "Hero1");
 		}
 	}
 	
@@ -809,7 +809,7 @@
 				reinterpret_cast<vector<Enemy*>*>(bush_killers_vector),
 				reinterpret_cast<vector<Enemy*>*>(hornet_vector),
 				reinterpret_cast<vector<Enemy*>*>(hornet_hives_vector)
-				}
+				}, t_manager
 			);
 		}
 		else 
@@ -821,7 +821,7 @@
 				reinterpret_cast<vector<Enemy*>*>(bush_killers_vector),
 				reinterpret_cast<vector<Enemy*>*>(hornet_vector),
 				reinterpret_cast<vector<Enemy*>*>(hornet_hives_vector)
-			}
+			}, t_manager
 		);
 	}
 	

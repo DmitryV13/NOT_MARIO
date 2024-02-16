@@ -1,21 +1,14 @@
 #include "stdafx.h"
 #include "Bow.h"
 
-	Bow::Bow(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_, const vector<vector<Enemy*>*>& enemies_)
-		:enemies(enemies_), sandbox(sandbox_) {
-		initTexture();
-		initSprite(player_position, player_bounds);
+	Bow::Bow(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_, const vector<vector<Enemy*>*>& enemies_, TextureManager* t_manager_, int index, string name)
+		:enemies(enemies_), sandbox(sandbox_), t_manager(t_manager_) {
+		initSprite(player_position, player_bounds, index, name);
 		initVariables();
 	}
-
-	void Bow::initTexture(){
-		if (!bow_T.loadFromFile("Textures/Weapons/bow1.png")) {
-			std::cout << "Error -> Bow -> couldn't load bow texture" << std::endl;
-		}
-	}
 	
-	void Bow::initSprite(Vector2f player_position, FloatRect player_bounds){
-		bow_S.setTexture(bow_T);
+	void Bow::initSprite(Vector2f player_position, FloatRect player_bounds, int index, string name){
+		bow_S.setTexture(t_manager->getTexture(index, name));
 		currentFrame = IntRect(0, 0, 36, 74);
 		bow_S.setTextureRect(currentFrame);
 		bow_S.setOrigin(18, 37);
@@ -80,7 +73,7 @@
 				if (!bow_pulled && Mouse::isButtonPressed(Mouse::Left)) {
 					currentFrame.top = 0;
 					if (currentFrame.left == 0) {
-						arrows.push_back(new Arrow(bow_S.getPosition(), side_of_attack, sandbox, enemies));
+						arrows.push_back(new Arrow(bow_S.getPosition(), side_of_attack, sandbox, enemies, t_manager, 0, "Arrow1"));
 					}
 					currentFrame.left += 36;
 					if (currentFrame.left == 144) {
@@ -99,7 +92,7 @@
 					currentFrame.top = 0;
 					
 					if (currentFrame.left == 36) {
-						arrows.push_back(new Arrow(bow_S.getPosition(), side_of_attack, sandbox, enemies));
+						arrows.push_back(new Arrow(bow_S.getPosition(), side_of_attack, sandbox, enemies, t_manager, 0, "Arrow1"));
 					}
 					currentFrame.left += 36;
 					if (currentFrame.left == 180) {
