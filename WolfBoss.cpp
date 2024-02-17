@@ -2,11 +2,11 @@
 #include "WolfBoss.h"
 
 
-WolfBoss::WolfBoss(TileMap& map, GeneralInfo* player_info,short regime)
-	: Enemy(map, player_info,regime)
+WolfBoss::WolfBoss(TileMap& map, GeneralInfo* player_info, short regime, TextureManager* t_manager, int index, 
+	string name)
+	: Enemy(map, player_info, regime, t_manager)
 {
-	WolfBoss::init_texture();
-	WolfBoss::init_sprite();
+	WolfBoss::init_sprite(index, name);
 	WolfBoss::init_physics();
 	WolfBoss::setAt(50);
 	WolfBoss::setHP(5000);
@@ -14,11 +14,11 @@ WolfBoss::WolfBoss(TileMap& map, GeneralInfo* player_info,short regime)
 	hp_bar->SET_ST_HP(HP);
 }
 
-WolfBoss::WolfBoss(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y) :
-	Enemy(map, player_info_, pos_x, pos_y)
+WolfBoss::WolfBoss(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y, TextureManager* t_manager, 
+	int index, string name) 
+	: Enemy(map, player_info_, pos_x, pos_y, t_manager)
 {
-	WolfBoss::init_texture();
-	WolfBoss::init_sprite();
+	WolfBoss::init_sprite(index, name);
 	WolfBoss::init_physics();
 	WolfBoss::setAt(50);
 	WolfBoss::setHP(5000);
@@ -67,20 +67,12 @@ void WolfBoss::init_physics()
 	pl_cont_jump = false;
 }
 
-void WolfBoss::init_texture()
-{
-	if (!Wolf_Boss_t_.loadFromFile("Textures/Enemies/boss_wolf.png"))
-	{
-		std::cout << "Error -> Enemy_Wolf_Boss -> couldn't load enemy_Wolf_Boss texture" << std::endl;
-	}
-}
-
-void WolfBoss::init_sprite()
+void WolfBoss::init_sprite(int index, string name)
 {
 	current_area = IntRect(0, 0, 2000, 200);
 	observation_area.setTextureRect(current_area);
 
-	anim_area.setTexture(Wolf_Boss_t_);
+	anim_area.setTexture(t_manager->getTexture(index, name));
 	standard_frame = IntRect(0, 0, 250, 250);
 	anim_area.setTextureRect(standard_frame);
 

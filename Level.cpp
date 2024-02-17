@@ -14,6 +14,7 @@
 		, regime(regime_)
 		, object_available(false){
 		//-1-random generation, 2-set positions
+		
 		Font* font = new Font();
 		if (!font->loadFromFile("Fonts/Pixel.ttf"))
 		{
@@ -30,9 +31,9 @@
 		//}
 	
 		all_static_items = new Group(0, 0, screenWidth, screenHeight);
-		pause_menu = new PopUpWindow(screenWidth, screenHeight, 800, 800, window);
-		level_inventory = new PopUpWindow(screenWidth, screenHeight, 600, 1000, window);
-		chest_items = new PopUpWindow(screenWidth, screenHeight, 600, 500, window);
+		pause_menu = new PopUpWindow(screenWidth, screenHeight, 800, 800, window, t_manager);
+		level_inventory = new PopUpWindow(screenWidth, screenHeight, 600, 1000, window, t_manager);
+		chest_items = new PopUpWindow(screenWidth, screenHeight, 600, 500, window, t_manager);
 		///////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////
 		pause_menu->addLabel(screenWidth, screenHeight, "Menu", font, 60, 10);
@@ -260,20 +261,20 @@
 		hornet_vector = new vector<hornet*>();
 		hornet_hives_vector = new vector<HornetHive*>();
 	
-		evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo(), 1));
-		evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo(), 2));
-		evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo(), 2));
-		evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo(), 2));
-		hornet_hives_vector->push_back(new HornetHive(sandbox, player->getGeneralInfo(), 2));
-		boss_vector->push_back(new WolfBoss(sandbox, player->getGeneralInfo(), 2));
+		evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo(), 1, t_manager, 8, "eye"));
+		evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo(), 2, t_manager, 8, "eye"));
+		evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo(), 2, t_manager, 8, "eye"));
+		evil_ball_vector->push_back(new EyeEvil(sandbox, player->getGeneralInfo(), 2, t_manager, 8, "eye"));
+		hornet_hives_vector->push_back(new HornetHive(sandbox, player->getGeneralInfo(), 2, t_manager, 8, "beehive"));
+		boss_vector->push_back(new WolfBoss(sandbox, player->getGeneralInfo(), 2, t_manager, 8, "boss_wolf"));
 	
-		bush_killers_vector->push_back(new BushKiller(sandbox, player->getGeneralInfo(), 2));
+		bush_killers_vector->push_back(new BushKiller(sandbox, player->getGeneralInfo(), 2, t_manager, 8, "bush_killer"));
 		//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo(),2));
-		Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo(),2));
-		Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo(),2));
+		Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo(),2, t_manager, 8, "chubacabra"));
+		Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo(),2, t_manager, 8, "chubacabra"));
 		//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
-		Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo(),2));
-		Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo(),2));
+		Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo(),2, t_manager, 8, "kusaka"));
+		Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo(),2, t_manager, 8, "kusaka"));
 		//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
 		//Red_Mutant_vector_->push_back(new RedMutant(sandbox, player->getGeneralInfo()));
 		//Kusaka_vector->push_back(new kusaka(sandbox, player->getGeneralInfo()));
@@ -294,18 +295,17 @@
 			evil_ball_vector->push_back(enemy);
 		}
 	
-	
 		Kusaka_vector = new vector<kusaka*>();
 		for (int i = 0; i < num_of_enemy_; i++)
 		{
-			kusaka* enemy = new kusaka(sandbox, player->getGeneralInfo(), 1);
+			kusaka* enemy = new kusaka(sandbox, player->getGeneralInfo(), 1, t_manager, 8, "kusaka");
 			Kusaka_vector->push_back(enemy);
 		}
 	
 		Red_Mutant_vector_ = new vector<RedMutant*>();
 		for (int i = 0; i < num_of_enemy_; i++)
 		{
-			RedMutant* enemy = new RedMutant(sandbox, player->getGeneralInfo(), 1);
+			RedMutant* enemy = new RedMutant(sandbox, player->getGeneralInfo(), 1, t_manager, 8, "chubacabra");
 			Red_Mutant_vector_->push_back(enemy);
 		}
 	
@@ -321,7 +321,7 @@
 		bush_killers_vector = new vector<BushKiller*>();
 		for (int i = 0; i < num_of_enemy_; i++)
 		{
-			auto* enemy = new BushKiller(sandbox, player->getGeneralInfo(), 1);
+			auto* enemy = new BushKiller(sandbox, player->getGeneralInfo(), 1, t_manager, 8, "bush_killer");
 			bush_killers_vector->push_back(enemy);
 		}
 	
@@ -330,14 +330,14 @@
 	
 		for (int i = 0; i < num_of_enemy_; i++)
 		{
-			hornet_hives_vector->push_back(new HornetHive(sandbox, player->getGeneralInfo(), 1));
+			hornet_hives_vector->push_back(new HornetHive(sandbox, player->getGeneralInfo(), 1, t_manager, 8, "beehive"));
 		}
 	
 		hornet_vector = new vector<hornet*>();
 	
 		for (int i = 0; i < num_of_enemy_; i++)
 		{
-			hornet_vector->push_back(new hornet(sandbox, player->getGeneralInfo(), 1));
+			hornet_vector->push_back(new hornet(sandbox, player->getGeneralInfo(), 1, t_manager, 8, "hornet"));
 		}
 	}
 	
@@ -558,11 +558,11 @@
 				{
 					(*it1)->cout_hornet = 0;
 					hornet_vector->push_back(new hornet(sandbox, player->getGeneralInfo(), (*it1)->get_position().x + 64,
-					                                    (*it1)->get_position().y - 35));
+					                                    (*it1)->get_position().y - 35, t_manager, 8, "hornet"));
 					hornet_vector->push_back(new hornet(sandbox, player->getGeneralInfo(), (*it1)->get_position().x,
-					                                    (*it1)->get_position().y - 64));
+					                                    (*it1)->get_position().y - 64, t_manager, 8, "hornet"));
 					hornet_vector->push_back(new hornet(sandbox, player->getGeneralInfo(), (*it1)->get_position().x - 30,
-					                                    (*it1)->get_position().y - 35));
+					                                    (*it1)->get_position().y - 35, t_manager, 8, "hornet"));
 				}
 				if ((*it1)->hornet_state == ENEMY_STATE::DEATH && (*it1)->DEATH_timer.getElapsedTime().asSeconds() >=
 					4.1f)

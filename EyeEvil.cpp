@@ -4,11 +4,10 @@
 
 EyeEvil::EyeEvil(TileMap& map, GeneralInfo* player_info, short regime, TextureManager* t_manager_, 
 	int index, string name)
-	: Enemy(map, player_info,regime), t_manager(t_manager_)
+	: Enemy(map, player_info, regime, t_manager_)
 {
 	{
-		EyeEvil::init_texture();
-		EyeEvil::init_sprite(nullptr, index, name);
+		EyeEvil::init_sprite(index, name);
 		EyeEvil::setAt(20);
 		EyeEvil::setHP(1000);
 		hp_damage_i = HP;
@@ -21,11 +20,10 @@ EyeEvil::EyeEvil(TileMap& map, GeneralInfo* player_info, short regime, TextureMa
 }
 EyeEvil::EyeEvil(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y, TextureManager* t_manager_, 
 	int index, string name) :
-	Enemy(map, player_info_, pos_x, pos_y), t_manager(t_manager_)
+	Enemy(map, player_info_, pos_x, pos_y, t_manager_)
 {
 	{
-		EyeEvil::init_texture();
-		EyeEvil::init_sprite(nullptr, index, name);
+		EyeEvil::init_sprite(index, name);
 		EyeEvil::setAt(20);
 		EyeEvil::setHP(1000);
 		hp_damage_i = HP;
@@ -37,7 +35,7 @@ EyeEvil::EyeEvil(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos
 	}
 }
 
-void EyeEvil::init_sprite(TextureManager* t_manager_, int index, string name)
+void EyeEvil::init_sprite(int index, string name)
 {
 	current_area = IntRect(0, 0, 640, 67);
 	observation_area.setTextureRect(current_area);
@@ -545,9 +543,9 @@ void EyeEvil::shot()
 	if (looks_to_the_right)
 	{
 		laserFL = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x, Enemy_S.getPosition().y,
-		                           looks_to_the_right, player_info);
+		                           looks_to_the_right, player_info, t_manager, 9, "laser");
 		laser = new laser_weapon(*sandbox, 2, Enemy_S.getPosition().x + 64, Enemy_S.getPosition().y,
-		                         looks_to_the_right, player_info);
+		                         looks_to_the_right, player_info, t_manager, 9, "laser");
 		//laser_weapon* shot_las = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x, Enemy_S.getPosition().y, looks_to_the_right);
 		/*laser.push_back(*shot_las);
 
@@ -562,9 +560,9 @@ void EyeEvil::shot()
 	else
 	{
 		laserFL = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x, Enemy_S.getPosition().y,
-		                           looks_to_the_right, player_info);
+		                           looks_to_the_right, player_info, t_manager, 9, "laser");
 		laser = new laser_weapon(*sandbox, 2, Enemy_S.getPosition().x - 64, Enemy_S.getPosition().y,
-		                         looks_to_the_right, player_info);
+		                         looks_to_the_right, player_info, t_manager, 9, "laser");
 		//laser_weapon* shot_las = new laser_weapon(*sandbox, 1, Enemy_S.getPosition().x - 60, Enemy_S.getPosition().y, looks_to_the_right);
 		/*laser.push_back(*shot_las);
 		for (int j = (Enemy_S.getPosition().x / 60); j > 0 && j > j - 5 &&

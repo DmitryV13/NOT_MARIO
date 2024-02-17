@@ -1,21 +1,12 @@
 #include "stdafx.h"
 #include "HornetHive.h"
 
-
-void HornetHive::init_texture()
-{
-	if (!HornetHive_t_.loadFromFile("Textures/Enemies/beehive.png"))
-	{
-		std::cout << "Error -> beehive -> couldn't load beehive texture" << std::endl;
-	}
-}
-
-void HornetHive::init_sprite()
+void HornetHive::init_sprite(int index, string name)
 {
 	current_area = IntRect(0, 0, 2000, 400);
 	observation_area.setTextureRect(current_area);
 
-	anim_area.setTexture(HornetHive_t_);
+	anim_area.setTexture(t_manager->getTexture(index, name));
 	standard_frame = IntRect(0, 0, 64,64);
 	anim_area.setTextureRect(standard_frame);
 
@@ -26,10 +17,11 @@ void HornetHive::init_sprite()
 }
 
 
-HornetHive::HornetHive(TileMap& map, GeneralInfo* player_info,short regime):Enemy(map, player_info,regime), player_info_(player_info)
+HornetHive::HornetHive(TileMap& map, GeneralInfo* player_info, short regime, TextureManager* t_manager, 
+	int index, string name)
+	:Enemy(map, player_info, regime, t_manager), player_info_(player_info)
 {
-	HornetHive::init_texture();
-	HornetHive::init_sprite();
+	HornetHive::init_sprite(index, name);
 	HornetHive::setAt(0);
 	HornetHive::setHP(30);
 	hp_damage_i = HP;
@@ -39,11 +31,11 @@ HornetHive::HornetHive(TileMap& map, GeneralInfo* player_info,short regime):Enem
 	hp_bar->SET_ST_HP(HP);
 }
 
-HornetHive::HornetHive(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y) :
-	Enemy(map, player_info_, pos_x, pos_y)
+HornetHive::HornetHive(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y, 
+	TextureManager* t_manager, int index, string name)
+	: Enemy(map, player_info_, pos_x, pos_y, t_manager)
 {
-	HornetHive::init_texture();
-	HornetHive::init_sprite();
+	HornetHive::init_sprite(index, name);
 	HornetHive::setAt(0);
 	HornetHive::setHP(30);
 	hp_damage_i = HP;

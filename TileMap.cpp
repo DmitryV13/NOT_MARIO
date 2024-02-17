@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "TileMap.h"
 
-TileMap::TileMap(short level, TextureManager* t_manager) : sizeTexture(64), mapH(50), mapW(100)
+TileMap::TileMap(short level, TextureManager* t_manager) : sizeTexture(64), mapH(200), mapW(10000)
 {
 	init_background();
 	init_tile_list(t_manager);

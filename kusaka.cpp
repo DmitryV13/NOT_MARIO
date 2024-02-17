@@ -1,12 +1,11 @@
 #include "stdafx.h"
 #include "kusaka.h"
 
-kusaka::kusaka(TileMap& map, GeneralInfo* player_info,short regime)
-	: Enemy(map, player_info,regime)
+kusaka::kusaka(TileMap& map, GeneralInfo* player_info,short regime, TextureManager* t_manager, int index, string name)
+	: Enemy(map, player_info, regime, t_manager)
 {
 	{
-		kusaka::init_texture();
-		kusaka::init_sprite();
+		kusaka::init_sprite(index, name);
 		kusaka::setAt(20);
 		kusaka::setHP(1000);
 		kusaka_state = ENEMY_STATE::SLEEPING;
@@ -20,12 +19,12 @@ kusaka::kusaka(TileMap& map, GeneralInfo* player_info,short regime)
 	}
 }
 
-kusaka::kusaka(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y) :
-	Enemy(map, player_info_, pos_x, pos_y)
+kusaka::kusaka(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y, TextureManager* t_manager, 
+	int index, string name) 
+	: Enemy(map, player_info_, pos_x, pos_y, t_manager)
 {
 	{
-		kusaka::init_texture();
-		kusaka::init_sprite();
+		kusaka::init_sprite(index, name);
 		kusaka::setAt(20);
 		kusaka::setHP(1000);
 		kusaka_state = ENEMY_STATE::SLEEPING;
@@ -39,22 +38,13 @@ kusaka::kusaka(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y
 	}
 }
 
-
-void kusaka::init_texture()
-{
-	if (!kusaka_t_.loadFromFile("Textures/Enemies/kusaka.png"))
-	{
-		std::cout << "Error -> Enemy_kusaka -> couldn't load enemy_kusaka texture" << std::endl;
-	}
-}
-
-void kusaka::init_sprite()
+void kusaka::init_sprite(int index, string name)
 {
 	current_area = IntRect(0, 0, 1280, 192);
 	observation_area.setTextureRect(current_area);
 
 
-	anim_area.setTexture(kusaka_t_);
+	anim_area.setTexture(t_manager->getTexture(index, name));
 	standard_frame = IntRect(0, 0, 90, 55);
 	anim_area.setTextureRect(standard_frame);
 

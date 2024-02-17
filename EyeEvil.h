@@ -12,7 +12,6 @@ using sf::Clock;
 class EyeEvil : public Enemy
 {
 public:
-	TextureManager* t_manager;
 	ENEMY_STATE eye_state;
 	ENEMY_STATE eye_state_past;
 	Clock IDLE_timer;
@@ -25,9 +24,10 @@ public:
 	//vector<laser_weapon> laser;
 	laser_weapon* laser{nullptr};
 	laser_weapon* laserFL{nullptr};
-	explicit EyeEvil(TileMap& map, GeneralInfo* player_info, short, TextureManager* t_manager_, 
-		int index, string name);
-	EyeEvil(TileMap& map, GeneralInfo* player_info_, float, float, TextureManager* t_manager_, int index, string name);
+	explicit EyeEvil(TileMap& map, GeneralInfo* player_info, short, TextureManager* t_manager_, int index, 
+		string name);
+	EyeEvil(TileMap& map, GeneralInfo* player_info_, float, float, TextureManager* t_manager_, int index, 
+		string name);
 
 	~EyeEvil() override = default;
 	void update_movement() override;
@@ -47,7 +47,5 @@ public:
 
 
 private:
-	Texture evil_ball_t_;
-	void init_sprite(TextureManager* t_manager_, int index, string name) override;
-	void init_texture() override;
+	void init_sprite(int index, string name) override;
 };

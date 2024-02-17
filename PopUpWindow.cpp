@@ -2,40 +2,44 @@
 #include "PopUpWindow.h"
 
 
-	PopUpWindow::PopUpWindow(double screen_width, double screen_height, int width_, int height_, RenderWindow* window_)
+	PopUpWindow::PopUpWindow(double screen_width, double screen_height, int width_, int height_, 
+		RenderWindow* window_, TextureManager* t_manager_)
 		:width(width_), height(height_), window(window_), puw_state(POP_UP_WINDOW_STATE::PUW_CLOSED){
 		callbacks_handler = new CallbacksHandler();
-		manager = new TextureManager();
+		manager = t_manager_;
 
 		w_background = new ComposedIMG(width, height, 6, manager, 2);
 		w_background->setPosition("center", "center", screen_width, screen_height);
 		position = Vector2f(w_background->getLocalBounds().left, w_background->getLocalBounds().top);
 	}
 
-	PopUpWindow::PopUpWindow(double screen_width, double screen_height, int width_, int height_, RenderWindow* window_, string positionX, string positionY) 
+	PopUpWindow::PopUpWindow(double screen_width, double screen_height, int width_, int height_, 
+		RenderWindow* window_, string positionX, string positionY, TextureManager* t_manager_)
 		:width(width_), height(height_), window(window_), puw_state(POP_UP_WINDOW_STATE::PUW_CLOSED){
 		callbacks_handler = new CallbacksHandler();
-		manager = new TextureManager();
+		manager = t_manager_;
 
 		w_background = new ComposedIMG(width, height, 6, manager, 1);
 		w_background->setPosition(positionX, positionY, screen_width, screen_height);
 		position = Vector2f(w_background->getLocalBounds().left, w_background->getLocalBounds().top);
 	}
 
-	PopUpWindow::PopUpWindow(double screen_width, double screen_height, int width_, int height_, RenderWindow* window_, string positionX, int y) 
+	PopUpWindow::PopUpWindow(double screen_width, double screen_height, int width_, int height_, 
+		RenderWindow* window_, string positionX, int y, TextureManager* t_manager_)
 		:width(width_), height(height_), window(window_), puw_state(POP_UP_WINDOW_STATE::PUW_CLOSED){
 		callbacks_handler = new CallbacksHandler();
-		manager = new TextureManager();
+		manager = t_manager_;
 
 		w_background = new ComposedIMG(width, height, 6, manager, 1);
 		w_background->setPosition(positionX, y, screen_width, screen_height);
 		position = Vector2f(w_background->getLocalBounds().left, w_background->getLocalBounds().top);
 	}
 
-	PopUpWindow::PopUpWindow(double screen_width, double screen_height, int width_, int height_, RenderWindow* window_, int x, string positionY) 
+	PopUpWindow::PopUpWindow(double screen_width, double screen_height, int width_, int height_, 
+		RenderWindow* window_, int x, string positionY, TextureManager* t_manager_)
 		:width(width_), height(height_), window(window_), puw_state(POP_UP_WINDOW_STATE::PUW_CLOSED){
 		callbacks_handler = new CallbacksHandler();
-		manager = new TextureManager();
+		manager = t_manager_;
 
 		w_background = new ComposedIMG(width, height, 6, manager, 1);
 		w_background->setPosition(x, positionY, screen_width, screen_height);

@@ -6,7 +6,6 @@ class WolfBoss : public Enemy
 	ENEMY_STATE boss_state;
 	ENEMY_STATE boss_state_past;
 	bool boss_state_TORMENT;
-	Texture Wolf_Boss_t_;
 	Clock RETREATING_timer;
 	Clock Jumping_att_timer;
 	Clock IDLE_timer;
@@ -31,14 +30,14 @@ class WolfBoss : public Enemy
 	int rand_;
 	float distance;
 
-
-	void init_texture() override;
-	void init_sprite() override;
+	void init_sprite(int index, string name) override;
 	void init_physics() override;
 
 public:
-	explicit WolfBoss(TileMap& map, GeneralInfo* player_info,short);
-	WolfBoss(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y);
+	explicit WolfBoss(TileMap& map, GeneralInfo* player_info, short, TextureManager* t_manager, int index, 
+		string name);
+	WolfBoss(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y, TextureManager* t_manager, 
+		int index, string name);
 
 	~WolfBoss() override = default;
 	void update_movement() override;

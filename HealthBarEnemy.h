@@ -21,14 +21,11 @@ private:
 	short HP_PREV;
 	float procent;
 	//Enemy* enemy_;
-	void init_texture() ;
-	void init_sprite() ;
-
 
 public:
 	
 	void set_position(const float x, const float y);
-	explicit HealthBarEnemy();
+	explicit HealthBarEnemy(TextureManager* t_manager, int index, string name);
 	~HealthBarEnemy()= default;
 	void update_animation();
 	void reset_Timer();

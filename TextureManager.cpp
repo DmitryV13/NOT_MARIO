@@ -43,8 +43,11 @@
 		if (!textures[0]["BlueScaleBar"].loadFromFile("Textures/GUI/scales/blueScale.png")) {
 			std::cout << "Error -> TextureManager -> couldn't load BlueScaleBar texture" << std::endl;
 		}
+		if (!textures[0]["hp_enemy_bar"].loadFromFile("Textures/Enemies/HP_STAND_ENEMY.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load hp_enemy_bar texture" << std::endl;
+		}
 
-		//label 1 (6)
+		//label 1 (6)  Textures/Enemies/HP_STAND_ENEMY.png"
 		textures.push_back(unordered_map<string, Texture>());
 		if (!textures[1]["Filler"].loadFromFile("Textures/GUI/popup/labelF.png")) {
 			std::cout << "Error -> TextureManager -> couldn't load labelFiller texture" << std::endl;
@@ -269,7 +272,7 @@
 			std::cout << "Error -> TextureManager -> couldn't bow1 texture" << std::endl;
 		}
 
-		//enemies 
+		//enemies Textures/Enemies/boss_wolf.png
 		textures.push_back(unordered_map<string, Texture>());
 		if (!textures[8]["bush_killer"].loadFromFile("Textures/Enemies/bush_killer.png")) {
 			std::cout << "Error -> TextureManager -> couldn't bush_killer texture" << std::endl;
@@ -277,12 +280,32 @@
 		if (!textures[8]["eye"].loadFromFile("Textures/Enemies/eye.png")) {
 			std::cout << "Error -> TextureManager -> couldn't eye texture" << std::endl;
 		}
+		if (!textures[8]["hornet"].loadFromFile("Textures/Enemies/hornet.png")) {
+			std::cout << "Error -> TextureManager -> couldn't hornet texture" << std::endl;
+		}
+		if (!textures[8]["beehive"].loadFromFile("Textures/Enemies/beehive.png")) {
+			std::cout << "Error -> TextureManager -> couldn't beehive texture" << std::endl;
+		}
+		if (!textures[8]["kusaka"].loadFromFile("Textures/Enemies/kusaka.png")) {
+			std::cout << "Error -> TextureManager -> couldn't kusaka texture" << std::endl;
+		}
+		if (!textures[8]["chubacabra"].loadFromFile("Textures/Enemies/RedMutant.png")) {
+			std::cout << "Error -> TextureManager -> couldn't RedMutant texture" << std::endl;
+		}
+		if (!textures[8]["boss_wolf"].loadFromFile("Textures/Enemies/boss_wolf.png")) {
+			std::cout << "Error -> TextureManager -> couldn't boss_wolf texture" << std::endl;
+		}
 
-		//enemies' ammunition
+		//enemies' ammunition  Textures/Enemies/laser.png
 		textures.push_back(unordered_map<string, Texture>());
 		if (!textures[9]["sheet"].loadFromFile("Textures/Enemies/sheet.png")) {
 			std::cout << "Error -> TextureManager -> couldn't sheet texture" << std::endl;
 		}
+		if (!textures[9]["laser"].loadFromFile("Textures/Enemies/laser.png")) {
+			std::cout << "Error -> TextureManager -> couldn't laser texture" << std::endl;
+		}
+		//std::cout << sizeof(textures);
+		std::cout << "uoigiuoiuofu   ";
 	}
 
 	Texture& TextureManager::getTexture(int index, string name)

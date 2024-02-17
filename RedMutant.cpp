@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #include "RedMutant.h"
 
-RedMutant::RedMutant(TileMap& map, GeneralInfo* player_info,short regime)
-	: Enemy(map, player_info,regime)
+RedMutant::RedMutant(TileMap& map, GeneralInfo* player_info, short regime, TextureManager* t_manager, int index, 
+	string name)
+	: Enemy(map, player_info, regime, t_manager)
 {
 	{
-		RedMutant::init_texture();
-		RedMutant::init_sprite();
+		RedMutant::init_sprite(index, name);
 		RedMutant::setAt(25);
 		RedMutant::setHP(2000);
 		red_mutant_state = ENEMY_STATE::IDLE;
@@ -25,12 +25,12 @@ void RedMutant::updateHP_bar()
 	hp_bar->update(Enemy_S);
 
 }
-RedMutant::RedMutant(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y) :
-	Enemy(map, player_info_, pos_x, pos_y)
+RedMutant::RedMutant(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y, TextureManager* t_manager, 
+	int index, string name) 
+	: Enemy(map, player_info_, pos_x, pos_y, t_manager)
 {
 	{
-		RedMutant::init_texture();
-		RedMutant::init_sprite();
+		RedMutant::init_sprite(index, name);
 		RedMutant::setAt(25);
 		RedMutant::setHP(2000);
 		red_mutant_state = ENEMY_STATE::IDLE;
@@ -45,20 +45,12 @@ RedMutant::RedMutant(TileMap& map, GeneralInfo* player_info_, float pos_x, float
 	}
 }
 
-void RedMutant::init_texture()
-{
-	if (!chubacabra_t_.loadFromFile("Textures/Enemies/RedMutant.png"))
-	{
-		std::cout << "Error -> Enemy_chubacabra -> couldn't load enemy_chubacabra texture" << std::endl;
-	}
-}
-
-void RedMutant::init_sprite()
+void RedMutant::init_sprite(int index, string name)
 {
 	current_area = IntRect(0, 0, 1280, 256);
 	observation_area.setTextureRect(current_area);
 
-	Enemy_S.setTexture(chubacabra_t_);
+	Enemy_S.setTexture(t_manager->getTexture(index, name));
 	current_frame = IntRect(0, 0, 60, 88);
 	Enemy_S.setTextureRect(current_frame);
 }

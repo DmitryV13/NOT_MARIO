@@ -14,8 +14,9 @@ public:
 	bool jump_flag{true};
 	short count_jm;
 
-	explicit kusaka(TileMap& map, GeneralInfo* player_info,short);
-	kusaka(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y);
+	explicit kusaka(TileMap& map, GeneralInfo* player_info, short, TextureManager* t_manager, int index, string name);
+	kusaka(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y, TextureManager* t_manager, int index, 
+		string name);
 
 	~kusaka() override = default;
 	void update_movement() override;
@@ -30,9 +31,7 @@ public:
 	bool update_collision_move_x();
 
 private:
-	Texture kusaka_t_;
 	bool player_l_r[2]{false};
 	int count_jump = 0;
-	void init_texture() override;
-	void init_sprite() override;
+	void init_sprite(int index, string name) override;
 };

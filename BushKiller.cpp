@@ -4,10 +4,10 @@
 
 BushKiller::BushKiller(TileMap& map, GeneralInfo* player_info, short regime, TextureManager* t_manager_, 
 	int index, string name)
-	: Enemy(map, player_info,regime), t_manager(t_manager_)
+	: Enemy(map, player_info, regime, t_manager_)
 
 {
-	BushKiller::init_sprite(nullptr, index, name);
+	BushKiller::init_sprite(index, name);
 	BushKiller::init_physics();
 	BushKiller::setAt(20);
 	BushKiller::setHP(100);
@@ -18,9 +18,9 @@ BushKiller::BushKiller(TileMap& map, GeneralInfo* player_info, short regime, Tex
 
 BushKiller::BushKiller(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y, 
 	TextureManager* t_manager_, int index, string name) :
-	Enemy(map, player_info_, pos_x, pos_y), t_manager(t_manager_)
+	Enemy(map, player_info_, pos_x, pos_y, t_manager_)
 {
-	BushKiller::init_sprite(nullptr, index, name);
+	BushKiller::init_sprite(index, name);
 	BushKiller::init_physics();
 	BushKiller::setAt(20);
 	BushKiller::setHP(100);
@@ -53,7 +53,7 @@ void BushKiller::init_physics()
 	looks_to_the_right = true;
 }
 
-void BushKiller::init_sprite(TextureManager* t_manager_, int index, string name)
+void BushKiller::init_sprite(int index, string name)
 {
 	current_area = IntRect(0, 0, 2000, 1500);
 	observation_area.setTextureRect(current_area);

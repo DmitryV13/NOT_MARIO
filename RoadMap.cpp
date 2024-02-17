@@ -13,9 +13,9 @@
 		warehouse = new Warehouse();
 		
 		all_static_items = new Group(0, 0, screen_width, screen_height);
-		level_selection = new PopUpWindow(screen_width, screen_height, 800, 800, window);
-		shop = new PopUpWindow(screen_width, screen_height, 1000, 800, window);
-		inventory = new PopUpWindow(screen_width, screen_height, 1000, 800, window);
+		level_selection = new PopUpWindow(screen_width, screen_height, 800, 800, window, t_manager);
+		shop = new PopUpWindow(screen_width, screen_height, 1000, 800, window, t_manager);
+		inventory = new PopUpWindow(screen_width, screen_height, 1000, 800, window, t_manager);
 
 		///////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////

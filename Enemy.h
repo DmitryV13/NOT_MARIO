@@ -21,10 +21,10 @@ using sf::Clock;
 class Enemy
 {
 protected:
+	TextureManager* t_manager;
 	TileMap* sandbox;
 	GeneralInfo* player_info;
 
-	Texture Enemy_T;
 	Sprite Enemy_S;
 	Sprite observation_area;
 	Sprite anim_area;
@@ -68,16 +68,15 @@ protected:
 	void setHP(short hp);
 	//virtual
 	virtual void init_physics();
-	virtual void init_texture() = 0;
-	virtual void init_sprite(TextureManager* t_manager, int index, string name) = 0;
+	virtual void init_sprite(int index, string name) = 0;
 
 public:
 	//Enemy
 	bool looks_to_the_left;
 	bool looks_to_the_right;
 	sf::Vector2f generate_random_start_position(int mapWidth, int mapHeight);
-	Enemy(TileMap& map, GeneralInfo* player_info_,short);
-	Enemy(TileMap& map, GeneralInfo* player_info_, float,float);
+	Enemy(TileMap& map, GeneralInfo* player_info_, short, TextureManager* t_manager_);
+	Enemy(TileMap& map, GeneralInfo* player_info_, float, float, TextureManager* t_manager_);
 	const bool& get_animation_switch();
 	sf::Vector2f get_position() const;
 	const FloatRect get_global_bounds() const;

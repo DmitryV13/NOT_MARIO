@@ -11,8 +11,6 @@ using sf::Clock;
 class hornet:public Enemy
 {
 private:
-	Texture hornet_t_;
-	
 	ENEMY_STATE hornet_state_past;
 	Clock IDLE_timer;
 	Clock ATTACKING_timer;
@@ -23,8 +21,7 @@ private:
 	float moveX;
 	float moveY;
 
-	void init_texture() override;
-	void init_sprite(TextureManager* t_manager, int index, string name) override;
+	void init_sprite(int index, string name) override;
 
 
 public:
@@ -32,8 +29,10 @@ public:
 	ENEMY_STATE hornet_state;
 
 
-	explicit hornet(TileMap& map, GeneralInfo* player_info,short);
-	hornet(TileMap& map, GeneralInfo* player_info_, float, float);
+	explicit hornet(TileMap& map, GeneralInfo* player_info, short, TextureManager* t_manager, 
+		int index, string name);
+	hornet(TileMap& map, GeneralInfo* player_info_, float, float, TextureManager* t_manager, 
+		int index, string name);
 
 	~hornet() override = default;
 	void update_movement() override;

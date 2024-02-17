@@ -4,9 +4,6 @@
 class RedMutant : public Enemy
 {
 private:
-	Texture chubacabra_t_;
-
-
 	Clock IDLE_timer;
 
 	Clock RED_MUTANT_TAKING_DAMAGE_TIMER;
@@ -18,16 +15,17 @@ private:
 	bool player_l_r[2]{false};
 	int count_jump = 0;
 	int count_atack = 0;
-	void init_texture() override;
-	void init_sprite() override;
+	void init_sprite(int index, string name) override;
 
 public:
 	ENEMY_STATE red_mutant_state;
 	ENEMY_STATE red_mutant_state_past;
 	Clock DEATH_timer;
 	sf::Vector2f calculateRandomPosition(const sf::FloatRect& playerBounds, int radius);
-	explicit RedMutant(TileMap& map, GeneralInfo* player_info,short);
-	RedMutant(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y);
+	explicit RedMutant(TileMap& map, GeneralInfo* player_info, short, TextureManager* t_manager, int index, 
+		string name);
+	RedMutant(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y, TextureManager* t_manager, 
+		int index, string name);
 
 	~RedMutant() override = default;
 	void reset_Timer();

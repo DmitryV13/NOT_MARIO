@@ -56,12 +56,12 @@ void Enemy::init_variables()
 	animation_state = ENEMY_ANIMATION_STATE::ENEMY_IDLE;
 }
 
-Enemy::Enemy(TileMap& map, GeneralInfo* player_info_,short regime)
-	: player_info(player_info_)
+Enemy::Enemy(TileMap& map, GeneralInfo* player_info_, short regime, TextureManager* t_manager_)
+	: player_info(player_info_), t_manager(t_manager_)
 {
 	blow_timer.restart();
 	sandbox = &map;
-	hp_bar = new HealthBarEnemy();
+	hp_bar = new HealthBarEnemy(t_manager, 0, "hp_enemy_bar");
 	init_variables();
 	init_animation();
 	Enemy::init_physics();
@@ -73,12 +73,12 @@ Enemy::Enemy(TileMap& map, GeneralInfo* player_info_,short regime)
 	hp_bar->SET_ST_HP(HP);
 }
 
-Enemy::Enemy(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y)
-	: player_info(player_info_)
+Enemy::Enemy(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y, TextureManager* t_manager_)
+	: player_info(player_info_), t_manager(t_manager_)
 {
 	blow_timer.restart();
 	sandbox = &map;
-	hp_bar = new HealthBarEnemy();
+	hp_bar = new HealthBarEnemy(t_manager, 0, "hp_enemy_bar");
 	init_variables();
 	init_animation();
 	Enemy::init_physics();

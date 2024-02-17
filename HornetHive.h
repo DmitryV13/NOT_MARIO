@@ -12,17 +12,11 @@ using sf::Clock;
 class HornetHive:public Enemy
 {
 private:
-	Texture HornetHive_t_;
-
 	ENEMY_STATE hornet_hive_state_past;
 	Clock HORNET_TAKING_DAMAGE_TIMER;
 	GeneralInfo* player_info_;
 
-
-	void init_texture() override;
-	void init_sprite() override;
-
-
+	void init_sprite(int index, string name) override;
 public:
 	Clock DEATH_timer;
 	ENEMY_STATE hornet_state;
@@ -30,8 +24,8 @@ public:
 	bool HIVE_LIFE() const;
 	void set_position_AR(const float x, const float y);
 
-	explicit HornetHive(TileMap& map, GeneralInfo* player_info,short);
-	HornetHive(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y);
+	explicit HornetHive(TileMap& map, GeneralInfo* player_info, short, TextureManager* t_manager, int index, string name);
+	HornetHive(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y, TextureManager* t_manager, int index, string name);
 
 	~HornetHive() override = default;
 	void update_movement() override;

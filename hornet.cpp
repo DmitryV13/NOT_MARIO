@@ -1,33 +1,25 @@
 #include "stdafx.h"
 #include "hornet.h"
 
-void hornet::init_texture()
-{
-	if (!hornet_t_.loadFromFile("Textures/Enemies/hornet.png"))
-	{
-		std::cout << "Error -> hornet -> couldn't load hornet texture" << std::endl;
-	}
-}
-
-void hornet::init_sprite(TextureManager* t_manager, int index, string name)
+void hornet::init_sprite(int index, string name)
 {
 	current_area = IntRect(0, 0, 2000, 400);
 	observation_area.setTextureRect(current_area);
 
-	anim_area.setTexture(hornet_t_);
+	anim_area.setTexture(t_manager->getTexture(index, name));
 	standard_frame = IntRect(0, 0, 64, 76);
 	anim_area.setTextureRect(standard_frame);
-
 
 	//Enemy_S.setTexture(Wolf_Boss_t_);
 	current_frame = IntRect(0, 0, 30, 30);
 	Enemy_S.setTextureRect(current_frame);
 }
 
-hornet::hornet(TileMap& map, GeneralInfo* player_info,short regime): Enemy(map, player_info,regime), player_info_(player_info)
+hornet::hornet(TileMap& map, GeneralInfo* player_info, short regime, TextureManager* t_manager, int index, 
+	string name)
+	: Enemy(map, player_info, regime, t_manager), player_info_(player_info)
 {
-	hornet::init_texture();
-	hornet::init_sprite(nullptr, 0, "");
+	hornet::init_sprite(index, name);
 	hornet::setAt(20);
 	hornet::setHP(50);
 	hp_damage_i = HP;
@@ -39,11 +31,11 @@ hornet::hornet(TileMap& map, GeneralInfo* player_info,short regime): Enemy(map, 
 	hp_bar->SET_ST_HP(HP);
 }
 
-hornet::hornet(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y):
-Enemy(map, player_info_,pos_x,pos_y ), player_info_(player_info)
+hornet::hornet(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y, TextureManager* t_manager, 
+	int index, string name)
+	: Enemy(map, player_info_, pos_x, pos_y, t_manager), player_info_(player_info)
 {
-	hornet::init_texture();
-	hornet::init_sprite(nullptr, 0, "");
+	hornet::init_sprite(index, name);
 	hornet::setAt(20);
 	hornet::setHP(50);
 	hp_damage_i = HP;

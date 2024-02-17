@@ -12,13 +12,13 @@ using sf::Texture;
 using sf::IntRect;
 using sf::Clock;
 using sf::Vector2f;
+
 class killer_leaf
 {
 
 protected:
 	TileMap* sandbox;
 	short attack;
-	Texture leaf_T;
 	Sprite leaf_S;
 	IntRect current_frame;
 	Clock animation_timer;

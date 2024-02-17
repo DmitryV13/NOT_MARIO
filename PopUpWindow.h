@@ -27,10 +27,14 @@ private:
 
 	vector<vector<Group*>> groups;
 public:
-	PopUpWindow(double screen_width, double screen_height, int width_, int height_, RenderWindow* window_);
-	PopUpWindow(double screen_width, double screen_height, int width_, int height_, RenderWindow* window_, string positionX, string positionY);
-	PopUpWindow(double screen_width, double screen_height, int width_, int height_, RenderWindow* window_, string positionX, int y);
-	PopUpWindow(double screen_width, double screen_height, int width_, int height_, RenderWindow* window_, int x, string positionY);
+	PopUpWindow(double screen_width, double screen_height, int width_, int height_, RenderWindow* window_, 
+		TextureManager* t_manager_);
+	PopUpWindow(double screen_width, double screen_height, int width_, int height_, RenderWindow* window_, 
+		string positionX, string positionY, TextureManager* t_manager_);
+	PopUpWindow(double screen_width, double screen_height, int width_, int height_, RenderWindow* window_, 
+		string positionX, int y, TextureManager* t_manager_);
+	PopUpWindow(double screen_width, double screen_height, int width_, int height_, RenderWindow* window_, 
+		int x, string positionY, TextureManager* t_manager_);
 	~PopUpWindow();
 
 	void setBackground();

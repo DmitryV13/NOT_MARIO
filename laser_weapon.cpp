@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "laser_weapon.h"
 
-laser_weapon::laser_weapon(TileMap& map, int compar, float i,
-                           float j, bool direction, GeneralInfo* player_info_)
+laser_weapon::laser_weapon(TileMap& map, int compar, float i, float j, bool direction, GeneralInfo* player_info_, 
+	TextureManager* t_manager, int index, string name)
 	: attack(12), player_info(player_info_)
 {
 	//player = pl;
@@ -12,8 +12,7 @@ laser_weapon::laser_weapon(TileMap& map, int compar, float i,
 
 	init_variables(compar);
 
-	init_texture();
-	init_sprite();
+	init_sprite(t_manager, index, name);
 	set_position(i, j);
 	init_animation();
 	laser_timer.restart();
@@ -107,33 +106,23 @@ void laser_weapon::reset_animation_timer()
 	animation_switch = true;
 }
 
-
-void laser_weapon::init_texture()
-{
-	if (!laser_T.loadFromFile("Textures/Enemies/laser.png"))
-	{
-		std::cout << "Error -> laser -> couldn't load laser texture" << std::endl;
-	}
-}
-
-
-void laser_weapon::init_sprite()
+void laser_weapon::init_sprite(TextureManager* t_manager, int index, string name)
 {
 	if (LASER_ANIMATION_STATES::LASER_FIRST == animation_state && dir_x)
 	{
-		laser_S.setTexture(laser_T);
+		laser_S.setTexture(t_manager->getTexture(index, name));
 		current_frame = IntRect(0, 0, 65, 60);
 		laser_S.setTextureRect(current_frame);
 	}
 	else
 	{
-		laser_S.setTexture(laser_T);
+		laser_S.setTexture(t_manager->getTexture(index, name));
 		current_frame = IntRect(65, 0, -65, 60);
 		laser_S.setTextureRect(current_frame);
 	}
 	if (LASER_ANIMATION_STATES::LASER_NEXT == animation_state)
 	{
-		laser_S.setTexture(laser_T);
+		laser_S.setTexture(t_manager->getTexture(index, name));
 		current_frame = IntRect(120, 0, 64, 60);
 		laser_S.setTextureRect(current_frame);
 	}

@@ -23,7 +23,6 @@ class laser_weapon
 protected:
 	TileMap* sandbox;
 	short attack;
-	Texture laser_T;
 	Sprite laser_S;
 	Sprite laser_area;
 	IntRect current_frame;
@@ -36,18 +35,16 @@ protected:
 	bool dir_x;
 	short cout_las{ 0 };
 
-
 	GeneralInfo* player_info;
 
-
-	void init_texture();
-	void init_sprite();
+	void init_sprite(TextureManager* t_manager, int index, string name);
 	void init_variables(int);
 	void init_animation();
 	void init_physics();
 
 public:
-	explicit laser_weapon(TileMap& map, int, float, float, bool, GeneralInfo* player_info_);
+	explicit laser_weapon(TileMap& map, int, float, float, bool, GeneralInfo* player_info_, 
+		TextureManager* t_manager, int index, string name);
 	~laser_weapon() = default;
 
 	const bool& get_animation_switch();

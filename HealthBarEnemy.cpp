@@ -1,30 +1,18 @@
 #include "stdafx.h"
 #include "HealthBarEnemy.h"
 
-void HealthBarEnemy::init_texture()
-{
-	if (!HealthBarEnemy_t_.loadFromFile("Textures/Enemies/HP_STAND_ENEMY.png"))
-	{
-		std::cout << "Error -> HP_STAND_ENEMY -> couldn't load HP_STAND_ENEMY texture" << std::endl;
-	}
-}
-
-void HealthBarEnemy::init_sprite()
-{
-	HealthBarEnemy_S_.setTexture(HealthBarEnemy_t_);
-	standard_frame = IntRect(0, 0, 90, 13);
-	HealthBarEnemy_S_.setTextureRect(standard_frame);
-}
 
 void HealthBarEnemy::set_position(const float x, const float y)
 {
 	HealthBarEnemy_S_.setPosition(x, y);
 }
 
-HealthBarEnemy::HealthBarEnemy()
+HealthBarEnemy::HealthBarEnemy(TextureManager* t_manager, int index, string name)
 {
-	HealthBarEnemy::init_texture();
-	HealthBarEnemy::init_sprite();
+	HealthBarEnemy_S_.setTexture(t_manager->getTexture(index, name));
+	standard_frame = IntRect(0, 0, 90, 13);
+	HealthBarEnemy_S_.setTextureRect(standard_frame);
+
 	procent = 0.0833333333f;
 	manifestation_timer.restart();
 }
