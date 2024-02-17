@@ -7,7 +7,6 @@ class BushKiller: public Enemy
 	TextureManager* t_manager;
 	ENEMY_STATE bush_state;
 	ENEMY_STATE bush_state_past;
-	Texture bush_killer_t_;
 	Clock BUSH_TAKING_DAMAGE_TIMER;
 	Clock Shot_timer;
 	Clock DEATH_timer;
@@ -15,9 +14,6 @@ class BushKiller: public Enemy
 	vector<killer_leaf*>killer_leaf_SH;
 	//killer_leaf* killer_leaf_SH{ nullptr };
 
-
-
-	void init_texture() override;
 	void init_sprite(TextureManager* t_manager_, int index, string name) override;
 	void init_physics() override;
 

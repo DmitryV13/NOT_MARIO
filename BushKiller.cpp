@@ -7,7 +7,6 @@ BushKiller::BushKiller(TileMap& map, GeneralInfo* player_info, short regime, Tex
 	: Enemy(map, player_info,regime), t_manager(t_manager_)
 
 {
-	BushKiller::init_texture();
 	BushKiller::init_sprite(nullptr, index, name);
 	BushKiller::init_physics();
 	BushKiller::setAt(20);
@@ -21,7 +20,6 @@ BushKiller::BushKiller(TileMap& map, GeneralInfo* player_info_, float pos_x, flo
 	TextureManager* t_manager_, int index, string name) :
 	Enemy(map, player_info_, pos_x, pos_y), t_manager(t_manager_)
 {
-	BushKiller::init_texture();
 	BushKiller::init_sprite(nullptr, index, name);
 	BushKiller::init_physics();
 	BushKiller::setAt(20);
@@ -55,20 +53,12 @@ void BushKiller::init_physics()
 	looks_to_the_right = true;
 }
 
-void BushKiller::init_texture()
-{
-	if (!bush_killer_t_.loadFromFile("Textures/Enemies/bush_killer.png"))
-	{
-		std::cout << "Error -> bush_killer -> couldn't load bush_killer texture" << std::endl;
-	}
-}
-
-void BushKiller::init_sprite()
+void BushKiller::init_sprite(TextureManager* t_manager_, int index, string name)
 {
 	current_area = IntRect(0, 0, 2000, 1500);
 	observation_area.setTextureRect(current_area);
 
-	anim_area.setTexture(bush_killer_t_);
+	anim_area.setTexture(t_manager->getTexture(index, name));
 	standard_frame = IntRect(0, 0, 64, 64);
 	anim_area.setTextureRect(standard_frame);
 
@@ -444,7 +434,7 @@ void BushKiller::attack()
 		cord.push_back(get_position().y+get_global_bounds().height/2 + 10);
 		cord.push_back(player_info->getPosition().x+player_info->getGlobalBounds().width/2);
 		cord.push_back(player_info->getPosition().y+player_info->getGlobalBounds().height/2);
-		killer_leaf_SH.push_back(new killer_leaf(*sandbox, cord, player_info));
+		killer_leaf_SH.push_back(new killer_leaf(*sandbox, cord, player_info, t_manager, 9, "sheet"));
 		leaf_spawn.restart();
 	}
 	

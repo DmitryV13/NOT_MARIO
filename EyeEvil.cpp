@@ -2,12 +2,13 @@
 #include "EyeEvil.h"
 
 
-EyeEvil::EyeEvil(TileMap& map, GeneralInfo* player_info,short regime)
-	: Enemy(map, player_info,regime)
+EyeEvil::EyeEvil(TileMap& map, GeneralInfo* player_info, short regime, TextureManager* t_manager_, 
+	int index, string name)
+	: Enemy(map, player_info,regime), t_manager(t_manager_)
 {
 	{
 		EyeEvil::init_texture();
-		EyeEvil::init_sprite();
+		EyeEvil::init_sprite(nullptr, index, name);
 		EyeEvil::setAt(20);
 		EyeEvil::setHP(1000);
 		hp_damage_i = HP;
@@ -18,12 +19,13 @@ EyeEvil::EyeEvil(TileMap& map, GeneralInfo* player_info,short regime)
 		hp_bar->SET_ST_HP(HP);
 	}
 }
-EyeEvil::EyeEvil(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y) :
-	Enemy(map, player_info_, pos_x, pos_y)
+EyeEvil::EyeEvil(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y, TextureManager* t_manager_, 
+	int index, string name) :
+	Enemy(map, player_info_, pos_x, pos_y), t_manager(t_manager_)
 {
 	{
 		EyeEvil::init_texture();
-		EyeEvil::init_sprite();
+		EyeEvil::init_sprite(nullptr, index, name);
 		EyeEvil::setAt(20);
 		EyeEvil::setHP(1000);
 		hp_damage_i = HP;
@@ -35,21 +37,12 @@ EyeEvil::EyeEvil(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos
 	}
 }
 
-
-void EyeEvil::init_texture()
-{
-	if (!Enemy_T.loadFromFile("Textures/Enemies/eye.png"))
-	{
-		std::cout << "Error -> Enemy -> couldn't load enemy texture" << std::endl;
-	}
-}
-
-void EyeEvil::init_sprite()
+void EyeEvil::init_sprite(TextureManager* t_manager_, int index, string name)
 {
 	current_area = IntRect(0, 0, 640, 67);
 	observation_area.setTextureRect(current_area);
 
-	Enemy_S.setTexture(Enemy_T);
+	Enemy_S.setTexture(t_manager->getTexture(index, name));
 	current_frame = IntRect(0, 0, 60, 55.4);
 	Enemy_S.setTextureRect(current_frame);
 }

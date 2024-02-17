@@ -1,17 +1,9 @@
 #include "stdafx.h"
 #include "killer_leaf.h"
 
-void killer_leaf::init_texture()
+void killer_leaf::init_sprite(TextureManager* t_manager, int index, string name)
 {
-	if (!leaf_T.loadFromFile("Textures/Enemies/sheet.png"))
-	{
-		std::cout << "Error -> sheet -> couldn't load sheet texture" << std::endl;
-	}
-}
-
-void killer_leaf::init_sprite()
-{
-	leaf_S.setTexture(leaf_T);
+	leaf_S.setTexture(t_manager->getTexture(index, name));
 	current_frame = IntRect(120, 0,9, 10);
 	leaf_S.setTextureRect(current_frame);
 }
@@ -23,13 +15,12 @@ void killer_leaf::init_animation()
 }
 
 
-killer_leaf::killer_leaf(TileMap& map,
-	vector<float>flightCord,
-	GeneralInfo* player_info_):attack(20),player_info(player_info_), flight_cord_(std::move(flightCord)),extermination_flag(false)
+killer_leaf::killer_leaf(TileMap& map, vector<float>flightCord, GeneralInfo* player_info_, 
+	TextureManager* t_manager, int index, string name)
+	:attack(20),player_info(player_info_), flight_cord_(std::move(flightCord)),extermination_flag(false)
 {
 	sandbox = &map;
-	init_texture();
-	init_sprite();
+	init_sprite(t_manager, index, name);
 	init_animation();
 	set_position(flight_cord_[0], flight_cord_[1]);
 	calculation_formula();

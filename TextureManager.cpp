@@ -269,10 +269,19 @@
 			std::cout << "Error -> TextureManager -> couldn't bow1 texture" << std::endl;
 		}
 
-		//enemies
+		//enemies 
 		textures.push_back(unordered_map<string, Texture>());
 		if (!textures[8]["bush_killer"].loadFromFile("Textures/Enemies/bush_killer.png")) {
 			std::cout << "Error -> TextureManager -> couldn't bush_killer texture" << std::endl;
+		}
+		if (!textures[8]["eye"].loadFromFile("Textures/Enemies/eye.png")) {
+			std::cout << "Error -> TextureManager -> couldn't eye texture" << std::endl;
+		}
+
+		//enemies' ammunition
+		textures.push_back(unordered_map<string, Texture>());
+		if (!textures[9]["sheet"].loadFromFile("Textures/Enemies/sheet.png")) {
+			std::cout << "Error -> TextureManager -> couldn't sheet texture" << std::endl;
 		}
 	}
 

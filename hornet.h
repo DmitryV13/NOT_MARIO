@@ -24,7 +24,7 @@ private:
 	float moveY;
 
 	void init_texture() override;
-	void init_sprite() override;
+	void init_sprite(TextureManager* t_manager, int index, string name) override;
 
 
 public:

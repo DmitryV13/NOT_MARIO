@@ -290,7 +290,7 @@
 		evil_ball_vector = new vector<EyeEvil*>();
 		for (int i = 0; i < num_of_enemy_; i++)
 		{
-			EyeEvil* enemy = new EyeEvil(sandbox, player->getGeneralInfo(), 1);
+			EyeEvil* enemy = new EyeEvil(sandbox, player->getGeneralInfo(), 1, t_manager, 8, "eye");
 			evil_ball_vector->push_back(enemy);
 		}
 	

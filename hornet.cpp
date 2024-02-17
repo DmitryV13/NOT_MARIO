@@ -9,7 +9,7 @@ void hornet::init_texture()
 	}
 }
 
-void hornet::init_sprite()
+void hornet::init_sprite(TextureManager* t_manager, int index, string name)
 {
 	current_area = IntRect(0, 0, 2000, 400);
 	observation_area.setTextureRect(current_area);
@@ -27,7 +27,7 @@ void hornet::init_sprite()
 hornet::hornet(TileMap& map, GeneralInfo* player_info,short regime): Enemy(map, player_info,regime), player_info_(player_info)
 {
 	hornet::init_texture();
-	hornet::init_sprite();
+	hornet::init_sprite(nullptr, 0, "");
 	hornet::setAt(20);
 	hornet::setHP(50);
 	hp_damage_i = HP;
@@ -43,7 +43,7 @@ hornet::hornet(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y
 Enemy(map, player_info_,pos_x,pos_y ), player_info_(player_info)
 {
 	hornet::init_texture();
-	hornet::init_sprite();
+	hornet::init_sprite(nullptr, 0, "");
 	hornet::setAt(20);
 	hornet::setHP(50);
 	hp_damage_i = HP;

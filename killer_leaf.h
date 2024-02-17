@@ -30,15 +30,12 @@ protected:
 	sf::Vector2f displacement;
 	bool extermination_flag;
 
-
-
-	void init_texture();
-	void init_sprite();
+	void init_sprite(TextureManager* t_manager, int index, string name);
 	void init_animation();
 
 public:
 	explicit killer_leaf(TileMap& map, vector<float>flightCord
-	, GeneralInfo* player_info_);
+	, GeneralInfo* player_info_, TextureManager* t_manager, int index, string name);
 	~killer_leaf() = default;
 
 	sf::Vector2f get_position() const;
