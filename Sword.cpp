@@ -22,8 +22,8 @@
     
     void Sword::initVariables() {
         attack_activation = false;
-        side_of_attack = 0;
-        previous_side = 0;
+        side_of_attack = PLAYER_ANIMATION_STATES::IDLE_LEFT;
+        previous_side = PLAYER_ANIMATION_STATES::IDLE_RIGHT;
     }
     
     void Sword::initAnimation() {
@@ -43,8 +43,8 @@
         Vector2f mouse_pos(Mouse::getPosition(*window));
         if (player_side == PLAYER_ANIMATION_STATES::MOVING_RIGHT) {
             currentFrame.width = 92.f;
-            if (previous_side == 0) {
-                previous_side = 1;
+            if (previous_side == PLAYER_ANIMATION_STATES::MOVING_LEFT || previous_side == PLAYER_ANIMATION_STATES::IDLE_RIGHT) {
+                previous_side = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
                 currentFrame.left = 0.f;
             }
             sword_S.setOrigin(10, 64);
@@ -53,8 +53,8 @@
             sword_S.setRotation(180 / 3.14 * std::atan2(mouse_pos.y + (view_cords.top - view_cords.height / 2) - sword_S.getPosition().y, mouse_pos.x + (view_cords.left - view_cords.width / 2) - sword_S.getPosition().x));
         }
         else {
-            if (previous_side == 1) {
-                previous_side = 0;
+            if (previous_side == PLAYER_ANIMATION_STATES::MOVING_RIGHT || previous_side == PLAYER_ANIMATION_STATES::IDLE_RIGHT) {
+                previous_side = PLAYER_ANIMATION_STATES::MOVING_LEFT;
                 currentFrame.left = 92.f;
             }
             currentFrame.width = -92.f;

@@ -18,8 +18,8 @@
 	void Bow::initVariables(){
 		attack_activation = false;
 		bow_pulled = false;
-		side_of_attack = 0;
-		previous_side = 0;
+		side_of_attack = PLAYER_ANIMATION_STATES::IDLE_LEFT;
+		previous_side = PLAYER_ANIMATION_STATES::IDLE_RIGHT;
 	}
 	
 	void Bow::initAnimation(){
@@ -35,20 +35,24 @@
 		Vector2f mouse_pos(Mouse::getPosition(*window));
 		if (player_side == PLAYER_ANIMATION_STATES::MOVING_RIGHT) {
 			currentFrame.width = 36.f;
-			if (previous_side == 0) {
-				previous_side = 1;
+			if (previous_side == PLAYER_ANIMATION_STATES::MOVING_LEFT) {
 				currentFrame.left -= 36.f;
 			}
+			previous_side = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
+			
 			bow_S.setTextureRect(currentFrame);
 			bow_S.setPosition(player_position.x + 27, player_position.y + 41);
 			rot_angle = 180 / 3.14 * std::atan2(mouse_pos.y + (view_cords.top - view_cords.height / 2) - bow_S.getPosition().y, mouse_pos.x + (view_cords.left - view_cords.width / 2) - bow_S.getPosition().x);
 			bow_S.setRotation(rot_angle);
 		}
 		else {
-			if (previous_side == 1) {
-				previous_side = 0;
+			if (previous_side == PLAYER_ANIMATION_STATES::MOVING_RIGHT) {
 				currentFrame.left += 36.f;
 			}
+			if (previous_side == PLAYER_ANIMATION_STATES::IDLE_RIGHT) {
+				currentFrame.left = 36.f;
+			}
+			previous_side = PLAYER_ANIMATION_STATES::MOVING_LEFT;
 			currentFrame.width = -36.f;
 			bow_S.setTextureRect(currentFrame);
 			//21-82
@@ -124,6 +128,7 @@
 	}
 	
 	void Bow::render(RenderTarget& target){
+		std::cout << bow_S.getPosition().x << "   " << bow_S.getPosition().y << std::endl;
 		target.draw(bow_S);
 	}
 	

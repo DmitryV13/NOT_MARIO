@@ -6,6 +6,6 @@ int main() {
 
     Game game;
     game.start();
-    std::cout << sizeof(game) << std::endl;
+    //std::cout << sizeof(game) << std::endl;
     return 0;
 }

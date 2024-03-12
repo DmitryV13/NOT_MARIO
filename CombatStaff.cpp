@@ -20,8 +20,8 @@
     
     void CombatStaff::initVariables(){
         attack_activation = false;
-        side_of_attack = 0;
-        previous_side = 0;
+        side_of_attack = PLAYER_ANIMATION_STATES::IDLE_LEFT;
+        previous_side = PLAYER_ANIMATION_STATES::IDLE_RIGHT;
     }
     
     void CombatStaff::initAnimation(){
@@ -29,7 +29,9 @@
     }
     
     void CombatStaff::render(RenderTarget& target){
+//        std::cout << staff_S.getPosition().x <<"   "<< staff_S.getPosition().y<< std::endl;
         target.draw(staff_S);
+        std::cout << "   111" << std::endl;
     }
 
     void CombatStaff::renderProjectiles(RenderTarget& target){
@@ -46,8 +48,8 @@
     void CombatStaff::updatePosition(Vector2f player_position, short player_side, RenderWindow* window, FloatRect view_cords){
         if (player_side == PLAYER_ANIMATION_STATES::MOVING_RIGHT) {
             currentFrame.width = 18.f;
-            if (previous_side == 0) {
-                previous_side = 1;
+            if (previous_side == PLAYER_ANIMATION_STATES::MOVING_LEFT || previous_side == PLAYER_ANIMATION_STATES::IDLE_RIGHT) {
+                previous_side = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
                 currentFrame.left = 0.f;
             }
             staff_S.setOrigin(6, 42);
@@ -55,8 +57,8 @@
             staff_S.setPosition(player_position.x + 21, player_position.y + 43);
         }
         else {
-            if (previous_side == 1) {
-                previous_side = 0;
+            if (previous_side == PLAYER_ANIMATION_STATES::MOVING_RIGHT || previous_side == PLAYER_ANIMATION_STATES::IDLE_RIGHT) {
+                previous_side = PLAYER_ANIMATION_STATES::MOVING_LEFT;
                 currentFrame.left = 18.f;
             }
             currentFrame.width = -18.f;

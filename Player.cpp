@@ -98,7 +98,8 @@
         //std::cout << getPosition().x << " " <<getPosition().y<<"\n";
         target.draw(player_S);
         if (alive) {
-        weapons[chosen_weapon]->render(target);
+           // std::cout << chosen_weapon << std::endl;
+            weapons[chosen_weapon]->render(target);
         }
         renderProjectiles(target);
     }
@@ -403,8 +404,7 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
     }
 
     void Player::change_weapon(short count){
-        if (checkStan())
-            return;
+        if (checkStan()) return;
         chosen_weapon+=count;
         if (chosen_weapon >= static_cast<short>(weapons.size())) {
             chosen_weapon = 0;

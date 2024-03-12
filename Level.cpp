@@ -479,6 +479,7 @@
 			}
 			if (event.type == sf::Event::MouseWheelScrolled)
 			{
+				
 				if (event.mouseWheelScroll.delta > 0)
 				{
 					player->change_weapon(1);

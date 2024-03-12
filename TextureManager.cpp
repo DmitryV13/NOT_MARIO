@@ -305,7 +305,7 @@
 			std::cout << "Error -> TextureManager -> couldn't laser texture" << std::endl;
 		}
 		//std::cout << sizeof(textures);
-		std::cout << "uoigiuoiuofu   ";
+		//std::cout << "uoigiuoiuofu   ";
 	}
 
 	Texture& TextureManager::getTexture(int index, string name)

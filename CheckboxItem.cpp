@@ -30,12 +30,12 @@
 					if (!chosen) {
 						chosen = true;
 						fi_state = FORM_ITEM_STATE::FORM_ITEM_ACTIVE_1;
-						std::cout << "active" << std::endl;
+						//std::cout << "active" << std::endl;
 					}
 					else {
 						chosen = false;
 						fi_state = FORM_ITEM_STATE::FORM_ITEM_IDLE;
-						std::cout << "idle" << std::endl;
+						//std::cout << "idle" << std::endl;
 					}
 					unpressed = false;
 				}
