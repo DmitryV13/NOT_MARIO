@@ -31,7 +31,7 @@
 
     void Player::initSprite(TextureManager* t_manager, int index, string name){
         player_S.setTexture(t_manager->getTexture(index, name));
-        currentFrame = IntRect(2, 80, 48, 70);
+        currentFrame = IntRect(0, 80, 48, 70);
         player_S.setTextureRect(currentFrame);
         //initial position
         player_S.setPosition(10, 10);
@@ -40,7 +40,7 @@
 
     void Player::initSprite(Vector2f position, TextureManager* t_manager, int index, string name){
         player_S.setTexture(t_manager->getTexture(index, name));
-        currentFrame = IntRect(2, 80, 48, 70);
+        currentFrame = IntRect(0, 80, 48, 70);
         player_S.setTextureRect(currentFrame);
         //initial position
         player_S.setPosition(position);
