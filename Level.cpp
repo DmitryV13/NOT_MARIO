@@ -419,7 +419,7 @@
 		}
 		else
 		{
-			player = new Player(sandbox, Vector2f(150, 2600), t_manager, 4, "Hero1");
+			player = new Player(sandbox, Vector2f(100, 2600), t_manager, 4, "Hero1");
 		}
 	}
 	

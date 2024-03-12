@@ -35,8 +35,10 @@ void MyView::updateLeft(double left) {
 			windowLeft -= offset;
 		}
 		else {
-			offset = 0;
-			view.reset(FloatRect(absoluteLeft, windowTop, screenWidth, screenHeight));
+			offset = windowLeft - 1;
+			viewScreen.left -= offset;
+			windowRight -= offset;
+			windowLeft -= offset;
 		}
 	}
 	else {
@@ -54,8 +56,10 @@ void MyView::updateRight(double right) {
 			windowLeft += offset;
 		}
 		else {
-			offset = 0;
-			view.reset(FloatRect(absoluteRight - screenWidth, windowTop, screenWidth, screenHeight));
+			offset = absoluteRight - windowRight - 1;
+			viewScreen.left += offset;
+			windowRight += offset;
+			windowLeft += offset;
 		}
 	}
 	else {
@@ -73,8 +77,10 @@ void MyView::updateTop(double top) {
 			windowBottom -= offset;
 		}
 		else {
-			offset = 0;
-			view.reset(FloatRect(windowLeft, absoluteTop, screenWidth, screenHeight));
+			offset = windowTop-1;
+			viewScreen.top -= offset;
+			windowTop -= offset;
+			windowBottom -= offset;
 		}
 	}
 	else {
@@ -92,8 +98,10 @@ void MyView::updateBottom(double bottom) {
 			windowBottom += offset;
 		}
 		else {
-			offset = 0;
-			view.reset(FloatRect(windowLeft, absoluteBottom - screenHeight, screenWidth, screenHeight));
+			offset = absoluteBottom-windowBottom-1;
+			viewScreen.top += offset;
+			windowTop += offset;
+			windowBottom += offset;
 		}
 	}
 	else {
