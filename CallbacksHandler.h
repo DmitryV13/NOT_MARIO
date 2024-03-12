@@ -2,8 +2,10 @@
 
 using namespace::sf;
 
+using CallbackFunctions = vector <std::function<void(float)>>;
+
 using CallbackContainer = unordered_map<
-	short*, std::function<void(float)>>;
+	short*, CallbackFunctions>;
 
 using Callbacks = unordered_map<
 	short, CallbackContainer>;
@@ -24,9 +26,11 @@ public:
 };
 
 template<class T>
-inline bool CallbacksHandler::addCallback(short* b_state, short a_state, float param, void(T::* l_func)(float), T* l_instance) {
-	c_parameters.insert({ b_state, param });
+inline bool CallbacksHandler::addCallback(short* c_state, short a_state, float param, void(T::* l_func)(float), T* l_instance) {
+	c_parameters.insert({ c_state, param });
 	auto itr = w_callbacks.emplace(a_state, CallbackContainer()).first;
 	auto temp = std::bind(l_func, l_instance, std::placeholders::_1);
-	return itr->second.emplace(b_state, temp).second;
+	bool inserted = itr->second.emplace(c_state, CallbackFunctions()).second;
+	itr->second.at(c_state).push_back(temp);
+	return inserted;
 }

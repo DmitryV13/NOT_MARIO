@@ -9,7 +9,9 @@
 			for (auto j : i.second) {
 				auto g = (j.first);
 				if (i.first == *(j.first)) {
-					j.second(c_parameters[j.first]);
+					for (size_t ind = 0; ind < j.second.size(); ind++){
+						j.second[ind](c_parameters[j.first]);
+					}
 				}
 			}
 		}
