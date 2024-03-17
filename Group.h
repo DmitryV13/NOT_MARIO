@@ -1,7 +1,8 @@
 #pragma once
 #include "InterfaceItem.h"
-#include "INTERFACE_ITEM_TYPE.h"
 #include "ImageButton.h"
+#include "FormItem.h"
+#include "InputField.h"
 
 class Group : public InterfaceItem{
 protected:
@@ -24,7 +25,7 @@ public:
 	Group(float x, float y, float width_, float height_);
 
 	FloatRect getLocalBounds() override;
-	FloatRect getGlobalBounds();
+	FloatRect getGlobalBounds() override;
 	float getMaxELHeight(short index);
 	short* getButtonState(int btn_id);
 
@@ -57,6 +58,7 @@ public:
 	CRect<float>* calculatePFNII(short fill_p_w, short fill_p_h, short index);
 	void resetActiveState() override;
 
+	void formInput(Event event);
 	void update(Vector2f mouse_pos, FloatRect view_cords) override;
 	void render(RenderTarget* target);
 };

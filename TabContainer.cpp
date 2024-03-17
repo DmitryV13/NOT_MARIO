@@ -39,7 +39,7 @@
 		}
 	}
 
-	void TabContainer::changeCurrentTab(float tab_index){
+	void TabContainer::changeCurrentTab(float tab_index, float param2){
 		current_tab = static_cast<int>(tab_index);
 	}
 

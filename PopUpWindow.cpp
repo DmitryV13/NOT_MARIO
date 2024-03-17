@@ -6,6 +6,7 @@
 		RenderWindow* window_, TextureManager* t_manager_)
 		:width(width_), height(height_), window(window_), puw_state(POP_UP_WINDOW_STATE::PUW_CLOSED){
 		callbacks_handler = new CallbacksHandler();
+		dcallbacks_handler = new DCallbacksHandler();
 		manager = t_manager_;
 
 		w_background = new ComposedIMG(width, height, 6, manager, 2);
@@ -17,6 +18,7 @@
 		RenderWindow* window_, string positionX, string positionY, TextureManager* t_manager_)
 		:width(width_), height(height_), window(window_), puw_state(POP_UP_WINDOW_STATE::PUW_CLOSED){
 		callbacks_handler = new CallbacksHandler();
+		dcallbacks_handler = new DCallbacksHandler();
 		manager = t_manager_;
 
 		w_background = new ComposedIMG(width, height, 6, manager, 1);
@@ -28,6 +30,7 @@
 		RenderWindow* window_, string positionX, int y, TextureManager* t_manager_)
 		:width(width_), height(height_), window(window_), puw_state(POP_UP_WINDOW_STATE::PUW_CLOSED){
 		callbacks_handler = new CallbacksHandler();
+		dcallbacks_handler = new DCallbacksHandler();
 		manager = t_manager_;
 
 		w_background = new ComposedIMG(width, height, 6, manager, 1);
@@ -39,6 +42,7 @@
 		RenderWindow* window_, int x, string positionY, TextureManager* t_manager_)
 		:width(width_), height(height_), window(window_), puw_state(POP_UP_WINDOW_STATE::PUW_CLOSED){
 		callbacks_handler = new CallbacksHandler();
+		dcallbacks_handler = new DCallbacksHandler();
 		manager = t_manager_;
 
 		w_background = new ComposedIMG(width, height, 6, manager, 1);
@@ -55,15 +59,13 @@
 	void PopUpWindow::setSize(){
 	}
 
-	void PopUpWindow::setPUWStateO(float q){
-		puw_state = POP_UP_WINDOW_STATE::PUW_OPENED;
-	}
-
-	void PopUpWindow::setPUWStateC(float q){
-		puw_state = POP_UP_WINDOW_STATE::PUW_CLOSED;
-		for (auto i : groups) {
-			for (auto j : i) {
-				j->resetActiveState();
+	void PopUpWindow::setPUWState(float param1, float param2){
+		puw_state = static_cast<short>(param1);
+		if (puw_state == POP_UP_WINDOW_STATE::PUW_CLOSED) {
+			for (auto i : groups) {
+				for (auto j : i) {
+					j->resetActiveState();
+				}
 			}
 		}
 	}
@@ -149,6 +151,14 @@
 		return new CRect<float>(new_gposition_x, new_gposition_y, fill_p_w * width / 100, fill_p_h * height / 100);
 	}
 	
+	void PopUpWindow::formInput(Event event){
+		for (auto i : groups) {
+			for (auto j : i) {
+				((Group*)j)->formInput(event);
+			}
+		}
+	}
+
 	void PopUpWindow::update(FloatRect view_cords){
 		w_background->update(view_cords);
 		if(label!=nullptr)
@@ -161,6 +171,7 @@
 		}
 
 		callbacks_handler->update();
+		dcallbacks_handler->update();
 	}
 	
 	void PopUpWindow::render(){

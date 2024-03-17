@@ -324,6 +324,18 @@
     <ClCompile Include="killer_leaf.cpp">
       <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="InputField.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FORM_ITEM_TYPE.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DCallbacksHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextareaField.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Map.h">
@@ -378,9 +390,6 @@
       <Filter>Header Files\GameObjects\Artificial\Weapons\RangedWeapons</Filter>
     </ClInclude>
     <ClInclude Include="ORIENTATION.h">
-      <Filter>Header Files\Enums</Filter>
-    </ClInclude>
-    <ClInclude Include="MENU_STATE.h">
       <Filter>Header Files\Enums</Filter>
     </ClInclude>
     <ClInclude Include="TileAnim.h">
@@ -562,6 +571,24 @@
     </ClInclude>
     <ClInclude Include="InterfaceItem.h">
       <Filter>Header Files\GUI\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="InputField.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENEMY_ANIMATION_STATE.h">
+      <Filter>Header Files\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="ENEMY_STATE.h">
+      <Filter>Header Files\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="FORM_ITEM_TYPE.h">
+      <Filter>Header Files\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="DCallbacksHandler.h">
+      <Filter>Header Files\ServiceClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="TextareaField.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

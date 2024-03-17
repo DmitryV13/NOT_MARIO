@@ -81,7 +81,7 @@
 	void Game::initOptions(){
 		options = new MainMenuOption*[options_number];
 		options[0] = new RoadMap(&window, screen_width, screen_height, menuMainColor[menuGUIS], t_manager);
-		options[1] = new Setting();
+		options[1] = new Setting(&window, screen_width, screen_height, menuMainColor[menuGUIS], t_manager);
 		options[2] = new Exit();
 
 		options_indexes = new short[options_number];

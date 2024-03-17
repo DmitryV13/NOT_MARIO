@@ -7,6 +7,7 @@
 #include "BUTTON_STATE.h"
 #include "POP_UP_WINDOW_STATE.h"
 #include "CallbacksHandler.h"
+#include "DCallbacksHandler.h"
 
 class PopUpWindow{
 private:
@@ -18,6 +19,7 @@ private:
 	short puw_state;
 
 	CallbacksHandler* callbacks_handler;
+	DCallbacksHandler* dcallbacks_handler;
 	//inner clean parameters
 	int width;
 	int height;
@@ -39,8 +41,7 @@ public:
 
 	void setBackground();
 	void setSize();
-	void setPUWStateO(float q);
-	void setPUWStateC(float q);
+	void setPUWState(float param1, float param2);
 
 	short getState();
 	int getMaxGroupsHeight(short index);
@@ -56,15 +57,24 @@ public:
 	void addDelimiter();
 
 	template<class T>
-	bool addCallback(short* b_state, short a_state, float param, void(T::* l_func)(float), T* l_instance);
+	bool addCallback(short* b_state, short a_state, float param1, float param2, void(T::* l_func)(float, float), T* l_instance);
+
+	template<class T>
+	bool addDCallback(short* b_state, short a_state, string* param1, string* param2, void(T::* l_func)(string*, string*), T* l_instance);
 
 	CRect<float>* calculatePFNG(short fill_p_w, short fill_p_h, short index);//parameters for new group
 
+	void formInput(Event event);
 	void update(FloatRect view_cords);
 	void render();
 };
 
 template<class T>
-inline bool PopUpWindow::addCallback(short* b_state, short a_state, float param, void(T::* l_func)(float), T* l_instance){
-	return callbacks_handler->addCallback(b_state, a_state, param, l_func, l_instance);
+inline bool PopUpWindow::addCallback(short* b_state, short a_state, float param1, float param2, void(T::* l_func)(float, float), T* l_instance){
+	return callbacks_handler->addCallback(b_state, a_state, param1, param2, l_func, l_instance);
+}
+
+template<class T>
+inline bool PopUpWindow::addDCallback(short* b_state, short a_state, string* param1, string* param2, void(T::* l_func)(string*, string*), T* l_instance) {
+	return dcallbacks_handler->addCallback(b_state, a_state, param1, param2, l_func, l_instance);
 }

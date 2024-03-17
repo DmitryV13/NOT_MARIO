@@ -146,8 +146,11 @@
     <ClCompile Include="BushKiller.cpp" />
     <ClCompile Include="CheckboxItem.cpp" />
     <ClCompile Include="Chest.cpp" />
+    <ClCompile Include="DCallbacksHandler.cpp" />
     <ClCompile Include="Form.cpp" />
     <ClCompile Include="FormItem.cpp" />
+    <ClCompile Include="FORM_ITEM_TYPE.cpp" />
+    <ClCompile Include="InputField.cpp" />
     <ClCompile Include="MovingAnimObject.cpp" />
     <ClCompile Include="MovingObject.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -165,6 +168,7 @@
     <ClCompile Include="ImageButton.cpp" />
     <ClCompile Include="ImageInfo.cpp" />
     <ClCompile Include="InventoryItem.cpp" />
+    <ClCompile Include="TextareaField.cpp" />
     <ClCompile Include="Warehouse.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="Notification.cpp" />
@@ -218,12 +222,14 @@
     <ClInclude Include="BushKiller.h" />
     <ClInclude Include="CheckboxItem.h" />
     <ClInclude Include="Chest.h" />
+    <ClInclude Include="DCallbacksHandler.h" />
     <ClInclude Include="ENEMY_ANIMATION_STATE.h" />
     <ClInclude Include="ENEMY_STATE.h" />
     <ClInclude Include="Form.h" />
     <ClInclude Include="FormItem.h" />
     <ClInclude Include="FORM_ITEM_STATE.h" />
-    <ClInclude Include="MENU_STATE.h" />
+    <ClInclude Include="FORM_ITEM_TYPE.h" />
+    <ClInclude Include="InputField.h" />
     <ClInclude Include="BUTTON_STATE.h" />
     <ClInclude Include="CallbacksHandler.h" />
     <ClInclude Include="ComposedIMG.h" />
@@ -241,6 +247,7 @@
     <ClInclude Include="INTERFACE_ITEM_TYPE.h" />
     <ClInclude Include="InventoryItem.h" />
     <ClInclude Include="OBJECT_TYPE.h" />
+    <ClInclude Include="TextareaField.h" />
     <ClInclude Include="Warehouse.h" />
     <ClInclude Include="Label.h" />
     <ClInclude Include="Notification.h" />

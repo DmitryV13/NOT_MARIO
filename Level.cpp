@@ -54,9 +54,9 @@
 		pm->addButton(40, font, "BACK TO LOBBY", menuColor, 2, 2);
 	
 		pm->setAlignment("center auto", "center 50");
-		pause_menu->addCallback(pm->getButtonState(0), (short)BUTTON_STATE::BTN_ACTIVE, 0, &Level::continueGame, this);
+		pause_menu->addCallback(pm->getButtonState(0), (short)BUTTON_STATE::BTN_ACTIVE, 0, 0, &Level::continueGame, this);
 	
-		pause_menu->addCallback(pm->getButtonState(2), (short)BUTTON_STATE::BTN_ACTIVE, 0, &Level::finishGame, this);
+		pause_menu->addCallback(pm->getButtonState(2), (short)BUTTON_STATE::BTN_ACTIVE, 0, 0, &Level::finishGame, this);
 		pause_menu->addGroup(pm, 0);
 	
 		///////////////////////////////////////////////////////////////
@@ -101,12 +101,12 @@
 		tmp = ci_g1_bottom->calculatePFNII(30, 70, 0);
 		ci_g1_bottom->addButton(tmp->third, tmp->fourth, 20, font, "TAKE", Color::White, Color::White,
 			Color(239, 135, 6, 255), Color(239, 155, 6, 255), false, 0, 0);
-		chest_items->addCallback(ci_g1_bottom->getButtonState(0), BUTTON_STATE::BTN_ACTIVE, 0,
+		chest_items->addCallback(ci_g1_bottom->getButtonState(0), BUTTON_STATE::BTN_ACTIVE, 0, 0,
 			&Form::activateForm, (Form*)ci_f0_top);
 		ci_g1_bottom->addButton(tmp->third, tmp->fourth, 20, font, "CLOSE", Color::White, Color::White,
 			Color(212, 24, 22, 255), Color(212, 24, 22, 255), false, 1, 0);
-		chest_items->addCallback(ci_g1_bottom->getButtonState(1), BUTTON_STATE::BTN_ACTIVE, 0,
-			&PopUpWindow::setPUWStateC, chest_items);
+		chest_items->addCallback(ci_g1_bottom->getButtonState(1), BUTTON_STATE::BTN_ACTIVE, POP_UP_WINDOW_STATE::PUW_CLOSED, 0,
+			&PopUpWindow::setPUWState, chest_items);
 	
 		ci_g1_bottom->setAlignment("space around", "center 0");
 		ci->setAlignment("center 0", "space between 10");
@@ -240,12 +240,12 @@
 		}
 	}
 	
-	void Level::finishGame(float q)
+	void Level::finishGame(float param1, float param2)
 	{
 		game_state = GAME_STATE::FINISHED;
 	}
 	
-	void Level::continueGame(float q)
+	void Level::continueGame(float param1, float param2)
 	{
 		game_state = GAME_STATE::CONTINUES;
 	}
@@ -495,7 +495,7 @@
 					if (object_available == OBJECT_TYPE::CHEST) {
 						std::cout << "chest" << std::endl;
 						available_object->useObject();
-						chest_items->setPUWStateO(0);
+						chest_items->setPUWState(POP_UP_WINDOW_STATE::PUW_OPENED, 0);
 					}
 					if (object_available == OBJECT_TYPE::SWITCH) {
 						std::cout << "switch" << std::endl;

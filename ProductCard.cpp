@@ -60,7 +60,7 @@
 		group->changePosition(offset_x, offset_y);
 	}
 	
-	void ProductCard::buy(float q){
+	void ProductCard::buy(float param1, float param2){
 		if (*currency >= price) {
 			*source += amount;
 			*currency -= price;

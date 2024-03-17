@@ -35,8 +35,8 @@
 		asi_g0_g0_left->createElementLine();
 		asi_g0_g0_left->addButton(240, 80, 40, font, "SHOP", Color::White, Color::White,
 			Color(14, 178, 12, 255), Color(14, 178, 12, 255), true, 10, 0);
-		cb_handler->addCallback(asi_g0_g0_left->getButtonState(10), BUTTON_STATE::BTN_ACTIVE, 0,
-			&PopUpWindow::setPUWStateO, shop);
+		cb_handler->addCallback(asi_g0_g0_left->getButtonState(10), BUTTON_STATE::BTN_ACTIVE, POP_UP_WINDOW_STATE::PUW_OPENED, 0,
+			&PopUpWindow::setPUWState, shop);
 
 		tmp = asi_g0_top->calculatePFNII(60, 100, 0);
 		Group* asi_g0_g1_center = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
@@ -70,7 +70,7 @@
 		asi_g0_g2_right->createElementLine();
 		asi_g0_g2_right->addButton(80, 80, 40, font, "", menuColor, Color::White, Color(108, 82, 59, 255)
 			, Color(163, 118, 76, 255), t_manager, 0, "ArrowBack", true, 9, 0);
-		cb_handler->addCallback(asi_g0_g2_right->getButtonState(9), BUTTON_STATE::BTN_ACTIVE, 0, &RoadMap::closeRoadMap, this);
+		cb_handler->addCallback(asi_g0_g2_right->getButtonState(9), BUTTON_STATE::BTN_ACTIVE, 0, 0, &RoadMap::closeRoadMap, this);
 		
 		asi_g0_g0_left->setAlignment("left 30", "center 0");
 		asi_g0_g1_center->setAlignment("center 160", "center 0");
@@ -89,12 +89,12 @@
 		delete tmp;
 		asi_g1_center->addButton(100, 100, 40, font, "", menuColor, Color::White, Color(239, 135, 6, 255)
 			, Color(255, 185, 12), t_manager, 0, "ArrowL", true, 0, 0);
-		cb_handler->addCallback(asi_g1_center->getButtonState(0), BUTTON_STATE::BTN_ACTIVE, -1,
+		cb_handler->addCallback(asi_g1_center->getButtonState(0), BUTTON_STATE::BTN_ACTIVE, -1, 0,
 			&Reviewer::changeCurrentImage, asi_g1_r0_center);
 		asi_g1_center->addIElement((InterfaceItem*)asi_g1_r0_center, 0);
 		asi_g1_center->addButton(100, 100, 40, font, "", menuColor, Color::White, Color(239, 135, 6, 255)
 			, Color(255, 185, 12), t_manager, 0, "ArrowR", true, 1, 0);
-		cb_handler->addCallback(asi_g1_center->getButtonState(1), BUTTON_STATE::BTN_ACTIVE, 1,
+		cb_handler->addCallback(asi_g1_center->getButtonState(1), BUTTON_STATE::BTN_ACTIVE, 1, 0,
 			&Reviewer::changeCurrentImage, asi_g1_r0_center);
 
 		asi_g1_r0_center->addAnimatedImage(t_manager, warehouse, "Hero1");
@@ -110,12 +110,12 @@
 		asi_g2_bottom->createElementLine();
 		asi_g2_bottom->addButton(400, 120, 40, font, "INVENTORY", Color::White, Color::White,
 			Color(212, 24, 22, 255), Color(212, 24, 22, 255), true, 2, 0);
-		cb_handler->addCallback(asi_g2_bottom->getButtonState(2), BUTTON_STATE::BTN_ACTIVE, 0,
-			&PopUpWindow::setPUWStateO, inventory);
+		cb_handler->addCallback(asi_g2_bottom->getButtonState(2), BUTTON_STATE::BTN_ACTIVE, POP_UP_WINDOW_STATE::PUW_OPENED, 0,
+			&PopUpWindow::setPUWState, inventory);
 		asi_g2_bottom->addButton(400, 120, 40, font, "PLAY", Color::White, Color::White,
 			Color(43, 95, 194, 255), Color(43, 95, 194, 255), true, 3, 0);
-		cb_handler->addCallback(asi_g2_bottom->getButtonState(3), BUTTON_STATE::BTN_ACTIVE, 0,
-			&PopUpWindow::setPUWStateO, level_selection);
+		cb_handler->addCallback(asi_g2_bottom->getButtonState(3), BUTTON_STATE::BTN_ACTIVE, POP_UP_WINDOW_STATE::PUW_OPENED, 0,
+			&PopUpWindow::setPUWState, level_selection);
 		asi_g2_bottom->setAlignment("space between 200", "center 0");
 		
 		all_static_items->setAlignment("center 0", "bottom 0");
@@ -141,11 +141,11 @@
 		ls_g0_top->createElementLine();
 		ls_g0_top->addButton(100, 100, 40, font, "1", menuColor, Color::White, Color(43, 43, 120, 255),
 			Color(43, 43, 120, 255), false, 4, 0);
-		level_selection->addCallback(ls_g0_top->getButtonState(4), BUTTON_STATE::BTN_ACTIVE, 4,
+		level_selection->addCallback(ls_g0_top->getButtonState(4), BUTTON_STATE::BTN_ACTIVE, 4, 0,
 			&RoadMap::openLevel, this);
 		ls_g0_top->addButton(100, 100, 40, font, "2", menuColor, Color::White, Color(43, 43, 120, 255),
 			Color(43, 43, 120, 255), false, 40, 0);
-		level_selection->addCallback(ls_g0_top->getButtonState(40), BUTTON_STATE::BTN_ACTIVE, 5,
+		level_selection->addCallback(ls_g0_top->getButtonState(40), BUTTON_STATE::BTN_ACTIVE, 5, 0,
 			&RoadMap::openLevel, this);
 		ls_g0_top->setAlignment("center 20", "center 0");
 
@@ -163,11 +163,11 @@
 			Color(43, 43, 120, 255), false, 6, 0);
 		ls_g1_center->addButton(100, 100, 40, font, "3", menuColor, Color::White, Color(43, 43, 120, 255),
 			Color(43, 43, 120, 255), false, 7, 0);
-		level_selection->addCallback(ls_g1_center->getButtonState(5), BUTTON_STATE::BTN_ACTIVE, 1,
+		level_selection->addCallback(ls_g1_center->getButtonState(5), BUTTON_STATE::BTN_ACTIVE, 1, 0,
 			&RoadMap::openLevel, this);
-		level_selection->addCallback(ls_g1_center->getButtonState(6), BUTTON_STATE::BTN_ACTIVE, 2,
+		level_selection->addCallback(ls_g1_center->getButtonState(6), BUTTON_STATE::BTN_ACTIVE, 2, 0,
 			&RoadMap::openLevel, this);
-		level_selection->addCallback(ls_g1_center->getButtonState(7), BUTTON_STATE::BTN_ACTIVE, 3,
+		level_selection->addCallback(ls_g1_center->getButtonState(7), BUTTON_STATE::BTN_ACTIVE, 3, 0,
 			&RoadMap::openLevel, this);
 		ls_g1_center->setAlignment("center 20", "center 0");
 
@@ -180,8 +180,8 @@
 		ls_g2_bottom->createElementLine();
 		ls_g2_bottom->addButton(300, 100, 40, font, "CLOSE", menuColor, Color::White,
 			Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 8, 0);
-		level_selection->addCallback(ls_g2_bottom->getButtonState(8), BUTTON_STATE::BTN_ACTIVE, 0,
-			&PopUpWindow::setPUWStateC, level_selection);
+		level_selection->addCallback(ls_g2_bottom->getButtonState(8), BUTTON_STATE::BTN_ACTIVE, POP_UP_WINDOW_STATE::PUW_CLOSED, 0,
+			&PopUpWindow::setPUWState, level_selection);
 		ls_g2_bottom->setAlignment("center 0", "bottom 0");
 
 		ls->setAlignment("center 0", "space around 0");
@@ -243,7 +243,7 @@
 		s_tc0_0_pc0_g->createElementLine();
 		s_tc0_0_pc0_g->addButton(tmp->third, tmp->fourth-1, 30, font, "BUY", Color::White,
 			Color::White, Color(239, 135, 6, 255), Color(239, 135, 6, 255), false, 14, 2);
-		shop->addCallback(s_tc0_0_pc0_g->getButtonState(14), BUTTON_STATE::BTN_ACTIVE, 0,
+		shop->addCallback(s_tc0_0_pc0_g->getButtonState(14), BUTTON_STATE::BTN_ACTIVE, 0, 0,
 			&ProductCard::buy, s_tc0_0_pc0);
 		delete tmp;
 
@@ -266,18 +266,18 @@
 		s_g1_right->createElementLine();
 		s_g1_right->addButton(tmp->third, 60, 20, font, "BUY", menuColor, Color::White,
 			Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 11, 0);
-		shop->addCallback(s_g1_right->getButtonState(11), BUTTON_STATE::BTN_ACTIVE, 0,
+		shop->addCallback(s_g1_right->getButtonState(11), BUTTON_STATE::BTN_ACTIVE, 0, 0,
 			&TabContainer::changeCurrentTab, s_tc0_left);
 		s_g1_right->createElementLine();
 		s_g1_right->addButton(tmp->third, 60, 20, font, "UPGRADE", menuColor, Color::White,
 			Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 12, 1);
-		shop->addCallback(s_g1_right->getButtonState(12), BUTTON_STATE::BTN_ACTIVE, 1,
+		shop->addCallback(s_g1_right->getButtonState(12), BUTTON_STATE::BTN_ACTIVE, 1, 0,
 			&TabContainer::changeCurrentTab, s_tc0_left);
 		s_g1_right->createElementLine();
 		s_g1_right->addButton(tmp->third, 60, 20, font, "CLOSE", menuColor, Color::White,
 			Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 13, 2);
-		shop->addCallback(s_g1_right->getButtonState(13), BUTTON_STATE::BTN_ACTIVE, 0,
-			&PopUpWindow::setPUWStateC, shop);
+		shop->addCallback(s_g1_right->getButtonState(13), BUTTON_STATE::BTN_ACTIVE, POP_UP_WINDOW_STATE::PUW_CLOSED, 0,
+			&PopUpWindow::setPUWState, shop);
 		s_g1_right->setAlignment("center 0", "top 5");
 		delete tmp;
 
@@ -383,32 +383,32 @@
 		i_g1_right->createElementLine();
 		i_g1_right->addButton(tmp->third, 60, 20, font, "WEAPONS", menuColor, Color::White,
 			Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 15, 0);
-		inventory->addCallback(i_g1_right->getButtonState(15), BUTTON_STATE::BTN_ACTIVE, 0,
+		inventory->addCallback(i_g1_right->getButtonState(15), BUTTON_STATE::BTN_ACTIVE, 0, 0,
 			&TabContainer::changeCurrentTab, i_tc0_left);
 
 		i_g1_right->createElementLine();
 		i_g1_right->addButton(tmp->third, 60, 20, font, "AMMO", menuColor, Color::White,
 			Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 16, 1);
-		inventory->addCallback(i_g1_right->getButtonState(16), BUTTON_STATE::BTN_ACTIVE, 1,
+		inventory->addCallback(i_g1_right->getButtonState(16), BUTTON_STATE::BTN_ACTIVE, 1, 0,
 			&TabContainer::changeCurrentTab, i_tc0_left);
 
 		i_g1_right->createElementLine();
 		i_g1_right->addButton(tmp->third, 60, 20, font, "POTIONS", menuColor, Color::White,
 			Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 17, 2);
-		inventory->addCallback(i_g1_right->getButtonState(17), BUTTON_STATE::BTN_ACTIVE, 2,
+		inventory->addCallback(i_g1_right->getButtonState(17), BUTTON_STATE::BTN_ACTIVE, 2, 0,
 			&TabContainer::changeCurrentTab, i_tc0_left);
 
 		i_g1_right->createElementLine();
 		i_g1_right->addButton(tmp->third, 60, 20, font, "OTHER", menuColor, Color::White,
 			Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 18, 3);
-		inventory->addCallback(i_g1_right->getButtonState(18), BUTTON_STATE::BTN_ACTIVE, 3,
+		inventory->addCallback(i_g1_right->getButtonState(18), BUTTON_STATE::BTN_ACTIVE, 3, 0,
 			&TabContainer::changeCurrentTab, i_tc0_left);
 
 		i_g1_right->createElementLine();
 		i_g1_right->addButton(tmp->third, 60, 20, font, "CLOSE", menuColor, Color::White,
 			Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 19, 4);
-		inventory->addCallback(i_g1_right->getButtonState(19), BUTTON_STATE::BTN_ACTIVE, 0,
-			&PopUpWindow::setPUWStateC, inventory);
+		inventory->addCallback(i_g1_right->getButtonState(19), BUTTON_STATE::BTN_ACTIVE, POP_UP_WINDOW_STATE::PUW_CLOSED, 0,
+			&PopUpWindow::setPUWState, inventory);
 
 		delete tmp;
 		i_g1_right->setAlignment("center 0", "top 5");
@@ -459,7 +459,7 @@
 		updateEvents();
 	}
 
-	void RoadMap::openLevel(float level_index){
+	void RoadMap::openLevel(float level_index, float param2){
 		Level* level;
 		if(level_index<4)
 			level = new Level(window, screen_width, screen_height, static_cast<int>(level_index), menuColor, t_manager, warehouse, -1);
@@ -468,10 +468,10 @@
 		level->start();
 		delete level;
 		menu_timer.restart();
-		level_selection->setPUWStateC(0);
+		level_selection->setPUWState(POP_UP_WINDOW_STATE::PUW_CLOSED, 0);
 	}
 
-	void RoadMap::closeRoadMap(float q){
+	void RoadMap::closeRoadMap(float param1, float param2){
 		state = PAGE_STATE::PAGE_CLOSED;
 	}
 

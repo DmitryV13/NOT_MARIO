@@ -181,7 +181,6 @@ Button::Button(float x, float y, float width, float height, short text_size, sf:
 	
 	void Button::update(Vector2f mouse_pos, FloatRect view_cords){
 		updatePosition(view_cords);
-
 		button_cstate = BUTTON_STATE::BTN_IDLE;
 		if (shape.getGlobalBounds().contains(mouse_pos.x + (view_cords.left - view_cords.width / 2), mouse_pos.y + (view_cords.top - view_cords.height / 2))) {
 			button_cstate = BUTTON_STATE::BTN_HOVERED;

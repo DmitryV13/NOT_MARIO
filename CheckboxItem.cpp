@@ -6,6 +6,7 @@
 		visible = true;
 		ii_type = INTERFACE_ITEM_TYPE::FORM_ITEM;
 		fi_state = FORM_ITEM_STATE::FORM_ITEM_IDLE;
+		fi_type = FORM_ITEM_TYPE::CHECKBOX_ITEM;
 		chosen = false;
 		unpressed = true;
 		shape.setOutlineThickness(1.f);
@@ -43,6 +44,7 @@
 			if (!Mouse::isButtonPressed(sf::Mouse::Left)) {
 				unpressed = true;
 			}
+			std::cout << fi_state << std::endl;
 		}
 
 		//if (fi_state == FORM_ITEM_STATE::FORM_ITEM_ACTIVE_1) {

@@ -40,7 +40,7 @@ public:
 
 	void changePosition(float offset_x, float offset_y) override;
 
-	void buy(float q);
+	void buy(float param1, float param2);
 
 	void update(Vector2f mouse_pos, FloatRect view_cords) override;
 	void render(sf::RenderTarget* target) override;

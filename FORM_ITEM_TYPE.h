@@ -1,0 +1,7 @@
+#pragma once
+enum FORM_ITEM_TYPE { 
+	CHECKBOX_ITEM,
+	CHECKBOX_FIELD,
+	INPUT_FIELD
+};
+

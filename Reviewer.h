@@ -29,7 +29,7 @@ public:
 
 	void changePosition(float offset_x, float offset_y) override;
 
-	void changeCurrentImage(float next);
+	void changeCurrentImage(float next, float param2);
 
 	void update(Vector2f mouse_pos, FloatRect view_cords) override;
 	void render(RenderTarget* target) override;

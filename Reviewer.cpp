@@ -103,7 +103,7 @@
 		setPosition(Vector2f(position.x + offset_x, position.y + offset_y));
 	}
 
-	void Reviewer::changeCurrentImage(float next){
+	void Reviewer::changeCurrentImage(float next, float param2){
 		if (current_image + static_cast<int>(next) < images.size() 
 			&& current_image + static_cast<int>(next)>=0) {	
 		current_image += static_cast<int>(next);

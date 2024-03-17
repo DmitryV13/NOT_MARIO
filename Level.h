@@ -73,8 +73,8 @@ public:
 	Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level, Color menuColor, TextureManager* t_manager_, Warehouse* warehouse_, short regime_);
 	~Level();
 
-	void finishGame(float q);
-	void continueGame(float q);
+	void finishGame(float param1, float param2);
+	void continueGame(float param1, float param2);
 
 	//const sf::RenderWindow& getWindow() const;
 	void update();

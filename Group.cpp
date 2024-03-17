@@ -488,6 +488,23 @@
 		}
 	}
 
+	void Group::formInput(Event event){
+		for (auto i : g_elements) {
+			for (auto j : i) {
+				if (j->getIIType() == INTERFACE_ITEM_TYPE::FORM_ITEM) {
+					switch (dynamic_cast<FormItem*>(j)->getFIType()) {
+					case FORM_ITEM_TYPE::INPUT_FIELD:
+						((InputField*)j)->formEInput(event);
+						break;
+					}
+				}
+				else if (j->getIIType() == INTERFACE_ITEM_TYPE::GROUP) {
+					((Group*)j)->formInput(event);
+				}
+			}
+		}
+	}
+
 	void Group::update(Vector2f mouse_pos, FloatRect view_cords){
 		if (name != nullptr) {
 			name->setPosition(
