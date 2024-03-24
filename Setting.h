@@ -4,6 +4,7 @@
 #include "PopUpWindow.h"
 #include "InputField.h"
 #include "TextareaField.h"
+#include "NumberField.h"
 
 using namespace sf;
 

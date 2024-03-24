@@ -89,6 +89,7 @@
 		delete tmp;
 		asi_g1_center->addButton(100, 100, 40, font, "", menuColor, Color::White, Color(239, 135, 6, 255)
 			, Color(255, 185, 12), t_manager, 0, "ArrowL", true, 0, 0);
+		short* gtf = asi_g1_center->getButtonState(0);
 		cb_handler->addCallback(asi_g1_center->getButtonState(0), BUTTON_STATE::BTN_ACTIVE, -1, 0,
 			&Reviewer::changeCurrentImage, asi_g1_r0_center);
 		asi_g1_center->addIElement((InterfaceItem*)asi_g1_r0_center, 0);

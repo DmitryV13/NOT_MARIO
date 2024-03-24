@@ -2,9 +2,12 @@
 #include "ResourceInfo.h"
 
 	ResourceInfo::ResourceInfo(){
+		ii_type = INTERFACE_ITEM_TYPE::RESOURCE_INFO;
 	}
 
 	ResourceInfo::ResourceInfo(float x, float y, Font* font, int text_size, bool image_){
+		ii_type = INTERFACE_ITEM_TYPE::RESOURCE_INFO;
+
 		image = image_;
 		position.x = x;
 		position.y = y;
@@ -16,6 +19,8 @@
 	ResourceInfo::ResourceInfo(float x, float y, int text_size, Font* font
 		, TextureManager* t_manager, Warehouse* w_object, string name, bool image_)
 		: image(image_) {
+		ii_type = INTERFACE_ITEM_TYPE::RESOURCE_INFO;
+
 		position.x = x;
 		position.y = y;
 		resource = w_object->getWarehouseItem(name)->getInfo().first;
@@ -52,6 +57,8 @@
 	ResourceInfo::ResourceInfo(float x, float y, int* resource_, int max_v, int text_size, Font* font
 		, TextureManager* t_manager, int index, string name, bool self_align_)
 		: resource(resource_), image(self_align_){
+		ii_type = INTERFACE_ITEM_TYPE::RESOURCE_INFO;
+
 		src_img.setTexture(t_manager->getTexture(index, name));
 		position.x = x;
 		position.y = y;

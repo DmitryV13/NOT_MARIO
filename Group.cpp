@@ -496,6 +496,12 @@
 					case FORM_ITEM_TYPE::INPUT_FIELD:
 						((InputField*)j)->formEInput(event);
 						break;
+					case FORM_ITEM_TYPE::TEXTAREA_FIELD:
+						((TextareaField*)j)->formEInput(event);
+						break;
+					case FORM_ITEM_TYPE::NUMBER_FIELD:
+						((NumberField*)j)->formEInput(event);
+						break;
 					}
 				}
 				else if (j->getIIType() == INTERFACE_ITEM_TYPE::GROUP) {

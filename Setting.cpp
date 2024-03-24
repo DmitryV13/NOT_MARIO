@@ -17,12 +17,19 @@ Setting::Setting(RenderWindow* window_, double screen_w, double screen_h, Color 
 
 	ls->createElementLine();
 	tmp = ls->calculatePFNII(30, 30, 0);
-	ls_g0_top = new TextareaField(tmp->first, tmp->second, tmp->third, tmp->fourth, "textarea", font, 25, true, 60);
+	ls_g0_top = new TextareaField(tmp->first, tmp->second, tmp->third, tmp->fourth, "textarea", font, 25, true, 600);
 	ls->addIElement((InterfaceItem*)ls_g0_top, 0);
 
+	ls->createElementLine();
 	tmp = ls->calculatePFNII(25, 10, 0);
-	ls_g0_top = new InputField(tmp->first, tmp->second, tmp->third, tmp->fourth, "input", font, 25, true, 20);
-	ls->addIElement((InterfaceItem*)ls_g0_top, 0);
+	ls_g0_top = new InputField(tmp->first, tmp->second, tmp->third, tmp->fourth, "input", font, 25, true, 90);
+	ls->addIElement((InterfaceItem*)ls_g0_top, 1);
+
+	ls->createElementLine();
+	tmp = ls->calculatePFNII(20, 7, 0);
+	NumberField* ls_g0_top2 = new NumberField(tmp->first, tmp->second, tmp->third, tmp->fourth, "number", font, 25, true, 90);
+	ls_g0_top2->setMinMaxType(20, 100, false);
+	ls->addIElement((InterfaceItem*)ls_g0_top2, 2);
 	ls->setAlignment("center auto", "center auto");
 
 	example->setPUWState(POP_UP_WINDOW_STATE::PUW_OPENED, 0);

@@ -25,6 +25,23 @@
 	void InterfaceItem::setPositionY(float y){
 	}
 
+	View InterfaceItem::createLocalView(FloatRect rect, RenderTarget* target) const{
+		float left{ rect.left };
+		float top{ rect.top };
+		float width{ rect.width };
+		float height{ rect.height };
+		sf::View view;
+		view.setSize(width, height);
+		view.setCenter(left + (width / 2.f), top + (height / 2.f));
+		view.setViewport(sf::FloatRect(
+			left / target->getSize().x,
+			top / target->getSize().y,
+			width / target->getSize().x,
+			height / target->getSize().y)
+		);
+		return view;
+	}
+
 	void InterfaceItem::changePosition(float offset_x, float offset_y){
 	}
 

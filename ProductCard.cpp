@@ -3,6 +3,7 @@
 
 	ProductCard::ProductCard(int price_, int amount_, float p_coefficient_, int* source_)
 	: price(price_), amount(amount_), source(source_), p_coefficient(p_coefficient_){
+		ii_type = INTERFACE_ITEM_TYPE::PRODUCT_CARD;
 	}
 	
 	FloatRect ProductCard::getLocalBounds(){

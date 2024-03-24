@@ -3,6 +3,8 @@
 #include "ImageButton.h"
 #include "FormItem.h"
 #include "InputField.h"
+#include "TextareaField.h"
+#include "NumberField.h"
 
 class Group : public InterfaceItem{
 protected:
