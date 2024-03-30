@@ -324,23 +324,23 @@
     <ClCompile Include="killer_leaf.cpp">
       <Filter>Source Files\GameObjects\Alive\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="InputField.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FORM_ITEM_TYPE.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextareaField.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Textarea.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NumberField.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DCallbacksHandler.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="InputField.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="NumberField.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Textarea.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="TextareaField.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalProcessData.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -605,10 +605,16 @@
     <ClInclude Include="NumberField.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GlobalProcessData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="NOT_MARIO.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

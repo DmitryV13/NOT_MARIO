@@ -42,6 +42,13 @@
 		return view;
 	}
 
+	bool InterfaceItem::itemScroll(float delta){
+		return false;
+	}
+
+	void InterfaceItem::changeChildrenPosition(float offset_x, float offset_y){
+	}
+
 	void InterfaceItem::changePosition(float offset_x, float offset_y){
 	}
 

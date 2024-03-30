@@ -24,6 +24,8 @@ void MyView::updateView(FloatRect coordinates) {
 	updateRight(coordinates.left + coordinates.width);
 	updateTop(coordinates.top);
 	updateBottom(coordinates.top + coordinates.height);
+
+	GlobalProcessData::setViewCords(FloatRect(view.getCenter(), Vector2f(screenWidth, screenHeight)));
 }
 
 void MyView::updateLeft(double left) {

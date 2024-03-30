@@ -26,10 +26,18 @@ Setting::Setting(RenderWindow* window_, double screen_w, double screen_h, Color 
 	ls->addIElement((InterfaceItem*)ls_g0_top, 1);
 
 	ls->createElementLine();
-	tmp = ls->calculatePFNII(20, 7, 0);
+	tmp = ls->calculatePFNII(20, 10, 0);
 	NumberField* ls_g0_top2 = new NumberField(tmp->first, tmp->second, tmp->third, tmp->fourth, "number", font, 25, true, 90);
 	ls_g0_top2->setMinMaxType(20, 100, false);
 	ls->addIElement((InterfaceItem*)ls_g0_top2, 2);
+
+	ls->createElementLine();
+	tmp = ls->calculatePFNII(40, 10, 0);
+	SliderControl* sl = new SliderControl(tmp->first, tmp->second, tmp->third, tmp->fourth, "slider", font);
+	sl->setMinMaxType(0, 100);
+	sl->setValueType(new float(), true);
+	ls->addIElement((InterfaceItem*)sl, 3);
+
 	ls->setAlignment("center auto", "center auto");
 
 	example->setPUWState(POP_UP_WINDOW_STATE::PUW_OPENED, 0);
@@ -50,13 +58,14 @@ void Setting::updateEvents(){
 		if (event.type == Event::Closed) {
 			window->close();
 		}
-		if (event.type == Event::TextEntered) {
-			example->formInput(event);
+		if (example->getState() == POP_UP_WINDOW_STATE::PUW_OPENED) {
+			example->updateEvent(&event);
 		}
 	}
 }
 
 void Setting::update(){
+	GlobalProcessData::setViewCords(FloatRect(window->getView().getCenter(), Vector2f(screen_width, screen_height)));
 	window->setView(View(FloatRect(0, 0, screen_width, screen_height)));
 	
 	updateEvents();

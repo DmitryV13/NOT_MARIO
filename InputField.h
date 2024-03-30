@@ -14,7 +14,7 @@ using namespace::sf;
 
 class InputField: public InterfaceItem, public FormItem {
 protected:
-	Text* input_label;
+	Text* label;
 	Textarea* textarea;
 	std::ostringstream input_stream;
 

@@ -65,7 +65,9 @@ public:
 	CRect<float>* calculatePFNG(short fill_p_w, short fill_p_h, short index);//parameters for new group
 
 	void formInput(Event event);
+	void itemScroll(float delta);
 	void update(FloatRect view_cords);
+	void updateEvent(Event* event);
 	void render();
 };
 

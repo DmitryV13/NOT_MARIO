@@ -5,6 +5,8 @@
 		: outer_width(width_), outer_height(height_), inner_width(width_), inner_height(height_)
 		, position(Vector2f(x, y)){
 		ii_type = INTERFACE_ITEM_TYPE::GROUP;
+		is_scrollable = true;
+
 		background.setFillColor(Color(0, 0, 0, 0));
 
 		g0.setSize(Vector2f(width_ - 2, height_ - 2));
@@ -39,6 +41,7 @@
 	void Group::setAlignment(string horiz_a, string vertic_a){
 		setVAlignment(vertic_a);
 		setHAlignment(horiz_a);
+		//normalization();
 	}
 
 	void Group::setVAlignment(string vertic_a){
@@ -344,6 +347,31 @@
 		background.setSize(Vector2f(outer_width, outer_height));
 	}
 
+	void Group::normalization(){
+		float initial_position_y =position.y + outer_height - inner_height;
+		float content_height = g_elements[g_elements.size() - 1][0]->getGlobalBounds().top +
+			getMaxELHeight(g_elements.size() - 1) - g_elements[0][0]->getGlobalBounds().top;
+		if (content_height > inner_height) {
+			overflow_y = true;
+			float offset = initial_position_y - g_elements[0][0]->getGlobalBounds().top;
+			if (offset > 0) {
+				for (auto i : g_elements) {
+					for (auto j : i) {
+						j->changePosition(0, offset + 20);
+					}
+				}
+			}
+		}
+	}
+
+	void Group::changeChildrenPosition(float offset_x, float offset_y){
+		for (auto i : g_elements) {
+			for (auto j : i) {
+				j->changePosition(offset_x, offset_y);
+			}
+		}
+	}
+
 	void Group::changePosition(float offset_x, float offset_y){
 		position.x += offset_x;
 		position.y += offset_y;
@@ -488,6 +516,54 @@
 		}
 	}
 
+	bool Group::itemScroll(float delta){
+		bool was_scrolling = false;
+
+		for (int i = 0; i < g_elements.size(); i++) {
+			for (int j = 0; j < g_elements[i].size(); j++) {
+				was_scrolling |= g_elements[i][j]->itemScroll(delta);
+				if (was_scrolling)
+					return true;
+			}
+		}
+
+		Vector2i mouse_pos = GlobalProcessData::getMousePos();
+		FloatRect view_cords = GlobalProcessData::getViewCords();
+		//if (getGlobalBounds().contains(mouse_pos.x + (view_cords.left - view_cords.width / 2), mouse_pos.y + (view_cords.top - view_cords.height / 2))) {
+		//	if (overflow_y) {
+		//		float initial_position_y = position.y + outer_height - inner_height;
+		//		float content_height = g_elements[g_elements.size()-1][0]->getGlobalBounds().top +
+		//			getMaxELHeight(g_elements.size()-1) - g_elements[0][0]->getGlobalBounds().top;
+		//		std::cout << delta;
+		//		if (delta > 0) {
+		//			float h = g_elements[0][0]->getGlobalBounds().top - 20;
+		//			if (g_elements[0][0]->getGlobalBounds().top - 20 >= initial_position_y) {
+		//				float offset=initial_position_y - g_elements[0][0]->getGlobalBounds().top;
+		//				changeChildrenPosition(0, offset + 20);
+		//				float h1p = g_elements[0][0]->getGlobalBounds().top - 20;
+		//			}
+		//			else {
+		//				changeChildrenPosition(0, delta * 16);
+		//			}
+		//		}
+		//		else {
+		//			if (g_elements[g_elements.size() - 1][0]->getGlobalBounds().top +
+		//				getMaxELHeight(g_elements.size() - 1) + 20 <= position.y + inner_height) {
+		//				float offset = position.y + inner_height - (g_elements[g_elements.size() - 1][0]->getGlobalBounds().top +
+		//					getMaxELHeight(g_elements.size() - 1)) - 20;
+		//				changeChildrenPosition(0, offset);
+		//			}
+		//			else {
+		//				changeChildrenPosition(0, delta * 16);
+		//			}
+		//		}
+		//		return true;
+		//	}
+		//}
+
+		return false;
+	}
+
 	void Group::formInput(Event event){
 		for (auto i : g_elements) {
 			for (auto j : i) {
@@ -560,16 +636,19 @@
 		if (name != nullptr) {
 			target->draw(*name);
 		}
-
+		View oldView{ target->getView() };
+		View view{ createLocalView(this->getLocalBounds(), target) };
+		target->setView(view);
 		for (auto i : g_elements) {
 			for (auto j : i) {
 				j->render(target);
 			}
 		}
+		target->setView(oldView);
 
 		//target->draw(g1);
 		// 
 		
 		//target->draw(g2);
-		//target->draw(g0);
+		target->draw(g0);
 	}

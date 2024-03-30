@@ -36,6 +36,9 @@
 		min = min_;
 		max = max_;
 		isFloat = isFloat_;
+		textarea->setString(isFloat ? std::to_string(min) : std::to_string(static_cast<int>(min)));
+		input_stream.str("");
+		input_stream << min;
 	}
 
 	void NumberField::update(Vector2f mouse_pos, FloatRect view_cords){
@@ -104,9 +107,9 @@
 			break;
 		}
 
-		input_label->setPosition(
-			view_cords.left - view_cords.width / 2 + position.x - input_label->getLocalBounds().left + 5,
-			view_cords.top - view_cords.height / 2 + position.y - input_label->getLocalBounds().top
+		label->setPosition(
+			view_cords.left - view_cords.width / 2 + position.x - label->getLocalBounds().left + 5,
+			view_cords.top - view_cords.height / 2 + position.y - label->getLocalBounds().top
 		);
 		shape1.setPosition(
 			view_cords.left - view_cords.width / 2 + position.x + 1,

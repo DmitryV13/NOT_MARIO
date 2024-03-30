@@ -38,6 +38,8 @@ public:
 	void setPositionY(float y) override;
 	void setBColor(Color color);
 
+	void normalization();
+	void changeChildrenPosition(float offset_x, float offset_y) override;
 	void changePosition(float offset_x, float offset_y) override;
 	void changePositionY(float offset);
 
@@ -60,7 +62,9 @@ public:
 	CRect<float>* calculatePFNII(short fill_p_w, short fill_p_h, short index);
 	void resetActiveState() override;
 
+	bool itemScroll(float delta) override;
 	void formInput(Event event);
+
 	void update(Vector2f mouse_pos, FloatRect view_cords) override;
 	void render(RenderTarget* target);
 };

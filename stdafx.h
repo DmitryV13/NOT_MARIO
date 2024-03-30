@@ -26,6 +26,7 @@ using std::stack;
 
 #include "CRect.h"
 #include "TextureManager.h"
+#include "GlobalProcessData.h"
 
 #include "INTERFACE_ITEM_TYPE.h"
 #include "FORM_ITEM_TYPE.h"

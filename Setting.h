@@ -5,6 +5,7 @@
 #include "InputField.h"
 #include "TextareaField.h"
 #include "NumberField.h"
+#include "SliderControl.h"
 
 using namespace sf;
 

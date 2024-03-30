@@ -40,6 +40,8 @@
 		window.setFramerateLimit(144);
 		window.setView(view);
 		window.setFramerateLimit(144);
+
+		GlobalProcessData::setWindow(&window);
 		//window.setMouseCursorVisible(false);
 		//cursor = new Cursor();
 	}

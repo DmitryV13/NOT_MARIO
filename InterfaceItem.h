@@ -6,6 +6,8 @@ class InterfaceItem{
 protected:
 	short ii_type;
 	bool is_scrollable = false;
+	bool overflow_x = false;
+	bool overflow_y = false;
 public:
 	virtual FloatRect getLocalBounds();
 	virtual FloatRect getGlobalBounds();
@@ -16,6 +18,8 @@ public:
 
 	View createLocalView(FloatRect rect, RenderTarget* target) const;
 
+	virtual bool itemScroll(float delta);
+	virtual void changeChildrenPosition(float offset_x, float offset_y);
 	virtual void changePosition(float offset_x, float offset_y);
 	virtual void resetActiveState();
 

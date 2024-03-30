@@ -159,6 +159,23 @@
 		}
 	}
 
+	void PopUpWindow::itemScroll(float delta){
+		for (auto i : groups) {
+			for (auto j : i) {
+				((Group*)j)->itemScroll(delta);
+			}
+		}
+	}
+
+	void PopUpWindow::updateEvent(Event* event){
+		if (event->type == Event::TextEntered) {
+			formInput(*event);
+		}
+		if (event->type == Event::MouseWheelScrolled) {
+			itemScroll(event->mouseWheelScroll.delta);
+		}
+	}
+
 	void PopUpWindow::update(FloatRect view_cords){
 		w_background->update(view_cords);
 		if(label!=nullptr)

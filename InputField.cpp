@@ -21,14 +21,14 @@
 		shape1.setPosition(position.x + 1, position.y + 1);
 		shape1.setSize(Vector2f(width - 2, height - 2));
 
-		input_label = new Text();
-		input_label->setFont(*font_);
-		input_label->setString(input_label_);
-		input_label->setCharacterSize(20);
-		input_label->setFillColor(Color::White);
-		input_label->setPosition(
-			position.x - input_label->getLocalBounds().left + 5,
-			position.y - input_label->getLocalBounds().top
+		label = new Text();
+		label->setFont(*font_);
+		label->setString(input_label_);
+		label->setCharacterSize(20);
+		label->setFillColor(Color::White);
+		label->setPosition(
+			position.x - label->getLocalBounds().left + 5,
+			position.y - label->getLocalBounds().top
 		);
 	}
 
@@ -38,10 +38,10 @@
 		has_limit = has_limit_;
 		limit = limit_;
 		textarea = new Textarea(
-			position.x + 2,
-			position.y + input_label->getGlobalBounds().height + input_label->getLocalBounds().top + 2 + 6,
+			position.x,
+			position.y + label->getGlobalBounds().height + label->getLocalBounds().top + 6,
 			width,
-			height,
+			height - (position.y + label->getGlobalBounds().height + label->getLocalBounds().top + 6 - position.y),
 			font_,
 			text_size,
 			multiline);
@@ -54,10 +54,10 @@
 		has_limit = has_limit_;
 		limit = limit_;
 		textarea = new Textarea(
-			position.x + 2,
-			position.y + input_label->getGlobalBounds().height + input_label->getLocalBounds().top + 2 + 6,
+			position.x,
+			position.y + label->getGlobalBounds().height + label->getLocalBounds().top + 6,
 			width,
-			height,
+			height - (position.y + label->getGlobalBounds().height + label->getLocalBounds().top + 6 - position.y),
 			font_,
 			text_size,
 			false);
@@ -70,10 +70,10 @@
 		has_limit = has_limit_;
 		limit = limit_;
 		textarea = new Textarea(
-			position.x + 2,
-			position.y + input_label->getGlobalBounds().height + input_label->getLocalBounds().top + 2 + 6,
+			position.x,
+			position.y + label->getGlobalBounds().height + label->getLocalBounds().top + 6,
 			width,
-			height,
+			height - (position.y + label->getGlobalBounds().height + label->getLocalBounds().top + 6 - position.y),
 			font_,
 			text_size,
 			false);
@@ -152,9 +152,9 @@
 		position.y += offset_y;
 
 		shape1.setPosition(position.x + 1, position.y + 1);
-		input_label->setPosition(
-			position.x - input_label->getLocalBounds().left + 5,
-			position.y - input_label->getLocalBounds().top
+		label->setPosition(
+			position.x - label->getLocalBounds().left + 5,
+			position.y - label->getLocalBounds().top
 		);
 
 		textarea->changePosition(offset_x, offset_y);
@@ -208,19 +208,20 @@
 			break;
 		}
 
-		input_label->setPosition(
-			view_cords.left - view_cords.width / 2 + position.x - input_label->getLocalBounds().left + 5,
-			view_cords.top - view_cords.height / 2 + position.y - input_label->getLocalBounds().top
+		label->setPosition(
+			view_cords.left - view_cords.width / 2 + position.x - label->getLocalBounds().left + 5,
+			view_cords.top - view_cords.height / 2 + position.y - label->getLocalBounds().top
 		);
 		shape1.setPosition(
 			view_cords.left - view_cords.width / 2 + position.x + 1,
-			view_cords.top - view_cords.height / 2 + position.y + 1);
+			view_cords.top - view_cords.height / 2 + position.y + 1
+		);
 
 		textarea->update(mouse_pos, view_cords);
 	}
 
 	void InputField::render(sf::RenderTarget* target){
-		target->draw(*input_label);
+		target->draw(*label);
 		textarea->render(target);
-		//target->draw(shape1);
+		target->draw(shape1);
 	}
