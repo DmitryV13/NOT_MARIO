@@ -3,6 +3,7 @@
 
 
 	InputField::InputField(){
+		id = GlobalProcessData::getUnicId();
 	}
 
 	InputField::InputField(float x, float y, float width_, float height_, const string& input_label_, 
@@ -11,6 +12,8 @@
 		ii_type = INTERFACE_ITEM_TYPE::FORM_ITEM;
 		fi_state = FORM_ITEM_STATE::FORM_ITEM_IDLE;
 		fi_type = FORM_ITEM_TYPE::INPUT_FIELD;
+		id = GlobalProcessData::getUnicId();
+
 		chosen = false;
 		unpressed = true;
 		overflow_x = false;

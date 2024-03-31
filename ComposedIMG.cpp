@@ -33,56 +33,61 @@
 		filler.setTextureRect(IntRect(0, 0, width, height));
 	}
 	
-	void ComposedIMG::setPosition(int x, int y){
-		offsetX = x - origin_size;
-		offsetY = y - origin_size;
+	void ComposedIMG::setPosition(float x, float y){
+		position.x = x - origin_size;
+		position.y = y - origin_size;
 
-		cornerTopLeft.setPosition(offsetX, offsetY);
-		cornerTopRight.setPosition(offsetX + width + origin_size, offsetY);
-		cornerBottomLeft.setPosition(offsetX, offsetY + height + origin_size);
-		cornerBottomRight.setPosition(offsetX + width + origin_size, offsetY + height + origin_size);
-		filler.setPosition(offsetX + origin_size, offsetY + origin_size);
+		cornerTopLeft.setPosition(position.x, position.y);
+		cornerTopRight.setPosition(position.x + width + origin_size, position.y);
+		cornerBottomLeft.setPosition(position.x, position.y + height + origin_size);
+		cornerBottomRight.setPosition(position.x + width + origin_size, position.y + height + origin_size);
+		filler.setPosition(position.x + origin_size, position.y + origin_size);
 	}
 	
 	void ComposedIMG::setPosition(string positionX, string positionY, int screen_width, int screen_height){
 		if (positionX == "center") {
-			offsetX = (screen_width - width + origin_size*2) / 2;
+			position.x = (screen_width - width + origin_size*2) / 2;
 		}
 		if (positionY == "center") {
-			offsetY = (screen_height - height + origin_size*2) / 2;
+			position.y = (screen_height - height + origin_size*2) / 2;
 		}
 
-		cornerTopLeft.setPosition(offsetX, offsetY);
-		cornerTopRight.setPosition(offsetX + width + origin_size, offsetY);
-		cornerBottomLeft.setPosition(offsetX, offsetY + height + origin_size);
-		cornerBottomRight.setPosition(offsetX + width + origin_size, offsetY + height + origin_size);
-		filler.setPosition(offsetX + origin_size, offsetY + origin_size);
+		cornerTopLeft.setPosition(position.x, position.y);
+		cornerTopRight.setPosition(position.x + width + origin_size, position.y);
+		cornerBottomLeft.setPosition(position.x, position.y + height + origin_size);
+		cornerBottomRight.setPosition(position.x + width + origin_size, position.y + height + origin_size);
+		filler.setPosition(position.x + origin_size, position.y + origin_size);
 	}
 
-	void ComposedIMG::setPosition(string positionX, int y, int screen_width, int screen_height){
+	void ComposedIMG::setPosition(string positionX, float y, int screen_width, int screen_height){
 		if (positionX == "center") {
-			offsetX = (screen_width - width + origin_size*2) / 2;
+			position.x = (screen_width - width + origin_size*2) / 2;
 		}
-		offsetY = y - origin_size;
+		position.y = y - origin_size;
 
-		cornerTopLeft.setPosition(offsetX, offsetY);
-		cornerTopRight.setPosition(offsetX + width + origin_size, offsetY);
-		cornerBottomLeft.setPosition(offsetX, offsetY + height + origin_size);
-		cornerBottomRight.setPosition(offsetX + width + origin_size, offsetY + height + origin_size);
-		filler.setPosition(offsetX + origin_size, offsetY + origin_size);
+		cornerTopLeft.setPosition(position.x, position.y);
+		cornerTopRight.setPosition(position.x + width + origin_size, position.y);
+		cornerBottomLeft.setPosition(position.x, position.y + height + origin_size);
+		cornerBottomRight.setPosition(position.x + width + origin_size, position.y + height + origin_size);
+		filler.setPosition(position.x + origin_size, position.y + origin_size);
 	}
 
-	void ComposedIMG::setPosition(int x, string positionY, int screen_width, int screen_height){
+	void ComposedIMG::setPosition(float x, string positionY, int screen_width, int screen_height){
 		if (positionY == "center") {
-			offsetY = (screen_height - height + origin_size*2) / 2;
+			position.y = (screen_height - height + origin_size*2) / 2;
 		}
-		offsetX = x - origin_size;
+		position.x = x - origin_size;
 
-		cornerTopLeft.setPosition(offsetX, offsetY);
-		cornerTopRight.setPosition(offsetX + width + origin_size, offsetY);
-		cornerBottomLeft.setPosition(offsetX, offsetY + height + origin_size);
-		cornerBottomRight.setPosition(offsetX + width + origin_size, offsetY + height + origin_size);
-		filler.setPosition(offsetX + origin_size, offsetY + origin_size);
+		cornerTopLeft.setPosition(position.x, position.y);
+		cornerTopRight.setPosition(position.x + width + origin_size, position.y);
+		cornerBottomLeft.setPosition(position.x, position.y + height + origin_size);
+		cornerBottomRight.setPosition(position.x + width + origin_size, position.y + height + origin_size);
+		filler.setPosition(position.x + origin_size, position.y + origin_size);
+	}
+
+	void ComposedIMG::changePosition(float offset_x, float offset_y){
+		position.x += offset_x;
+		position.y += offset_y;
 	}
 
 	void ComposedIMG::setScale(float scale_){
@@ -105,11 +110,11 @@
 	void ComposedIMG::update(){
 		FloatRect view_cords = GlobalProcessData::getViewCords();
 
-		cornerTopLeft.setPosition(view_cords.left - view_cords.width/2 + offsetX, view_cords.top - view_cords.height/2 + offsetY);
-		cornerTopRight.setPosition(view_cords.left - view_cords.width/2 + offsetX + width + origin_size, view_cords.top - view_cords.height/2 + offsetY);
-		cornerBottomLeft.setPosition(view_cords.left - view_cords.width/2 + offsetX, view_cords.top - view_cords.height/2 + offsetY + height + origin_size);
-		cornerBottomRight.setPosition(view_cords.left - view_cords.width/2 + offsetX + width + origin_size, view_cords.top - view_cords.height/2 + offsetY + height + origin_size);
-		filler.setPosition(view_cords.left - view_cords.width/2 + offsetX + origin_size, view_cords.top - view_cords.height/2 + offsetY + origin_size);
+		cornerTopLeft.setPosition(view_cords.left - view_cords.width/2 + position.x, view_cords.top - view_cords.height/2 + position.y);
+		cornerTopRight.setPosition(view_cords.left - view_cords.width/2 + position.x + width + origin_size, view_cords.top - view_cords.height/2 + position.y);
+		cornerBottomLeft.setPosition(view_cords.left - view_cords.width/2 + position.x, view_cords.top - view_cords.height/2 + position.y + height + origin_size);
+		cornerBottomRight.setPosition(view_cords.left - view_cords.width/2 + position.x + width + origin_size, view_cords.top - view_cords.height/2 + position.y + height + origin_size);
+		filler.setPosition(view_cords.left - view_cords.width/2 + position.x + origin_size, view_cords.top - view_cords.height/2 + position.y + origin_size);
 	}
 	
 	void ComposedIMG::render(){

@@ -3,12 +3,15 @@
 
 	ImageInfo::ImageInfo(){
 		ii_type = INTERFACE_ITEM_TYPE::IMAGE_INFO;
+		id = GlobalProcessData::getUnicId();
 		shape.setFillColor(Color(0, 0, 0, 0));
 	}
 
 	ImageInfo::ImageInfo(float x, float y, string text_, int text_size,
 		TextureManager* t_manager, int index, string name){
 		ii_type = INTERFACE_ITEM_TYPE::IMAGE_INFO;
+		id = GlobalProcessData::getUnicId();
+
 		shape.setFillColor(Color(0, 0, 0, 0));
 		position.x = x;
 		position.y = y;
@@ -40,6 +43,8 @@
 	ImageInfo::ImageInfo(float x, float y, int text_, int text_size, TextureManager* t_manager, 
 		int index, string name){
 		ii_type = INTERFACE_ITEM_TYPE::IMAGE_INFO;
+		id = GlobalProcessData::getUnicId();
+
 		shape.setFillColor(Color(0, 0, 0, 0));
 		position.x = x;
 		position.y = y;

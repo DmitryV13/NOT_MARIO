@@ -14,12 +14,6 @@
 		, regime(regime_)
 		, object_available(false){
 		//-1-random generation, 2-set positions
-		
-		Font* font = new Font();
-		if (!font->loadFromFile("Fonts/Pixel.ttf"))
-		{
-			std::cout << "Error -> RoadMap -> couldn't load text font" << std::endl;
-		}
 		//Chest* ooo=new Chest();
 		//
 		//auto df = sandbox.getObjects();
@@ -40,23 +34,24 @@
 		pause_menu->addBackground(sandbox.getMapWidth(), sandbox.getMapHeight(), Color(59, 66, 73, 87));
 		pause_menu->createGroupLine();
 	
+		int tmp_id;
 		CRect<float>* tmp = pause_menu->calculatePFNG(100, 100, 0);
 		Group* pm = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
 		delete tmp;
 	
 		pm->createElementLine();
-		pm->addButton(40, "CONTINUE", menuColor, 0, 0);
+		tmp_id = pm->addButton(40, "CONTINUE", menuColor, 0);
+		pause_menu->addCallback(pm->getButtonState(tmp_id), (short)BUTTON_STATE::BTN_ACTIVE, 0, 0, &Level::continueGame, this);
 	
 		pm->createElementLine();
-		pm->addButton(40, "SETTINGS", menuColor, 1, 1);
+		tmp_id = pm->addButton(40, "SETTINGS", menuColor, 1);
 	
 		pm->createElementLine();
-		pm->addButton(40, "BACK TO LOBBY", menuColor, 2, 2);
+		tmp_id = pm->addButton(40, "BACK TO LOBBY", menuColor, 2);
+		pause_menu->addCallback(pm->getButtonState(tmp_id), (short)BUTTON_STATE::BTN_ACTIVE, 0, 0, &Level::finishGame, this);
 	
 		pm->setAlignment("center auto", "center 50");
-		pause_menu->addCallback(pm->getButtonState(0), (short)BUTTON_STATE::BTN_ACTIVE, 0, 0, &Level::continueGame, this);
 	
-		pause_menu->addCallback(pm->getButtonState(2), (short)BUTTON_STATE::BTN_ACTIVE, 0, 0, &Level::finishGame, this);
 		pause_menu->addGroup(pm, 0);
 	
 		///////////////////////////////////////////////////////////////
@@ -99,13 +94,13 @@
 	
 		ci_g1_bottom->createElementLine();
 		tmp = ci_g1_bottom->calculatePFNII(30, 70, 0);
-		ci_g1_bottom->addButton(tmp->third, tmp->fourth, 20, "TAKE", Color::White, Color::White,
-			Color(239, 135, 6, 255), Color(239, 155, 6, 255), false, 0, 0);
-		chest_items->addCallback(ci_g1_bottom->getButtonState(0), BUTTON_STATE::BTN_ACTIVE, 0, 0,
+		tmp_id = ci_g1_bottom->addButton(tmp->third, tmp->fourth, 20, "TAKE", Color::White, Color::White,
+			Color(239, 135, 6, 255), Color(239, 155, 6, 255), false, 0);
+		chest_items->addCallback(ci_g1_bottom->getButtonState(tmp_id), BUTTON_STATE::BTN_ACTIVE, 0, 0,
 			&Form::activateForm, (Form*)ci_f0_top);
-		ci_g1_bottom->addButton(tmp->third, tmp->fourth, 20, "CLOSE", Color::White, Color::White,
-			Color(212, 24, 22, 255), Color(212, 24, 22, 255), false, 1, 0);
-		chest_items->addCallback(ci_g1_bottom->getButtonState(1), BUTTON_STATE::BTN_ACTIVE, POP_UP_WINDOW_STATE::PUW_CLOSED, 0,
+		tmp_id = ci_g1_bottom->addButton(tmp->third, tmp->fourth, 20, "CLOSE", Color::White, Color::White,
+			Color(212, 24, 22, 255), Color(212, 24, 22, 255), false, 0);
+		chest_items->addCallback(ci_g1_bottom->getButtonState(tmp_id), BUTTON_STATE::BTN_ACTIVE, POP_UP_WINDOW_STATE::PUW_CLOSED, 0,
 			&PopUpWindow::setPUWState, chest_items);
 	
 		ci_g1_bottom->setAlignment("space around", "center 0");

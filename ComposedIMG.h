@@ -15,18 +15,18 @@ private:
 	int height;
 	float scale;
 
-	int offsetX;
-	int offsetY;
+	Vector2f position;
 public:
 	ComposedIMG(int width_, int height_, int original_size, TextureManager* manager, int index);
 	ComposedIMG(int width_, int height_, int original_size, TextureManager* manager
 		, int index_0, string name_0, int index_1, string name_1, int index_2, string name_2
 		, int index_3, string name_3, int index_4, string name_4);
 
-	void setPosition(int x, int y);
+	void setPosition(float x, float y);
 	void setPosition(string positionX, string positionY, int screen_width, int screen_height);
-	void setPosition(string positionX, int y, int screen_width, int screen_height);
-	void setPosition(int x, string positionY, int screen_width, int screen_height);
+	void setPosition(string positionX, float y, int screen_width, int screen_height);
+	void setPosition(float x, string positionY, int screen_width, int screen_height);
+	void changePosition(float offset_x, float offset_y);
 	void setScale(float scale_);
 
 	FloatRect getLocalBounds();

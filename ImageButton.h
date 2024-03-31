@@ -9,7 +9,7 @@ private:
 	const string name;
 public:
 	ImageButton(float x, float y, float width, float height, short text_size
-		, string text_, TextureManager* t_manager, int index, string name_, bool outline, int id_);
+		, string text_, TextureManager* t_manager, int index, string name_, bool outline);
 
 	void setPosition(Vector2f new_position) override;
 

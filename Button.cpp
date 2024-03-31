@@ -1,18 +1,20 @@
 #include "stdafx.h"
 #include "Button.h"
 
-Button::Button(){
-	ii_type = INTERFACE_ITEM_TYPE::BUTTON;
-	button_cstate = BUTTON_STATE::BTN_IDLE;
-	button_prstate = BUTTON_STATE::BTN_HOVERED;
-}
-
-Button::Button(float x, float y, float width, float height, short text_size
-		, string text_, Color btn_hcolor, int id_)
+	Button::Button(){
+		ii_type = INTERFACE_ITEM_TYPE::BUTTON;
+		id = GlobalProcessData::getUnicId();
+		button_cstate = BUTTON_STATE::BTN_IDLE;
+		button_prstate = BUTTON_STATE::BTN_HOVERED;
+	}
+	
+	Button::Button(float x, float y, float width, float height, short text_size
+		, string text_, Color btn_hcolor)
 		: btn_hover_color(btn_hcolor), btn_active_color(btn_hcolor), btn_idle_color(Color::White)
 		, shp_hover_color(sf::Color(28, 26, 47, 255)), shp_active_color(sf::Color(28, 26, 47, 255))
-		, shp_idle_color(sf::Color(28, 26, 47, 255)), position(Vector2f(x, y)), id(id_) {
+		, shp_idle_color(sf::Color(28, 26, 47, 255)), position(Vector2f(x, y)) {
 		ii_type = INTERFACE_ITEM_TYPE::BUTTON;
+		id = GlobalProcessData::getUnicId();
 		button_cstate = BUTTON_STATE::BTN_IDLE;
 		button_prstate = BUTTON_STATE::BTN_HOVERED;
 
@@ -33,11 +35,12 @@ Button::Button(float x, float y, float width, float height, short text_size
 		shape.setFillColor(shp_idle_color);
 	}
 
-	Button::Button(float x, float y, short text_size, string text_, Color btn_hcolor, int id_)
+	Button::Button(float x, float y, short text_size, string text_, Color btn_hcolor)
 		: btn_hover_color(btn_hcolor), btn_active_color(btn_hcolor), btn_idle_color(Color::White)
 		, shp_hover_color(Color(0, 0, 0, 0)), shp_active_color(Color(0, 0, 0, 0))
-		, shp_idle_color(Color(0, 0, 0, 0)), position(Vector2f(x, y)), id(id_) {
+		, shp_idle_color(Color(0, 0, 0, 0)), position(Vector2f(x, y)) {
 		ii_type = INTERFACE_ITEM_TYPE::BUTTON;
+		id = GlobalProcessData::getUnicId();
 		button_cstate = BUTTON_STATE::BTN_IDLE;
 		button_prstate = BUTTON_STATE::BTN_HOVERED;
 
@@ -60,9 +63,10 @@ Button::Button(float x, float y, float width, float height, short text_size
 	}
 
 	Button::Button(float x, float y, float width, float height, short text_size
-		, string text_, bool outline, int id_)
-		: position(Vector2f(x, y)), id(id_) {
+		, string text_, bool outline)
+		: position(Vector2f(x, y)) {
 		ii_type = INTERFACE_ITEM_TYPE::BUTTON;
+		id = GlobalProcessData::getUnicId();
 		button_cstate = BUTTON_STATE::BTN_IDLE;
 		button_prstate = BUTTON_STATE::BTN_HOVERED;
 
@@ -108,10 +112,6 @@ Button::Button(float x, float y, float width, float height, short text_size
 
 	short* Button::getButtonState(){
 		return &button_cstate;
-	}
-
-	const int& Button::getIdentificator() const{
-		return id;
 	}
 
 	FloatRect Button::getLocalBounds(){

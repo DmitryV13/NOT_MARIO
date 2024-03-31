@@ -4,11 +4,13 @@
 
 	ScaleParameterBar::ScaleParameterBar(){
 		ii_type = INTERFACE_ITEM_TYPE::SCALE_PARAMETER_BAR;
+		id = GlobalProcessData::getUnicId();
 	}
 	
 	ScaleParameterBar::ScaleParameterBar(float x, float y, float width, float height, float* resource_, float max_value_, TextureManager* t_manager, Warehouse* w_object, string name)
 		: resource(resource_), max_value(max_value_), position(Vector2f(x, y)){
 		ii_type = INTERFACE_ITEM_TYPE::SCALE_PARAMETER_BAR;
+		id = GlobalProcessData::getUnicId();
 
 		shape.setPosition(position); 
 		shape.setSize(Vector2f(width, height));

@@ -5,6 +5,7 @@
 SliderControl::SliderControl(float x, float y, float width_, float height_, const string& input_label_)
 		:position(Vector2f(x, y)), width(width_), height(height_) {
 		ii_type = INTERFACE_ITEM_TYPE::FORM_ITEM;
+		id = GlobalProcessData::getUnicId();
 		fi_state = FORM_ITEM_STATE::FORM_ITEM_IDLE;
 		fi_type = FORM_ITEM_TYPE::SLIDER_CONTROL;
 

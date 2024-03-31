@@ -3,6 +3,7 @@
 
 	InventoryItem::InventoryItem(float x, float y, float width_, float height_, int text_size_)
 		:position(Vector2f(x, y)), width(width_), height(height_), text_size(text_size_){
+		id = GlobalProcessData::getUnicId();
 		background.setPosition(x, y);
 		background.setSize(Vector2f(width, height));
 		background.setFillColor(Color(0, 0, 0, 0));

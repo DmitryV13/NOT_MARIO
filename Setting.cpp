@@ -4,9 +4,11 @@
 Setting::Setting(RenderWindow* window_, double screen_w, double screen_h, Color menuColor_, TextureManager* t_manager_)
 	: window(window_), screen_height(screen_h), screen_width(screen_w), menuColor(menuColor_), t_manager(t_manager_){
 	initFont();
+
+	int tmp_id;
 	CRect<float>* tmp;
 
-	settings = new PopUpWindow(screen_width, screen_height, 1000, 800, t_manager);
+	settings = new PopUpAutocWindow(screen_width, screen_height, 1000, 800, t_manager);
 	settings->createGroupLine();
 	tmp = settings->calculatePFNG(100, 100, 0);
 	Group* s_g0_top = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
@@ -31,9 +33,9 @@ Setting::Setting(RenderWindow* window_, double screen_w, double screen_h, Color 
 	s_if->setVisibility(false);
 	s_g0_top->addIElement((InterfaceItem*)s_if, 2);
 
-	s_g0_top->addButton(tmp->fourth, tmp->fourth, 40, "", menuColor, Color::White, Color(239, 135, 6, 255)
-		, Color(255, 185, 12), t_manager, 0, "EyeB", true, 0, 2);
-	settings->addCallback(s_g0_top->getButtonState(0), BUTTON_STATE::BTN_ACTIVE, 0, 0,
+	tmp_id = s_g0_top->addButton(tmp->fourth, tmp->fourth, 40, "", menuColor, Color::White, Color(239, 135, 6, 255)
+		, Color(255, 185, 12), t_manager, 0, "EyeB", true, 2);
+	settings->addCallback(s_g0_top->getButtonState(tmp_id), BUTTON_STATE::BTN_ACTIVE, 0, 0,
 		&InputField::changeVisibility, s_if);
 	
 	s_g0_top->createElementLine();
@@ -51,15 +53,15 @@ Setting::Setting(RenderWindow* window_, double screen_w, double screen_h, Color 
 
 	s_g0_top->createElementLine();
 	tmp = s_g0_top->calculatePFNII(40, 10, 0);
-	s_g0_top->addButton(tmp->third, 60, 20, "MAP BUILDER", menuColor, Color::White,
-		Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 19, 5);
+	tmp_id = s_g0_top->addButton(tmp->third, 60, 20, "MAP BUILDER", menuColor, Color::White,
+		Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 5);
 	
 
 	s_g0_top->createElementLine();
 	tmp = s_g0_top->calculatePFNII(40, 10, 0);
-	s_g0_top->addButton(tmp->third, 60, 20, "BACK", menuColor, Color::White,
-		Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 4, 6);
-	settings->addCallback(s_g0_top->getButtonState(4), BUTTON_STATE::BTN_ACTIVE, 0, 0,
+	tmp_id = s_g0_top->addButton(tmp->third, 60, 20, "BACK", menuColor, Color::White,
+		Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 6);
+	settings->addCallback(s_g0_top->getButtonState(tmp_id), BUTTON_STATE::BTN_ACTIVE, 0, 0,
 		&Setting::close, (MainMenuOption*)this);
 
 	s_g0_top->setAlignment("center auto", "center auto");

@@ -4,6 +4,7 @@
 	TabContainer::TabContainer(float x, float y, float width_, float height_)
 		:position(Vector2f(x, y)), width(width_), height(height_){
 		ii_type = INTERFACE_ITEM_TYPE::TAB_CONTAINER;
+		id = GlobalProcessData::getUnicId();
 	}
 
 	FloatRect TabContainer::getLocalBounds(){

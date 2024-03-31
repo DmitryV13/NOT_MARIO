@@ -6,6 +6,8 @@
 		: position(Vector2f(x, y)), width(width_), height(height_), overflow(overflow_), multiline(multiline_)
 		, text_size(text_size_){
 		ii_type = INTERFACE_ITEM_TYPE::FORM_ITEM;
+		id = GlobalProcessData::getUnicId();
+
 		visibility = true;
 		offset_y = 0;
 
@@ -40,6 +42,8 @@
 		: position(Vector2f(x, y)), width(width_), height(height_), overflow(ITEM_OVERFLOW::HIDDEN), 
 		multiline(multiline_), text_size(text_size_) {
 		ii_type = INTERFACE_ITEM_TYPE::FORM_ITEM;
+		id = GlobalProcessData::getUnicId();
+
 		visibility = true;
 		offset_y = 0;
 

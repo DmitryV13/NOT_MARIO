@@ -1026,7 +1026,7 @@ void TileFactory::tunnels_generation(vector<int>& y, vector<vector<char>>& map) 
         if (posibility < 50)
             left_zigzag(position_x - 2, position_y - 2, map);
         else right_zigzag(position_x + 2, position_y - 2, map);
-        //find_surface(position_x, position_y-2, map);
+        //find_surface(position_x, position.y-2, map);
     }
 }
 

@@ -8,10 +8,12 @@ protected:
 	bool is_scrollable = false;
 	bool overflow_x = false;
 	bool overflow_y = false;
+	int id;
 public:
 	virtual FloatRect getLocalBounds();
 	virtual FloatRect getGlobalBounds();
 	short& getIIType();
+	const int& getId() const;
 
 	virtual void setPositionX(float x);
 	virtual void setPositionY(float y);

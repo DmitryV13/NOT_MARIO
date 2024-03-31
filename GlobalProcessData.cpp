@@ -3,6 +3,7 @@
 	RenderWindow* GlobalProcessData::window = nullptr;
 	FloatRect GlobalProcessData::view_cords = FloatRect(0,0,0,0);
 	Font* GlobalProcessData::font = new Font();
+	int GlobalProcessData::id_accumulator = 0;
 
 	void GlobalProcessData::setFont(Font* font_){
 		font = font_;
@@ -16,6 +17,12 @@
 		window = new_window;
 	}
 	
+	int GlobalProcessData::getUnicId(){
+		int tmp = id_accumulator;
+		id_accumulator++;
+		return tmp;
+	}
+
 	Font* GlobalProcessData::getFont(){
 		return font;
 	}

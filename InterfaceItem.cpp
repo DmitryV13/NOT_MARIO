@@ -19,6 +19,10 @@
 		return ii_type;
 	}
 
+	const int& InterfaceItem::getId() const{
+		return id;
+	}
+
 	void InterfaceItem::setPositionX(float x){
 	}
 

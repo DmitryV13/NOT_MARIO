@@ -2,9 +2,8 @@
 #include "ImageButton.h"
 
 	ImageButton::ImageButton(float x, float y, float width, float height, short text_size
-		, string text_, TextureManager* t_manager, int index, string name_, bool outline, int id_)
+		, string text_, TextureManager* t_manager, int index, string name_, bool outline)
 		: name(name_){
-		id = id_;
 		position = Vector2f(x, y);
 
 		shape.setPosition(position);

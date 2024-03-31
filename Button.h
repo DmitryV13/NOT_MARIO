@@ -7,7 +7,6 @@
 
 class Button : public InterfaceItem{
 protected:
-	int id;
 	short button_prstate;
 	short button_cstate;
 	RectangleShape shape;
@@ -25,11 +24,11 @@ protected:
 
 public:
 	Button();
-	Button(float x, float y, short text_size, string text_, Color menuColor, int id_);
+	Button(float x, float y, short text_size, string text_, Color menuColor);
 	Button(float x, float y, float width, float height, short text_size, string text_
-		, Color btn_hcolor, int id_);
+		, Color btn_hcolor);
 	Button(float x, float y, float width, float height, short text_size, string text_
-		, bool outline, int id_);
+		, bool outline);
 	~Button();
 
 	float getHeight();
@@ -37,7 +36,6 @@ public:
 	float getTextHeight();
 	float getTextWidth();
 	short* getButtonState();
-	const int& getIdentificator() const;
 	FloatRect getLocalBounds() override;
 	FloatRect getGlobalBounds() override;
 

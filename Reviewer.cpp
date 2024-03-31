@@ -4,6 +4,7 @@
 	Reviewer::Reviewer(float x, float y, float width_, float height_)
 		: max_height(height_), max_width(width_), position(Vector2f(x, y)){
 		ii_type = INTERFACE_ITEM_TYPE::REVIEWER;
+		id = GlobalProcessData::getUnicId();
 	}
 
 	FloatRect Reviewer::getLocalBounds(){

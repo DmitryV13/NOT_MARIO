@@ -5,6 +5,7 @@
 		: outer_width(width_), outer_height(height_), inner_width(width_), inner_height(height_)
 		, position(Vector2f(x, y)){
 		ii_type = INTERFACE_ITEM_TYPE::GROUP;
+		id = GlobalProcessData::getUnicId();
 		is_scrollable = true;
 
 		background.setFillColor(Color(0, 0, 0, 0));
@@ -401,7 +402,7 @@
 			for (int j = 0; j < g_elements[i].size(); j++) {
 				if (g_elements[i][j]->getIIType() == INTERFACE_ITEM_TYPE::BUTTON) {
 					//string u = static_cast<Button*>(g_elements[i][j])->getName();
-					if (static_cast<Button*>(g_elements[i][j])->getIdentificator() == btn_id) {
+					if (static_cast<Button*>(g_elements[i][j])->getId() == btn_id) {
 						return static_cast<Button*>(g_elements[i][j])->getButtonState();
 					}
 				}
@@ -430,7 +431,7 @@
 		g2.setSize(Vector2f(inner_width - 2, outer_height - inner_height - 2));
 	}
 
-	void Group::addGroup(short fill_p_w, short fill_p_h, short index){
+	int Group::addGroup(short fill_p_w, short fill_p_h, short index){
 		int new_eposition_y = position.y;
 		for (size_t i = 0; i < index; i++) {
 			new_eposition_y += getMaxELHeight(i).second;
@@ -441,13 +442,14 @@
 		for (size_t i = 0; i < g_elements[index].size(); i++) {
 			new_eposition_x += g_elements[index][i]->getGlobalBounds().width;
 		}
-
-		g_elements[index].push_back(new Group(new_eposition_x, new_eposition_y, fill_p_w * inner_width / 100, fill_p_h * inner_height / 100));
+		Group* tmp = new Group(new_eposition_x, new_eposition_y, fill_p_w * inner_width / 100, fill_p_h * inner_height / 100);
+		g_elements[index].push_back(tmp);
+		return tmp->getId();
 	}
 
 
 
-	void Group::addButton(short text_size, string btn_name, Color btn_color, int btn_id, short index_g){
+	int Group::addButton(short text_size, string btn_name, Color btn_color, short index_g){
 		int new_eposition_y = position.y;
 		for (size_t i = 0; i < index_g; i++) {
 			new_eposition_y += getMaxELHeight(i).second;
@@ -458,12 +460,14 @@
 		for (size_t i = 0; i < g_elements[index_g].size(); i++) {
 			new_eposition_x += g_elements[index_g][i]->getGlobalBounds().width;
 		}
-		g_elements[index_g].push_back(new Button(new_eposition_x, new_eposition_y, text_size, btn_name, btn_color, btn_id));
+		Button* tmp = new Button(new_eposition_x, new_eposition_y, text_size, btn_name, btn_color);
+		g_elements[index_g].push_back(tmp);
+		return tmp->getId();
 	}
 
-	void Group::addButton(float width, float height, short text_size
+	int Group::addButton(float width, float height, short text_size
 		, string btn_name, Color btn_hcolor, Color btn_icolor, Color shp_hcolor, Color shp_icolor
-		, bool outline, int btn_id, short index_g){
+		, bool outline, short index_g){
 		int new_eposition_y = position.y;
 		for (size_t i = 0; i < index_g; i++) {
 			new_eposition_y += getMaxELHeight(i).second;
@@ -474,14 +478,15 @@
 		for (size_t i = 0; i < g_elements[index_g].size(); i++) {
 			new_eposition_x += g_elements[index_g][i]->getGlobalBounds().width;
 		}
-		Button* btn = new Button(new_eposition_x, new_eposition_y, width, height, text_size, btn_name, outline, btn_id);
-		btn->setColors(btn_hcolor, btn_icolor, shp_hcolor, shp_icolor);
-		g_elements[index_g].push_back(btn);
+		Button* tmp = new Button(new_eposition_x, new_eposition_y, width, height, text_size, btn_name, outline);
+		tmp->setColors(btn_hcolor, btn_icolor, shp_hcolor, shp_icolor);
+		g_elements[index_g].push_back(tmp);
+		return tmp->getId();
 	}
 
-	void Group::addButton(float width, float height, short text_size, string btn_name
+	int Group::addButton(float width, float height, short text_size, string btn_name
 		, Color btn_hcolor, Color btn_icolor, Color shp_hcolor, Color shp_icolor, TextureManager* t_manager
-		, int index_t, string name, bool outline, int btn_id, short index_g){
+		, int index_t, string name, bool outline, short index_g){
 		int new_eposition_y = position.y;
 		for (size_t i = 0; i < index_g; i++) {
 			new_eposition_y += getMaxELHeight(i).second;
@@ -492,9 +497,10 @@
 		for (size_t i = 0; i < g_elements[index_g].size(); i++) {
 			new_eposition_x += g_elements[index_g][i]->getGlobalBounds().width;
 		}
-		ImageButton* btn = new ImageButton(new_eposition_x, new_eposition_y, width, height, text_size, btn_name, t_manager, index_t, name, outline, btn_id);
-		btn->setColors(btn_hcolor, btn_icolor, shp_hcolor, shp_icolor);
-		g_elements[index_g].push_back(btn);
+		ImageButton* tmp = new ImageButton(new_eposition_x, new_eposition_y, width, height, text_size, btn_name, t_manager, index_t, name, outline);
+		tmp->setColors(btn_hcolor, btn_icolor, shp_hcolor, shp_icolor);
+		g_elements[index_g].push_back(tmp);
+		return tmp->getId();
 	}
 
 
