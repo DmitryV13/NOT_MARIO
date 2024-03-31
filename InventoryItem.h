@@ -15,7 +15,6 @@ protected:
 	RectangleShape shape;
 	BasicImage* image;
 	ResourceInfo* r_info;
-	Font* font;
 	Text text;
 
 	int text_size;
@@ -24,7 +23,7 @@ protected:
 	bool visible;
 	Vector2f position;
 public:
-	InventoryItem(float x, float y, float width_, float height_, int text_size_, Font* font_);
+	InventoryItem(float x, float y, float width_, float height_, int text_size_);
 
 	void addItemInfo(TextureManager* t_manager, Warehouse* w_object, string name);
 	void addItemInfo(TextureManager* t_manager, WarehouseItem* w_item);
@@ -39,7 +38,7 @@ public:
 
 	void changePosition(float offset_x, float offset_y) override;
 
-	void update(Vector2f mouse_pos, FloatRect view_cords) override;
-	void render(RenderTarget* target) override;
+	void update() override;
+	void render() override;
 };
 

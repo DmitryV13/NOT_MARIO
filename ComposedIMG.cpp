@@ -102,7 +102,9 @@
 		return FloatRect(cornerTopLeft.getPosition().x, cornerTopLeft.getPosition().y, width + origin_size*2, height + origin_size*2);
 	}
 	
-	void ComposedIMG::update(FloatRect view_cords){
+	void ComposedIMG::update(){
+		FloatRect view_cords = GlobalProcessData::getViewCords();
+
 		cornerTopLeft.setPosition(view_cords.left - view_cords.width/2 + offsetX, view_cords.top - view_cords.height/2 + offsetY);
 		cornerTopRight.setPosition(view_cords.left - view_cords.width/2 + offsetX + width + origin_size, view_cords.top - view_cords.height/2 + offsetY);
 		cornerBottomLeft.setPosition(view_cords.left - view_cords.width/2 + offsetX, view_cords.top - view_cords.height/2 + offsetY + height + origin_size);
@@ -110,7 +112,9 @@
 		filler.setPosition(view_cords.left - view_cords.width/2 + offsetX + origin_size, view_cords.top - view_cords.height/2 + offsetY + origin_size);
 	}
 	
-	void ComposedIMG::render(RenderTarget* target){
+	void ComposedIMG::render(){
+		RenderTarget* target = GlobalProcessData::getWindow();
+
 		target->draw(cornerTopLeft);
 		target->draw(cornerTopRight);
 		target->draw(cornerBottomLeft);

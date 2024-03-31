@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include "Label.h"
 
-	Label::Label(const string& label_text_, Font* font_, int text_size_, TextureManager* manager, int index)
+	Label::Label(const string& label_text_,  int text_size_, TextureManager* manager, int index)
 		:text_size(text_size_){
 		label_text = new Text();
-		label_text->setFont(*font_);
+		label_text->setFont(*GlobalProcessData::getFont());
 		label_text->setString(label_text_);
 		label_text->setFillColor(sf::Color::White);
 		label_text->setCharacterSize(text_size);
@@ -42,13 +42,15 @@
 		return label_background->getGlobalBounds();
 	}
 
-	void Label::update(FloatRect view_cords){
-		label_background->update(view_cords);
+	void Label::update(){
+		label_background->update();
 		label_text->setPosition(label_background->getLocalBounds().left - label_text->getLocalBounds().left + label_text->getLocalBounds().width / 4, label_background->getLocalBounds().top - label_text->getLocalBounds().top + label_text->getLocalBounds().height / 8);
 	}
 
-	void Label::render(RenderTarget* target){
-		label_background->render(target);
+	void Label::render(){
+		RenderTarget* target = GlobalProcessData::getWindow();
+
+		label_background->render();
 		target->draw(*label_text);
 	}
 	

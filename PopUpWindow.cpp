@@ -3,8 +3,8 @@
 
 
 	PopUpWindow::PopUpWindow(double screen_width, double screen_height, int width_, int height_, 
-		RenderWindow* window_, TextureManager* t_manager_)
-		:width(width_), height(height_), window(window_), puw_state(POP_UP_WINDOW_STATE::PUW_CLOSED){
+		TextureManager* t_manager_)
+		:width(width_), height(height_), puw_state(POP_UP_WINDOW_STATE::PUW_CLOSED){
 		callbacks_handler = new CallbacksHandler();
 		dcallbacks_handler = new DCallbacksHandler();
 		manager = t_manager_;
@@ -15,8 +15,8 @@
 	}
 
 	PopUpWindow::PopUpWindow(double screen_width, double screen_height, int width_, int height_, 
-		RenderWindow* window_, string positionX, string positionY, TextureManager* t_manager_)
-		:width(width_), height(height_), window(window_), puw_state(POP_UP_WINDOW_STATE::PUW_CLOSED){
+		string positionX, string positionY, TextureManager* t_manager_)
+		:width(width_), height(height_), puw_state(POP_UP_WINDOW_STATE::PUW_CLOSED){
 		callbacks_handler = new CallbacksHandler();
 		dcallbacks_handler = new DCallbacksHandler();
 		manager = t_manager_;
@@ -27,8 +27,8 @@
 	}
 
 	PopUpWindow::PopUpWindow(double screen_width, double screen_height, int width_, int height_, 
-		RenderWindow* window_, string positionX, int y, TextureManager* t_manager_)
-		:width(width_), height(height_), window(window_), puw_state(POP_UP_WINDOW_STATE::PUW_CLOSED){
+		string positionX, int y, TextureManager* t_manager_)
+		:width(width_), height(height_), puw_state(POP_UP_WINDOW_STATE::PUW_CLOSED){
 		callbacks_handler = new CallbacksHandler();
 		dcallbacks_handler = new DCallbacksHandler();
 		manager = t_manager_;
@@ -39,8 +39,8 @@
 	}
 
 	PopUpWindow::PopUpWindow(double screen_width, double screen_height, int width_, int height_, 
-		RenderWindow* window_, int x, string positionY, TextureManager* t_manager_)
-		:width(width_), height(height_), window(window_), puw_state(POP_UP_WINDOW_STATE::PUW_CLOSED){
+		int x, string positionY, TextureManager* t_manager_)
+		:width(width_), height(height_), puw_state(POP_UP_WINDOW_STATE::PUW_CLOSED){
 		callbacks_handler = new CallbacksHandler();
 		dcallbacks_handler = new DCallbacksHandler();
 		manager = t_manager_;
@@ -88,12 +88,12 @@
 		groups.push_back(vector<Group*>());
 	}
 
-	void PopUpWindow::addLabel(double screen_width, double screen_height, const string& label_text, Font* font_, int text_size, short offset){
-		label = new Label(label_text, font_, text_size, manager, 0);
+	void PopUpWindow::addLabel(double screen_width, double screen_height, const string& label_text, int text_size, short offset){
+		label = new Label(label_text, text_size, manager, 0);
 		label->setPosition("center", (screen_height - height) / 2 - label->getLocalBounds().height - offset, screen_width, screen_height);
 	}
 
-	void PopUpWindow::addGroup(short fill_p_w, short fill_p_h, short index, string name, int name_size, Font* font){
+	void PopUpWindow::addGroup(short fill_p_w, short fill_p_h, short index, string name, int name_size){
 		int new_gposition_y=position.y;
 		for (size_t i = 0; i < index; i++){
 			new_gposition_y += getMaxGroupsHeight(i);
@@ -104,7 +104,7 @@
 		}
 
 		groups[index].push_back(new Group(new_gposition_x, new_gposition_y, fill_p_w * width / 100, fill_p_h * height / 100));
-		groups[index][groups[index].size() - 1]->addGroupName(name, name_size, font);
+		groups[index][groups[index].size() - 1]->addGroupName(name, name_size);
 	}
 
 	void PopUpWindow::addGroup(short fill_p_w, short fill_p_h, short index) {
@@ -124,8 +124,8 @@
 		groups[index].push_back(new_group);
 	}
 
-	void PopUpWindow::addGroupName(int i, int j, string name, int name_size, Font* font){
-		groups[i][j]->addGroupName(name, name_size, font);
+	void PopUpWindow::addGroupName(int i, int j, string name, int name_size){
+		groups[i][j]->addGroupName(name, name_size);
 	}
 
 	void PopUpWindow::addBackground(double map_width, double map_height, Color color){
@@ -176,14 +176,14 @@
 		}
 	}
 
-	void PopUpWindow::update(FloatRect view_cords){
-		w_background->update(view_cords);
+	void PopUpWindow::update(){
+		w_background->update();
 		if(label!=nullptr)
-			label->update(view_cords);
+			label->update();
 
 		for (auto i = groups.begin(); i != groups.end(); ++i) {
 			for (auto j = i->begin(); j != i->end(); ++j) {
-				(*j)->update(Vector2f(Mouse::getPosition(*window)), view_cords);
+				(*j)->update();
 			}
 		}
 
@@ -192,15 +192,17 @@
 	}
 	
 	void PopUpWindow::render(){
+		RenderTarget* target = GlobalProcessData::getWindow();
+
 		if(background)
-			window->draw(*background);
-		w_background->render(window);
+			target->draw(*background);
+		w_background->render();
 		if (label != nullptr)
-			label->render(window);
+			label->render();
 
 		for (auto i : groups) {
 			for (auto j : i) {
-				j->render(window);
+				j->render();
 			}
 		}
 	}

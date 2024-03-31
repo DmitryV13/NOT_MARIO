@@ -5,18 +5,18 @@
 		ii_type = INTERFACE_ITEM_TYPE::RESOURCE_INFO;
 	}
 
-	ResourceInfo::ResourceInfo(float x, float y, Font* font, int text_size, bool image_){
+	ResourceInfo::ResourceInfo(float x, float y, int text_size, bool image_){
 		ii_type = INTERFACE_ITEM_TYPE::RESOURCE_INFO;
 
 		image = image_;
 		position.x = x;
 		position.y = y;
 		shape.setPosition(position);
-		text.setFont(*font);
+		text.setFont(*GlobalProcessData::getFont());
 		text.setCharacterSize(text_size);
 	}
 	
-	ResourceInfo::ResourceInfo(float x, float y, int text_size, Font* font
+	ResourceInfo::ResourceInfo(float x, float y, int text_size
 		, TextureManager* t_manager, Warehouse* w_object, string name, bool image_)
 		: image(image_) {
 		ii_type = INTERFACE_ITEM_TYPE::RESOURCE_INFO;
@@ -28,7 +28,7 @@
 
 		shape.setPosition(position);
 		max = w_object->getWarehouseItem(name)->getInfo().second == 0 ? "" : "/" + std::to_string(w_object->getWarehouseItem(name)->getInfo().second);
-		text.setFont(*font);
+		text.setFont(*GlobalProcessData::getFont());
 		text.setString(std::to_string(*resource) + max);
 		text.setFillColor(Color::White);
 		text.setCharacterSize(text_size);
@@ -54,7 +54,7 @@
 		shape.setFillColor(Color(0, 0, 0, 0));
 	}
 
-	ResourceInfo::ResourceInfo(float x, float y, int* resource_, int max_v, int text_size, Font* font
+	ResourceInfo::ResourceInfo(float x, float y, int* resource_, int max_v, int text_size
 		, TextureManager* t_manager, int index, string name, bool self_align_)
 		: resource(resource_), image(self_align_){
 		ii_type = INTERFACE_ITEM_TYPE::RESOURCE_INFO;
@@ -64,7 +64,7 @@
 		position.y = y;
 		shape.setPosition(position);
 		max = max_v==0?"": "/" + std::to_string(max_v);
-		text.setFont(*font);
+		text.setFont(*GlobalProcessData::getFont());
 		text.setString(std::to_string(*resource) + max);
 		text.setFillColor(Color::White);
 		text.setCharacterSize(text_size);
@@ -185,7 +185,10 @@
 		shape.setFillColor(Color(0, 0, 0, 0));
 	}
 
-	void ResourceInfo::update(Vector2f mouse_pos, FloatRect view_cords){
+	void ResourceInfo::update(){
+		Vector2f mouse_pos = GlobalProcessData::getMousePos();
+		FloatRect view_cords = GlobalProcessData::getViewCords();
+
 		shape.setPosition(Vector2f(
 			position.x + view_cords.left - view_cords.width / 2,
 			position.y + view_cords.top - view_cords.height / 2)

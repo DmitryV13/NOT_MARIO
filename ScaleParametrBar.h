@@ -21,7 +21,8 @@ private:
 	Vector2f position;
 public:
 	ScaleParameterBar();
-	ScaleParameterBar(float x, float y, float width, float height, float* resource_, float max_value_, TextureManager* t_manager, Warehouse* w_object, string name);
+	ScaleParameterBar(float x, float y, float width, float height, float* resource_, float max_value_, 
+		TextureManager* t_manager, Warehouse* w_object, string name);
 	~ScaleParameterBar();
 
 	FloatRect getLocalBounds() override;
@@ -33,7 +34,7 @@ public:
 
 	void changePosition(float offset_x, float offset_y) override;
 
-	void update(Vector2f mouse_pos, FloatRect view_cords) override;
-	void render(RenderTarget* target) override;
+	void update() override;
+	void render() override;
 };
 

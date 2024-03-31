@@ -23,14 +23,15 @@ protected:
 	float height;
 	Vector2f position;
 public:
-	Textarea(float x, float y, float width_, float height_, Font* font_, int text_size_, Color text_color_, 
+	Textarea(float x, float y, float width_, float height_,  int text_size_, Color text_color_, 
 		Color background_color_, Color border_color, short overflow_, bool multiline_);
-	Textarea(float x, float y, float width_, float height_, Font* font_, int text_size_, bool multiline_);
+	Textarea(float x, float y, float width_, float height_, int text_size_, bool multiline_);
 
 	FloatRect getLocalBounds() override;
 	FloatRect getGlobalBounds() override;
 	std::string* getString();
 	char getLastCharacter();
+	bool getVisibility();
 
 	bool hasCursor();
 	bool contentOverflows();
@@ -55,7 +56,7 @@ public:
 	void scroll(float delta);
 	void normalization();
 
-	void update(Vector2f mouse_pos, FloatRect view_cords) override;
-	void render(RenderTarget* target) override;
+	void update() override;
+	void render() override;
 };
 

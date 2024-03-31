@@ -12,11 +12,11 @@ private:
 	bool chosen;
 	bool unpressed;
 public:
-	CheckboxItem(float x, float y, float width_, float height_, int text_size_, Font* font);
+	CheckboxItem(float x, float y, float width_, float height_, int text_size_);
 
 	void setVisibility(bool visibility);
 
-	void update(Vector2f mouse_pos, FloatRect view_cords) override;
-	void render(RenderTarget* target) override;
+	void update() override;
+	void render() override;
 };
 

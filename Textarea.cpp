@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Textarea.h"
 
-	Textarea::Textarea(float x, float y, float width_, float height_, Font* font_, int text_size_, 
+	Textarea::Textarea(float x, float y, float width_, float height_, int text_size_, 
 		Color text_color_, Color background_color_, Color border_color_, short overflow_, bool multiline_)
 		: position(Vector2f(x, y)), width(width_), height(height_), overflow(overflow_), multiline(multiline_)
 		, text_size(text_size_){
@@ -22,7 +22,7 @@
 		background.setOutlineColor(border_color_);
 
 		text = new Text();
-		text->setFont(*font_);
+		text->setFont(*GlobalProcessData::getFont());
 		text->setString("a");
 		text->setCharacterSize(text_size);
 		text->setFillColor(text_color);
@@ -35,7 +35,7 @@
 		cursor = ' ';
 	}
 	
-	Textarea::Textarea(float x, float y, float width_, float height_, Font* font_, int text_size_, 
+	Textarea::Textarea(float x, float y, float width_, float height_, int text_size_, 
 		bool multiline_)
 		: position(Vector2f(x, y)), width(width_), height(height_), overflow(ITEM_OVERFLOW::HIDDEN), 
 		multiline(multiline_), text_size(text_size_) {
@@ -56,7 +56,7 @@
 		background.setOutlineColor(Color(60, 60, 118, 255));
 
 		text = new Text();
-		text->setFont(*font_);
+		text->setFont(*GlobalProcessData::getFont());
 		text->setString("a");
 		text->setCharacterSize(text_size);
 		text->setFillColor(text_color);
@@ -83,6 +83,10 @@
 
 	char Textarea::getLastCharacter(){
 		return text_str->empty() ? ' ' : text_str->at(text_str->size()-1);
+	}
+
+	bool Textarea::getVisibility(){
+		return visibility;
 	}
 
 	bool Textarea::hasCursor(){
@@ -300,7 +304,10 @@
 		text->setString(output);
 	}
 	
-	void Textarea::update(Vector2f mouse_pos, FloatRect view_cords){
+	void Textarea::update(){
+		Vector2f mouse_pos = GlobalProcessData::getMousePos();
+		FloatRect view_cords = GlobalProcessData::getViewCords();
+
 		background.setPosition(
 			view_cords.left - view_cords.width / 2 + position.x + 2,
 			view_cords.top - view_cords.height / 2 + position.y + 2
@@ -317,7 +324,9 @@
 		text->setString(tmp);
 	}
 	
-	void Textarea::render(sf::RenderTarget* target){
+	void Textarea::render(){
+		RenderTarget* target = GlobalProcessData::getWindow();
+
 		target->draw(background);
 		View oldView{ target->getView() };
 		View view{ createLocalView(this->getLocalBounds(), target)};

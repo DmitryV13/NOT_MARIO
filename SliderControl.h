@@ -28,7 +28,7 @@ private:
 
 	void changeValue();
 public:
-	SliderControl(float x, float y, float width_, float height_, const string& input_label_, Font* font_);
+	SliderControl(float x, float y, float width_, float height_, const string& input_label_);
 
 	FloatRect getLocalBounds() override;
 	FloatRect getGlobalBounds() override;
@@ -41,7 +41,7 @@ public:
 
 	void scrollSlider(float mouse_pos_x);
 
-	void render(RenderTarget* target) override;
-	void update(Vector2f mouse_pos, FloatRect view_cords) override;
+	void render() override;
+	void update() override;
 };
 

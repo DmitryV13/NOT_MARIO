@@ -110,19 +110,21 @@
 		}
 	}
 
-	void Reviewer::update(Vector2f mouse_pos, FloatRect view_cords){
+	void Reviewer::update(){
+		FloatRect view_cords = GlobalProcessData::getViewCords();
+
 		setPosition(Vector2f(
 			position.x + view_cords.left - view_cords.width / 2,
 			position.y + view_cords.top - view_cords.height / 2)
 		);
 		if (!images.empty()) {
-			images[current_image]->update(mouse_pos, view_cords);
+			images[current_image]->update();
 		}
 	}
 
-	void Reviewer::render(RenderTarget* target){
+	void Reviewer::render(){
 		if (!images.empty()) {
-			images[current_image]->render(target);
+			images[current_image]->render();
 		}
 	}
 	

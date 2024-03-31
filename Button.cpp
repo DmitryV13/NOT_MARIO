@@ -7,7 +7,7 @@ Button::Button(){
 	button_prstate = BUTTON_STATE::BTN_HOVERED;
 }
 
-Button::Button(float x, float y, float width, float height, short text_size, sf::Font* font_
+Button::Button(float x, float y, float width, float height, short text_size
 		, string text_, Color btn_hcolor, int id_)
 		: btn_hover_color(btn_hcolor), btn_active_color(btn_hcolor), btn_idle_color(Color::White)
 		, shp_hover_color(sf::Color(28, 26, 47, 255)), shp_active_color(sf::Color(28, 26, 47, 255))
@@ -19,8 +19,7 @@ Button::Button(float x, float y, float width, float height, short text_size, sf:
 		shape.setPosition(position);
 		shape.setSize(sf::Vector2f(width, height));
 
-		font = font_;
-		text.setFont(*font);
+		text.setFont(*GlobalProcessData::getFont());
 		text.setString(text_);
 		text.setFillColor(btn_idle_color);
 		text.setCharacterSize(text_size);
@@ -34,7 +33,7 @@ Button::Button(float x, float y, float width, float height, short text_size, sf:
 		shape.setFillColor(shp_idle_color);
 	}
 
-	Button::Button(float x, float y, short text_size, sf::Font* font_, string text_, Color btn_hcolor, int id_)
+	Button::Button(float x, float y, short text_size, string text_, Color btn_hcolor, int id_)
 		: btn_hover_color(btn_hcolor), btn_active_color(btn_hcolor), btn_idle_color(Color::White)
 		, shp_hover_color(Color(0, 0, 0, 0)), shp_active_color(Color(0, 0, 0, 0))
 		, shp_idle_color(Color(0, 0, 0, 0)), position(Vector2f(x, y)), id(id_) {
@@ -44,8 +43,7 @@ Button::Button(float x, float y, float width, float height, short text_size, sf:
 
 		shape.setPosition(position);
 		
-		font = font_;
-		text.setFont(*font);
+		text.setFont(*GlobalProcessData::getFont());
 		text.setString(text_);
 		text.setFillColor(btn_idle_color);
 		text.setCharacterSize(text_size);
@@ -61,7 +59,7 @@ Button::Button(float x, float y, float width, float height, short text_size, sf:
 		shape.setFillColor(shp_idle_color);
 	}
 
-	Button::Button(float x, float y, float width, float height, short text_size, sf::Font* font_
+	Button::Button(float x, float y, float width, float height, short text_size
 		, string text_, bool outline, int id_)
 		: position(Vector2f(x, y)), id(id_) {
 		ii_type = INTERFACE_ITEM_TYPE::BUTTON;
@@ -74,8 +72,7 @@ Button::Button(float x, float y, float width, float height, short text_size, sf:
 			shape.setOutlineThickness(3.f);
 			shape.setOutlineColor(Color::Black);
 		}
-		font = font_;
-		text.setFont(*font);
+		text.setFont(*GlobalProcessData::getFont());
 		text.setString(text_);
 		text.setFillColor(btn_idle_color);
 		text.setCharacterSize(text_size);
@@ -169,7 +166,9 @@ Button::Button(float x, float y, float width, float height, short text_size, sf:
 		return false;
 	}
 
-	void Button::updatePosition(FloatRect view_cords) {
+	void Button::updatePosition() {
+		FloatRect view_cords = GlobalProcessData::getViewCords();
+
 		shape.setPosition(
 			view_cords.left - view_cords.width / 2 + position.x,
 			view_cords.top - view_cords.height / 2 + position.y);
@@ -179,8 +178,11 @@ Button::Button(float x, float y, float width, float height, short text_size, sf:
 		);
 	}
 	
-	void Button::update(Vector2f mouse_pos, FloatRect view_cords){
-		updatePosition(view_cords);
+	void Button::update(){
+		Vector2f mouse_pos = GlobalProcessData::getMousePos();
+		FloatRect view_cords = GlobalProcessData::getViewCords();
+
+		updatePosition();
 		button_cstate = BUTTON_STATE::BTN_IDLE;
 		if (shape.getGlobalBounds().contains(mouse_pos.x + (view_cords.left - view_cords.width / 2), mouse_pos.y + (view_cords.top - view_cords.height / 2))) {
 			button_cstate = BUTTON_STATE::BTN_HOVERED;
@@ -220,7 +222,8 @@ Button::Button(float x, float y, float width, float height, short text_size, sf:
 		}
 	}
 
-	void Button::render(sf::RenderTarget* target){
+	void Button::render(){
+		RenderTarget* target = GlobalProcessData::getWindow();
 		target->draw(shape);
 		//if (btn_image != nullptr) {
 			//target->draw(*btn_image);

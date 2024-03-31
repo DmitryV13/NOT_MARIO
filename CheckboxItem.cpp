@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "CheckboxItem.h"
 
-	CheckboxItem::CheckboxItem(float x, float y, float width_, float height_, int text_size_, Font* font)
-		:InventoryItem(x, y, width_, height_, text_size_, font) {
+	CheckboxItem::CheckboxItem(float x, float y, float width_, float height_, int text_size_)
+		:InventoryItem(x, y, width_, height_, text_size_) {
 		visible = true;
 		ii_type = INTERFACE_ITEM_TYPE::FORM_ITEM;
 		fi_state = FORM_ITEM_STATE::FORM_ITEM_IDLE;
@@ -16,7 +16,10 @@
 		visible = visibility;
 	}
 
-	void CheckboxItem::update(Vector2f mouse_pos, FloatRect view_cords){
+	void CheckboxItem::update(){
+		Vector2f mouse_pos = GlobalProcessData::getMousePos();
+		FloatRect view_cords = GlobalProcessData::getViewCords();
+
 		FloatRect gr =
 			FloatRect(
 				getGlobalBounds().left + view_cords.left - view_cords.width / 2,
@@ -77,8 +80,8 @@
 		////////////////////////////////////
 
 		shape.setPosition(position.x + 1, position.y + 1);
-		image->update(mouse_pos, view_cords);
-		r_info->update(mouse_pos, view_cords);
+		image->update();
+		r_info->update();
 		text.setPosition(Vector2f(
 			view_cords.left - view_cords.width / 2 + position.x + (width - text.getGlobalBounds().width) / 2,
 			view_cords.top - view_cords.height / 2 + position.y + width - text.getGlobalBounds().height
@@ -93,11 +96,13 @@
 		);
 	}
 
-	void CheckboxItem::render(RenderTarget* target){
+	void CheckboxItem::render(){
+		RenderTarget* target = GlobalProcessData::getWindow();
+		
 		target->draw(background);
 		//if (visible) {
-			image->render(target);
-			r_info->render(target);
+			image->render();
+			r_info->render();
 			target->draw(text);
 		//}
 		target->draw(shape);

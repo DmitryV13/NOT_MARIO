@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "ImageButton.h"
 
-	ImageButton::ImageButton(float x, float y, float width, float height, short text_size, sf::Font* font_
+	ImageButton::ImageButton(float x, float y, float width, float height, short text_size
 		, string text_, TextureManager* t_manager, int index, string name_, bool outline, int id_)
 		: name(name_){
 		id = id_;
@@ -16,10 +16,12 @@
 		btn_image = new Sprite();
 		btn_image->setTexture(t_manager->getTexture(index, name));
 		float img_max_height = (shape.getSize().y * 80) / 100;
-		btn_image->setScale(img_max_height/btn_image->getLocalBounds().height, img_max_height / btn_image->getLocalBounds().height);
+		float img_max_width = (shape.getSize().x * 80) / 100;
+		float max_param = (img_max_height / btn_image->getLocalBounds().height) < (img_max_width / btn_image->getLocalBounds().width) ? img_max_height : img_max_width;
+		float basic_param = (img_max_height / btn_image->getLocalBounds().height) < (img_max_width / btn_image->getLocalBounds().width) ? btn_image->getLocalBounds().height : btn_image->getLocalBounds().width;
+		btn_image->setScale(max_param / basic_param, max_param / basic_param);
 		
-		font = font_;
-		text.setFont(*font);
+		text.setFont(*GlobalProcessData::getFont());
 		text.setString(text_);
 		text.setFillColor(btn_idle_color);
 		text.setCharacterSize(text_size);
@@ -29,7 +31,7 @@
 		if (text.getGlobalBounds().width == 0) {
 			btn_image->setPosition(
 				shape.getPosition().x - shape.getOutlineThickness() + (width - btn_image->getGlobalBounds().width) / 2,
-				shape.getPosition().y - shape.getOutlineThickness() + (height - img_max_height) / 2
+				shape.getPosition().y - shape.getOutlineThickness() + (height - max_param) / 2
 			);
 		}
 		else {
@@ -68,7 +70,8 @@
 		);
 	}
 	
-	void ImageButton::updatePosition(FloatRect view_cords){
+	void ImageButton::updatePosition(){
+		FloatRect view_cords = GlobalProcessData::getViewCords();
 		shape.setPosition(
 			view_cords.left - view_cords.width / 2 + position.x,
 			view_cords.top - view_cords.height / 2 + position.y
@@ -91,7 +94,9 @@
 		);
 	}
 	
-	void ImageButton::render(sf::RenderTarget* target){
+	void ImageButton::render(){
+		RenderTarget* target = GlobalProcessData::getWindow();
+
 		target->draw(shape);
 		target->draw(*btn_image);
 		target->draw(text);

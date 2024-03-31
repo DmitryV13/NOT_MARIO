@@ -6,7 +6,7 @@
 		shape.setFillColor(Color(0, 0, 0, 0));
 	}
 
-	ImageInfo::ImageInfo(float x, float y, string text_, int text_size, Font* font,
+	ImageInfo::ImageInfo(float x, float y, string text_, int text_size,
 		TextureManager* t_manager, int index, string name){
 		ii_type = INTERFACE_ITEM_TYPE::IMAGE_INFO;
 		shape.setFillColor(Color(0, 0, 0, 0));
@@ -15,7 +15,7 @@
 		src_img.setTexture(t_manager->getTexture(index, name));
 
 		shape.setPosition(position);
-		text.setFont(*font);
+		text.setFont(*GlobalProcessData::getFont());
 		text.setString(text_);
 		text.setFillColor(Color::White);
 		text.setCharacterSize(text_size);
@@ -37,7 +37,8 @@
 		);
 	}
 
-	ImageInfo::ImageInfo(float x, float y, int text_, int text_size, Font* font, TextureManager* t_manager, int index, string name){
+	ImageInfo::ImageInfo(float x, float y, int text_, int text_size, TextureManager* t_manager, 
+		int index, string name){
 		ii_type = INTERFACE_ITEM_TYPE::IMAGE_INFO;
 		shape.setFillColor(Color(0, 0, 0, 0));
 		position.x = x;
@@ -45,7 +46,7 @@
 		src_img.setTexture(t_manager->getTexture(index, name));
 
 		shape.setPosition(position);
-		text.setFont(*font);
+		text.setFont(*GlobalProcessData::getFont());
 		text.setString(std::to_string(text_));
 		text.setFillColor(Color::White);
 		text.setCharacterSize(text_size);
@@ -117,7 +118,9 @@
 		setPosition(Vector2f(position.x + offset_x, position.y + offset_y));
 	}
 	
-	void ImageInfo::update(Vector2f mouse_pos, FloatRect view_cords){
+	void ImageInfo::update(){
+		FloatRect view_cords = GlobalProcessData::getViewCords();
+
 		shape.setPosition(Vector2f(
 			position.x + view_cords.left - view_cords.width / 2,
 			position.y + view_cords.top - view_cords.height / 2)
@@ -132,7 +135,9 @@
 		);
 	}
 	
-	void ImageInfo::render(sf::RenderTarget* target){
+	void ImageInfo::render(){
+		RenderTarget* target = GlobalProcessData::getWindow();
+
 		target->draw(src_img);
 		target->draw(text);
 	}

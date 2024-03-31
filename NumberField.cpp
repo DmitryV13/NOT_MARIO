@@ -2,16 +2,16 @@
 #include "NumberField.h"
 
 	NumberField::NumberField(float x, float y, float width_, float height_, const string& input_label_, 
-		Font* font_, int text_size_, Color text_color_, bool has_limit_, int limit_)
-		:InputField(x, y, width_, height_, input_label_, font_, text_size_, Color::Black, has_limit_, limit_, false) {
+		 int text_size_, Color text_color_, bool has_limit_, int limit_)
+		:InputField(x, y, width_, height_, input_label_, text_size_, Color::Black, has_limit_, limit_, false) {
 		fi_type = FORM_ITEM_TYPE::NUMBER_FIELD;
 
 		textarea->setOverflow(ITEM_OVERFLOW::HIDDEN);
 	}
 	
 	NumberField::NumberField(float x, float y, float width_, float height_, const string& input_label_, 
-		Font* font_, int text_size_, bool has_limit_, int limit_)
-		:InputField(x, y, width_, height_, input_label_, font_, text_size_, Color::Black, has_limit_, limit_, false) {
+		 int text_size_, bool has_limit_, int limit_)
+		:InputField(x, y, width_, height_, input_label_, text_size_, Color::Black, has_limit_, limit_, false) {
 		fi_type = FORM_ITEM_TYPE::NUMBER_FIELD;
 
 		textarea->setOverflow(ITEM_OVERFLOW::HIDDEN);
@@ -41,7 +41,10 @@
 		input_stream << min;
 	}
 
-	void NumberField::update(Vector2f mouse_pos, FloatRect view_cords){
+	void NumberField::update(){
+		Vector2f mouse_pos = GlobalProcessData::getMousePos();
+		FloatRect view_cords = GlobalProcessData::getViewCords();
+
 		if (textarea->getGlobalBounds().contains(mouse_pos.x + (view_cords.left - view_cords.width / 2), mouse_pos.y + (view_cords.top - view_cords.height / 2))) {
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 				if (unpressed) {
@@ -115,5 +118,5 @@
 			view_cords.left - view_cords.width / 2 + position.x + 1,
 			view_cords.top - view_cords.height / 2 + position.y + 1);
 
-		textarea->update(mouse_pos, view_cords);
+		textarea->update();
 	}

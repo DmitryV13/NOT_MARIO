@@ -24,8 +24,8 @@
 		return view_cords;
 	}
 	
-	Vector2i GlobalProcessData::getMousePos(){
-		return Mouse::getPosition(*window);
+	Vector2f GlobalProcessData::getMousePos(){
+		return Vector2f(Mouse::getPosition(*window));
 	}
 
 	RenderWindow* GlobalProcessData::getWindow(){

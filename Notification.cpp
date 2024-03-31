@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "Notification.h"
 
-	Notification::Notification(float x, float y, float dest_x, float dest_y, short text_size, sf::Font* font_, string text_, Color text_color)
+	Notification::Notification(float x, float y, float dest_x, float dest_y, short text_size, string text_, Color text_color)
 		:position(Vector2f(x, y)), active(false){
-		text.setFont(*font_);
+		text.setFont(*GlobalProcessData::getFont());
 		text.setString(text_);
 		text.setFillColor(text_color);
 		text.setCharacterSize(text_size);
@@ -17,11 +17,11 @@
 		display_time.restart();
 	}
 
-	Notification::Notification(FloatRect object_cords, short text_size, sf::Font* font_, string text_, Color text_color)
+	Notification::Notification(FloatRect object_cords, short text_size, string text_, Color text_color)
 		:active(false){
 		position.x = object_cords.left + object_cords.width / 2;
 		position.y = object_cords.top + object_cords.height / 2;
-		text.setFont(*font_);
+		text.setFont(*GlobalProcessData::getFont());
 		text.setString(text_);
 		text.setFillColor(text_color);
 		text.setCharacterSize(text_size);
@@ -58,7 +58,9 @@
 		}
 	}
 	
-	void Notification::render(RenderTarget* target){
+	void Notification::render(){
+		RenderTarget* target = GlobalProcessData::getWindow();
+
 		if (active) {
 			target->draw(text);
 		}

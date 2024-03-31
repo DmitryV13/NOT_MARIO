@@ -32,7 +32,7 @@ public:
 	FloatRect getLocalBounds();
 	FloatRect getGlobalBounds();
 
-	void update(FloatRect view_cords);
-	void render(RenderTarget* target);
+	void update();
+	void render();
 };
 

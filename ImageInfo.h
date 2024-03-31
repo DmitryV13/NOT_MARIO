@@ -14,8 +14,8 @@ protected:
 	Vector2f position;
 public:
 	ImageInfo();
-	ImageInfo(float x, float y, string text_, int text_size, Font* font, TextureManager* t_manager, int index, string name);
-	ImageInfo(float x, float y, int text_, int text_size, Font* font, TextureManager* t_manager, int index, string name);
+	ImageInfo(float x, float y, string text_, int text_size, TextureManager* t_manager, int index, string name);
+	ImageInfo(float x, float y, int text_, int text_size, TextureManager* t_manager, int index, string name);
 
 	FloatRect getLocalBounds() override;
 	FloatRect getGlobalBounds() override;
@@ -28,7 +28,7 @@ public:
 
 	void changePosition(float offset_x, float offset_y) override;
 
-	void update(Vector2f mouse_pos, FloatRect view_cords) override;
-	void render(sf::RenderTarget* target) override;
+	void update() override;
+	void render() override;
 };
 

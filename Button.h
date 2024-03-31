@@ -12,7 +12,6 @@ protected:
 	short button_cstate;
 	RectangleShape shape;
 
-	Font* font;
 	Text text;
 
 	Vector2f position;
@@ -26,10 +25,10 @@ protected:
 
 public:
 	Button();
-	Button(float x, float y, short text_size, sf::Font* font_, string text_, Color menuColor, int id_);
-	Button(float x, float y, float width, float height, short text_size, sf::Font* font_, string text_
+	Button(float x, float y, short text_size, string text_, Color menuColor, int id_);
+	Button(float x, float y, float width, float height, short text_size, string text_
 		, Color btn_hcolor, int id_);
-	Button(float x, float y, float width, float height, short text_size, sf::Font* font_, string text_
+	Button(float x, float y, float width, float height, short text_size, string text_
 		, bool outline, int id_);
 	~Button();
 
@@ -54,9 +53,8 @@ public:
 	
 	const bool isPressed() const;
 
-	virtual void updatePosition(FloatRect view_cords);
-	void update(Vector2f mouse_pos, FloatRect view_cords) override;
-	void render(sf::RenderTarget* target) override;
-
+	virtual void updatePosition();
+	void update() override;
+	void render() override;
 };
 

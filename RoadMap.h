@@ -36,7 +36,6 @@ private:
 	Font* font;
 	Color menuColor;
 	Clock menu_timer;
-	short state;
 
 	void initFont();
 	void initBackground();
@@ -47,7 +46,6 @@ public:
 	void updateEvents();
 	void update();
 	void openLevel(float level_index, float param2);
-	void closeRoadMap(float param1, float param2);
 
 	void render();
 

@@ -62,7 +62,9 @@
 		shape.setFillColor(color);
 	}
 	
-	void BasicImage::update(Vector2f mouse_pos, FloatRect view_cords){
+	void BasicImage::update(){
+		FloatRect view_cords = GlobalProcessData::getViewCords();
+
 		image.setPosition(
 			position.x + view_cords.left - view_cords.width / 2,
 			position.y + view_cords.top - view_cords.height / 2
@@ -73,7 +75,9 @@
 		);
 	}
 	
-	void BasicImage::render(RenderTarget* target){
+	void BasicImage::render(){
+		RenderTarget* target = GlobalProcessData::getWindow();
+
 		target->draw(shape);
 		target->draw(image);
 	}

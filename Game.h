@@ -15,8 +15,8 @@ private:
 	TextureManager* t_manager;
 	short menuGUIS;
 
+
 	Event event;
-	View view;
 	RenderWindow window;
 	unordered_map<short, Color> menuMainColor;
 	Texture menu_T;

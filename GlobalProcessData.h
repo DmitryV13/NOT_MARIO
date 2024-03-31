@@ -12,7 +12,7 @@ public:
 
 	static Font* getFont();
 	static FloatRect getViewCords();
-	static Vector2i getMousePos();
+	static Vector2f getMousePos();
 	static RenderWindow* getWindow();
 };
 

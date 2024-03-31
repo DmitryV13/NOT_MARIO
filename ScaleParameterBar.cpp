@@ -60,7 +60,10 @@
 		setPosition(Vector2f(position.x + offset_x, position.y + offset_y));
 	}
 
-	void ScaleParameterBar::update(Vector2f mouse_pos, FloatRect view_cords){
+	void ScaleParameterBar::update(){
+		Vector2f mouse_pos = GlobalProcessData::getMousePos();
+		FloatRect view_cords = GlobalProcessData::getViewCords();
+
 		middle_bar.width = static_cast<float>(*resource) / max_value * back_bar.width;
 		shape.setPosition(Vector2f(
 			position.x + view_cords.left - view_cords.width / 2,
@@ -72,7 +75,9 @@
 		));
 	}
 
-	void ScaleParameterBar::render(RenderTarget* target){
+	void ScaleParameterBar::render(){
+		RenderTarget* target = GlobalProcessData::getWindow();
+
 		scale_bar.move(Vector2f(
 			offset,
 			offset

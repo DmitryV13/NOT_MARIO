@@ -37,31 +37,32 @@ protected:
 	virtual void inputLogic(int typed_char);
 	void deletLastChar();
 
-	InputField(float x, float y, float width_, float height_, const string& input_label_, Font* font_, 
+	InputField(float x, float y, float width_, float height_, const string& input_label_, 
 		int text_size_, Color text_color_, bool has_limit_, int limit_, bool multiline);
 public:
 	InputField();
-	InputField(float x, float y, float width_, float height_, const string& input_label_, Font* font_,
-		int text_size_);
-	InputField(float x, float y, float width_, float height_, const string& input_label_, Font* font_, 
-		int text_size_, Color text_color_, bool has_limit_, int limit_);
-	InputField(float x, float y, float width_, float height_, const string& input_label_, Font* font_, 
-		int text_size_, bool has_limit_, int limit_);
+	InputField(float x, float y, float width_, float height_, const string& input_label_, int text_size_);
+	InputField(float x, float y, float width_, float height_, const string& input_label_, int text_size_, 
+		Color text_color_, bool has_limit_, int limit_);
+	InputField(float x, float y, float width_, float height_, const string& input_label_, int text_size_, 
+		bool has_limit_, int limit_);
 
 	FloatRect getLocalBounds() override;
 	FloatRect getGlobalBounds() override;
 	string* getString();
 
-	void setVisibility(float param1, float param2);
+	void setVisibility(bool vis);
 	void setOverflow(short overflow);
 	void setPositionX(float x) override;
 	void setPositionY(float y) override;
 	void changePosition(float offset_x, float offset_y) override;
+	void changeVisibility(float param1, float param2);
 
 	bool itemScroll(float delta) override;
 	void formEInput(Event event) override;
-	void update(Vector2f mouse_pos, FloatRect view_cords) override;
-	void render(sf::RenderTarget* target) override;
+
+	void update() override;
+	void render() override;
 };
 
 

@@ -43,14 +43,17 @@
 		current_tab = static_cast<int>(tab_index);
 	}
 
-	void TabContainer::update(Vector2f mouse_pos, FloatRect view_cords){
+	void TabContainer::update(){
+		Vector2f mouse_pos = GlobalProcessData::getMousePos();
+		FloatRect view_cords = GlobalProcessData::getViewCords();
+
 		if (!tabs.empty()) {
-			tabs[current_tab]->update(mouse_pos, view_cords);
+			tabs[current_tab]->update();
 		}
 	}
 
-	void TabContainer::render(sf::RenderTarget* target){
+	void TabContainer::render(){
 		if (!tabs.empty()) {
-			tabs[current_tab]->render(target);
+			tabs[current_tab]->render();
 		}
 	}

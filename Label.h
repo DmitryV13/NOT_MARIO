@@ -9,7 +9,7 @@ private:
 	Text* label_text;
 	int text_size;
 public:
-	Label(const string& label_text_, Font* font_, int text_size_, TextureManager* manager, int index);
+	Label(const string& label_text_,  int text_size_, TextureManager* manager, int index);
 
 	void setPosition(int x, int y);
 	void setPosition(string positionX, string positionY, int screen_width, int screen_height);
@@ -19,7 +19,7 @@ public:
 	FloatRect getLocalBounds();
 	FloatRect getGlobalBounds();
 
-	void update(FloatRect view_cords);
-	void render(RenderTarget* target);
+	void update();
+	void render();
 };
 

@@ -6,54 +6,65 @@ Setting::Setting(RenderWindow* window_, double screen_w, double screen_h, Color 
 	initFont();
 	CRect<float>* tmp;
 
-	example = new PopUpAutocWindow(screen_width, screen_height, 1000, 800, window, t_manager);
-	example->setWindowName("Window");
-	example->createGroupLine();
-	tmp = example->calculatePFNG(100, 100, 0);
-	Group* ls = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
+	settings = new PopUpWindow(screen_width, screen_height, 1000, 800, t_manager);
+	settings->createGroupLine();
+	tmp = settings->calculatePFNG(100, 100, 0);
+	Group* s_g0_top = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
 	delete tmp;
 
-	example->addGroup(ls, 0);
+	settings->addGroup(s_g0_top, 0);
 
-	ls->createElementLine();
-	tmp = ls->calculatePFNII(25, 10, 0);
-	ls_g0_top = new InputField(tmp->first, tmp->second, tmp->third, tmp->fourth, "input", font, 25, true, 90);
-	ls_g0_top->setVisibility(0, 0);
-	ls->addIElement((InterfaceItem*)ls_g0_top, 0);
+	s_g0_top->createElementLine();
 
-	tmp = ls->calculatePFNII(30, 30, 0);
-	ls_g0_top = new TextareaField(tmp->first, tmp->second, tmp->third, tmp->fourth, "textarea", font, 25, true, 600);
-	ls->addIElement((InterfaceItem*)ls_g0_top, 0);
+	tmp = s_g0_top->calculatePFNII(30, 30, 0);
+	InputField* s_if = new TextareaField(tmp->first, tmp->second, tmp->third, tmp->fourth, "textarea", 25, true, 600);
+	s_g0_top->addIElement((InterfaceItem*)s_if, 0);
 
-	ls->createElementLine();
-	tmp = ls->calculatePFNII(25, 10, 1);
-	ls_g0_top = new InputField(tmp->first, tmp->second, tmp->third, tmp->fourth, "input", font, 25, true, 90);
-	ls->addIElement((InterfaceItem*)ls_g0_top, 1);
+	s_g0_top->createElementLine();
+	tmp = s_g0_top->calculatePFNII(25, 10, 1);
+	s_if = new InputField(tmp->first, tmp->second, tmp->third, tmp->fourth, "input", 25, true, 90);
+	s_g0_top->addIElement((InterfaceItem*)s_if, 1);
+
+	s_g0_top->createElementLine();
+	tmp = s_g0_top->calculatePFNII(25, 10, 1);
+	s_if = new InputField(tmp->first, tmp->second, tmp->third, tmp->fourth, "password", 25, true, 90);
+	s_if->setVisibility(false);
+	s_g0_top->addIElement((InterfaceItem*)s_if, 2);
+
+	s_g0_top->addButton(tmp->fourth, tmp->fourth, 40, "", menuColor, Color::White, Color(239, 135, 6, 255)
+		, Color(255, 185, 12), t_manager, 0, "EyeB", true, 0, 2);
+	settings->addCallback(s_g0_top->getButtonState(0), BUTTON_STATE::BTN_ACTIVE, 0, 0,
+		&InputField::changeVisibility, s_if);
 	
-	tmp = ls->calculatePFNII(30, 30, 1);
-	ls_g0_top = new TextareaField(tmp->first, tmp->second, tmp->third, tmp->fourth, "textarea", font, 25, true, 600);
-	ls->addIElement((InterfaceItem*)ls_g0_top, 1);
-	
-	ls->createElementLine();
-	tmp = ls->calculatePFNII(20, 10, 0);
-	NumberField* ls_g0_top2 = new NumberField(tmp->first, tmp->second, tmp->third, tmp->fourth, "number", font, 25, true, 90);
+	s_g0_top->createElementLine();
+	tmp = s_g0_top->calculatePFNII(20, 10, 0);
+	NumberField* ls_g0_top2 = new NumberField(tmp->first, tmp->second, tmp->third, tmp->fourth, "number", 25, true, 90);
 	ls_g0_top2->setMinMaxType(20, 100, false);
-	ls->addIElement((InterfaceItem*)ls_g0_top2, 2);
+	s_g0_top->addIElement((InterfaceItem*)ls_g0_top2, 3);
 	
-	ls->createElementLine();
-	tmp = ls->calculatePFNII(40, 10, 0);
-	SliderControl* sl = new SliderControl(tmp->first, tmp->second, tmp->third, tmp->fourth, "slider", font);
+	s_g0_top->createElementLine();
+	tmp = s_g0_top->calculatePFNII(40, 10, 0);
+	SliderControl* sl = new SliderControl(tmp->first, tmp->second, tmp->third, tmp->fourth, "slider");
 	sl->setMinMaxType(0, 100);
 	sl->setValueType(new float(), true);
-	ls->addIElement((InterfaceItem*)sl, 3);
+	s_g0_top->addIElement((InterfaceItem*)sl, 4);
+
+	s_g0_top->createElementLine();
+	tmp = s_g0_top->calculatePFNII(40, 10, 0);
+	s_g0_top->addButton(tmp->third, 60, 20, "MAP BUILDER", menuColor, Color::White,
+		Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 19, 5);
 	
-	tmp = ls->calculatePFNII(30, 30, 3);
-	ls_g0_top = new TextareaField(tmp->first, tmp->second, tmp->third, tmp->fourth, "textarea", font, 25, true, 600);
-	ls->addIElement((InterfaceItem*)ls_g0_top, 3);
 
-	ls->setAlignment("center auto", "center auto");
+	s_g0_top->createElementLine();
+	tmp = s_g0_top->calculatePFNII(40, 10, 0);
+	s_g0_top->addButton(tmp->third, 60, 20, "BACK", menuColor, Color::White,
+		Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 4, 6);
+	settings->addCallback(s_g0_top->getButtonState(4), BUTTON_STATE::BTN_ACTIVE, 0, 0,
+		&Setting::close, (MainMenuOption*)this);
 
-	example->setPUWState(POP_UP_WINDOW_STATE::PUW_OPENED, 0);
+	s_g0_top->setAlignment("center auto", "center auto");
+
+	settings->setPUWState(POP_UP_WINDOW_STATE::PUW_OPENED, 0);
 }
 
 void Setting::updateMenuState(){
@@ -71,16 +82,13 @@ void Setting::updateEvents(){
 		if (event.type == Event::Closed) {
 			window->close();
 		}
-		if (example->getState() == POP_UP_WINDOW_STATE::PUW_OPENED) {
-			example->updateEvent(&event);
+		if (settings->getState() == POP_UP_WINDOW_STATE::PUW_OPENED) {
+			settings->updateEvent(&event);
 		}
 	}
 }
 
 void Setting::update(){
-	GlobalProcessData::setViewCords(FloatRect(window->getView().getCenter(), Vector2f(screen_width, screen_height)));
-	window->setView(View(FloatRect(0, 0, screen_width, screen_height)));
-	
 	updateEvents();
 }
 
@@ -92,11 +100,11 @@ void Setting::initFont(){
 }
 
 void Setting::render(){
-	window->clear(Color::Yellow);
+	window->clear();
 
-	if (example->getState() == POP_UP_WINDOW_STATE::PUW_OPENED) {
-		example->update(FloatRect(window->getView().getCenter(), Vector2f(screen_width, screen_height)));
-		example->render();
+	if (settings->getState() == POP_UP_WINDOW_STATE::PUW_OPENED) {
+		settings->update();
+		settings->render();
 	}
 
 	window->display();
@@ -108,5 +116,8 @@ void Setting::enter(RenderWindow* window){
 		updateMenuState();
 		update();
 		render();
+		short o = PAGE_STATE::PAGE_OPENED;
+		short c = PAGE_STATE::PAGE_CLOSED;
+		std::cout << state << std::endl;
 	}
 }

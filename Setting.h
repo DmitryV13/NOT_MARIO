@@ -15,8 +15,7 @@ private:
 	double screen_width;
 	double screen_height;
 
-	PopUpAutocWindow* example;
-	InputField* ls_g0_top;
+	PopUpWindow* settings;
 	TextureManager* t_manager;
 
 	Sprite background;
@@ -24,7 +23,6 @@ private:
 	Font* font;
 	Color menuColor;
 	Clock menu_timer;
-	short state;
 
 	void initFont();
 public:

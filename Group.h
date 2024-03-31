@@ -48,12 +48,12 @@ public:
 
 	void addIElement(InterfaceItem* new_group, short index);
 	void addGroup(short fill_p_w, short fill_p_h, short index);// fill percentage width/height
-	void addGroupName(string text_name, int name_size, Font* font);
-	void addButton(short text_size, sf::Font* font, string btn_name, Color btn_color, int btn_id, short index_g);
-	void addButton(float width, float height, short text_size, sf::Font* font
+	void addGroupName(string text_name, int name_size);
+	void addButton(short text_size, string btn_name, Color btn_color, int btn_id, short index_g);
+	void addButton(float width, float height, short text_size
 		, string btn_name, Color btn_hcolor, Color btn_icolor, Color shp_hcolor, Color shp_icolor
 		, bool outline, int btn_id, short index_g);
-	void addButton(float width, float height, short text_size, sf::Font* font_, string btn_name
+	void addButton(float width, float height, short text_size, string btn_name
 		, Color btn_hcolor, Color btn_icolor, Color shp_hcolor, Color shp_icolor
 		, TextureManager* t_manager, int index_t, string name, bool outline, int btn_id, short index_g);
 	//void addDelimiter();
@@ -65,7 +65,7 @@ public:
 	bool itemScroll(float delta) override;
 	void formInput(Event event);
 
-	void update(Vector2f mouse_pos, FloatRect view_cords) override;
-	void render(RenderTarget* target);
+	void update() override;
+	void render();
 };
 

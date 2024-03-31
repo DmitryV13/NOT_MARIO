@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "InventoryItem.h"
 
-	InventoryItem::InventoryItem(float x, float y, float width_, float height_, int text_size_, Font* font_)
-		:position(Vector2f(x, y)), width(width_), height(height_), text_size(text_size_), font(font_){
+	InventoryItem::InventoryItem(float x, float y, float width_, float height_, int text_size_)
+		:position(Vector2f(x, y)), width(width_), height(height_), text_size(text_size_){
 		background.setPosition(x, y);
 		background.setSize(Vector2f(width, height));
 		background.setFillColor(Color(0, 0, 0, 0));
@@ -12,8 +12,8 @@
 		shape.setFillColor(Color(0, 0, 0, 0));
 
 		image = new BasicImage(x, y);
-		r_info = new ResourceInfo(x, y + height - 20, font, text_size_, false);
-		text.setFont(*font);
+		r_info = new ResourceInfo(x, y + height - 20, text_size_, false);
+		text.setFont(*GlobalProcessData::getFont());
 		text.setCharacterSize(text_size);
 
 		text.setPosition(
@@ -24,7 +24,7 @@
 
 	void InventoryItem::addItemInfo(TextureManager* t_manager, Warehouse* w_object, string name){
 		image = new BasicImage(position.x, position.y);
-		r_info = new ResourceInfo(position.x, position.y + height - 20, font, (int)text.getCharacterSize(), false);
+		r_info = new ResourceInfo(position.x, position.y + height - 20, (int)text.getCharacterSize(), false);
 		image->addInfo(t_manager, w_object, name);
 
 		float scale = (width / image->getLocalBounds().width) <
@@ -83,7 +83,7 @@
 		delete image;
 		delete r_info;
 		image = new BasicImage(position.x, position.y);
-		r_info = new ResourceInfo(position.x, position.y + height - 20, font, (int)text.getCharacterSize(), false);
+		r_info = new ResourceInfo(position.x, position.y + height - 20, (int)text.getCharacterSize(), false);
 	}
 
 	FloatRect InventoryItem::getLocalBounds(){
@@ -130,11 +130,14 @@
 		setPosition(Vector2f(position.x + offset_x, position.y + offset_y));
 	}
 
-	void InventoryItem::update(Vector2f mouse_pos, FloatRect view_cords){
+	void InventoryItem::update(){
+		Vector2f mouse_pos = GlobalProcessData::getMousePos();
+		FloatRect view_cords = GlobalProcessData::getViewCords();
+
 		background.setPosition(position.x, position.y);
 		shape.setPosition(position.x + 1, position.y + 1);
-		image->update(mouse_pos, view_cords);
-		r_info->update(mouse_pos, view_cords);
+		image->update();
+		r_info->update();
 		text.setPosition(Vector2f(
 			view_cords.left-view_cords.width / 2 + position.x + (width - text.getGlobalBounds().width) / 2,
 			view_cords.top - view_cords.height / 2 + position.y + width - text.getGlobalBounds().height
@@ -147,9 +150,11 @@
 		);
 	}
 
-	void InventoryItem::render(RenderTarget* target){
+	void InventoryItem::render(){
+		RenderTarget* target = GlobalProcessData::getWindow();
+
 		target->draw(background);
-		image->render(target);
-		r_info->render(target);
+		image->render();
+		r_info->render();
 		target->draw(text);
 	}

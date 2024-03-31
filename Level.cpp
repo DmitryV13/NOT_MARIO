@@ -31,12 +31,12 @@
 		//}
 	
 		all_static_items = new Group(0, 0, screenWidth, screenHeight);
-		pause_menu = new PopUpWindow(screenWidth, screenHeight, 800, 800, window, t_manager);
-		level_inventory = new PopUpWindow(screenWidth, screenHeight, 600, 1000, window, t_manager);
-		chest_items = new PopUpWindow(screenWidth, screenHeight, 600, 500, window, t_manager);
+		pause_menu = new PopUpWindow(screenWidth, screenHeight, 800, 800, t_manager);
+		level_inventory = new PopUpWindow(screenWidth, screenHeight, 600, 1000, t_manager);
+		chest_items = new PopUpWindow(screenWidth, screenHeight, 600, 500, t_manager);
 		///////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////
-		pause_menu->addLabel(screenWidth, screenHeight, "Menu", font, 60, 10);
+		pause_menu->addLabel(screenWidth, screenHeight, "Menu", 60, 10);
 		pause_menu->addBackground(sandbox.getMapWidth(), sandbox.getMapHeight(), Color(59, 66, 73, 87));
 		pause_menu->createGroupLine();
 	
@@ -45,13 +45,13 @@
 		delete tmp;
 	
 		pm->createElementLine();
-		pm->addButton(40, font, "CONTINUE", menuColor, 0, 0);
+		pm->addButton(40, "CONTINUE", menuColor, 0, 0);
 	
 		pm->createElementLine();
-		pm->addButton(40, font, "SETTINGS", menuColor, 1, 1);
+		pm->addButton(40, "SETTINGS", menuColor, 1, 1);
 	
 		pm->createElementLine();
-		pm->addButton(40, font, "BACK TO LOBBY", menuColor, 2, 2);
+		pm->addButton(40, "BACK TO LOBBY", menuColor, 2, 2);
 	
 		pm->setAlignment("center auto", "center 50");
 		pause_menu->addCallback(pm->getButtonState(0), (short)BUTTON_STATE::BTN_ACTIVE, 0, 0, &Level::continueGame, this);
@@ -62,7 +62,7 @@
 		///////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////
 	
-		chest_items->addLabel(screenWidth, screenHeight, "Chest", font, 40, 10);
+		chest_items->addLabel(screenWidth, screenHeight, "Chest", 40, 10);
 		chest_items->addBackground(sandbox.getMapWidth(), sandbox.getMapHeight(), Color(59, 66, 73, 87));
 		chest_items->createGroupLine();
 	
@@ -82,7 +82,7 @@
 			ci_f0_top->createElementLine();
 			for (int jn = 0; jn < 4; jn++) {
 				tmp = ci_f0_top->calculatePFNII(22, 45, in);
-				CheckboxItem* temp = new CheckboxItem(tmp->first, tmp->second, tmp->third, tmp->fourth, 15, font);
+				CheckboxItem* temp = new CheckboxItem(tmp->first, tmp->second, tmp->third, tmp->fourth, 15);
 				temp->setBColor(Color(118, 118, 118, 255));
 				delete tmp;
 				ci_f0_top->addIElement((InterfaceItem*)temp, in);
@@ -99,11 +99,11 @@
 	
 		ci_g1_bottom->createElementLine();
 		tmp = ci_g1_bottom->calculatePFNII(30, 70, 0);
-		ci_g1_bottom->addButton(tmp->third, tmp->fourth, 20, font, "TAKE", Color::White, Color::White,
+		ci_g1_bottom->addButton(tmp->third, tmp->fourth, 20, "TAKE", Color::White, Color::White,
 			Color(239, 135, 6, 255), Color(239, 155, 6, 255), false, 0, 0);
 		chest_items->addCallback(ci_g1_bottom->getButtonState(0), BUTTON_STATE::BTN_ACTIVE, 0, 0,
 			&Form::activateForm, (Form*)ci_f0_top);
-		ci_g1_bottom->addButton(tmp->third, tmp->fourth, 20, font, "CLOSE", Color::White, Color::White,
+		ci_g1_bottom->addButton(tmp->third, tmp->fourth, 20, "CLOSE", Color::White, Color::White,
 			Color(212, 24, 22, 255), Color(212, 24, 22, 255), false, 1, 0);
 		chest_items->addCallback(ci_g1_bottom->getButtonState(1), BUTTON_STATE::BTN_ACTIVE, POP_UP_WINDOW_STATE::PUW_CLOSED, 0,
 			&PopUpWindow::setPUWState, chest_items);
@@ -343,7 +343,7 @@
 	
 	void Level::updateGameMenu()
 	{
-		pause_menu->update(myView.getCurrentViewCords());
+		pause_menu->update();//myView.getCurrentViewCords()
 	}
 	
 	
@@ -436,7 +436,7 @@
 		updateView();
 		updateCursor();
 		updateMap();
-		all_static_items->update(Vector2f(Mouse::getPosition(*window)), myView.getCurrentViewCords());
+		all_static_items->update();//Vector2f(Mouse::getPosition(*window)), myView.getCurrentViewCords()
 		//updateLifeBar();
 	
 		update_Enemy();
@@ -692,11 +692,11 @@
 		renderCursor();
 		window->setView(myView.view);
 
-		all_static_items->render(window);
+		all_static_items->render();
 		//renderLifeBar();
 	
 		if (chest_items->getState() == POP_UP_WINDOW_STATE::PUW_OPENED) {
-			chest_items->update(FloatRect(window->getView().getCenter(), Vector2f(screenWidth, screenHeight)));
+			chest_items->update();//FloatRect(window->getView().getCenter(), Vector2f(screenWidth, screenHeight))
 			chest_items->render();
 		}
 	
@@ -780,11 +780,7 @@
 	}
 	
 	
-	void Level::start()
-	{
-		//if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-		//	int y = 0;
-		//}
+	void Level::start(){
 		game_state = GAME_STATE::CONTINUES;
 		while (game_state != GAME_STATE::FINISHED)
 		{
@@ -797,6 +793,7 @@
 			}
 			render();
 		}
+
 	}
 	
 	void Level::initWeapons()

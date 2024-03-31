@@ -23,7 +23,7 @@ public:
 	virtual void changePosition(float offset_x, float offset_y);
 	virtual void resetActiveState();
 
-	virtual void render(RenderTarget* target);
-	virtual void update(Vector2f mouse_pos, FloatRect view_cords);
+	virtual void render();
+	virtual void update();
 };
 

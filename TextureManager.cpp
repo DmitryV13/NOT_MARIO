@@ -13,6 +13,9 @@
 		if (!textures[0]["CloseB"].loadFromFile("Textures/GUI/buttons/closeB.png")) {
 			std::cout << "Error -> TextureManager -> couldn't load CloseB texture" << std::endl;
 		}
+		if (!textures[0]["EyeB"].loadFromFile("Textures/GUI/buttons/eyeB.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load eyeB texture" << std::endl;
+		}
 		if (!textures[0]["ArrowL"].loadFromFile("Textures/GUI/buttons/arrowL.png")) {
 			std::cout << "Error -> TextureManager -> couldn't load ArrowL texture" << std::endl;
 		}

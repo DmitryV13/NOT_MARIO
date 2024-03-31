@@ -12,7 +12,7 @@ public:
 	AnimatedImage(TextureManager* t_manager, Warehouse* w_object, string name);
 	AnimatedImage(TextureManager* t_manager, int index, string name, IntRect first_frame, short frames_number_);
 
-	void update(Vector2f mouse_pos, FloatRect view_cords) override;
-	void render(RenderTarget* target);
+	void update() override;
+	void render();
 };
 

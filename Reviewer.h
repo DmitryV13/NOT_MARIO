@@ -31,7 +31,7 @@ public:
 
 	void changeCurrentImage(float next, float param2);
 
-	void update(Vector2f mouse_pos, FloatRect view_cords) override;
-	void render(RenderTarget* target) override;
+	void update() override;
+	void render() override;
 };
 

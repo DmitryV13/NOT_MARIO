@@ -7,7 +7,6 @@
 		, options_number(3)
 		, option_selected(MENU_OPTION::MENU_PLAY) {
 		t_manager = new TextureManager();
-		view.reset(FloatRect(0, 0, screen_width, screen_height));
 		initMenuTexture();
 		initMenuSprite();
 		initWindow();
@@ -21,7 +20,6 @@
 		VideoMode desktop = VideoMode::getDesktopMode();
 		screen_width = desktop.width;
 		screen_height = desktop.height;
-		view.reset(FloatRect(0, 0, screen_width, screen_height));
 		initMenuTexture();
 		initMenuSprite();
 		initWindow();
@@ -30,7 +28,14 @@
 		initBackgroundSprite();
 		//////////////////////////////////
 
-		
+		CRect<float>* tmp;
+		//
+		//example = new PopUpAutocWindow(screen_width, screen_height, 1000, 800, window, t_manager);
+		//example->setWindowName("Window");
+		//example->createGroupLine();
+		//tmp = example->calculatePFNG(100, 100, 0);
+		//Group* ls = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
+		//delete tmp;
 
 		//////////////////////////////////
 	}
@@ -38,9 +43,10 @@
 	void Game::initWindow(){
 		window.create(VideoMode(screen_width, screen_height), "NOT_MARIO", Style::Default);
 		window.setFramerateLimit(144);
-		window.setView(view);
+		window.setView(View(FloatRect(0, 0, screen_width, screen_height)));
 		window.setFramerateLimit(144);
 
+		GlobalProcessData::setViewCords(FloatRect(Vector2f(screen_width / 2, screen_height / 2), Vector2f(screen_width, screen_height)));
 		GlobalProcessData::setWindow(&window);
 		//window.setMouseCursorVisible(false);
 		//cursor = new Cursor();
@@ -105,7 +111,6 @@
 	}
 
 	void Game::update(){
-		window.setView(view);
 		while (window.pollEvent(event)) {
 			if (event.type == Event::Closed) {
 				window.close();

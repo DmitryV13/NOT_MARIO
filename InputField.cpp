@@ -6,7 +6,7 @@
 	}
 
 	InputField::InputField(float x, float y, float width_, float height_, const string& input_label_, 
-		Font* font_, int text_size_)
+		 int text_size_)
 		:text_size(text_size_), position(Vector2f(x, y)), width(width_), height(height_) {
 		ii_type = INTERFACE_ITEM_TYPE::FORM_ITEM;
 		fi_state = FORM_ITEM_STATE::FORM_ITEM_IDLE;
@@ -22,7 +22,7 @@
 		shape1.setSize(Vector2f(width - 2, height - 2));
 
 		label = new Text();
-		label->setFont(*font_);
+		label->setFont(*GlobalProcessData::getFont());
 		label->setString(input_label_);
 		label->setCharacterSize(20);
 		label->setFillColor(Color::White);
@@ -33,8 +33,8 @@
 	}
 
 	InputField::InputField(float x, float y, float width_, float height_, const string& input_label_, 
-		Font* font_, int text_size_, Color text_color_, bool has_limit_, int limit_, bool multiline)
-		:InputField(x, y, width_, height_, input_label_, font_, text_size_){
+		 int text_size_, Color text_color_, bool has_limit_, int limit_, bool multiline)
+		:InputField(x, y, width_, height_, input_label_, text_size_){
 		has_limit = has_limit_;
 		limit = limit_;
 		textarea = new Textarea(
@@ -42,15 +42,14 @@
 			position.y + label->getGlobalBounds().height + label->getLocalBounds().top + 6,
 			width,
 			height - (position.y + label->getGlobalBounds().height + label->getLocalBounds().top + 6 - position.y),
-			font_,
 			text_size,
 			multiline);
 		textarea->setTextColor(text_color_);
 	}
 
 	InputField::InputField(float x, float y, float width_, float height_, const string& input_label_,
-		Font* font_, int text_size_, Color text_color_, bool has_limit_, int limit_)
-		:InputField(x, y, width_, height_, input_label_, font_, text_size_){
+		 int text_size_, Color text_color_, bool has_limit_, int limit_)
+		:InputField(x, y, width_, height_, input_label_, text_size_){
 		has_limit = has_limit_;
 		limit = limit_;
 		textarea = new Textarea(
@@ -58,15 +57,14 @@
 			position.y + label->getGlobalBounds().height + label->getLocalBounds().top + 6,
 			width,
 			height - (position.y + label->getGlobalBounds().height + label->getLocalBounds().top + 6 - position.y),
-			font_,
 			text_size,
 			false);
 		textarea->setTextColor(text_color_);
 	}
 	
 	InputField::InputField(float x, float y, float width_, float height_, const string& input_label_, 
-		Font* font_, int text_size_, bool has_limit_, int limit_)
-		:InputField(x, y, width_, height_, input_label_, font_, text_size_){
+		 int text_size_, bool has_limit_, int limit_)
+		:InputField(x, y, width_, height_, input_label_, text_size_){
 		has_limit = has_limit_;
 		limit = limit_;
 		textarea = new Textarea(
@@ -74,7 +72,6 @@
 			position.y + label->getGlobalBounds().height + label->getLocalBounds().top + 6,
 			width,
 			height - (position.y + label->getGlobalBounds().height + label->getLocalBounds().top + 6 - position.y),
-			font_,
 			text_size,
 			false);
 		textarea->setTextColor(Color::Black);
@@ -95,7 +92,7 @@
 
 	bool InputField::itemScroll(float delta){
 		FloatRect view_cords = GlobalProcessData::getViewCords();
-		Vector2i mouse_pos = GlobalProcessData::getMousePos();
+		Vector2f mouse_pos = GlobalProcessData::getMousePos();
 
 		View t_view = textarea->createLocalView(textarea->getLocalBounds(), GlobalProcessData::getWindow());
 		FloatRect t_on_screen = FloatRect(
@@ -155,18 +152,12 @@
 		textarea->removeLastCharacter();
 	}
 
-	
 	void InputField::setOverflow(short overflow){
 		textarea->setOverflow(overflow);
 	}
 
-	void InputField::setVisibility(float param1, float param2){
-		if (param1 == 0) {
-			textarea->setVisibility(false);
-		}
-		else {
-			textarea->setVisibility(true);
-		}
+	void InputField::setVisibility(bool vis){
+		textarea->setVisibility(vis);
 	}
 
 	void InputField::setPositionX(float x){
@@ -192,7 +183,17 @@
 		textarea->changePosition(offset_x, offset_y);
 	}
 
-	void InputField::update(Vector2f mouse_pos, FloatRect view_cords){
+	void InputField::changeVisibility(float param1, float param2){
+		if (textarea->getVisibility())
+			textarea->setVisibility(false);
+		else
+			textarea->setVisibility(true);
+	}
+
+	void InputField::update(){
+		Vector2f mouse_pos = GlobalProcessData::getMousePos();
+		FloatRect view_cords = GlobalProcessData::getViewCords();
+
 		if (textarea->getGlobalBounds().contains(mouse_pos.x + (view_cords.left - view_cords.width / 2), mouse_pos.y + (view_cords.top - view_cords.height / 2))) {
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 				if (unpressed) {
@@ -249,11 +250,13 @@
 			view_cords.top - view_cords.height / 2 + position.y + 1
 		);
 
-		textarea->update(mouse_pos, view_cords);
+		textarea->update();
 	}
 
-	void InputField::render(sf::RenderTarget* target){
+	void InputField::render(){
+		RenderTarget* target = GlobalProcessData::getWindow();
+
 		target->draw(*label);
-		textarea->render(target);
+		textarea->render();
 		target->draw(shape1);
 	}

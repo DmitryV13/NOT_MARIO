@@ -29,7 +29,7 @@ public:
 	void changePosition(float offset_x, float offset_y) override;
 	void changeCurrentTab(float tab_index, float param2);
 	
-	void update(Vector2f mouse_pos, FloatRect view_cords) override;
-	void render(sf::RenderTarget* target) override;
+	void update() override;
+	void render() override;
 };
 

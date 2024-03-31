@@ -35,14 +35,14 @@ public:
 	void setPositionY(float y) override;
 	void setCurrency(int* curr);
 	void setAlignment(string v_align, string h_align);
-	void addNotification(short text_size, sf::Font* font_, string text_, Color text_color);
-	void addNotification(short text_size, sf::Font* font_, Color text_color);
+	void addNotification(short text_size, string text_, Color text_color);
+	void addNotification(short text_size, Color text_color);
 
 	void changePosition(float offset_x, float offset_y) override;
 
 	void buy(float param1, float param2);
 
-	void update(Vector2f mouse_pos, FloatRect view_cords) override;
-	void render(sf::RenderTarget* target) override;
+	void update() override;
+	void render() override;
 };
 

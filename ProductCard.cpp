@@ -49,12 +49,12 @@
 		group->setAlignment(h_alignment, v_alignment);
 	}
 
-	void ProductCard::addNotification(short text_size, sf::Font* font_, string text_, Color text_color){
-		notification = new Notification(getGlobalBounds(), text_size, font_, text_, text_color);
+	void ProductCard::addNotification(short text_size, string text_, Color text_color){
+		notification = new Notification(getGlobalBounds(), text_size, text_, text_color);
 	}
 
-	void ProductCard::addNotification(short text_size, sf::Font* font_, Color text_color){
-		notification = new Notification(getGlobalBounds(), text_size, font_, "+"+std::to_string(amount), text_color);
+	void ProductCard::addNotification(short text_size, Color text_color){
+		notification = new Notification(getGlobalBounds(), text_size, "+"+std::to_string(amount), text_color);
 	}
 	
 	void ProductCard::changePosition(float offset_x, float offset_y){
@@ -73,20 +73,20 @@
 		}
 	}
 	
-	void ProductCard::update(Vector2f mouse_pos, FloatRect view_cords){
+	void ProductCard::update(){
 		if (purchase_state == PURCHASE::PURCHASE_DONE) {
 			purchase_state = PURCHASE::PURCHASE_UNDONE;
 		}
 		group->setAlignment(h_alignment, v_alignment);
-		group->update(mouse_pos, view_cords);
+		group->update();
 		if (notification) {
 			notification->update();
 		}
 	}
 	
-	void ProductCard::render(sf::RenderTarget* target){
-		group->render(target);
+	void ProductCard::render(){
+		group->render();
 		if (notification) {
-			notification->render(target);
+			notification->render();
 		}
 	}

@@ -15,7 +15,10 @@
 		animation_timer.restart();
 	}
 
-	void AnimatedImage::update(Vector2f mouse_pos, FloatRect view_cords){
+	void AnimatedImage::update(){
+		Vector2f mouse_pos = GlobalProcessData::getMousePos();
+		FloatRect view_cords = GlobalProcessData::getViewCords();
+
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f) {
 			current_frame.left += current_frame.width;
 			if (current_frame.left >= frames_number * current_frame.width) {
@@ -30,6 +33,8 @@
 		}
 	}
 
-	void AnimatedImage::render(RenderTarget* target){
+	void AnimatedImage::render(){
+		RenderTarget* target = GlobalProcessData::getWindow();
+
 		target->draw(image);
 	}

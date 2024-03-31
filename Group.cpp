@@ -413,9 +413,9 @@
 		g_elements[index].push_back(new_element);
 	}
 
-	void Group::addGroupName(string text_name, int name_size, Font* font){
+	void Group::addGroupName(string text_name, int name_size){
 		name = new Text();
-		name->setFont(*font);
+		name->setFont(*GlobalProcessData::getFont());
 		name->setString(text_name);
 		name->setFillColor(sf::Color::White);
 		name->setCharacterSize(name_size);
@@ -447,7 +447,7 @@
 
 
 
-	void Group::addButton(short text_size, sf::Font* font, string btn_name, Color btn_color, int btn_id, short index_g){
+	void Group::addButton(short text_size, string btn_name, Color btn_color, int btn_id, short index_g){
 		int new_eposition_y = position.y;
 		for (size_t i = 0; i < index_g; i++) {
 			new_eposition_y += getMaxELHeight(i).second;
@@ -458,10 +458,10 @@
 		for (size_t i = 0; i < g_elements[index_g].size(); i++) {
 			new_eposition_x += g_elements[index_g][i]->getGlobalBounds().width;
 		}
-		g_elements[index_g].push_back(new Button(new_eposition_x, new_eposition_y, text_size, font, btn_name, btn_color, btn_id));
+		g_elements[index_g].push_back(new Button(new_eposition_x, new_eposition_y, text_size, btn_name, btn_color, btn_id));
 	}
 
-	void Group::addButton(float width, float height, short text_size, sf::Font* font
+	void Group::addButton(float width, float height, short text_size
 		, string btn_name, Color btn_hcolor, Color btn_icolor, Color shp_hcolor, Color shp_icolor
 		, bool outline, int btn_id, short index_g){
 		int new_eposition_y = position.y;
@@ -474,12 +474,12 @@
 		for (size_t i = 0; i < g_elements[index_g].size(); i++) {
 			new_eposition_x += g_elements[index_g][i]->getGlobalBounds().width;
 		}
-		Button* btn = new Button(new_eposition_x, new_eposition_y, width, height, text_size, font, btn_name, outline, btn_id);
+		Button* btn = new Button(new_eposition_x, new_eposition_y, width, height, text_size, btn_name, outline, btn_id);
 		btn->setColors(btn_hcolor, btn_icolor, shp_hcolor, shp_icolor);
 		g_elements[index_g].push_back(btn);
 	}
 
-	void Group::addButton(float width, float height, short text_size, sf::Font* font, string btn_name
+	void Group::addButton(float width, float height, short text_size, string btn_name
 		, Color btn_hcolor, Color btn_icolor, Color shp_hcolor, Color shp_icolor, TextureManager* t_manager
 		, int index_t, string name, bool outline, int btn_id, short index_g){
 		int new_eposition_y = position.y;
@@ -492,7 +492,7 @@
 		for (size_t i = 0; i < g_elements[index_g].size(); i++) {
 			new_eposition_x += g_elements[index_g][i]->getGlobalBounds().width;
 		}
-		ImageButton* btn = new ImageButton(new_eposition_x, new_eposition_y, width, height, text_size, font, btn_name, t_manager, index_t, name, outline, btn_id);
+		ImageButton* btn = new ImageButton(new_eposition_x, new_eposition_y, width, height, text_size, btn_name, t_manager, index_t, name, outline, btn_id);
 		btn->setColors(btn_hcolor, btn_icolor, shp_hcolor, shp_icolor);
 		g_elements[index_g].push_back(btn);
 	}
@@ -532,14 +532,14 @@
 			}
 		}
 
-		Vector2i mouse_pos = GlobalProcessData::getMousePos();
+		Vector2f mouse_pos = GlobalProcessData::getMousePos();
 		FloatRect view_cords = GlobalProcessData::getViewCords();
 		if (getGlobalBounds().contains(mouse_pos.x + (view_cords.left - view_cords.width / 2), mouse_pos.y + (view_cords.top - view_cords.height / 2))) {
 			if (overflow_y) {
 				float initial_position_y = position.y + outer_height - inner_height;
 				float offset = delta * 16;
 				if (delta > 0) {
-					if (getMaxELHeight(0).first - 20 >= initial_position_y) {
+					if (getMaxELHeight(0).first - 20 + offset >= initial_position_y) {
 						offset=initial_position_y - getMaxELHeight(0).first;
 						changeChildrenPosition(0, offset + 20);
 					}
@@ -549,7 +549,7 @@
 				}
 				else {
 					if (getMaxELHeight(g_elements.size() - 1).first +
-						getMaxELHeight(g_elements.size() - 1).second + 20 <= position.y + inner_height) {
+						getMaxELHeight(g_elements.size() - 1).second + 20 + offset <= position.y + inner_height) {
 						offset = position.y + inner_height - (getMaxELHeight(g_elements.size() - 1).first +
 							getMaxELHeight(g_elements.size() - 1).second) - 20;
 						changeChildrenPosition(0, offset);
@@ -587,7 +587,9 @@
 		}
 	}
 
-	void Group::update(Vector2f mouse_pos, FloatRect view_cords){
+	void Group::update(){
+		Vector2f mouse_pos = GlobalProcessData::getMousePos();
+		FloatRect view_cords = GlobalProcessData::getViewCords();
 		if (name != nullptr) {
 			name->setPosition(
 				view_cords.left - view_cords.width / 2 + position.x + (outer_width - name->getLocalBounds().width) / 2 - name->getLocalBounds().left,
@@ -626,12 +628,14 @@
 
 		for (auto i : g_elements) {
 			for (auto j : i) {
-				j->update(mouse_pos, view_cords);
+				j->update();
 			}
 		}
 	}
 
-	void Group::render(RenderTarget* target){
+	void Group::render(){
+		RenderTarget* target = GlobalProcessData::getWindow();
+
 		target->draw(background);
 		if (name != nullptr) {
 			target->draw(*name);
@@ -641,7 +645,7 @@
 		target->setView(view);
 		for (auto i : g_elements) {
 			for (auto j : i) {
-				j->render(target);
+				j->render();
 			}
 		}
 		target->setView(oldView);

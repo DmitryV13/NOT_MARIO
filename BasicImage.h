@@ -26,7 +26,7 @@ public:
 	void setScale(float scale_);
 	void setBColor(Color color);
 
-	virtual void update(Vector2f mouse_pos, FloatRect view_cords);
-	void render(RenderTarget* target);
+	virtual void update();
+	void render();
 };
 

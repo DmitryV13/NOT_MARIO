@@ -8,11 +8,11 @@ private:
 	Textarea* window_name;
 public:
 	PopUpAutocWindow(double screen_width, double screen_height, int width_, int height_,
-		RenderWindow* window_, TextureManager* t_manager_);
+		TextureManager* t_manager_);
 
 	void setWindowName(string name);
 
-	void update(FloatRect view_cords) override;
+	void update() override;
 	void render() override;
 };
 

@@ -2,8 +2,7 @@
 #include "SliderControl.h"
 
 
-SliderControl::SliderControl(float x, float y, float width_, float height_, const string& input_label_,
-		Font* font_)
+SliderControl::SliderControl(float x, float y, float width_, float height_, const string& input_label_)
 		:position(Vector2f(x, y)), width(width_), height(height_) {
 		ii_type = INTERFACE_ITEM_TYPE::FORM_ITEM;
 		fi_state = FORM_ITEM_STATE::FORM_ITEM_IDLE;
@@ -13,7 +12,7 @@ SliderControl::SliderControl(float x, float y, float width_, float height_, cons
 		mouse_pressed_pos_x = 0;
 
 		label = new Text();
-		label->setFont(*font_);
+		label->setFont(*GlobalProcessData::getFont());
 		label->setString(input_label_);
 		label->setCharacterSize(20);
 		label->setFillColor(Color::White);
@@ -148,7 +147,10 @@ SliderControl::SliderControl(float x, float y, float width_, float height_, cons
 		}
 	}
 
-	void SliderControl::update(Vector2f mouse_pos, FloatRect view_cords){
+	void SliderControl::update(){
+		Vector2f mouse_pos = GlobalProcessData::getMousePos();
+		FloatRect view_cords = GlobalProcessData::getViewCords();
+
 		float mouse_current_pos_x = mouse_pos.x + (view_cords.left - view_cords.width / 2);
 		if (slider.getGlobalBounds().contains(mouse_pos.x + (view_cords.left - view_cords.width / 2), mouse_pos.y + (view_cords.top - view_cords.height / 2))) {
 			if (Mouse::isButtonPressed(sf::Mouse::Left) && !chosen) {
@@ -199,7 +201,9 @@ SliderControl::SliderControl(float x, float y, float width_, float height_, cons
 		changeValue();
 	}
 	
-	void SliderControl::render(RenderTarget* target){
+	void SliderControl::render(){
+		RenderTarget* target = GlobalProcessData::getWindow();
+
 		target->draw(*label);
 		target->draw(scale);
 		target->draw(slider);
