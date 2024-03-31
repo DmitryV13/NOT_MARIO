@@ -10,6 +10,9 @@
 		if (!textures[0]["LobbyBackground"].loadFromFile("Textures/GUI/lobby0.png")) {
 			std::cout << "Error -> TextureManager -> couldn't load LobbyBackground texture" << std::endl;
 		}
+		if (!textures[0]["CloseB"].loadFromFile("Textures/GUI/buttons/closeB.png")) {
+			std::cout << "Error -> TextureManager -> couldn't load CloseB texture" << std::endl;
+		}
 		if (!textures[0]["ArrowL"].loadFromFile("Textures/GUI/buttons/arrowL.png")) {
 			std::cout << "Error -> TextureManager -> couldn't load ArrowL texture" << std::endl;
 		}

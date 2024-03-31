@@ -52,11 +52,13 @@ public:
 	FloatRect getGlobalBounds() override;
 	string* getString();
 
+	void setVisibility(float param1, float param2);
 	void setOverflow(short overflow);
 	void setPositionX(float x) override;
 	void setPositionY(float y) override;
 	void changePosition(float offset_x, float offset_y) override;
 
+	bool itemScroll(float delta) override;
 	void formEInput(Event event) override;
 	void update(Vector2f mouse_pos, FloatRect view_cords) override;
 	void render(sf::RenderTarget* target) override;

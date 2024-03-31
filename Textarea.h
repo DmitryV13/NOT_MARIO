@@ -9,13 +9,15 @@ protected:
 	string* text_str;
 	char cursor;
 
-	RectangleShape shape;
+	RectangleShape background;
 
 	int text_size;
 	Color text_color;
 
+	float offset_y;
 	short overflow;
 	bool multiline;
+	bool visibility;
 
 	float width;
 	float height;
@@ -31,8 +33,11 @@ public:
 	char getLastCharacter();
 
 	bool hasCursor();
+	bool contentOverflows();
 
+	void setVisibility(bool visibility_);
 	void setOverflow(short overflow_);
+	void setBackgroungColor(Color color);
 	void setOutlineColor(Color color);
 	void setTextColor(Color color);
 	void setString(std::string new_str);
@@ -47,6 +52,7 @@ public:
 	void removeCursor();
 	vector<string> splitString(const string& str, char delimiter);
 
+	void scroll(float delta);
 	void normalization();
 
 	void update(Vector2f mouse_pos, FloatRect view_cords) override;

@@ -93,6 +93,29 @@
 		return textarea->getString();
 	}
 
+	bool InputField::itemScroll(float delta){
+		FloatRect view_cords = GlobalProcessData::getViewCords();
+		Vector2i mouse_pos = GlobalProcessData::getMousePos();
+
+		View t_view = textarea->createLocalView(textarea->getLocalBounds(), GlobalProcessData::getWindow());
+		FloatRect t_on_screen = FloatRect(
+			t_view.getCenter().x - (t_view.getSize().x / 2),
+			t_view.getCenter().y - (t_view.getSize().y / 2),
+			t_view.getSize().x,
+			t_view.getSize().y
+		);//FIXME: scrolling while content is not visible
+
+		if (t_on_screen.contains(mouse_pos.x + (view_cords.left - view_cords.width / 2), mouse_pos.y + (view_cords.top - view_cords.height / 2))) {
+			if (!textarea->contentOverflows()) {
+				return false;
+			}
+			//std::cout << "1" << std::endl;
+			textarea->scroll(delta);
+			return true;
+		}
+		return false;
+	}
+
 	void InputField::formEInput(Event event) {
 		if (fi_state == FORM_ITEM_STATE::FORM_ITEM_ACTIVE_1) {
 			int typed_char = event.text.unicode;
@@ -135,6 +158,15 @@
 	
 	void InputField::setOverflow(short overflow){
 		textarea->setOverflow(overflow);
+	}
+
+	void InputField::setVisibility(float param1, float param2){
+		if (param1 == 0) {
+			textarea->setVisibility(false);
+		}
+		else {
+			textarea->setVisibility(true);
+		}
 	}
 
 	void InputField::setPositionX(float x){

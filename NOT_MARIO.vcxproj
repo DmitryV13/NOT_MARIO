@@ -169,6 +169,7 @@
     <ClCompile Include="ImageInfo.cpp" />
     <ClCompile Include="InventoryItem.cpp" />
     <ClCompile Include="GlobalProcessData.cpp" />
+    <ClCompile Include="PopUpAutocWindow.cpp" />
     <ClCompile Include="Textarea.cpp" />
     <ClCompile Include="TextareaField.cpp" />
     <ClCompile Include="Warehouse.cpp" />
@@ -252,6 +253,7 @@
     <ClInclude Include="OBJECT_TYPE.h" />
     <ClInclude Include="ITEM_OVERFLOW.h" />
     <ClInclude Include="GlobalProcessData.h" />
+    <ClInclude Include="PopUpAutocWindow.h" />
     <ClInclude Include="Textarea.h" />
     <ClInclude Include="TextareaField.h" />
     <ClInclude Include="Warehouse.h" />

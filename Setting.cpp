@@ -6,8 +6,8 @@ Setting::Setting(RenderWindow* window_, double screen_w, double screen_h, Color 
 	initFont();
 	CRect<float>* tmp;
 
-	example = new PopUpWindow(screen_width, screen_height, 1000, 800, window, t_manager);
-
+	example = new PopUpAutocWindow(screen_width, screen_height, 1000, 800, window, t_manager);
+	example->setWindowName("Window");
 	example->createGroupLine();
 	tmp = example->calculatePFNG(100, 100, 0);
 	Group* ls = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
@@ -16,27 +16,40 @@ Setting::Setting(RenderWindow* window_, double screen_w, double screen_h, Color 
 	example->addGroup(ls, 0);
 
 	ls->createElementLine();
+	tmp = ls->calculatePFNII(25, 10, 0);
+	ls_g0_top = new InputField(tmp->first, tmp->second, tmp->third, tmp->fourth, "input", font, 25, true, 90);
+	ls_g0_top->setVisibility(0, 0);
+	ls->addIElement((InterfaceItem*)ls_g0_top, 0);
+
 	tmp = ls->calculatePFNII(30, 30, 0);
 	ls_g0_top = new TextareaField(tmp->first, tmp->second, tmp->third, tmp->fourth, "textarea", font, 25, true, 600);
 	ls->addIElement((InterfaceItem*)ls_g0_top, 0);
 
 	ls->createElementLine();
-	tmp = ls->calculatePFNII(25, 10, 0);
+	tmp = ls->calculatePFNII(25, 10, 1);
 	ls_g0_top = new InputField(tmp->first, tmp->second, tmp->third, tmp->fourth, "input", font, 25, true, 90);
 	ls->addIElement((InterfaceItem*)ls_g0_top, 1);
-
+	
+	tmp = ls->calculatePFNII(30, 30, 1);
+	ls_g0_top = new TextareaField(tmp->first, tmp->second, tmp->third, tmp->fourth, "textarea", font, 25, true, 600);
+	ls->addIElement((InterfaceItem*)ls_g0_top, 1);
+	
 	ls->createElementLine();
 	tmp = ls->calculatePFNII(20, 10, 0);
 	NumberField* ls_g0_top2 = new NumberField(tmp->first, tmp->second, tmp->third, tmp->fourth, "number", font, 25, true, 90);
 	ls_g0_top2->setMinMaxType(20, 100, false);
 	ls->addIElement((InterfaceItem*)ls_g0_top2, 2);
-
+	
 	ls->createElementLine();
 	tmp = ls->calculatePFNII(40, 10, 0);
 	SliderControl* sl = new SliderControl(tmp->first, tmp->second, tmp->third, tmp->fourth, "slider", font);
 	sl->setMinMaxType(0, 100);
 	sl->setValueType(new float(), true);
 	ls->addIElement((InterfaceItem*)sl, 3);
+	
+	tmp = ls->calculatePFNII(30, 30, 3);
+	ls_g0_top = new TextareaField(tmp->first, tmp->second, tmp->third, tmp->fourth, "textarea", font, 25, true, 600);
+	ls->addIElement((InterfaceItem*)ls_g0_top, 3);
 
 	ls->setAlignment("center auto", "center auto");
 
@@ -79,7 +92,7 @@ void Setting::initFont(){
 }
 
 void Setting::render(){
-	window->clear();
+	window->clear(Color::Yellow);
 
 	if (example->getState() == POP_UP_WINDOW_STATE::PUW_OPENED) {
 		example->update(FloatRect(window->getView().getCenter(), Vector2f(screen_width, screen_height)));

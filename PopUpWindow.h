@@ -10,7 +10,7 @@
 #include "DCallbacksHandler.h"
 
 class PopUpWindow{
-private:
+protected:
 	TextureManager* manager;
 	RenderWindow* window;
 	ComposedIMG* w_background;
@@ -25,7 +25,6 @@ private:
 	int height;
 
 	Vector2f position;
-	//void *textInput;
 
 	vector<vector<Group*>> groups;
 public:
@@ -66,9 +65,9 @@ public:
 
 	void formInput(Event event);
 	void itemScroll(float delta);
-	void update(FloatRect view_cords);
+	virtual void update(FloatRect view_cords);
 	void updateEvent(Event* event);
-	void render();
+	virtual void render();
 };
 
 template<class T>

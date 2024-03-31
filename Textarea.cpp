@@ -6,18 +6,20 @@
 		: position(Vector2f(x, y)), width(width_), height(height_), overflow(overflow_), multiline(multiline_)
 		, text_size(text_size_){
 		ii_type = INTERFACE_ITEM_TYPE::FORM_ITEM;
+		visibility = true;
+		offset_y = 0;
 
-		shape.setSize(Vector2f(
+		background.setSize(Vector2f(
 			width - 4,
 			height - 4)
 		);
-		shape.setPosition(
+		background.setPosition(
 			position.x + 2,
 			position.y + 2
 		);
-		shape.setFillColor(background_color_);
-		shape.setOutlineThickness(2);
-		shape.setOutlineColor(border_color_);
+		background.setFillColor(background_color_);
+		background.setOutlineThickness(2);
+		background.setOutlineColor(border_color_);
 
 		text = new Text();
 		text->setFont(*font_);
@@ -25,8 +27,8 @@
 		text->setCharacterSize(text_size);
 		text->setFillColor(text_color);
 		text->setPosition(
-			shape.getPosition().x + 8 + 2 - text->getLocalBounds().left,//left offset
-			shape.getPosition().y + (multiline ? (8 + 2) : ((shape.getGlobalBounds().height - text->getGlobalBounds().height) / 2.f)) - text->getLocalBounds().top
+			background.getPosition().x + 8 + 2 - text->getLocalBounds().left,//left offset
+			background.getPosition().y + (multiline ? (8 + 2) : ((background.getGlobalBounds().height - text->getGlobalBounds().height) / 2.f)) - text->getLocalBounds().top
 		);
 		text->setString("");
 		text_str = new string();
@@ -38,18 +40,20 @@
 		: position(Vector2f(x, y)), width(width_), height(height_), overflow(ITEM_OVERFLOW::HIDDEN), 
 		multiline(multiline_), text_size(text_size_) {
 		ii_type = INTERFACE_ITEM_TYPE::FORM_ITEM;
+		visibility = true;
+		offset_y = 0;
 
-		shape.setSize(Vector2f(
+		background.setSize(Vector2f(
 			width - 4,
 			height - 4)
 		);
-		shape.setPosition(
+		background.setPosition(
 			position.x + 2,
 			position.y + 2
 		);
-		shape.setFillColor(Color::White);
-		shape.setOutlineThickness(2);
-		shape.setOutlineColor(Color(60, 60, 118, 255));
+		background.setFillColor(Color::White);
+		background.setOutlineThickness(2);
+		background.setOutlineColor(Color(60, 60, 118, 255));
 
 		text = new Text();
 		text->setFont(*font_);
@@ -57,8 +61,8 @@
 		text->setCharacterSize(text_size);
 		text->setFillColor(text_color);
 		text->setPosition(
-			shape.getPosition().x + 8 + 2 - text->getLocalBounds().left,
-			shape.getPosition().y + (multiline ? (8 + 2) : ((shape.getGlobalBounds().height - text->getGlobalBounds().height) / 2.f)) - text->getLocalBounds().top
+			background.getPosition().x + 8 + 2 - text->getLocalBounds().left,
+			background.getPosition().y + (multiline ? (8 + 2) : ((background.getGlobalBounds().height - text->getGlobalBounds().height) / 2.f)) - text->getLocalBounds().top
 		);
 		text->setString("");
 		text_str = new string();
@@ -66,11 +70,11 @@
 	}
 	
 	FloatRect Textarea::getLocalBounds(){
-		return FloatRect(shape.getPosition(), shape.getSize());
+		return FloatRect(background.getPosition(), background.getSize());
 	}
 	
 	FloatRect Textarea::getGlobalBounds(){
-		return shape.getGlobalBounds();
+		return background.getGlobalBounds();
 	}
 	
 	std::string* Textarea::getString(){
@@ -84,13 +88,25 @@
 	bool Textarea::hasCursor(){
 		return cursor == ' ' ? false : true;
 	}
+
+	bool Textarea::contentOverflows(){	
+		return text->getGlobalBounds().height >= background.getSize().y ? true : false;
+	}
 	
+	void Textarea::setVisibility(bool visibility_){
+		visibility = visibility_;
+	}
+
 	void Textarea::setOverflow(short overflow_){
 		overflow = overflow_;
 	}
 
+	void Textarea::setBackgroungColor(Color color){
+		background.setFillColor(color);
+	}
+
 	void Textarea::setOutlineColor(Color color){
-		shape.setOutlineColor(color);
+		background.setOutlineColor(color);
 	}
 
 	void Textarea::setTextColor(Color color){
@@ -122,6 +138,8 @@
 			return;
 		text_str->erase(index, index + 1);
 		normalization();
+		if (!contentOverflows())
+			offset_y = 0;
 	}
 	
 	void Textarea::removeLastCharacter(){
@@ -134,11 +152,15 @@
 			text_str->erase(text_str->size() - 1, 1);
 		}
 		normalization();
+		if (!contentOverflows())
+			offset_y = 0;
 	}
 
 	void Textarea::removeCursor(){
 		cursor = ' ';
 		normalization();
+		if (!contentOverflows())
+			offset_y = 0;
 	}
 
 	vector<string> Textarea::splitString(const string& str, char delimiter){
@@ -165,7 +187,7 @@
 		position.x += offset_x;
 		position.y += offset_y;
 
-		shape.setPosition(
+		background.setPosition(
 			position.x + 2,
 			position.y + 2
 		);
@@ -173,12 +195,34 @@
 		string tmp = text->getString();
 		text->setString("a");
 		text->setPosition(
-			shape.getPosition().x + 8 + 2 - text->getLocalBounds().left,//left offset
-			shape.getPosition().y + (multiline ? (8 + 2) : ((shape.getGlobalBounds().height - text->getGlobalBounds().height) / 2.f)) - text->getLocalBounds().top
+			background.getPosition().x + 8 + 2 - text->getLocalBounds().left,//left offset
+			background.getPosition().y + (multiline ? (8 + 2) : ((background.getGlobalBounds().height - text->getGlobalBounds().height) / 2.f)) - text->getLocalBounds().top
 		);
 		text->setString(tmp);
 	}
 	
+	void Textarea::scroll(float delta){
+		float offset = delta * 16;
+		if (delta > 0) {
+
+			if (background.getPosition().y <= text->getPosition().y - text->getLocalBounds().top + offset) {
+				offset_y = 0;
+			}
+			else {
+				offset_y += delta * 16;
+			}
+		}
+		else {
+			if (background.getPosition().y + background.getGlobalBounds().height 
+				>= text->getPosition().y - text->getLocalBounds().top + text->getGlobalBounds().height + offset) {
+				offset_y = background.getSize().y - text->getGlobalBounds().height - 10;
+			}
+			else {
+				offset_y += delta * 16;
+			}
+		}
+	}
+
 	void Textarea::normalization(){
 		string output;
 		if (multiline) {
@@ -189,7 +233,7 @@
 				string current_line = *words.begin() + (words.size() == 1 ? "" : " ");
 				for (auto word = words.begin()+1; word != words.end(); word++) {
 					text->setString(current_line + *word);
-					if ((text->getGlobalBounds().width + 2 + 8) > shape.getSize().x) {
+					if ((text->getGlobalBounds().width + 2 + 8) > background.getSize().x) {
 						output += current_line + '\n';
 						current_line.clear();
 						current_line += *word + ' ';
@@ -210,7 +254,7 @@
 				string current_line;
 				for (const auto& word : words) {
 					text->setString(current_line + word);
-					if ((text->getGlobalBounds().width + 2 + 8) > shape.getSize().x) {
+					if ((text->getGlobalBounds().width + 2 + 8) > background.getSize().x) {
 						output += current_line + '\n';
 						current_line.clear();
 						if (word.length() > 0) {
@@ -245,12 +289,19 @@
 				}
 			}
 		}
-
+		if (!visibility) {
+			std::transform(output.begin(), output.end(), output.begin(), [](char c) {
+				return (c != ' ') ? '*' : c;
+				});
+			if (hasCursor()) {
+				output.pop_back();
+			}
+		}
 		text->setString(output);
 	}
 	
 	void Textarea::update(Vector2f mouse_pos, FloatRect view_cords){
-		shape.setPosition(
+		background.setPosition(
 			view_cords.left - view_cords.width / 2 + position.x + 2,
 			view_cords.top - view_cords.height / 2 + position.y + 2
 		);
@@ -258,14 +309,16 @@
 		string tmp = text->getString();
 		text->setString("a");
 		text->setPosition(
-			view_cords.left - view_cords.width / 2 + shape.getPosition().x + 8 + 2 - text->getLocalBounds().left,
-			view_cords.top - view_cords.height / 2 + shape.getPosition().y + (multiline ? (8 + 2) : ((shape.getGlobalBounds().height - text->getGlobalBounds().height) / 2.f)) - text->getLocalBounds().top
+			view_cords.left - view_cords.width / 2 + background.getPosition().x + 8 + 2 - text->getLocalBounds().left,
+			view_cords.top - view_cords.height / 2 + background.getPosition().y + 
+			(multiline ? (8 + 2) : ((background.getGlobalBounds().height - text->getGlobalBounds().height) / 2.f)) - 
+			text->getLocalBounds().top + offset_y
 		);
 		text->setString(tmp);
 	}
 	
 	void Textarea::render(sf::RenderTarget* target){
-		target->draw(shape);
+		target->draw(background);
 		View oldView{ target->getView() };
 		View view{ createLocalView(this->getLocalBounds(), target)};
 		target->setView(view);

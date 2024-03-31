@@ -321,7 +321,7 @@
 			i_tc0_left->getGlobalBounds().width, i_tc0_left->getGlobalBounds().height);
 		i_tc0_left->addTab(i_tc0_1);
 
-		for (int in = 0; in < 5; in++) {
+		for (int in = 0; in < 8; in++) {
 			i_tc0_1->createElementLine();
 			for (int jn = 0; jn < 6; jn++) {
 				tmp = i_tc0_1->calculatePFNII(15, 18, in);
@@ -420,6 +420,7 @@
 		if (!font->loadFromFile("Fonts/Pixel.ttf")) {
 			std::cout << "Error -> RoadMap -> couldn't load text font" << std::endl;
 		}
+		GlobalProcessData::setFont(font);
 	}
 
 	void RoadMap::initBackground(){

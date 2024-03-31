@@ -28,7 +28,7 @@ public:
 
 	FloatRect getLocalBounds() override;
 	FloatRect getGlobalBounds() override;
-	float getMaxELHeight(short index);
+	std::pair<float, float> getMaxELHeight(short index);
 	short* getButtonState(int btn_id);
 
 	void setAlignment(string horiz_a, string vertic_a);

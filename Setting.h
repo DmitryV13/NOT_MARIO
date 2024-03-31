@@ -1,7 +1,7 @@
 #pragma once
 #include "MainMenuOption.h"
 #include "PAGE_STATE.h"
-#include "PopUpWindow.h"
+#include "PopUpAutocWindow.h"
 #include "InputField.h"
 #include "TextareaField.h"
 #include "NumberField.h"
@@ -15,7 +15,7 @@ private:
 	double screen_width;
 	double screen_height;
 
-	PopUpWindow* example;
+	PopUpAutocWindow* example;
 	InputField* ls_g0_top;
 	TextureManager* t_manager;
 

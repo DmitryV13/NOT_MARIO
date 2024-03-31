@@ -2,6 +2,11 @@
 #include "GlobalProcessData.h"
 	RenderWindow* GlobalProcessData::window = nullptr;
 	FloatRect GlobalProcessData::view_cords = FloatRect(0,0,0,0);
+	Font* GlobalProcessData::font = new Font();
+
+	void GlobalProcessData::setFont(Font* font_){
+		font = font_;
+	}
 
 	void GlobalProcessData::setViewCords(FloatRect new_cords){
 		view_cords = new_cords;
@@ -11,6 +16,10 @@
 		window = new_window;
 	}
 	
+	Font* GlobalProcessData::getFont(){
+		return font;
+	}
+
 	FloatRect GlobalProcessData::getViewCords(){
 		return view_cords;
 	}
