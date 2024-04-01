@@ -31,7 +31,7 @@
     void CombatStaff::render(RenderTarget& target){
 //        std::cout << staff_S.getPosition().x <<"   "<< staff_S.getPosition().y<< std::endl;
         target.draw(staff_S);
-        std::cout << "   111" << std::endl;
+        //std::cout << "   111" << std::endl;
     }
 
     void CombatStaff::renderProjectiles(RenderTarget& target){

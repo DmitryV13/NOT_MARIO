@@ -12,7 +12,6 @@ Setting::Setting(RenderWindow* window_, double screen_w, double screen_h, Color 
 	settings->createGroupLine();
 	tmp = settings->calculatePFNG(100, 100, 0);
 	Group* s_g0_top = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
-	s_g0_top->setBColor(Color::Cyan);
 	delete tmp;
 
 	settings->addGroup(s_g0_top, 0);

@@ -640,7 +640,7 @@
 	}
 
 	void Group::render(){
-		RenderTarget* target = GlobalProcessData::getWindow();
+		RenderWindow* target = GlobalProcessData::getWindow();
 
 		target->draw(background);
 		if (name != nullptr) {
@@ -655,7 +655,6 @@
 			}
 		}
 		target->setView(oldView);
-
 		target->draw(g1);
 		target->draw(g2);
 		//target->draw(g0);

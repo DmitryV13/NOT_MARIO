@@ -200,6 +200,7 @@
 		if (label != nullptr)
 			label->render();
 
+
 		for (auto i : groups) {
 			for (auto j : i) {
 				j->render();

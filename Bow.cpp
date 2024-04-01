@@ -128,7 +128,7 @@
 	}
 	
 	void Bow::render(RenderTarget& target){
-		std::cout << bow_S.getPosition().x << "   " << bow_S.getPosition().y << std::endl;
+		//std::cout << bow_S.getPosition().x << "   " << bow_S.getPosition().y << std::endl;
 		target.draw(bow_S);
 	}
 	

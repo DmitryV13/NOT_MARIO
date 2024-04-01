@@ -1,4 +1,5 @@
 #pragma once
+#include "MyView.h"
 
 class GlobalProcessData {
 private:

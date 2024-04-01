@@ -47,7 +47,7 @@
 			if (!Mouse::isButtonPressed(sf::Mouse::Left)) {
 				unpressed = true;
 			}
-			std::cout << fi_state << std::endl;
+			//std::cout << fi_state << std::endl;
 		}
 
 		//if (fi_state == FORM_ITEM_STATE::FORM_ITEM_ACTIVE_1) {
