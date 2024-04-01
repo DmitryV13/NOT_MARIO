@@ -44,12 +44,14 @@
 
 	void Label::update(){
 		label_background->update();
-		label_text->setPosition(label_background->getLocalBounds().left - label_text->getLocalBounds().left + label_text->getLocalBounds().width / 4, label_background->getLocalBounds().top - label_text->getLocalBounds().top + label_text->getLocalBounds().height / 8);
+		label_text->setPosition(
+			label_background->getLocalBounds().left - label_text->getLocalBounds().left + label_text->getLocalBounds().width / 4, 
+			label_background->getLocalBounds().top - label_text->getLocalBounds().top + label_text->getLocalBounds().height / 8);
 	}
 
 	void Label::render(){
 		RenderTarget* target = GlobalProcessData::getWindow();
-
+		
 		label_background->render();
 		target->draw(*label_text);
 	}

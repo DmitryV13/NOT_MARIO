@@ -224,9 +224,7 @@
 
 	void Button::render(){
 		RenderTarget* target = GlobalProcessData::getWindow();
+
 		target->draw(shape);
-		//if (btn_image != nullptr) {
-			//target->draw(*btn_image);
-		//}
 		target->draw(text);
 	}

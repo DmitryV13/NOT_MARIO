@@ -12,27 +12,28 @@ Setting::Setting(RenderWindow* window_, double screen_w, double screen_h, Color 
 	settings->createGroupLine();
 	tmp = settings->calculatePFNG(100, 100, 0);
 	Group* s_g0_top = new Group(tmp->first, tmp->second, tmp->third, tmp->fourth);
+	s_g0_top->setBColor(Color::Cyan);
 	delete tmp;
 
 	settings->addGroup(s_g0_top, 0);
-
+	
 	s_g0_top->createElementLine();
-
+	
 	tmp = s_g0_top->calculatePFNII(30, 30, 0);
 	InputField* s_if = new TextareaField(tmp->first, tmp->second, tmp->third, tmp->fourth, "textarea", 25, true, 600);
 	s_g0_top->addIElement((InterfaceItem*)s_if, 0);
-
+	
 	s_g0_top->createElementLine();
 	tmp = s_g0_top->calculatePFNII(25, 10, 1);
 	s_if = new InputField(tmp->first, tmp->second, tmp->third, tmp->fourth, "input", 25, true, 90);
 	s_g0_top->addIElement((InterfaceItem*)s_if, 1);
-
+	
 	s_g0_top->createElementLine();
 	tmp = s_g0_top->calculatePFNII(25, 10, 1);
 	s_if = new InputField(tmp->first, tmp->second, tmp->third, tmp->fourth, "password", 25, true, 90);
 	s_if->setVisibility(false);
 	s_g0_top->addIElement((InterfaceItem*)s_if, 2);
-
+	
 	tmp_id = s_g0_top->addButton(tmp->fourth, tmp->fourth, 40, "", menuColor, Color::White, Color(239, 135, 6, 255)
 		, Color(255, 185, 12), t_manager, 0, "EyeB", true, 2);
 	settings->addCallback(s_g0_top->getButtonState(tmp_id), BUTTON_STATE::BTN_ACTIVE, 0, 0,
@@ -50,13 +51,13 @@ Setting::Setting(RenderWindow* window_, double screen_w, double screen_h, Color 
 	sl->setMinMaxType(0, 100);
 	sl->setValueType(new float(), true);
 	s_g0_top->addIElement((InterfaceItem*)sl, 4);
-
+	
 	s_g0_top->createElementLine();
 	tmp = s_g0_top->calculatePFNII(40, 10, 0);
 	tmp_id = s_g0_top->addButton(tmp->third, 60, 20, "MAP BUILDER", menuColor, Color::White,
 		Color(43, 43, 120, 255), Color(43, 43, 120, 255), false, 5);
 	
-
+	
 	s_g0_top->createElementLine();
 	tmp = s_g0_top->calculatePFNII(40, 10, 0);
 	tmp_id = s_g0_top->addButton(tmp->third, 60, 20, "BACK", menuColor, Color::White,
@@ -118,8 +119,5 @@ void Setting::enter(RenderWindow* window){
 		updateMenuState();
 		update();
 		render();
-		short o = PAGE_STATE::PAGE_OPENED;
-		short c = PAGE_STATE::PAGE_CLOSED;
-		std::cout << state << std::endl;
 	}
 }
