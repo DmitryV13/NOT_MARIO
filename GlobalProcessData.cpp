@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "GlobalProcessData.h"
 	RenderWindow* GlobalProcessData::window = nullptr;
-	FloatRect GlobalProcessData::view_cords = FloatRect(0,0,0,0);
+	FloatRect GlobalProcessData::view_cords = FloatRect(0, 0, 0, 0);
 	Font* GlobalProcessData::font = new Font();
 	int GlobalProcessData::id_accumulator = 0;
 

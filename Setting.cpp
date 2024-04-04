@@ -33,10 +33,13 @@ Setting::Setting(RenderWindow* window_, double screen_w, double screen_h, Color 
 	s_if->setVisibility(false);
 	s_g0_top->addIElement((InterfaceItem*)s_if, 2);
 	
-	tmp_id = s_g0_top->addButton(tmp->fourth, tmp->fourth, 40, "", menuColor, Color::White, Color(239, 135, 6, 255)
-		, Color(255, 185, 12), t_manager, 0, "EyeB", true, 2);
-	settings->addCallback(s_g0_top->getButtonState(tmp_id), BUTTON_STATE::BTN_ACTIVE, 0, 0,
-		&InputField::changeVisibility, s_if);
+	Warehouse* warehouse = new Warehouse();
+	BasicImage* t = new BasicImage(tmp->fourth, tmp->fourth, t_manager, warehouse, "Coin");
+	s_g0_top->addIElement((InterfaceItem*)t, 2);
+	//tmp_id = s_g0_top->addButton(tmp->fourth, tmp->fourth, 40, "", menuColor, Color::White, Color(239, 135, 6, 255)
+	//	, Color(255, 185, 12), t_manager, 0, "EyeB", true, 2);
+	//settings->addCallback(s_g0_top->getButtonState(tmp_id), BUTTON_STATE::BTN_ACTIVE, 0, 0,
+	//	&InputField::changeVisibility, s_if);
 	
 	s_g0_top->createElementLine();
 	tmp = s_g0_top->calculatePFNII(20, 10, 0);
