@@ -16,5 +16,5 @@ public:
 
 	void update() override;
 	void render();
-};
+};//bug
 
