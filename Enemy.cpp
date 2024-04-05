@@ -28,6 +28,11 @@ Enemy::Enemy(TileMap& map, GeneralInfo* player_info_,short regime)
 	hp_bar->SET_ST_HP(HP);
 }
 
+/// \brief 
+/// \param map 
+/// \param player_info_ 
+/// \param pos_x 
+/// \param pos_y 
 Enemy::Enemy(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y)
 	: player_info(player_info_)
 {
