@@ -68,7 +68,7 @@
 
     void Player::initPhysics(){
         stan_timer.restart();
-        info = new GeneralInfo(100, 80);
+        info = new GeneralInfo(1000, 80);
         info->setGlobalBounds(player_S.getGlobalBounds());
         info->setPosition(player_S.getPosition());
 

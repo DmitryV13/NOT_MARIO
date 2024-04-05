@@ -75,10 +75,12 @@ void BushKiller::init_sprite()
 	Enemy_S.setTextureRect(current_frame);
 }
 
-
+/// <summary>
+/// Update Animation
+/// </summary>
 void BushKiller::update_animation()
 {
-	if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_MOVING)
+	if (animation_state == ENEMY_ANIMATION_STATES::ENEMY_MOVING	)
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.15f || get_animation_switch())
 		{
