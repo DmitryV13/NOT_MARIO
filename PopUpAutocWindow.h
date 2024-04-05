@@ -15,6 +15,7 @@ private:
 public:
 	PopUpAutocWindow(double screen_width, double screen_height, int width_, int height_,
 		TextureManager* t_manager_);
+	~PopUpAutocWindow();
 
 	void setWindowName(string name);
 	void dragWindow(Vector2f mouse_current_pos);

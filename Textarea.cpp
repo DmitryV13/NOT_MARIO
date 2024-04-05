@@ -72,6 +72,11 @@
 		text_str = new string();
 		cursor = ' ';
 	}
+
+	Textarea::~Textarea(){
+		delete text;
+		delete text_str;
+	}
 	
 	FloatRect Textarea::getLocalBounds(){
 		return FloatRect(background.getPosition(), background.getSize());

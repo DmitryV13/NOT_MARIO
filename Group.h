@@ -9,9 +9,9 @@
 class Group : public InterfaceItem{
 protected:
 	//Objects for visualization
-	RectangleShape g0;
-	RectangleShape g1;
-	RectangleShape g2;
+	RectangleShape shape0;
+	RectangleShape shape1;
+	RectangleShape shape2;
 
 	//
 	RectangleShape background;
@@ -25,6 +25,7 @@ protected:
 	Vector2f position;
 public:
 	Group(float x, float y, float width_, float height_);
+	~Group();
 
 	FloatRect getLocalBounds() override;
 	FloatRect getGlobalBounds() override;
@@ -45,6 +46,7 @@ public:
 
 	void createElementLine();
 
+	void clearInfo();
 
 	void addIElement(InterfaceItem* new_group, short index);
 	int addGroup(short fill_p_w, short fill_p_h, short index);// fill percentage width/height

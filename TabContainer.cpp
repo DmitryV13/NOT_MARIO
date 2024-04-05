@@ -7,6 +7,12 @@
 		id = GlobalProcessData::getUnicId();
 	}
 
+	TabContainer::~TabContainer(){
+		for (auto i : tabs) {
+			delete i;
+		}
+	}
+
 	FloatRect TabContainer::getLocalBounds(){
 		return FloatRect(position, Vector2f(width, height));
 	}

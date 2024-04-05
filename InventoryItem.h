@@ -20,10 +20,10 @@ protected:
 	int text_size;
 	float width;
 	float height;
-	bool visible;
 	Vector2f position;
 public:
 	InventoryItem(float x, float y, float width_, float height_, int text_size_);
+	~InventoryItem();
 
 	void addItemInfo(TextureManager* t_manager, Warehouse* w_object, string name);
 	void addItemInfo(TextureManager* t_manager, WarehouseItem* w_item);

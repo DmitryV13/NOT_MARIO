@@ -17,6 +17,9 @@
 		textarea->setOverflow(ITEM_OVERFLOW::HIDDEN);
 	}
 
+	NumberField::~NumberField(){
+	}
+
 	void NumberField::inputLogic(int typed_char){
 		if (typed_char != ESCAPE_KEY && typed_char != ENTER_KEY && typed_char != DELETE_KEY) {
 			if (47 < typed_char && typed_char < 58) {

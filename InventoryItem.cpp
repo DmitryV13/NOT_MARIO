@@ -23,6 +23,11 @@
 		);
 	}
 
+	InventoryItem::~InventoryItem(){
+		delete image;
+		delete r_info;
+	}
+
 	void InventoryItem::addItemInfo(TextureManager* t_manager, Warehouse* w_object, string name){
 		image = new BasicImage(position.x, position.y);
 		r_info = new ResourceInfo(position.x, position.y + height - 20, (int)text.getCharacterSize(), false);

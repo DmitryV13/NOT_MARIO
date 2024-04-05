@@ -47,6 +47,10 @@
 		
 		shape.setFillColor(shp_idle_color);
 	}
+
+	ImageButton::~ImageButton(){
+		delete btn_image;
+	}
 	
 	void ImageButton::setPosition(Vector2f new_position){
 		position = new_position;

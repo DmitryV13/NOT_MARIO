@@ -23,6 +23,7 @@ private:
 	Notification* notification;
 public:
 	ProductCard(int price, int amount, float p_coefficient, int* source);
+	~ProductCard();
 
 	FloatRect getLocalBounds() override;
 	FloatRect getGlobalBounds() override;

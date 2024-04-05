@@ -52,6 +52,10 @@ SliderControl::SliderControl(float x, float y, float width_, float height_, cons
 			(slider.getGlobalBounds().height - slider.getOutlineThickness() - scale.getGlobalBounds().height - scale.getOutlineThickness()) / 2.f
 		);
 	}
+
+	SliderControl::~SliderControl(){
+		delete label;
+	}
 	
 	FloatRect SliderControl::getLocalBounds(){
 		return FloatRect(
@@ -73,11 +77,12 @@ SliderControl::SliderControl(float x, float y, float width_, float height_, cons
 
 	void SliderControl::setValueType(float* value_, bool isStatic_){
 		isStatic = isStatic_;
+		s_value = new string();
 		if (isStatic) {
-			s_value = "";
 			delete value_;
 		}
 		else {
+			*s_value = std::to_string(*value_);
 			f_value = value_;
 		}
 	}
@@ -111,6 +116,12 @@ SliderControl::SliderControl(float x, float y, float width_, float height_, cons
 		);
 	}
 
+	string* SliderControl::getValue(){	
+		if (isStatic) {
+			return s_value;
+		}
+	}
+
 	void SliderControl::scrollSlider(float mouse_current_pos_x){
 		float offset = mouse_current_pos_x - mouse_pressed_pos_x;
 		if (offset > 0) {
@@ -141,7 +152,7 @@ SliderControl::SliderControl(float x, float y, float width_, float height_, cons
 		float current_percent = 100 * (slider.getPosition().x - position.x - slider.getOutlineThickness()) / full_scale_range;
 		float rezult = current_percent * value_one_percent + initial_value_offset;
 		if (isStatic) {
-			s_value = std::to_string(rezult);
+			*s_value = std::to_string(rezult);
 		}
 		else {
 			*f_value = rezult;

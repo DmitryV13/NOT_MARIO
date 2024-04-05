@@ -2,7 +2,7 @@
 
 using namespace::sf;
 
-using DCallbackFunctions = vector <std::function<void(float, string*)>>;
+using DCallbackFunctions = vector <std::function<void(string*, string*)>>;
 
 using DCallbackContainer = unordered_map<
 	short*, DCallbackFunctions>;
@@ -11,7 +11,7 @@ using DCallbacks = unordered_map<
 	short, DCallbackContainer>;
 
 using DParameters = unordered_map<
-	short*, std::pair<float, string*>>;
+	short*, std::pair<string*, string*>>;
 
 class DCallbacksHandler {
 private:
@@ -21,12 +21,12 @@ public:
 	DCallbacksHandler();
 
 	template<class T>
-	bool addCallback(short* b_state, short a_state, float param1, string* param2, void(T::* l_func)(float, string*), T* l_instance);
+	bool addCallback(short* b_state, short a_state, string* param1, string* param2, void(T::* l_func)(string*, string*), T* l_instance);
 	void update();
 };
 
 template<class T>
-inline bool DCallbacksHandler::addCallback(short* c_state, short a_state, float param1, string* param2, void(T::* l_func)(float, string*), T* l_instance) {
+inline bool DCallbacksHandler::addCallback(short* c_state, short a_state, string* param1, string* param2, void(T::* l_func)(string*, string*), T* l_instance) {
 	c_parameters.insert({ c_state, {param1, param2} });
 	auto itr = w_callbacks.emplace(a_state, DCallbackContainer()).first;
 	auto temp = std::bind(l_func, l_instance, std::placeholders::_1, std::placeholders::_2);

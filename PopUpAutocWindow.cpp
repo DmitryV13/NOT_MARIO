@@ -21,6 +21,11 @@
 			&PopUpWindow::setPUWState, (PopUpWindow*)this);
 	}
 
+	PopUpAutocWindow::~PopUpAutocWindow(){
+		delete close_b;
+		delete window_name;
+	}
+
 	void PopUpAutocWindow::setWindowName(string name){
 		window_name = new Textarea(
 			position.x,

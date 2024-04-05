@@ -16,3 +16,6 @@
 
 		textarea->setOverflow(ITEM_OVERFLOW::VERTICAL);
 	}
+
+	TextareaField::~TextareaField(){
+	}

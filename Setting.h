@@ -6,6 +6,7 @@
 #include "TextareaField.h"
 #include "NumberField.h"
 #include "SliderControl.h"
+#include "Form.h"
 
 using namespace sf;
 
@@ -27,7 +28,7 @@ private:
 	void initFont();
 public:
 	Setting(RenderWindow* window_, double screen_w, double screen_h, Color menuColor_, TextureManager* t_manager_);
-
+	void testForm(vector<string> parameters);
 	void updateMenuState();
 	void updateEvents();
 	void update();

@@ -51,6 +51,17 @@
 	}
 	
 	PopUpWindow::~PopUpWindow(){
+		for (auto i : groups) {
+			for (auto j : i) {
+				delete j;
+			}
+		}
+		delete manager;
+		delete w_background;
+		delete background;
+		delete label;
+		delete callbacks_handler;
+		delete dcallbacks_handler;
 	}
 	
 	void PopUpWindow::setBackground(){

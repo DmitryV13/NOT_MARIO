@@ -10,6 +10,7 @@ protected:
 public:
 	short& getFIType();
 	short& getFIState();
+	short* getFIPState();
 	void setFIState(short state);
 	virtual void formEInput(Event event);
 };

@@ -21,6 +21,7 @@ public:
 	ComposedIMG(int width_, int height_, int original_size, TextureManager* manager
 		, int index_0, string name_0, int index_1, string name_1, int index_2, string name_2
 		, int index_3, string name_3, int index_4, string name_4);
+	~ComposedIMG();
 
 	void setPosition(float x, float y);
 	void setPosition(string positionX, string positionY, int screen_width, int screen_height);

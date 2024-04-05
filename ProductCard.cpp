@@ -6,6 +6,10 @@
 		ii_type = INTERFACE_ITEM_TYPE::PRODUCT_CARD;
 		id = GlobalProcessData::getUnicId();
 	}
+
+	ProductCard::~ProductCard(){
+		delete group;
+	}
 	
 	FloatRect ProductCard::getLocalBounds(){
 		return group->getLocalBounds();

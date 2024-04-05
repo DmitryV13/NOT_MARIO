@@ -70,6 +70,8 @@
 		tmp = ci->calculatePFNII(100, 70, 0);
 		Group* ci_f0_top = new Form(tmp->first, tmp->second, tmp->third, tmp->fourth);
 		form = (Form*)ci_f0_top;
+		form->setStaticParametersType(false);
+		form->addDFormAction(8, &Level::testForm, this);
 		delete tmp;
 		ci->addIElement((InterfaceItem*)ci_f0_top, 0);
 	
@@ -77,8 +79,13 @@
 			ci_f0_top->createElementLine();
 			for (int jn = 0; jn < 4; jn++) {
 				tmp = ci_f0_top->calculatePFNII(22, 45, in);
-				CheckboxItem* temp = new CheckboxItem(tmp->first, tmp->second, tmp->third, tmp->fourth, 15);
+				CheckboxItem* temp = new CheckboxItem(tmp->first, tmp->second, tmp->third, tmp->fourth);
+				string* st = new string();
+				*st = std::to_string(in*4+jn);
 				temp->setBColor(Color(118, 118, 118, 255));
+				InventoryItem* temp2 = new InventoryItem(tmp->first, tmp->second, tmp->third, tmp->fourth, 15);
+				temp->createElementLine();
+				temp->addIElement((InterfaceItem*)temp2, 0);
 				delete tmp;
 				ci_f0_top->addIElement((InterfaceItem*)temp, in);
 			}
@@ -235,6 +242,21 @@
 		}
 	}
 	
+	void Level::testForm(vector<string> parameters){
+		for (size_t i = 0; i < parameters.size(); i++)
+		{
+			std::cout << parameters[i] << std::endl;
+		}
+	}
+
+	void Level::test1Form(vector<float> parameters)
+	{
+		for (size_t i = 0; i < parameters.size(); i++)
+		{
+			std::cout << parameters[i] << std::endl;
+		}
+	}
+
 	void Level::finishGame(float param1, float param2)
 	{
 		game_state = GAME_STATE::FINISHED;
@@ -386,14 +408,24 @@
 				available_object = objects[i];
 				if (objects[i]->getOType() == OBJECT_TYPE::CHEST) {
 					object_available = OBJECT_TYPE::CHEST;
-					auto rt = ((Chest*)(objects[i]))->getItems();
+					auto chest_items = ((Chest*)(objects[i]))->getItems();
 					//available_object = objects[i];
 					for (int in = 0; in < 2; in++) {
 						for (int jn = 0; jn < 4; jn++) {
 							int index_ = in * 4 + jn;
-							((CheckboxItem*)(form->getElement(in, jn)))->clearInfo();
-							if (index_ < rt.size()) {
-								((CheckboxItem*)(form->getElement(in, jn)))->addItemInfo(t_manager, rt[index_]);
+							CheckboxItem* c_item = ((CheckboxItem*)(form->getElement(in, jn)));
+							c_item->clearInfo();
+							if (index_ < chest_items.size()) {
+								InventoryItem* temp2 = new InventoryItem(
+									c_item->getGlobalBounds().left, 
+									c_item->getGlobalBounds().top, 
+									c_item->getGlobalBounds().width, 
+									c_item->getGlobalBounds().height, 
+									15);
+								temp2->addItemInfo(t_manager, chest_items[index_]);
+								c_item->createElementLine();
+								c_item->addIElement(temp2, 0);
+								int ifo = 9;
 							}
 						}
 					}

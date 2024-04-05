@@ -32,6 +32,9 @@
 		animation_timer.restart();
 	}
 
+	AnimatedImage::~AnimatedImage(){
+	}
+
 	void AnimatedImage::update(){
 		Vector2f mouse_pos = GlobalProcessData::getMousePos();
 		FloatRect view_cords = GlobalProcessData::getViewCords();

@@ -91,7 +91,6 @@
 	}
 	
 	Button::~Button(){
-
 	}
 
 	float Button::getHeight(){

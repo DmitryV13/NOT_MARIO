@@ -75,7 +75,7 @@
 			position.x + view_cords.left - view_cords.width / 2,
 			position.y + view_cords.top - view_cords.height / 2
 		));
-		std::cout << scale_bar.getGlobalBounds().top<<std::endl;
+		//std::cout << scale_bar.getGlobalBounds().top<<std::endl;
 	}
 
 	void ScaleParameterBar::render(){

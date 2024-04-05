@@ -18,6 +18,7 @@ public:
 	BasicImage(float width, float height, TextureManager* t_manager, Warehouse* w_object, string name);
 	BasicImage(TextureManager* t_manager, int index, string name, IntRect frame);
 	BasicImage(float width, float height, TextureManager* t_manager, int index, string name, IntRect frame);
+	~BasicImage();
 
 	void addInfo(TextureManager* t_manager, Warehouse* w_object, string name);
 	void addInfo(TextureManager* t_manager, WarehouseItem* w_item);

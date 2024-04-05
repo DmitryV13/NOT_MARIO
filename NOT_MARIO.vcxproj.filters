@@ -342,6 +342,9 @@
     <ClCompile Include="GlobalProcessData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PopUpAutocWindow.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Map.h">
@@ -606,6 +609,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GlobalProcessData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PopUpAutocWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

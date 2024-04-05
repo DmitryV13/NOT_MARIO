@@ -14,6 +14,11 @@
 
 	}
 
+	Label::~Label(){
+		delete label_background;
+		delete label_text;
+	}
+
 	void Label::setPosition(int x, int y){
 		label_background->setPosition(x, y);
 		label_text->setPosition(label_background->getLocalBounds().left, label_background->getLocalBounds().top);

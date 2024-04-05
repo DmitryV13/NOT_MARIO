@@ -13,6 +13,7 @@
 #include "ScaleParametrBar.h"
 #include "Enemy.h"
 #include "PopUpWindow.h"
+#include "InventoryItem.h"
 #include "hornet.h"
 #include "HornetHive.h"
 #include "TextureManager.h"
@@ -73,6 +74,8 @@ public:
 	Level(RenderWindow* window_, double screenWidth_, double screenHeight_, short level, Color menuColor, TextureManager* t_manager_, Warehouse* warehouse_, short regime_);
 	~Level();
 
+	void testForm(vector<string> parameters);
+	void test1Form(vector<float> parameters);
 	void finishGame(float param1, float param2);
 	void continueGame(float param1, float param2);
 

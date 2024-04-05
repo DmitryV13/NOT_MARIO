@@ -15,6 +15,7 @@ private:
 	Vector2f position;
 public:
 	Reviewer(float x, float y, float width_, float height_);
+	~Reviewer();
 
 	FloatRect getLocalBounds() override;
 	FloatRect getGlobalBounds() override;

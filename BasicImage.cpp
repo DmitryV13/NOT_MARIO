@@ -69,6 +69,9 @@
 		image.setScale(max_param / basic_param, max_param / basic_param);
 	}
 
+	BasicImage::~BasicImage(){
+	}
+
 	void BasicImage::addInfo(TextureManager* t_manager, Warehouse* w_object, string name){
 		image.setTexture(t_manager->getTexture(w_object->getWarehouseItem(name)->getTMInfo().first, name));
 		image.setTextureRect(w_object->getWarehouseItem(name)->getSpriteInfo().first);

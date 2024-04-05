@@ -81,6 +81,11 @@
 		textarea->setOverflow(ITEM_OVERFLOW::HIDDEN);
 		}
 
+	InputField::~InputField(){
+		delete label;
+		delete textarea;
+	}
+
 	FloatRect InputField::getLocalBounds(){
 		return textarea->getGlobalBounds();
 	}

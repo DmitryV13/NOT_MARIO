@@ -7,7 +7,7 @@
 class SliderControl: public InterfaceItem, public FormItem{
 private:
 	Text* label;
-	string s_value;
+	string* s_value;
 	float* f_value;
 	bool isStatic;
 	
@@ -29,6 +29,7 @@ private:
 	void changeValue();
 public:
 	SliderControl(float x, float y, float width_, float height_, const string& input_label_);
+	~SliderControl();
 
 	FloatRect getLocalBounds() override;
 	FloatRect getGlobalBounds() override;
@@ -38,6 +39,7 @@ public:
 	void setPositionX(float x) override;
 	void setPositionY(float y) override;
 	void changePosition(float offset_x, float offset_y) override;
+	string* getValue();
 
 	void scrollSlider(float mouse_pos_x);
 

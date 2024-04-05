@@ -7,6 +7,12 @@
 		id = GlobalProcessData::getUnicId();
 	}
 
+	Reviewer::~Reviewer(){
+		for (auto i : images) {
+			delete i;
+		}
+	}
+
 	FloatRect Reviewer::getLocalBounds(){
 		return FloatRect(position, Vector2f(max_width, max_height));
 	}

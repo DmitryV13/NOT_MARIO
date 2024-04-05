@@ -26,6 +26,7 @@ public:
 	Textarea(float x, float y, float width_, float height_,  int text_size_, Color text_color_, 
 		Color background_color_, Color border_color, short overflow_, bool multiline_);
 	Textarea(float x, float y, float width_, float height_, int text_size_, bool multiline_);
+	~Textarea();
 
 	FloatRect getLocalBounds() override;
 	FloatRect getGlobalBounds() override;

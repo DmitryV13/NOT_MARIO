@@ -90,6 +90,9 @@
 		shape.setFillColor(Color(0,0,0,0));
 	}
 
+	ResourceInfo::~ResourceInfo(){
+	}
+
 	void ResourceInfo::addInfo(TextureManager* t_manager, Warehouse* w_object, string name, bool x){
 		resource = w_object->getWarehouseItem(name)->getInfo().first;
 		if (x) {

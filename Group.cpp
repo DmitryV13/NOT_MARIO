@@ -10,15 +10,20 @@
 
 		background.setFillColor(Color(0, 0, 0, 0));
 
-		g0.setSize(Vector2f(width_ - 2, height_ - 2));
-		g0.setOutlineThickness(1.f);
-		g0.setFillColor(Color(0, 0, 0, 0));
+		shape0.setSize(Vector2f(width_ - 2, height_ - 2));
+		shape0.setOutlineThickness(1.f);
+		shape0.setFillColor(Color(0, 0, 0, 0));
 		
-		g1.setOutlineThickness(1.f);
-		g1.setFillColor(Color(0, 0, 0, 0));
+		shape1.setOutlineThickness(1.f);
+		shape1.setFillColor(Color(0, 0, 0, 0));
 
-		g2.setOutlineThickness(1.f);
-		g2.setFillColor(Color(0, 0, 0, 0));
+		shape2.setOutlineThickness(1.f);
+		shape2.setFillColor(Color(0, 0, 0, 0));
+	}
+
+	Group::~Group(){
+		clearInfo();
+		delete name;
 	}
 
 	FloatRect Group::getGlobalBounds(){
@@ -397,6 +402,15 @@
 		g_elements.push_back(vector<InterfaceItem*>());
 	}
 
+	void Group::clearInfo(){
+		for (auto i : g_elements) {
+			for (auto j : i) {
+				delete j;
+			}
+		}
+		g_elements.clear();
+	}
+
 	short* Group::getButtonState(int btn_id){
 		for (int i = 0; i < g_elements.size(); i++){
 			for (int j = 0; j < g_elements[i].size(); j++) {
@@ -427,8 +441,8 @@
 			position.y + name->getLocalBounds().height / 4 - name->getLocalBounds().top
 		);
 		inner_height = outer_height - name->getLocalBounds().height - name->getLocalBounds().height / 2;
-		g1.setSize(Vector2f(inner_width - 2, inner_height - 2));
-		g2.setSize(Vector2f(inner_width - 2, outer_height - inner_height - 2));
+		shape1.setSize(Vector2f(inner_width - 2, inner_height - 2));
+		shape2.setSize(Vector2f(inner_width - 2, outer_height - inner_height - 2));
 	}
 
 	int Group::addGroup(short fill_p_w, short fill_p_h, short index){
@@ -603,32 +617,32 @@
 			);
 		}
 
-		g0.setPosition(position.x + 1, position.y + 1);
-		g1.setPosition(position.x + 1, position.y + 1 + outer_height - inner_height);
-		g2.setPosition(position.x + 1, position.y + 1);
+		shape0.setPosition(position.x + 1, position.y + 1);
+		shape1.setPosition(position.x + 1, position.y + 1 + outer_height - inner_height);
+		shape2.setPosition(position.x + 1, position.y + 1);
 		background.setPosition(position);
-		if (FloatRect(mouse_pos, Vector2f(100, 100)).intersects(g0.getGlobalBounds())) {
-			g0.setOutlineColor(Color::Green);
-			g1.setOutlineColor(Color::Blue);
-			g2.setOutlineColor(Color::Red);
+		if (FloatRect(mouse_pos, Vector2f(100, 100)).intersects(shape0.getGlobalBounds())) {
+			shape0.setOutlineColor(Color::Green);
+			shape1.setOutlineColor(Color::Blue);
+			shape2.setOutlineColor(Color::Red);
 		}
 		else {
-			g0.setOutlineColor(Color(0, 0, 0, 0));
-			g1.setOutlineColor(Color(0, 0, 0, 0));
-			g2.setOutlineColor(Color(0, 0, 0, 0));
+			shape0.setOutlineColor(Color(0, 0, 0, 0));
+			shape1.setOutlineColor(Color(0, 0, 0, 0));
+			shape2.setOutlineColor(Color(0, 0, 0, 0));
 		}
 
 		background.setPosition(view_cords.left - view_cords.width / 2 + position.x,
 			view_cords.top - view_cords.height / 2 + position.y
 		);
-		g0.setPosition(view_cords.left - view_cords.width / 2 + g0.getPosition().x,
-			view_cords.top - view_cords.height / 2 + g0.getPosition().y
+		shape0.setPosition(view_cords.left - view_cords.width / 2 + shape0.getPosition().x,
+			view_cords.top - view_cords.height / 2 + shape0.getPosition().y
 		);
-		g1.setPosition(view_cords.left - view_cords.width / 2 + g1.getPosition().x,
-			view_cords.top - view_cords.height / 2 + g1.getPosition().y
+		shape1.setPosition(view_cords.left - view_cords.width / 2 + shape1.getPosition().x,
+			view_cords.top - view_cords.height / 2 + shape1.getPosition().y
 		);
-		g2.setPosition(view_cords.left - view_cords.width / 2 + g2.getPosition().x,
-			view_cords.top - view_cords.height / 2 + g2.getPosition().y
+		shape2.setPosition(view_cords.left - view_cords.width / 2 + shape2.getPosition().x,
+			view_cords.top - view_cords.height / 2 + shape2.getPosition().y
 		);
 
 
@@ -655,7 +669,7 @@
 			}
 		}
 		target->setView(oldView);
-		target->draw(g1);
-		target->draw(g2);
-		//target->draw(g0);
+		//target->draw(shape1);
+		//target->draw(shape2);
+		//target->draw(shape0);
 	}

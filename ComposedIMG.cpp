@@ -32,6 +32,9 @@
 		cornerBottomLeft.setTextureRect(IntRect(0, 0, origin_size + width, origin_size));
 		filler.setTextureRect(IntRect(0, 0, width, height));
 	}
+
+	ComposedIMG::~ComposedIMG(){
+	}
 	
 	void ComposedIMG::setPosition(float x, float y){
 		position.x = x - origin_size;

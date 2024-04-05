@@ -16,6 +16,7 @@ private:
 	Vector2f position;
 public:
 	TabContainer(float x, float y, float width_, float height_);
+	~TabContainer();
 
 	FloatRect getLocalBounds() override;
 	FloatRect getGlobalBounds() override;
