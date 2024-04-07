@@ -225,9 +225,6 @@
     <ClCompile Include="CallbacksHandler.cpp">
       <Filter>Source Files\ServiceClasses</Filter>
     </ClCompile>
-    <ClCompile Include="AnimatedImage.cpp">
-      <Filter>Source Files\ServiceClasses</Filter>
-    </ClCompile>
     <ClCompile Include="InterfaceItem.cpp">
       <Filter>Source Files\GUI\Items</Filter>
     </ClCompile>
@@ -288,9 +285,6 @@
     <ClCompile Include="AnimObject.cpp">
       <Filter>Source Files\Map\Object</Filter>
     </ClCompile>
-    <ClCompile Include="BasicImage.cpp">
-      <Filter>Source Files\ServiceClasses</Filter>
-    </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>Source Files\Map\Object</Filter>
     </ClCompile>
@@ -343,6 +337,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PopUpAutocWindow.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicImage.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedImage.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -622,5 +622,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram11.cd" />
   </ItemGroup>
 </Project>

@@ -59,6 +59,7 @@
 		background.setOutlineThickness(2);
 		background.setOutlineColor(Color(60, 60, 118, 255));
 
+		text_color = Color::Black;
 		text = new Text();
 		text->setFont(*GlobalProcessData::getFont());
 		text->setString("a");

@@ -16,7 +16,6 @@
 
 		chosen = false;
 		unpressed = true;
-		overflow_x = false;
 
 		shape1.setFillColor(Color(0, 0, 0, 0));
 		shape1.setOutlineThickness(1);

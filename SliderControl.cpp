@@ -120,6 +120,7 @@ SliderControl::SliderControl(float x, float y, float width_, float height_, cons
 		if (isStatic) {
 			return s_value;
 		}
+		else return nullptr;
 	}
 
 	void SliderControl::scrollSlider(float mouse_current_pos_x){

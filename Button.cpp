@@ -152,7 +152,9 @@
 	}
 
 	void Button::setBackgroundColor(Color shapeColor){
-		shape.setFillColor(shapeColor);
+		shp_idle_color = shapeColor;
+		shp_hover_color = shapeColor;
+		shp_active_color = shapeColor;
 	}
 
 	void Button::resetActiveState(){

@@ -27,7 +27,6 @@ protected:
 	RectangleShape shape1;
 
 	bool has_limit;
-	bool overflow_x;
 	int limit;
 
 	float width;
@@ -39,11 +38,11 @@ protected:
 
 	InputField(float x, float y, float width_, float height_, const string& input_label_, 
 		int text_size_, Color text_color_, bool has_limit_, int limit_, bool multiline);
-public:
 	InputField();
 	InputField(float x, float y, float width_, float height_, const string& input_label_, int text_size_);
 	InputField(float x, float y, float width_, float height_, const string& input_label_, int text_size_, 
 		Color text_color_, bool has_limit_, int limit_);
+public:
 	InputField(float x, float y, float width_, float height_, const string& input_label_, int text_size_, 
 		bool has_limit_, int limit_);
 	~InputField();
