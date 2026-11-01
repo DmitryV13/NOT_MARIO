@@ -1,4 +1,5 @@
 #pragma once
+#include "Global/Global.hpp"
 #include "TextureManager.h"
 #include "Warehouse.h"
 
@@ -7,7 +8,7 @@ using namespace::sf;
 class BasicImage{
 protected:
 	RectangleShape shape;
-	Sprite image;
+	Sprite image{ Global::dummyTexture };
 	short scale;
 	Vector2f position;
 public:

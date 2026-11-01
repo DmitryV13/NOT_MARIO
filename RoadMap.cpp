@@ -205,8 +205,8 @@
 		delete tmp;
 		s->addIElement((InterfaceItem*)s_tc0_left, 0);
 		
-		Group* s_tc0_0 = new Group(s_tc0_left->getGlobalBounds().left, s_tc0_left->getGlobalBounds().top, 
-			s_tc0_left->getGlobalBounds().width, s_tc0_left->getGlobalBounds().height);
+		Group* s_tc0_0 = new Group(s_tc0_left->getGlobalBounds().position.x, s_tc0_left->getGlobalBounds().position.y, 
+			s_tc0_left->getGlobalBounds().size.x, s_tc0_left->getGlobalBounds().size.y);
 		s_tc0_left->addTab(s_tc0_0);
 		s_tc0_0->createElementLine();
 
@@ -251,8 +251,8 @@
 		s_tc0_0_pc0->setAlignment("center 0", "space around");
 		s_tc0_0->setAlignment("left 20", "top 20");
 
-		Group* s_tc0_1 = new Group(s_tc0_left->getGlobalBounds().left, s_tc0_left->getGlobalBounds().top, 
-			s_tc0_left->getGlobalBounds().width, s_tc0_left->getGlobalBounds().height);
+		Group* s_tc0_1 = new Group(s_tc0_left->getGlobalBounds().position.x, s_tc0_left->getGlobalBounds().position.y, 
+			s_tc0_left->getGlobalBounds().size.x, s_tc0_left->getGlobalBounds().size.y);
 		s_tc0_left->addTab(s_tc0_1);
 		s_tc0_1->createElementLine();
 
@@ -299,8 +299,8 @@
 		delete tmp;
 		i->addIElement((InterfaceItem*)i_tc0_left, 0);
 
-		Group* i_tc0_0 = new Group(i_tc0_left->getGlobalBounds().left, i_tc0_left->getGlobalBounds().top,
-			i_tc0_left->getGlobalBounds().width, i_tc0_left->getGlobalBounds().height);
+		Group* i_tc0_0 = new Group(i_tc0_left->getGlobalBounds().position.x, i_tc0_left->getGlobalBounds().position.y,
+			i_tc0_left->getGlobalBounds().size.x, i_tc0_left->getGlobalBounds().size.y);
 		i_tc0_left->addTab(i_tc0_0);
 
 		for (int in = 0; in < 5; in++) {
@@ -316,8 +316,8 @@
 		}
 		i_tc0_0->setAlignment("space around", "space around");
 
-		Group* i_tc0_1 = new Group(i_tc0_left->getGlobalBounds().left, i_tc0_left->getGlobalBounds().top,
-			i_tc0_left->getGlobalBounds().width, i_tc0_left->getGlobalBounds().height);
+		Group* i_tc0_1 = new Group(i_tc0_left->getGlobalBounds().position.x, i_tc0_left->getGlobalBounds().position.y,
+			i_tc0_left->getGlobalBounds().size.x, i_tc0_left->getGlobalBounds().size.y);
 		i_tc0_left->addTab(i_tc0_1);
 
 		for (int in = 0; in < 5; in++) {
@@ -332,8 +332,8 @@
 		}
 		i_tc0_1->setAlignment("space around", "space around");
 
-		Group* i_tc0_2 = new Group(i_tc0_left->getGlobalBounds().left, i_tc0_left->getGlobalBounds().top,
-			i_tc0_left->getGlobalBounds().width, i_tc0_left->getGlobalBounds().height);
+		Group* i_tc0_2 = new Group(i_tc0_left->getGlobalBounds().position.x, i_tc0_left->getGlobalBounds().position.y,
+			i_tc0_left->getGlobalBounds().size.x, i_tc0_left->getGlobalBounds().size.y);
 		i_tc0_left->addTab(i_tc0_2);
 
 		auto ammo = warehouse->getWarehouseItems("potions");
@@ -354,8 +354,8 @@
 		}
 		i_tc0_2->setAlignment("space around", "space around");
 
-		Group* i_tc0_3 = new Group(i_tc0_left->getGlobalBounds().left, i_tc0_left->getGlobalBounds().top,
-			i_tc0_left->getGlobalBounds().width, i_tc0_left->getGlobalBounds().height);
+		Group* i_tc0_3 = new Group(i_tc0_left->getGlobalBounds().position.x, i_tc0_left->getGlobalBounds().position.y,
+			i_tc0_left->getGlobalBounds().size.x, i_tc0_left->getGlobalBounds().size.y);
 		i_tc0_left->addTab(i_tc0_3);
 
 		auto potions = warehouse->getWarehouseItems("ammunition");
@@ -415,22 +415,25 @@
 	}
 
 	void RoadMap::initFont(){
-		font = new Font();
-		if (!font->loadFromFile("Fonts/Pixel.ttf")) {
-			std::cout << "Error -> RoadMap -> couldn't load text font" << std::endl;
+		try {
+			font = new sf::Font("Fonts/Pixel.ttf");
+		}
+		catch (const sf::Exception& e) {
+			std::cout << "Error -> RoadMap -> couldn't load text font: "
+				<< e.what() << std::endl;
 		}
 	}
 
 	void RoadMap::initBackground(){
 		background.setTexture(t_manager->getTexture(0, "LobbyBackground"));
-		background.setScale(static_cast<float>(window->getSize().y) / background.getLocalBounds().height, static_cast<float>(window->getSize().y) / background.getLocalBounds().height);
-		background.setPosition((static_cast<float>(window->getSize().x) - background.getGlobalBounds().width) / 2, 0);
+		background.setScale(sf::Vector2f(static_cast<float>(window->getSize().y) / background.getLocalBounds().size.y, static_cast<float>(window->getSize().y) / background.getLocalBounds().size.y));
+		background.setPosition(sf::Vector2f((static_cast<float>(window->getSize().x) - background.getGlobalBounds().size.x) / 2, 0));
 		//background.setColor(Color(180, 180, 180, 255));
 	}
 
 	void RoadMap::updateMenuState(){
 		if (menu_timer.getElapsedTime().asSeconds() >= 0.2f) {
-			if (Keyboard::isKeyPressed(Keyboard::Escape)) {
+			if (Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
 				state = PAGE_STATE::PAGE_CLOSED;
 			}
 			menu_timer.restart();
@@ -438,16 +441,15 @@
 	}
 
 	void RoadMap::updateEvents(){
-		Event event;
-		while (window->pollEvent(event)) {
-			if (event.type == Event::Closed) {
+		while (const std::optional event = window->pollEvent()) {
+			if (event->is<sf::Event::Closed>()) {
 				window->close();
 			}
 		}
 	}
 
 	void RoadMap::update(){
-		window->setView(View(FloatRect(0, 0, screen_width, screen_height)));
+		window->setView(View(FloatRect(sf::Vector2f(0, 0), sf::Vector2f(screen_width, screen_height))));
 		if (level_selection->getState() == POP_UP_WINDOW_STATE::PUW_CLOSED &&
 			shop->getState() == POP_UP_WINDOW_STATE::PUW_CLOSED && 
 			inventory->getState() == POP_UP_WINDOW_STATE::PUW_CLOSED) {
@@ -455,7 +457,7 @@
 		}
 		cb_handler->update();
 
-		window->setView(View(FloatRect(0, 0, screen_width, screen_height)));
+		window->setView(View(FloatRect(sf::Vector2f(0, 0), sf::Vector2f(screen_width, screen_height))));
 		updateEvents();
 	}
 

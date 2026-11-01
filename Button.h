@@ -1,4 +1,5 @@
 #pragma once
+#include "Global/Global.hpp"
 #include "InterfaceItem.h"
 #include "INTERFACE_ITEM_TYPE.h"
 #include "BUTTON_STATE.h"
@@ -13,7 +14,7 @@ protected:
 	RectangleShape shape;
 
 	Font* font;
-	Text text;
+	Text text {Global::defaultFont};
 
 	Vector2f position;
 	Color btn_idle_color;

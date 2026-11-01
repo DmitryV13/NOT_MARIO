@@ -34,12 +34,12 @@ void Object::init_texture()
 		std::cout << "Error -> Object -> couldn't load texture";
 	}
 	object_S.setTexture(object_T);
-	object_S.setTextureRect(sf::IntRect(0, 0, texture_size_W, texture_size_H));
+	object_S.setTextureRect(sf::IntRect(sf::Vector2i(0, 0), sf::Vector2i(texture_size_W, texture_size_H)));
 }
 
 void Object::render_object(sf::RenderTarget& target)
 {
-	object_S.setPosition(position_x, position_y);
+	object_S.setPosition(sf::Vector2f(position_x, position_y));
 	target.draw(object_S);
 }
 

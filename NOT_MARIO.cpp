@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"//for each class
+#include "stdafx.h"//for each class
 #include "Game.h"
 
 int main() {

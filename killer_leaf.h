@@ -1,4 +1,5 @@
 #pragma once
+#include "Global/Global.hpp"
 
 #include "Map.h"
 #include "TileMap.h"
@@ -19,7 +20,7 @@ protected:
 	TileMap* sandbox;
 	short attack;
 	Texture leaf_T;
-	Sprite leaf_S;
+	Sprite leaf_S{ Global::dummyTexture };
 	IntRect current_frame;
 	Clock animation_timer;
 	bool animation_switch;

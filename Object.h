@@ -1,11 +1,12 @@
 #pragma once
+#include "Global/Global.hpp"
 #include "OBJECT_TYPE.h"
 
 class Object
 {
 protected:
 	sf::Texture object_T;
-	sf::Sprite	object_S;
+	sf::Sprite	object_S{ Global::dummyTexture };
 	std::string objectName;
 
 	short int texture_size_W;

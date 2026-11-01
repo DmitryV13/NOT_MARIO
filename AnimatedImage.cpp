@@ -17,16 +17,13 @@
 
 	void AnimatedImage::update(Vector2f mouse_pos, FloatRect view_cords){
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f) {
-			current_frame.left += current_frame.width;
-			if (current_frame.left >= frames_number * current_frame.width) {
-				current_frame.left = 0;
+			current_frame.position.x += current_frame.size.x;
+			if (current_frame.position.x >= frames_number * current_frame.size.x) {
+				current_frame.position.x = 0;
 			}
 			animation_timer.restart();
 			image.setTextureRect(current_frame);
-			image.setPosition(
-				position.x + view_cords.left - view_cords.width / 2,
-				position.y + view_cords.top - view_cords.height / 2
-			);
+			image.setPosition(sf::Vector2f(position.x + view_cords.position.x - view_cords.size.x / 2, position.y + view_cords.position.y - view_cords.size.y / 2));
 		}
 	}
 

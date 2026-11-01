@@ -12,16 +12,16 @@ void HornetHive::init_texture()
 
 void HornetHive::init_sprite()
 {
-	current_area = IntRect(0, 0, 2000, 400);
+	current_area = IntRect(sf::Vector2i(0, 0), sf::Vector2i(2000, 400));
 	observation_area.setTextureRect(current_area);
 
 	anim_area.setTexture(HornetHive_t_);
-	standard_frame = IntRect(0, 0, 64,64);
+	standard_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(64, 64));
 	anim_area.setTextureRect(standard_frame);
 
 
 	//Enemy_S.setTexture(Wolf_Boss_t_);
-	current_frame = IntRect(0,0, 64, 50);
+	current_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(64, 50));
 	Enemy_S.setTextureRect(current_frame);
 }
 
@@ -128,9 +128,9 @@ void HornetHive::update_animation()
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.03f || get_animation_switch())
 		{
-			standard_frame.top = 0.f;
-			standard_frame.left = 0.f;
-				standard_frame.width = 64.f;
+			standard_frame.position.y = 0.f;
+			standard_frame.position.x = 0.f;
+				standard_frame.size.x = 64.f;
 
 			
 
@@ -143,14 +143,14 @@ void HornetHive::update_animation()
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.3f || get_animation_switch())
 		{
-			standard_frame.top = 64.f;
+			standard_frame.position.y = 64.f;
 
-				standard_frame.left += 64;
-				if (standard_frame.left >= 256)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 256)
 				{
-					standard_frame.left = 192.f;
+					standard_frame.position.x = 192.f;
 				}
-				standard_frame.width = 64;
+				standard_frame.size.x = 64;
 			
 			
 
@@ -162,15 +162,15 @@ void HornetHive::update_animation()
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
-			standard_frame.top = 0.f;
+			standard_frame.position.y = 0.f;
 
 			
-			standard_frame.left += 64;
-				if (standard_frame.left >= 256)
+			standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 256)
 				{
-					standard_frame.left = 0.f;
+					standard_frame.position.x = 0.f;
 				}
-				standard_frame.width = 64;
+				standard_frame.size.x = 64;
 			
 
 			anim_area.setTextureRect(standard_frame);
@@ -206,12 +206,12 @@ void HornetHive::reset_Timer()
 	{
 		if (looks_to_the_right)
 		{
-			standard_frame.left = 0.f;
+			standard_frame.position.x = 0.f;
 			animation_timer.restart();
 		}
 		else
 		{
-			standard_frame.left = 64.f;
+			standard_frame.position.x = 64.f;
 			animation_timer.restart();
 		}
 		animation_state_past = animation_state;
@@ -291,17 +291,13 @@ bool HornetHive::HIVE_LIFE() const
 
 void HornetHive::set_position_AR(const float x, const float y)
 {
-	observation_area.setPosition(
-		x - (observation_area.getGlobalBounds().width - (observation_area.getGlobalBounds().width / 2) - (Enemy_S.
-			getGlobalBounds().width / 2)),
-		(y - (observation_area.getGlobalBounds().height - Enemy_S.getGlobalBounds().height)));
+	observation_area.setPosition(sf::Vector2f(x - (observation_area.getGlobalBounds().size.x - (observation_area.getGlobalBounds().size.x / 2) - (Enemy_S.
+			getGlobalBounds().size.x / 2)), (y - (observation_area.getGlobalBounds().size.y - Enemy_S.getGlobalBounds().size.y))));
 
-	anim_area.setPosition(
-		x - (anim_area.getGlobalBounds().width - (anim_area.getGlobalBounds().width / 2) - (Enemy_S.
-			getGlobalBounds().width / 2)),
-		(y - (anim_area.getGlobalBounds().height - Enemy_S.getGlobalBounds().height-4)));
+	anim_area.setPosition(sf::Vector2f(x - (anim_area.getGlobalBounds().size.x - (anim_area.getGlobalBounds().size.x / 2) - (Enemy_S.
+			getGlobalBounds().size.x / 2)), (y - (anim_area.getGlobalBounds().size.y - Enemy_S.getGlobalBounds().size.y-4))));
 
-	Enemy_S.setPosition(x, y);
+	Enemy_S.setPosition(sf::Vector2f(x, y));
 }
 
 

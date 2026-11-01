@@ -19,22 +19,16 @@
 		text.setString(text_);
 		text.setFillColor(Color::White);
 		text.setCharacterSize(text_size);
-		src_img.setScale(
-			(text.getGlobalBounds().height * 2) / src_img.getGlobalBounds().height,
-			(text.getGlobalBounds().height * 2) / src_img.getGlobalBounds().height
-		);
+		src_img.setScale(sf::Vector2f((text.getGlobalBounds().size.y * 2) / src_img.getGlobalBounds().size.y, (text.getGlobalBounds().size.y * 2) / src_img.getGlobalBounds().size.y));
 
 		shape.setSize(Vector2f(
-			src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 + text.getGlobalBounds().width,
-			text.getGlobalBounds().height * 2)
+			src_img.getGlobalBounds().size.x + src_img.getGlobalBounds().size.y / 2 + text.getGlobalBounds().size.x,
+			text.getGlobalBounds().size.y * 2)
 		);
 
 		src_img.setPosition(shape.getPosition());
 
-		text.setPosition(
-			position.x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
-			position.y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
-		);
+		text.setPosition(sf::Vector2f(position.x + src_img.getGlobalBounds().size.x + src_img.getGlobalBounds().size.y / 2 - text.getLocalBounds().position.x, position.y + text.getLocalBounds().size.y / 2 - text.getLocalBounds().position.y));
 	}
 
 	ImageInfo::ImageInfo(float x, float y, int text_, int text_size, Font* font, TextureManager* t_manager, int index, string name){
@@ -49,22 +43,16 @@
 		text.setString(std::to_string(text_));
 		text.setFillColor(Color::White);
 		text.setCharacterSize(text_size);
-		src_img.setScale(
-			(text.getGlobalBounds().height * 2) / src_img.getGlobalBounds().height,
-			(text.getGlobalBounds().height * 2) / src_img.getGlobalBounds().height
-		);
+		src_img.setScale(sf::Vector2f((text.getGlobalBounds().size.y * 2) / src_img.getGlobalBounds().size.y, (text.getGlobalBounds().size.y * 2) / src_img.getGlobalBounds().size.y));
 
 		shape.setSize(Vector2f(
-			src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 + text.getGlobalBounds().width,
-			text.getGlobalBounds().height * 2)
+			src_img.getGlobalBounds().size.x + src_img.getGlobalBounds().size.y / 2 + text.getGlobalBounds().size.x,
+			text.getGlobalBounds().size.y * 2)
 		);
 
 		src_img.setPosition(shape.getPosition());
 
-		text.setPosition(
-			position.x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
-			position.y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
-		);
+		text.setPosition(sf::Vector2f(position.x + src_img.getGlobalBounds().size.x + src_img.getGlobalBounds().size.y / 2 - text.getLocalBounds().position.x, position.y + text.getLocalBounds().size.y / 2 - text.getLocalBounds().position.y));
 	}
 	
 	FloatRect ImageInfo::getLocalBounds(){
@@ -80,10 +68,7 @@
 		shape.setPosition(position);
 		src_img.setPosition(position);
 
-		text.setPosition(
-			position.x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
-			position.y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
-		);
+		text.setPosition(sf::Vector2f(position.x + src_img.getGlobalBounds().size.x + src_img.getGlobalBounds().size.y / 2 - text.getLocalBounds().position.x, position.y + text.getLocalBounds().size.y / 2 - text.getLocalBounds().position.y));
 	}
 	
 	void ImageInfo::setPositionX(float x){
@@ -97,16 +82,13 @@
 	void ImageInfo::setText(float text_){
 		text.setString(std::to_string(static_cast<int>(text_)));
 		shape.setSize(Vector2f(
-			src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 + text.getGlobalBounds().width,
-			text.getGlobalBounds().height * 2)
+			src_img.getGlobalBounds().size.x + src_img.getGlobalBounds().size.y / 2 + text.getGlobalBounds().size.x,
+			text.getGlobalBounds().size.y * 2)
 		);
 
 		src_img.setPosition(shape.getPosition());
 
-		text.setPosition(
-			position.x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
-			position.y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
-		);
+		text.setPosition(sf::Vector2f(position.x + src_img.getGlobalBounds().size.x + src_img.getGlobalBounds().size.y / 2 - text.getLocalBounds().position.x, position.y + text.getLocalBounds().size.y / 2 - text.getLocalBounds().position.y));
 	}
 
 	void ImageInfo::setBackgroundColor(Color color){
@@ -119,17 +101,14 @@
 	
 	void ImageInfo::update(Vector2f mouse_pos, FloatRect view_cords){
 		shape.setPosition(Vector2f(
-			position.x + view_cords.left - view_cords.width / 2,
-			position.y + view_cords.top - view_cords.height / 2)
+			position.x + view_cords.position.x - view_cords.size.x / 2,
+			position.y + view_cords.position.y - view_cords.size.y / 2)
 		);
 		src_img.setPosition(Vector2f(
-			position.x + view_cords.left - view_cords.width / 2,
-			position.y + view_cords.top - view_cords.height / 2)
+			position.x + view_cords.position.x - view_cords.size.x / 2,
+			position.y + view_cords.position.y - view_cords.size.y / 2)
 		);
-		text.setPosition(
-			position.x + src_img.getGlobalBounds().width + src_img.getGlobalBounds().height / 2 - text.getLocalBounds().left,
-			position.y + text.getLocalBounds().height / 2 - text.getLocalBounds().top
-		);
+		text.setPosition(sf::Vector2f(position.x + src_img.getGlobalBounds().size.x + src_img.getGlobalBounds().size.y / 2 - text.getLocalBounds().position.x, position.y + text.getLocalBounds().size.y / 2 - text.getLocalBounds().position.y));
 	}
 	
 	void ImageInfo::render(sf::RenderTarget* target){

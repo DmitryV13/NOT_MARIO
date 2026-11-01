@@ -163,7 +163,7 @@ public:
 ///
 /// Usage example:
 /// \code
-/// if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+/// if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
 /// {
 ///     // left click...
 /// }

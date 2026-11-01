@@ -17,9 +17,9 @@
 	
 	void Projectile::initSprite(Vector2f init_pos){
 		projectile_S.setTexture(projectile_T);
-		projectile_S.setTextureRect(IntRect(0, 0, 18, 18));
-		projectile_S.setScale(2,2);
-		projectile_S.setOrigin(9,9);
+		projectile_S.setTextureRect(IntRect(sf::Vector2i(0, 0), sf::Vector2i(18, 18)));
+		projectile_S.setScale(sf::Vector2f(2, 2));
+		projectile_S.setOrigin(sf::Vector2f(9, 9));
 		projectile_S.setPosition(Vector2f(init_pos.x, init_pos.y-42+12));
 	}
 
@@ -37,8 +37,11 @@
 			for (int j = (projectile_S.getPosition().x-4) / 64; j < (projectile_S.getPosition().x + 3) / 64; j++) {
 				if (sandbox->outOfMap(i, j) && sandbox->isBlock(i, j)) {
 					FloatRect bul = projectile_S.getGlobalBounds();
-					FloatRect til(j*64, i*64, 64, 64);
-					if (bul.intersects(til)) {
+					FloatRect til(
+						{ static_cast<float>(j * 64), static_cast<float>(i * 64) },
+						{ 64.f, 64.f }
+					);
+					if (bul.findIntersection(til).has_value()) {
 						return true;
 					}
 				}
@@ -51,7 +54,7 @@
 		for (auto enemy_l : enemies)
 		{
 			for (auto enemy : *enemy_l) {
-				if (projectile_S.getGlobalBounds().intersects((enemy)->get_global_bounds())) {
+				if (projectile_S.getGlobalBounds().findIntersection((enemy)->get_global_bounds()).has_value()) {
 					enemy->changeHP(10);
 					return true;
 				}

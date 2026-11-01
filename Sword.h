@@ -1,4 +1,5 @@
 #pragma once
+#include "Global/Global.hpp"
 #include "PLAYER_ANIMATION_SATES.h"
 #include "Weapon.h"
 #include "kusaka.h"
@@ -12,7 +13,7 @@ using namespace::sf;
 class Sword : public Weapon{
 private:
 	Texture sword_T;
-	Sprite sword_S;
+	Sprite sword_S{ Global::dummyTexture };
 	
 	vector<vector<Enemy*>*> enemies;
 

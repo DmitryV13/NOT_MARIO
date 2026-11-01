@@ -489,7 +489,7 @@ SFML_GRAPHICS_API bool operator !=(const Transform& left, const Transform& right
 ///
 /// // use the result to transform stuff...
 /// sf::Vector2f point = transform.transformPoint(10, 20);
-/// sf::FloatRect rect = transform.transformRect(sf::FloatRect(0, 0, 10, 100));
+/// sf::FloatRect rect = transform.transformRect(sf::FloatRect(sf::Vector2f(0, 0), sf::Vector2f(10, 100)));
 /// \endcode
 ///
 /// \see sf::Transformable, sf::RenderStates

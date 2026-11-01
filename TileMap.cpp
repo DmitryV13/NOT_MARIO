@@ -84,8 +84,8 @@ void TileMap::init_background()
 
 void TileMap::init_coeff(sf::IntRect pos)
 {
-	coefficient_X = static_cast<float>(sizeTexture * mapW) / (static_cast<float>(pos.width) - 1920);
-	coefficient_Y = static_cast<float>(sizeTexture * mapH) / (static_cast<float>(pos.height) - 1080);
+	coefficient_X = static_cast<float>(sizeTexture * mapW) / (static_cast<float>(pos.size.x) - 1920);
+	coefficient_Y = static_cast<float>(sizeTexture * mapH) / (static_cast<float>(pos.size.y) - 1080);
 }
 
 void TileMap::init_tilemap(float mapH, float mapW)
@@ -107,7 +107,7 @@ void TileMap::init_level(short int level)
 		std::ifstream fin;
 		fin.open(path);
 		if (!fin.is_open()) {
-			std::cout << "Error: the file is not open or not found " << std::endl;
+			std::cout << " level - Error: the file is not open or not found " << std::endl;
 			return;
 		}
 		char tmp_letter;
@@ -179,7 +179,7 @@ void TileMap::init_objects(short int level)
 	std::ifstream fin;
 	fin.open(path);
 	if (!fin.is_open()) {
-		std::cout << "Error: the file is not open or not found " << std::endl;
+		std::cout << "Object - Error: the file is not open or not found " << std::endl;
 		return;
 	}
 	std::string objectName;
@@ -201,7 +201,7 @@ void TileMap::init_animObjects(short int level)
 	std::ifstream fin;
 	fin.open(path);
 	if (!fin.is_open()) {
-		std::cout << "Error: the file is not open or not found " << std::endl;
+		std::cout << "AnimObject - Error: the file is not open or not found " << std::endl;
 		return;
 	}
 	std::string objectName;
@@ -222,7 +222,7 @@ void TileMap::init_movingObjects(short int level)
 	std::ifstream fin;
 	fin.open(path);
 	if (!fin.is_open()) {
-		std::cout << "Error: the file is not open or not found " << std::endl;
+		std::cout << "MovingObject - Error: the file is not open or not found " << std::endl;
 		return;
 	}
 	std::string objectName;
@@ -245,7 +245,7 @@ void TileMap::init_movingAnimObjects(short int level)
 	std::ifstream fin;
 	fin.open(path);
 	if (!fin.is_open()) {
-		std::cout << "Error: the file is not open or not found " << std::endl;
+		std::cout << "MovingAnimObject - Error: the file is not open or not found " << std::endl;
 		return;
 	}
 	std::string objectName;
@@ -268,7 +268,7 @@ void TileMap::init_switch(short int level)
 	std::ifstream fin_;
 	fin_.open(path_);
 	if (!fin_.is_open()) {
-		std::cout << "Error: the file is not open or not found " << std::endl;
+		std::cout << "forSwitch - Error: the file is not open or not found " << std::endl;
 		return;
 	}
 	std::string objectName_;
@@ -287,7 +287,7 @@ void TileMap::init_switch(short int level)
 	std::ifstream fin;
 	fin.open(path);
 	if (!fin.is_open()) {
-		std::cout << "Error: the file is not open or not found " << std::endl;
+		std::cout << "Switch - Error: the file is not open or not found " << std::endl;
 		return;
 	}
 	std::string objectName;
@@ -317,7 +317,7 @@ void TileMap::init_chest(short int level)
 	std::ifstream fin;
 	fin.open(path);
 	if (!fin.is_open()) {
-		std::cout << "Error: the file is not open or not found " << std::endl;
+		std::cout << "Chest - Error: the file is not open or not found " << std::endl;
 		return;
 	}
 	std::string objectName;
@@ -334,7 +334,7 @@ void TileMap::init_chest(short int level)
 
 void TileMap::init_tile_list()
 {
-	//Основные блоки
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	tile_list['A'] = new Tile("grass_tile", 1, sizeTexture, sizeTexture, 'A');
 	tile_list['C'] = new Tile("grass_tile_on_the_left", 1, sizeTexture, sizeTexture, 'C');
 	tile_list['D'] = new Tile("grass_tile_on_the_right", 1, sizeTexture, sizeTexture, 'D');
@@ -349,7 +349,7 @@ void TileMap::init_tile_list()
 	tile_list['w'] = new TileAnim("water_down_layer", 2, sizeTexture, sizeTexture, 'w', 64, 4, 0.5);
 	tile_list['`'] = new Tile();
 
-	//Функциональные и декоративыне блоки.
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
 	tile_list['^'] = new Tile("ladder1", 0, sizeTexture, sizeTexture, '.');
 	tile_list['_'] = new Tile("ladder2", 0, sizeTexture, sizeTexture, '_');
 	tile_list['-'] = new Tile("ladder3", 0, sizeTexture, sizeTexture, '-');
@@ -366,7 +366,7 @@ void TileMap::init_tile_list()
 	tile_list['6'] = new Tile("cactus2", 0, sizeTexture, sizeTexture, '6');
 
 
-	//Анимированные блоки
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	tile_list['s'] = new TileAnim("spikes", 1, sizeTexture, sizeTexture, 's', 64, 3, 0.1);
 	tile_list['m'] = new TileAnim("magma", 1, sizeTexture, sizeTexture, 'm', 64, 2, 0.5);
 	tile_list['@'] = new TileAnim("health_potion", 0, 19, 39, '@', 19, 5, 0.3);
@@ -374,7 +374,7 @@ void TileMap::init_tile_list()
 
 void TileMap::init_tile_list_back()
 {
-	//Блоки заднего фона, отображаемые при разрушение блока, либо расположенные разработчиком в местах где они необходимы(пещеры, ямы и другое)
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
 	tile_list_back['A'] = new Tile("grass_tile_back", 0, sizeTexture, sizeTexture, 'A');
 	tile_list_back['C'] = new Tile("grass_tile_on_the_left_back", 0, sizeTexture, sizeTexture, 'C');
 	tile_list_back['D'] = new Tile("grass_tile_on_the_right_back", 0, sizeTexture, sizeTexture, 'D');
@@ -391,7 +391,7 @@ void TileMap::init_tile_list_back()
 
 void TileMap::init_tile_list_front()
 {
-	//Блоки переднего плана, служащие фильтром для погружения игрока в различные структуры на карте(вода, лава и другое)
+	//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
 	tile_list_front['w'] = new TileAnim("water_down_layer_back", 2, sizeTexture, sizeTexture, 'w', 64, 4, 0.5);
 	tile_list_front['W'] = new TileAnim("water_top_layer_back", 2, sizeTexture, sizeTexture, 'W', 64, 4, 0.5);
 	tile_list_front['o'] = new Tile("bush", 0, sizeTexture, sizeTexture, 'o');
@@ -440,13 +440,13 @@ void TileMap::first_renderObject(sf::RenderTarget& target)
 void TileMap::background_render(sf::RenderTarget& target, sf::FloatRect view_cords)
 {
 	float x, y, l, k;
-	l = (view_cords.left - (view_cords.width / 2));
-	k = (view_cords.top - (view_cords.height / 2));
+	l = (view_cords.position.x - (view_cords.size.x / 2));
+	k = (view_cords.position.y - (view_cords.size.y / 2));
 	x = l / coefficient_X;
 	y = k / coefficient_Y;
 	l = l - x;
 	k = k - y;
-	backround_S.setPosition(l, k);
+	backround_S.setPosition(sf::Vector2f(l, k));
 	target.draw(backround_S);
 }
 
@@ -454,10 +454,10 @@ void TileMap::first_render(sf::RenderTarget& target, sf::FloatRect view_cords)
 {
 	int start_i, start_j, finish_i, finish_j;
 
-	start_i = (view_cords.top - (view_cords.height / 2)) / sizeTexture;
-	start_j = (view_cords.left - (view_cords.width / 2)) / sizeTexture;
-	finish_i = (view_cords.top + (view_cords.height / 2)) / sizeTexture;
-	finish_j = (view_cords.left + (view_cords.width / 2)) / sizeTexture;
+	start_i = (view_cords.position.y - (view_cords.size.y / 2)) / sizeTexture;
+	start_j = (view_cords.position.x - (view_cords.size.x / 2)) / sizeTexture;
+	finish_i = (view_cords.position.y + (view_cords.size.y / 2)) / sizeTexture;
+	finish_j = (view_cords.position.x + (view_cords.size.x / 2)) / sizeTexture;
 
 	if (start_i > 0) start_i = start_i - 1;
 	if (start_j > 0) start_j = start_j - 1;
@@ -488,10 +488,10 @@ void TileMap::second_render(sf::RenderTarget& target, sf::FloatRect view_cords)
 {
 	int start_i, start_j, finish_i, finish_j;
 
-	start_i = (view_cords.top - (view_cords.height / 2)) / sizeTexture;
-	start_j = (view_cords.left - (view_cords.width / 2)) / sizeTexture;
-	finish_i = (view_cords.top + (view_cords.height / 2)) / sizeTexture;
-	finish_j = (view_cords.left + (view_cords.width / 2)) / sizeTexture;
+	start_i = (view_cords.position.y - (view_cords.size.y / 2)) / sizeTexture;
+	start_j = (view_cords.position.x - (view_cords.size.x / 2)) / sizeTexture;
+	finish_i = (view_cords.position.y + (view_cords.size.y / 2)) / sizeTexture;
+	finish_j = (view_cords.position.x + (view_cords.size.x / 2)) / sizeTexture;
 
 	if (start_i > 0) start_i = start_i - 1;
 	if (start_j > 0) start_j = start_j - 1;
@@ -595,3 +595,4 @@ vector<Object*>& TileMap::getObjects()
 {
 	return object;
 }
+

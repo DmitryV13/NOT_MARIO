@@ -16,10 +16,10 @@
 	
 	void Bow::initSprite(Vector2f player_position, FloatRect player_bounds){
 		bow_S.setTexture(bow_T);
-		currentFrame = IntRect(0, 0, 36, 74);
+		currentFrame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(36, 74));
 		bow_S.setTextureRect(currentFrame);
-		bow_S.setOrigin(18, 37);
-		bow_S.setPosition(player_position.x + 27, player_position.y + 41);
+		bow_S.setOrigin(sf::Vector2f(18, 37));
+		bow_S.setPosition(sf::Vector2f(player_position.x + 27, player_position.y + 41));
 	}
 	
 	void Bow::initVariables(){
@@ -41,27 +41,27 @@
 	void Bow::updatePosition(Vector2f player_position, short player_side, RenderWindow* window, FloatRect view_cords){
 		Vector2f mouse_pos(Mouse::getPosition(*window));
 		if (player_side == PLAYER_ANIMATION_STATES::MOVING_RIGHT) {
-			currentFrame.width = 36.f;
+			currentFrame.size.x = 36.f;
 			if (previous_side == 0) {
 				previous_side = 1;
-				currentFrame.left -= 36.f;
+				currentFrame.position.x -= 36.f;
 			}
 			bow_S.setTextureRect(currentFrame);
-			bow_S.setPosition(player_position.x + 27, player_position.y + 41);
-			rot_angle = 180 / 3.14 * std::atan2(mouse_pos.y + (view_cords.top - view_cords.height / 2) - bow_S.getPosition().y, mouse_pos.x + (view_cords.left - view_cords.width / 2) - bow_S.getPosition().x);
-			bow_S.setRotation(rot_angle);
+			bow_S.setPosition(sf::Vector2f(player_position.x + 27, player_position.y + 41));
+			rot_angle = 180 / 3.14 * std::atan2(mouse_pos.y + (view_cords.position.y - view_cords.size.y / 2) - bow_S.getPosition().y, mouse_pos.x + (view_cords.position.x - view_cords.size.x / 2) - bow_S.getPosition().x);
+			bow_S.setRotation(degrees(rot_angle));
 		}
 		else {
 			if (previous_side == 1) {
 				previous_side = 0;
-				currentFrame.left += 36.f;
+				currentFrame.position.x += 36.f;
 			}
-			currentFrame.width = -36.f;
+			currentFrame.size.x = -36.f;
 			bow_S.setTextureRect(currentFrame);
 			//21-82
-			bow_S.setPosition(player_position.x + 21, player_position.y + 41);
-			rot_angle =180 / 3.14 * std::atan2(mouse_pos.y + (view_cords.top - view_cords.height / 2) - bow_S.getPosition().y, mouse_pos.x + (view_cords.left - view_cords.width / 2) - bow_S.getPosition().x);
-			bow_S.setRotation(180 + rot_angle);
+			bow_S.setPosition(sf::Vector2f(player_position.x + 21, player_position.y + 41));
+			rot_angle =180 / 3.14 * std::atan2(mouse_pos.y + (view_cords.position.y - view_cords.size.y / 2) - bow_S.getPosition().y, mouse_pos.x + (view_cords.position.x - view_cords.size.x / 2) - bow_S.getPosition().x);
+			bow_S.setRotation(degrees(180 + rot_angle));
 		}
 		if (!arrows.empty() && !arrows[arrows.size() - 1]->isFlying()) {
 			arrows[arrows.size() - 1]->setPosition(bow_S.getPosition());
@@ -77,17 +77,17 @@
 		//if (attack_activation) {
 		if (side_of_attack == PLAYER_ANIMATION_STATES::MOVING_RIGHT) {
 			if (animationTimer.getElapsedTime().asSeconds() >= 0.1f) {
-				if (!bow_pulled && Mouse::isButtonPressed(Mouse::Left)) {
-					currentFrame.top = 0;
-					if (currentFrame.left == 0) {
+				if (!bow_pulled && Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+					currentFrame.position.y = 0;
+					if (currentFrame.position.x == 0) {
 						arrows.push_back(new Arrow(bow_S.getPosition(), side_of_attack, sandbox, enemies));
 					}
-					currentFrame.left += 36;
-					if (currentFrame.left == 144) {
+					currentFrame.position.x += 36;
+					if (currentFrame.position.x == 144) {
 						bow_pulled = true;
 						//arrows.push_back(new Arrow(bow_S.getPosition(), sandbox));
 					}
-					currentFrame.width = 36;
+					currentFrame.size.x = 36;
 					animationTimer.restart();
 					bow_S.setTextureRect(currentFrame);
 				}
@@ -95,17 +95,17 @@
 		}
 		else if (side_of_attack == PLAYER_ANIMATION_STATES::MOVING_LEFT) {
 			if (animationTimer.getElapsedTime().asSeconds() >= 0.1f) {
-				if (!bow_pulled && Mouse::isButtonPressed(Mouse::Left)) {
-					currentFrame.top = 0;
+				if (!bow_pulled && Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+					currentFrame.position.y = 0;
 					
-					if (currentFrame.left == 36) {
+					if (currentFrame.position.x == 36) {
 						arrows.push_back(new Arrow(bow_S.getPosition(), side_of_attack, sandbox, enemies));
 					}
-					currentFrame.left += 36;
-					if (currentFrame.left == 180) {
+					currentFrame.position.x += 36;
+					if (currentFrame.position.x == 180) {
   						bow_pulled = true;
 					}
-					currentFrame.width = -36;
+					currentFrame.size.x = -36;
 					animationTimer.restart();
 					bow_S.setTextureRect(currentFrame);
 				}
@@ -143,7 +143,7 @@
 	void Bow::attack(short side_attack, Vector2f mouse_pos, FloatRect view_cords, bool is_btn_pressed){
 		this->side_of_attack = side_attack;
 		
-		arrow_dir = Vector2f(mouse_pos.x + (view_cords.left - view_cords.width / 2), mouse_pos.y + (view_cords.top - view_cords.height / 2));
+		arrow_dir = Vector2f(mouse_pos.x + (view_cords.position.x - view_cords.size.x / 2), mouse_pos.y + (view_cords.position.y - view_cords.size.y / 2));
 
 		
 		if (is_btn_pressed) {
@@ -158,7 +158,7 @@
 		else {
 			bow_pulled = false;
 			if (side_of_attack == PLAYER_ANIMATION_STATES::MOVING_RIGHT) {
-				if (currentFrame.left == 144) {
+				if (currentFrame.position.x == 144) {
 					arrows[arrows.size() - 1]->letOff(arrow_dir);
 				}
 				else {
@@ -167,11 +167,11 @@
 						arrows.erase(arrows.begin() + arrows.size() - 1);
 					}
 				}
-				currentFrame.left = 0;
-				currentFrame.width = 36;
+				currentFrame.position.x = 0;
+				currentFrame.size.x = 36;
 			}
 			else {
-				if (currentFrame.left == 180) {
+				if (currentFrame.position.x == 180) {
 					arrows[arrows.size() - 1]->letOff(arrow_dir);
 				}
 				else {
@@ -180,8 +180,8 @@
 						arrows.erase(arrows.begin() + arrows.size() - 1);
 					}
 				}
-				currentFrame.left = 36;
-				currentFrame.width = -36;
+				currentFrame.position.x = 36;
+				currentFrame.size.x = -36;
 			}
 			bow_S.setTextureRect(currentFrame);
 		}

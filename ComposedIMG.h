@@ -1,14 +1,15 @@
 #pragma once
+#include "Global/Global.hpp"
 #include "TextureManager.h"
 using namespace::sf;
 
 class ComposedIMG{
 private:
-	Sprite filler;			 // 6*6px
-	Sprite cornerTopLeft;	 // 6*6px
-	Sprite cornerTopRight;	 // 6*6px
-	Sprite cornerBottomLeft; // 6*6px
-	Sprite cornerBottomRight;// 6*6px
+	Sprite filler{ Global::dummyTexture };			 // 6*6px
+	Sprite cornerTopLeft{ Global::dummyTexture };	 // 6*6px
+	Sprite cornerTopRight{ Global::dummyTexture };	 // 6*6px
+	Sprite cornerBottomLeft{ Global::dummyTexture }; // 6*6px
+	Sprite cornerBottomRight{ Global::dummyTexture };// 6*6px
 
 	int origin_size;
 	int width;

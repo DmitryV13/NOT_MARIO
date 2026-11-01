@@ -11,16 +11,16 @@ void hornet::init_texture()
 
 void hornet::init_sprite()
 {
-	current_area = IntRect(0, 0, 2000, 400);
+	current_area = IntRect(sf::Vector2i(0, 0), sf::Vector2i(2000, 400));
 	observation_area.setTextureRect(current_area);
 
 	anim_area.setTexture(hornet_t_);
-	standard_frame = IntRect(0, 0, 64, 76);
+	standard_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(64, 76));
 	anim_area.setTextureRect(standard_frame);
 
 
 	//Enemy_S.setTexture(Wolf_Boss_t_);
-	current_frame = IntRect(0, 0, 30, 30);
+	current_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(30, 30));
 	Enemy_S.setTextureRect(current_frame);
 }
 
@@ -173,24 +173,24 @@ void hornet::update_animation()
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.03f || get_animation_switch())
 		{
-			standard_frame.top = 0.f;
+			standard_frame.position.y = 0.f;
 			if (looks_to_the_left)
 			{
-				standard_frame.left += 64;
-				if (standard_frame.left >= 512)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 512)
 				{
-					standard_frame.left = 64.f;
+					standard_frame.position.x = 64.f;
 				}
-				standard_frame.width = 64.f;
+				standard_frame.size.x = 64.f;
 			}
 			else
 			{
-				standard_frame.left += 64;
-				if (standard_frame.left >= 576)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 576)
 				{
-					standard_frame.left = 128.f;
+					standard_frame.position.x = 128.f;
 				}
-				standard_frame.width = -64.f;
+				standard_frame.size.x = -64.f;
 			}
 
 			anim_area.setTextureRect(standard_frame);
@@ -201,24 +201,24 @@ void hornet::update_animation()
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.03f || get_animation_switch())
 		{
-			standard_frame.top = 0.f;
+			standard_frame.position.y = 0.f;
 			if (looks_to_the_left)
 			{
-				standard_frame.left += 64;
-				if (standard_frame.left >= 512)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 512)
 				{
-					standard_frame.left = 64.f;
+					standard_frame.position.x = 64.f;
 				}
-				standard_frame.width = 64.f;
+				standard_frame.size.x = 64.f;
 			}
 			else
 			{
-				standard_frame.left += 64;
-				if (standard_frame.left >= 576)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 576)
 				{
-					standard_frame.left = 128.f;
+					standard_frame.position.x = 128.f;
 				}
-				standard_frame.width = -64.f;
+				standard_frame.size.x = -64.f;
 			}
 
 			anim_area.setTextureRect(standard_frame);
@@ -230,25 +230,25 @@ void hornet::update_animation()
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.07f || get_animation_switch())
 		{
-			standard_frame.top = 76.f;
+			standard_frame.position.y = 76.f;
 
 			if (looks_to_the_left)
 			{
-				standard_frame.left += 64;
-				if (standard_frame.left >= 256)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 256)
 				{
-					standard_frame.left = 0.f;
+					standard_frame.position.x = 0.f;
 				}
-				standard_frame.width = 64;
+				standard_frame.size.x = 64;
 			}
 			else
 			{
-				standard_frame.left += 64;
-				if (standard_frame.left >= 320)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 320)
 				{
-					standard_frame.left = 64.f;
+					standard_frame.position.x = 64.f;
 				}
-				standard_frame.width = -64.f;
+				standard_frame.size.x = -64.f;
 			}
 
 			anim_area.setTextureRect(standard_frame);
@@ -259,25 +259,25 @@ void hornet::update_animation()
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
-			standard_frame.top = 228.f;
+			standard_frame.position.y = 228.f;
 
 			if (looks_to_the_left)
 			{
-				standard_frame.left += 64;
-				if (standard_frame.left >= 704)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 704)
 				{
-					standard_frame.left = 576.f;
+					standard_frame.position.x = 576.f;
 				}
-				standard_frame.width = 64;
+				standard_frame.size.x = 64;
 			}
 			else
 			{
-				standard_frame.left += 64;
-				if (standard_frame.left >= 768)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 768)
 				{
-					standard_frame.left = 640.f;
+					standard_frame.position.x = 640.f;
 				}
-				standard_frame.width = -64.f;
+				standard_frame.size.x = -64.f;
 			}
 
 			anim_area.setTextureRect(standard_frame);
@@ -288,25 +288,25 @@ void hornet::update_animation()
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
-			standard_frame.top = 228.f;
+			standard_frame.position.y = 228.f;
 
 			if (looks_to_the_left)
 			{
-				standard_frame.left += 64;
-				if (standard_frame.left >= 384)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 384)
 				{
-					standard_frame.left = 64.f;
+					standard_frame.position.x = 64.f;
 				}
-				standard_frame.width = 64;
+				standard_frame.size.x = 64;
 			}
 			else
 			{
-				standard_frame.left += 64;
-				if (standard_frame.left >= 448)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 448)
 				{
-					standard_frame.left = 128.f;
+					standard_frame.position.x = 128.f;
 				}
-				standard_frame.width = -64.f;
+				standard_frame.size.x = -64.f;
 			}
 
 			anim_area.setTextureRect(standard_frame);
@@ -337,7 +337,7 @@ bool hornet::search_for_enemies()
 
 	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
 	//looks();
-	if (look.intersects(pl))
+	if (look.findIntersection(pl).has_value())
 	{
 		return true;
 	}
@@ -384,12 +384,12 @@ void hornet::reset_Timer()
 	{
 		if (looks_to_the_right)
 		{
-			standard_frame.left = 0.f;
+			standard_frame.position.x = 0.f;
 			animation_timer.restart();
 		}
 		else
 		{
-			standard_frame.left = 64.f;
+			standard_frame.position.x = 64.f;
 			animation_timer.restart();
 		}
 		animation_state_past = animation_state;

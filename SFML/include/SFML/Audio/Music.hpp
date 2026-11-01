@@ -323,7 +323,7 @@ private:
 /// }
 ///
 /// // Change some parameters
-/// music.setPosition(0, 1, 10); // change its 3D position
+/// music.setPosition(sf::Vector2f(0, 1, 10)); // change its 3D position
 /// music.setPitch(2);           // increase the pitch
 /// music.setVolume(50);         // reduce the volume
 /// music.setLoop(true);         // make it loop

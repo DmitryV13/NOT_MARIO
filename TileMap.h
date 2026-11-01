@@ -1,4 +1,5 @@
 #pragma once
+#include "Global/Global.hpp"
 #include "Tile.h"
 #include "TileAnim.h"
 #include "TileFactory.h"
@@ -17,7 +18,7 @@ private:
 	
 	int bim = 2;
 	sf::Texture background_T;
-	sf::Sprite backround_S;
+	sf::Sprite backround_S{ Global::dummyTexture };
 
 	Tile ****tilemap;
 	std::vector<Object*> object;

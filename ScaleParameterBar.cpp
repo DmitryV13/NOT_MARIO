@@ -12,18 +12,18 @@
 
 		offset = 6;
 		front_bar = w_object->getWarehouseItem(name)->getSpriteInfo().first;
-		middle_bar = IntRect(6, offset + front_bar.height, front_bar.width - offset*2, 8);
-		back_bar = IntRect(6, offset + front_bar.height * 2, front_bar.width - offset*2, 8);
+		middle_bar = IntRect(sf::Vector2i(6, offset + front_bar.size.y), sf::Vector2i(front_bar.size.x - offset*2, 8));
+		back_bar = IntRect(sf::Vector2i(6, offset + front_bar.size.y * 2), sf::Vector2i(front_bar.size.x - offset*2, 8));
 
 		scale_bar.setPosition(position);
 		scale_bar.setTexture(t_manager->getTexture(w_object->getWarehouseItem(name)->getTMInfo().first, name));
 		scale_bar.setTextureRect(w_object->getWarehouseItem(name)->getSpriteInfo().first);
 
-		float scale = (width / scale_bar.getLocalBounds().width) <
-			(height / scale_bar.getLocalBounds().height) ?
-			(width / scale_bar.getLocalBounds().width) :
-			(height / scale_bar.getLocalBounds().height);
-		scale_bar.setScale(scale, scale);
+		float scale = (width / scale_bar.getLocalBounds().size.x) <
+			(height / scale_bar.getLocalBounds().size.y) ?
+			(width / scale_bar.getLocalBounds().size.x) :
+			(height / scale_bar.getLocalBounds().size.y);
+		scale_bar.setScale(sf::Vector2f(scale, scale));
 		offset *= scale;
 	}
 
@@ -58,14 +58,14 @@
 	}
 
 	void ScaleParameterBar::update(Vector2f mouse_pos, FloatRect view_cords){
-		middle_bar.width = static_cast<float>(*resource) / max_value * back_bar.width;
+		middle_bar.size.x = static_cast<float>(*resource) / max_value * back_bar.size.x;
 		shape.setPosition(Vector2f(
-			position.x + view_cords.left - view_cords.width / 2,
-			position.y + view_cords.top - view_cords.height / 2
+			position.x + view_cords.position.x - view_cords.size.x / 2,
+			position.y + view_cords.position.y - view_cords.size.y / 2
 		));
 		scale_bar.setPosition(Vector2f(
-			position.x + view_cords.left - view_cords.width / 2,
-			position.y + view_cords.top - view_cords.height / 2
+			position.x + view_cords.position.x - view_cords.size.x / 2,
+			position.y + view_cords.position.y - view_cords.size.y / 2
 		));
 	}
 

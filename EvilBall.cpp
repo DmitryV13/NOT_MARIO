@@ -24,6 +24,6 @@ EvilBall::EvilBall(TileMap& map):Enemy(map)
 	{
 		//Enemy_T = init_texture();
 		Enemy_S.setTexture(Enemy_T);
-		currentFrame = IntRect(0, 0, 60, 55.5);
+		currentFrame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(60, 55.5));
 		Enemy_S.setTextureRect(currentFrame);
 	}

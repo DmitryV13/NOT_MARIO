@@ -18,14 +18,14 @@
 	void CheckboxItem::update(Vector2f mouse_pos, FloatRect view_cords){
 		FloatRect gr =
 			FloatRect(
-				getGlobalBounds().left + view_cords.left - view_cords.width / 2,
-				getGlobalBounds().top + view_cords.top - view_cords.height / 2,
-				getGlobalBounds().width,
-				getGlobalBounds().height);
-		if (gr.contains(mouse_pos.x + (view_cords.left - view_cords.width / 2)
-			, mouse_pos.y + (view_cords.top - view_cords.height / 2))) {
+				{ getGlobalBounds().position.x + view_cords.position.x - view_cords.size.x / 2,
+				getGlobalBounds().position.y + view_cords.position.y - view_cords.size.y / 2 },
+				{ getGlobalBounds().size.x,
+				getGlobalBounds().size.y });
+		if (gr.contains(Vector2f(mouse_pos.x + (view_cords.position.x - view_cords.size.x / 2)
+			, mouse_pos.y + (view_cords.position.y - view_cords.size.y / 2)))) {
 			//fi_state = FORM_ITEM_STATE::FORM_ITEM_HOVERED;
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 				if (unpressed) {
 					if (!chosen) {
 						chosen = true;
@@ -40,7 +40,7 @@
 					unpressed = false;
 				}
 			}
-			if (!Mouse::isButtonPressed(sf::Mouse::Left)) {
+			if (!Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 				unpressed = true;
 			}
 		}
@@ -74,21 +74,15 @@
 
 		////////////////////////////////////
 
-		shape.setPosition(position.x + 1, position.y + 1);
+		shape.setPosition(sf::Vector2f(position.x + 1, position.y + 1));
 		image->update(mouse_pos, view_cords);
 		r_info->update(mouse_pos, view_cords);
 		text.setPosition(Vector2f(
-			view_cords.left - view_cords.width / 2 + position.x + (width - text.getGlobalBounds().width) / 2,
-			view_cords.top - view_cords.height / 2 + position.y + width - text.getGlobalBounds().height
+			view_cords.position.x - view_cords.size.x / 2 + position.x + (width - text.getGlobalBounds().size.x) / 2,
+			view_cords.position.y - view_cords.size.y / 2 + position.y + width - text.getGlobalBounds().size.y
 		));
-		shape.setPosition(
-			view_cords.left - view_cords.width / 2 + position.x + 1,
-			view_cords.top - view_cords.height / 2 + position.y + 1
-		);
-		background.setPosition(
-			view_cords.left - view_cords.width / 2 + position.x,
-			view_cords.top - view_cords.height / 2 + position.y
-		);
+		shape.setPosition(sf::Vector2f(view_cords.position.x - view_cords.size.x / 2 + position.x + 1, view_cords.position.y - view_cords.size.y / 2 + position.y + 1));
+		background.setPosition(sf::Vector2f(view_cords.position.x - view_cords.size.x / 2 + position.x, view_cords.position.y - view_cords.size.y / 2 + position.y));
 	}
 
 	void CheckboxItem::render(RenderTarget* target){
@@ -99,5 +93,5 @@
 			target->draw(text);
 		//}
 		target->draw(shape);
-		//std::cout << "check   " << text.getGlobalBounds().left << "   " << text.getGlobalBounds().top << std::endl;
+		//std::cout << "check   " << text.getGlobalBounds().position.x << "   " << text.getGlobalBounds().position.y << std::endl;
 	}

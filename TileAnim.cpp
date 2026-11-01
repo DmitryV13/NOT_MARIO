@@ -25,11 +25,11 @@ void TileAnim::tile_animation()
     {
 
         sf::IntRect pos = tile_S.getTextureRect();
-        pos.left += animation_factor;
+        pos.position.x += animation_factor;
 
-        if (pos.left >= animation_factor * animation_quantity)
+        if (pos.position.x >= animation_factor * animation_quantity)
         {
-            pos.left = pos.left - animation_factor * animation_quantity;
+            pos.position.x = pos.position.x - animation_factor * animation_quantity;
             tile_S.setTextureRect(pos);
         }
         tile_S.setTextureRect(pos);

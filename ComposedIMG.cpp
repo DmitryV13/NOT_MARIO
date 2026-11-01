@@ -9,11 +9,11 @@
 		cornerBottomLeft.setTexture(manager->getTexture(index, "BottomLeft"));
 		cornerBottomRight.setTexture(manager->getTexture(index, "BottomRight"));
 	
-		cornerTopLeft.setTextureRect(IntRect(0, 0, origin_size + width, origin_size + height));
-		cornerTopRight.setTextureRect(IntRect(0, 0, origin_size, origin_size + height));
-		cornerBottomRight.setTextureRect(IntRect(0, 0, origin_size, origin_size));
-		cornerBottomLeft.setTextureRect(IntRect(0, 0, origin_size + width, origin_size));
-		filler.setTextureRect(IntRect(0, 0, width, height));
+		cornerTopLeft.setTextureRect(IntRect(sf::Vector2i(0, 0), sf::Vector2i(origin_size + width, origin_size + height)));
+		cornerTopRight.setTextureRect(IntRect(sf::Vector2i(0, 0), sf::Vector2i(origin_size, origin_size + height)));
+		cornerBottomRight.setTextureRect(IntRect(sf::Vector2i(0, 0), sf::Vector2i(origin_size, origin_size)));
+		cornerBottomLeft.setTextureRect(IntRect(sf::Vector2i(0, 0), sf::Vector2i(origin_size + width, origin_size)));
+		filler.setTextureRect(IntRect(sf::Vector2i(0, 0), sf::Vector2i(width, height)));
 	}
 
 	ComposedIMG::ComposedIMG(int width_, int height_, int original_size, TextureManager* manager
@@ -26,22 +26,22 @@
 		cornerBottomLeft.setTexture(manager->getTexture(index_3, name_3));
 		cornerBottomRight.setTexture(manager->getTexture(index_4, name_4));
 
-		cornerTopLeft.setTextureRect(IntRect(0, 0, origin_size + width, origin_size + height));
-		cornerTopRight.setTextureRect(IntRect(0, 0, origin_size, origin_size + height));
-		cornerBottomRight.setTextureRect(IntRect(0, 0, origin_size, origin_size));
-		cornerBottomLeft.setTextureRect(IntRect(0, 0, origin_size + width, origin_size));
-		filler.setTextureRect(IntRect(0, 0, width, height));
+		cornerTopLeft.setTextureRect(IntRect(sf::Vector2i(0, 0), sf::Vector2i(origin_size + width, origin_size + height)));
+		cornerTopRight.setTextureRect(IntRect(sf::Vector2i(0, 0), sf::Vector2i(origin_size, origin_size + height)));
+		cornerBottomRight.setTextureRect(IntRect(sf::Vector2i(0, 0), sf::Vector2i(origin_size, origin_size)));
+		cornerBottomLeft.setTextureRect(IntRect(sf::Vector2i(0, 0), sf::Vector2i(origin_size + width, origin_size)));
+		filler.setTextureRect(IntRect(sf::Vector2i(0, 0), sf::Vector2i(width, height)));
 	}
 	
 	void ComposedIMG::setPosition(int x, int y){
 		offsetX = x - origin_size;
 		offsetY = y - origin_size;
 
-		cornerTopLeft.setPosition(offsetX, offsetY);
-		cornerTopRight.setPosition(offsetX + width + origin_size, offsetY);
-		cornerBottomLeft.setPosition(offsetX, offsetY + height + origin_size);
-		cornerBottomRight.setPosition(offsetX + width + origin_size, offsetY + height + origin_size);
-		filler.setPosition(offsetX + origin_size, offsetY + origin_size);
+		cornerTopLeft.setPosition(sf::Vector2f(offsetX, offsetY));
+		cornerTopRight.setPosition(sf::Vector2f(offsetX + width + origin_size, offsetY));
+		cornerBottomLeft.setPosition(sf::Vector2f(offsetX, offsetY + height + origin_size));
+		cornerBottomRight.setPosition(sf::Vector2f(offsetX + width + origin_size, offsetY + height + origin_size));
+		filler.setPosition(sf::Vector2f(offsetX + origin_size, offsetY + origin_size));
 	}
 	
 	void ComposedIMG::setPosition(string positionX, string positionY, int screen_width, int screen_height){
@@ -52,11 +52,11 @@
 			offsetY = (screen_height - height + origin_size*2) / 2;
 		}
 
-		cornerTopLeft.setPosition(offsetX, offsetY);
-		cornerTopRight.setPosition(offsetX + width + origin_size, offsetY);
-		cornerBottomLeft.setPosition(offsetX, offsetY + height + origin_size);
-		cornerBottomRight.setPosition(offsetX + width + origin_size, offsetY + height + origin_size);
-		filler.setPosition(offsetX + origin_size, offsetY + origin_size);
+		cornerTopLeft.setPosition(sf::Vector2f(offsetX, offsetY));
+		cornerTopRight.setPosition(sf::Vector2f(offsetX + width + origin_size, offsetY));
+		cornerBottomLeft.setPosition(sf::Vector2f(offsetX, offsetY + height + origin_size));
+		cornerBottomRight.setPosition(sf::Vector2f(offsetX + width + origin_size, offsetY + height + origin_size));
+		filler.setPosition(sf::Vector2f(offsetX + origin_size, offsetY + origin_size));
 	}
 
 	void ComposedIMG::setPosition(string positionX, int y, int screen_width, int screen_height){
@@ -65,11 +65,11 @@
 		}
 		offsetY = y - origin_size;
 
-		cornerTopLeft.setPosition(offsetX, offsetY);
-		cornerTopRight.setPosition(offsetX + width + origin_size, offsetY);
-		cornerBottomLeft.setPosition(offsetX, offsetY + height + origin_size);
-		cornerBottomRight.setPosition(offsetX + width + origin_size, offsetY + height + origin_size);
-		filler.setPosition(offsetX + origin_size, offsetY + origin_size);
+		cornerTopLeft.setPosition(sf::Vector2f(offsetX, offsetY));
+		cornerTopRight.setPosition(sf::Vector2f(offsetX + width + origin_size, offsetY));
+		cornerBottomLeft.setPosition(sf::Vector2f(offsetX, offsetY + height + origin_size));
+		cornerBottomRight.setPosition(sf::Vector2f(offsetX + width + origin_size, offsetY + height + origin_size));
+		filler.setPosition(sf::Vector2f(offsetX + origin_size, offsetY + origin_size));
 	}
 
 	void ComposedIMG::setPosition(int x, string positionY, int screen_width, int screen_height){
@@ -78,11 +78,11 @@
 		}
 		offsetX = x - origin_size;
 
-		cornerTopLeft.setPosition(offsetX, offsetY);
-		cornerTopRight.setPosition(offsetX + width + origin_size, offsetY);
-		cornerBottomLeft.setPosition(offsetX, offsetY + height + origin_size);
-		cornerBottomRight.setPosition(offsetX + width + origin_size, offsetY + height + origin_size);
-		filler.setPosition(offsetX + origin_size, offsetY + origin_size);
+		cornerTopLeft.setPosition(sf::Vector2f(offsetX, offsetY));
+		cornerTopRight.setPosition(sf::Vector2f(offsetX + width + origin_size, offsetY));
+		cornerBottomLeft.setPosition(sf::Vector2f(offsetX, offsetY + height + origin_size));
+		cornerBottomRight.setPosition(sf::Vector2f(offsetX + width + origin_size, offsetY + height + origin_size));
+		filler.setPosition(sf::Vector2f(offsetX + origin_size, offsetY + origin_size));
 	}
 
 	void ComposedIMG::setScale(float scale_){
@@ -95,19 +95,19 @@
 	}
 
 	FloatRect ComposedIMG::getLocalBounds(){
-		return FloatRect(cornerTopLeft.getPosition().x + origin_size, cornerTopLeft.getPosition().y + origin_size, width, height);
+		return FloatRect(sf::Vector2f(cornerTopLeft.getPosition().x + origin_size, cornerTopLeft.getPosition().y + origin_size), sf::Vector2f(width, height));
 	}
 
 	FloatRect ComposedIMG::getGlobalBounds(){
-		return FloatRect(cornerTopLeft.getPosition().x, cornerTopLeft.getPosition().y, width + origin_size*2, height + origin_size*2);
+		return FloatRect(sf::Vector2f(cornerTopLeft.getPosition().x, cornerTopLeft.getPosition().y), sf::Vector2f(width + origin_size*2, height + origin_size*2));
 	}
 	
 	void ComposedIMG::update(FloatRect view_cords){
-		cornerTopLeft.setPosition(view_cords.left - view_cords.width/2 + offsetX, view_cords.top - view_cords.height/2 + offsetY);
-		cornerTopRight.setPosition(view_cords.left - view_cords.width/2 + offsetX + width + origin_size, view_cords.top - view_cords.height/2 + offsetY);
-		cornerBottomLeft.setPosition(view_cords.left - view_cords.width/2 + offsetX, view_cords.top - view_cords.height/2 + offsetY + height + origin_size);
-		cornerBottomRight.setPosition(view_cords.left - view_cords.width/2 + offsetX + width + origin_size, view_cords.top - view_cords.height/2 + offsetY + height + origin_size);
-		filler.setPosition(view_cords.left - view_cords.width/2 + offsetX + origin_size, view_cords.top - view_cords.height/2 + offsetY + origin_size);
+		cornerTopLeft.setPosition(sf::Vector2f(view_cords.position.x - view_cords.size.x/2 + offsetX, view_cords.position.y - view_cords.size.y/2 + offsetY));
+		cornerTopRight.setPosition(sf::Vector2f(view_cords.position.x - view_cords.size.x/2 + offsetX + width + origin_size, view_cords.position.y - view_cords.size.y/2 + offsetY));
+		cornerBottomLeft.setPosition(sf::Vector2f(view_cords.position.x - view_cords.size.x/2 + offsetX, view_cords.position.y - view_cords.size.y/2 + offsetY + height + origin_size));
+		cornerBottomRight.setPosition(sf::Vector2f(view_cords.position.x - view_cords.size.x/2 + offsetX + width + origin_size, view_cords.position.y - view_cords.size.y/2 + offsetY + height + origin_size));
+		filler.setPosition(sf::Vector2f(view_cords.position.x - view_cords.size.x/2 + offsetX + origin_size, view_cords.position.y - view_cords.size.y/2 + offsetY + origin_size));
 	}
 	
 	void ComposedIMG::render(RenderTarget* target){

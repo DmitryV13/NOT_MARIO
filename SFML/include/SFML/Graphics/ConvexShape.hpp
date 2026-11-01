@@ -143,7 +143,7 @@ private:
 /// polygon.setPoint(2, sf::Vector2f(25, 5));
 /// polygon.setOutlineColor(sf::Color::Red);
 /// polygon.setOutlineThickness(5);
-/// polygon.setPosition(10, 20);
+/// polygon.setPosition(sf::Vector2f(10, 20));
 /// ...
 /// window.draw(polygon);
 /// \endcode

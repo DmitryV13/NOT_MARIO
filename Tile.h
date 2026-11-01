@@ -1,4 +1,5 @@
 #pragma once
+#include "Global/Global.hpp"
 
 using sf::Clock;
 
@@ -8,7 +9,7 @@ protected:
 
 	std::string tileName;
 	sf::Texture tile_T;
-	sf::Sprite	tile_S;
+	sf::Sprite	tile_S{ Global::dummyTexture };
 	float texture_size_W;
 	float texture_size_H;
 	short int interaction;

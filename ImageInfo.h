@@ -1,4 +1,5 @@
 #pragma once
+#include "Global/Global.hpp"
 #include "TextureManager.h"
 #include "Warehouse.h"
 #include "InterfaceItem.h"
@@ -9,8 +10,8 @@ using namespace::sf;
 class ImageInfo : public InterfaceItem {
 protected:
 	RectangleShape shape;//*2
-	Text text;
-	Sprite src_img;//*2
+	Text text { Global::defaultFont };
+	Sprite src_img{ Global::dummyTexture };//*2
 	Vector2f position;
 public:
 	ImageInfo();

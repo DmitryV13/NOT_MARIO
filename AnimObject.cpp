@@ -25,11 +25,11 @@ void AnimObject::animation_object()
     if (animationTimer.getElapsedTime().asSeconds() >= animation_time)
     {
         sf::IntRect pos = object_S.getTextureRect();
-        pos.left += animation_factor;
+        pos.position.x += animation_factor;
 
-        if (pos.left >= animation_factor * animation_quantity)
+        if (pos.position.x >= animation_factor * animation_quantity)
         {
-            pos.left = pos.left - animation_factor * animation_quantity;
+            pos.position.x = pos.position.x - animation_factor * animation_quantity;
             object_S.setTextureRect(pos);
         }
         object_S.setTextureRect(pos);

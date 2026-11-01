@@ -28,7 +28,7 @@ Switch::Switch(std::string name, float position_x, float position_y, short int s
 
 void Switch::render_object(sf::RenderTarget& target)
 {
-    object_S.setPosition(position_x, position_y);
+    object_S.setPosition(sf::Vector2f(position_x, position_y));
     target.draw(object_S);
     if (obj) {
         obj->render_object(target);
@@ -59,11 +59,11 @@ void Switch::animation_object()
         if (animationTimer.getElapsedTime().asSeconds() >= animation_time)
         {
             sf::IntRect pos = object_S.getTextureRect();
-            pos.left += animation_factor;
+            pos.position.x += animation_factor;
 
-            if (pos.left >= animation_factor * animation_quantity)
+            if (pos.position.x >= animation_factor * animation_quantity)
             {
-                pos.left -= animation_factor;
+                pos.position.x -= animation_factor;
                 object_S.setTextureRect(pos);
                 return;
             }
@@ -81,11 +81,11 @@ void Switch::animation_object()
         if (animationTimer.getElapsedTime().asSeconds() >= animation_time)
         {
             sf::IntRect pos = object_S.getTextureRect();
-            pos.left -= animation_factor;
+            pos.position.x -= animation_factor;
 
-            if (pos.left < 0)
+            if (pos.position.x < 0)
             {
-                pos.left += animation_factor;
+                pos.position.x += animation_factor;
                 object_S.setTextureRect(pos);
                 return;
             }

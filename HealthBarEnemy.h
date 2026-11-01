@@ -1,4 +1,5 @@
 #pragma once
+#include "Global/Global.hpp"
 
 using sf::Sprite;
 using sf::RenderWindow;
@@ -13,7 +14,7 @@ class HealthBarEnemy
 {
 private:
 	Texture HealthBarEnemy_t_;
-	Sprite HealthBarEnemy_S_;
+	Sprite HealthBarEnemy_S_{ Global::dummyTexture };
 	IntRect standard_frame;
 	Clock manifestation_timer;
 	short HP_S;

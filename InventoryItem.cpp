@@ -3,11 +3,11 @@
 
 	InventoryItem::InventoryItem(float x, float y, float width_, float height_, int text_size_, Font* font_)
 		:position(Vector2f(x, y)), width(width_), height(height_), text_size(text_size_), font(font_){
-		background.setPosition(x, y);
+		background.setPosition(sf::Vector2f(x, y));
 		background.setSize(Vector2f(width, height));
 		background.setFillColor(Color(0, 0, 0, 0));
 
-		shape.setPosition(x+1, y+1);
+		shape.setPosition(sf::Vector2f(x+1, y+1));
 		shape.setSize(Vector2f(width-2, height-2));
 		shape.setFillColor(Color(0, 0, 0, 0));
 
@@ -16,10 +16,7 @@
 		text.setFont(*font);
 		text.setCharacterSize(text_size);
 
-		text.setPosition(
-			position.x,
-			position.y + height
-		);
+		text.setPosition(sf::Vector2f(position.x, position.y + height));
 	}
 
 	void InventoryItem::addItemInfo(TextureManager* t_manager, Warehouse* w_object, string name){
@@ -27,54 +24,54 @@
 		r_info = new ResourceInfo(position.x, position.y + height - 20, font, (int)text.getCharacterSize(), false);
 		image->addInfo(t_manager, w_object, name);
 
-		float scale = (width / image->getLocalBounds().width) <
-			(width / image->getLocalBounds().height) ?
-			(width / image->getLocalBounds().width) :
-			(width / image->getLocalBounds().height);
+		float scale = (width / image->getLocalBounds().size.x) <
+			(width / image->getLocalBounds().size.y) ?
+			(width / image->getLocalBounds().size.x) :
+			(width / image->getLocalBounds().size.y);
 		image->setScale(scale);
 		image->setPosition(
-			position.x + (width - image->getGlobalBounds().width) / 2,
-			position.y + (width - image->getGlobalBounds().height) / 2
+			position.x + (width - image->getGlobalBounds().size.x) / 2,
+			position.y + (width - image->getGlobalBounds().size.y) / 2
 		);
 		string h = w_object->getWarehouseItem(name)->getNameFU();
 		text.setString(w_object->getWarehouseItem(name)->getNameFU());
 		text.setFillColor(Color::White);
 		text.setPosition(Vector2f(
-			position.x + width - r_info->getGlobalBounds().width,
-			position.y + width - r_info->getGlobalBounds().height
+			position.x + width - r_info->getGlobalBounds().size.x,
+			position.y + width - r_info->getGlobalBounds().size.y
 		));
 
 		r_info->addInfo(t_manager, w_object, name, true);
 		r_info->setPosition(Vector2f(
-			position.x + width - r_info->getGlobalBounds().width,
-			text.getGlobalBounds().top - r_info->getGlobalBounds().height
+			position.x + width - r_info->getGlobalBounds().size.x,
+			text.getGlobalBounds().position.y - r_info->getGlobalBounds().size.y
 		));
 	}
 
 	void InventoryItem::addItemInfo(TextureManager* t_manager, WarehouseItem* w_item){
 		image->addInfo(t_manager, w_item);
 
-		float scale = (width / image->getLocalBounds().width) <
-			(width / image->getLocalBounds().height) ?
-			(width / image->getLocalBounds().width) :
-			(width / image->getLocalBounds().height);
+		float scale = (width / image->getLocalBounds().size.x) <
+			(width / image->getLocalBounds().size.y) ?
+			(width / image->getLocalBounds().size.x) :
+			(width / image->getLocalBounds().size.y);
 
 		image->setScale(scale);
 		image->setPosition(
-			position.x + (width - image->getGlobalBounds().width) / 2,
-			position.y + (width - image->getGlobalBounds().height) / 2
+			position.x + (width - image->getGlobalBounds().size.x) / 2,
+			position.y + (width - image->getGlobalBounds().size.y) / 2
 		);
 		text.setString(w_item->getNameFU());
 		text.setFillColor(Color::White);
 		text.setPosition(Vector2f(
-			position.x + width - r_info->getGlobalBounds().width,
-			position.y + width - r_info->getGlobalBounds().height
+			position.x + width - r_info->getGlobalBounds().size.x,
+			position.y + width - r_info->getGlobalBounds().size.y
 		));
 
 		r_info->addInfo(t_manager, w_item, true);
 		r_info->setPosition(Vector2f(
-			position.x + width - r_info->getGlobalBounds().width,
-			text.getGlobalBounds().top - r_info->getGlobalBounds().height
+			position.x + width - r_info->getGlobalBounds().size.x,
+			text.getGlobalBounds().position.y - r_info->getGlobalBounds().size.y
 		));
 	}
 
@@ -95,22 +92,22 @@
 	}
 
 	void InventoryItem::setPosition(Vector2f new_position){
-		background.setPosition(new_position.x, new_position.y);
-		shape.setPosition(new_position.x + 1, new_position.y + 1);
+		background.setPosition(sf::Vector2f(new_position.x, new_position.y));
+		shape.setPosition(sf::Vector2f(new_position.x + 1, new_position.y + 1));
 		position = new_position;
 		image->setPosition(
-			position.x + (width - image->getGlobalBounds().width) / 2,
-			position.y + (width - image->getGlobalBounds().height) / 2
+			position.x + (width - image->getGlobalBounds().size.x) / 2,
+			position.y + (width - image->getGlobalBounds().size.y) / 2
 		);
 
 		text.setPosition(Vector2f(
-			position.x + (width - text.getGlobalBounds().width)/2,
-			position.y + width - text.getGlobalBounds().height
+			position.x + (width - text.getGlobalBounds().size.x)/2,
+			position.y + width - text.getGlobalBounds().size.y
 		));
 
 		r_info->setPosition(Vector2f(
-			position.x + (width - r_info->getGlobalBounds().width)/2,
-			text.getGlobalBounds().top - r_info->getGlobalBounds().height - text.getGlobalBounds().height
+			position.x + (width - r_info->getGlobalBounds().size.x)/2,
+			text.getGlobalBounds().position.y - r_info->getGlobalBounds().size.y - text.getGlobalBounds().size.y
 		));
 	}
 
@@ -131,20 +128,16 @@
 	}
 
 	void InventoryItem::update(Vector2f mouse_pos, FloatRect view_cords){
-		background.setPosition(position.x, position.y);
-		shape.setPosition(position.x + 1, position.y + 1);
+		background.setPosition(sf::Vector2f(position.x, position.y));
+		shape.setPosition(sf::Vector2f(position.x + 1, position.y + 1));
 		image->update(mouse_pos, view_cords);
 		r_info->update(mouse_pos, view_cords);
 		text.setPosition(Vector2f(
-			view_cords.left-view_cords.width / 2 + position.x + (width - text.getGlobalBounds().width) / 2,
-			view_cords.top - view_cords.height / 2 + position.y + width - text.getGlobalBounds().height
+			view_cords.position.x-view_cords.size.x / 2 + position.x + (width - text.getGlobalBounds().size.x) / 2,
+			view_cords.position.y - view_cords.size.y / 2 + position.y + width - text.getGlobalBounds().size.y
 		));
-		background.setPosition(view_cords.left - view_cords.width / 2 + background.getPosition().x,
-			view_cords.top - view_cords.height / 2 + background.getPosition().y
-		);
-		background.setPosition(view_cords.left - view_cords.width / 2 + background.getPosition().x,
-			view_cords.top - view_cords.height / 2 + background.getPosition().y
-		);
+		background.setPosition(sf::Vector2f(view_cords.position.x - view_cords.size.x / 2 + background.getPosition().x, view_cords.position.y - view_cords.size.y / 2 + background.getPosition().y));
+		background.setPosition(sf::Vector2f(view_cords.position.x - view_cords.size.x / 2 + background.getPosition().x, view_cords.position.y - view_cords.size.y / 2 + background.getPosition().y));
 	}
 
 	void InventoryItem::render(RenderTarget* target){

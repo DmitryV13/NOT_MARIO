@@ -26,10 +26,7 @@ Button::Button(float x, float y, float width, float height, short text_size, sf:
 		text.setCharacterSize(text_size);
 		text.setOutlineThickness(3.f);
 		text.setOutlineColor(sf::Color(0, 0, 0, 0));
-		text.setPosition(
-			shape.getPosition().x +(shape.getGlobalBounds().width / 2.f) - text.getLocalBounds().width / 2.f - text.getLocalBounds().left,
-			shape.getPosition().y + (shape.getGlobalBounds().height / 2.f) - text.getLocalBounds().height / 2.f - text.getLocalBounds().top
-			);
+		text.setPosition(sf::Vector2f(shape.getPosition().x +(shape.getGlobalBounds().size.x / 2.f) - text.getLocalBounds().size.x / 2.f - text.getLocalBounds().position.x, shape.getPosition().y + (shape.getGlobalBounds().size.y / 2.f) - text.getLocalBounds().size.y / 2.f - text.getLocalBounds().position.y));
 
 		shape.setFillColor(shp_idle_color);
 	}
@@ -51,12 +48,9 @@ Button::Button(float x, float y, float width, float height, short text_size, sf:
 		text.setCharacterSize(text_size);
 		text.setOutlineThickness(3.f);
 		text.setOutlineColor(sf::Color(0, 0, 0, 0));
-		text.setPosition(
-			shape.getPosition().x - text.getLocalBounds().left,
-			shape.getPosition().y - text.getLocalBounds().top
-		);
+		text.setPosition(sf::Vector2f(shape.getPosition().x - text.getLocalBounds().position.x, shape.getPosition().y - text.getLocalBounds().position.y));
 
-		shape.setSize(sf::Vector2f(text.getLocalBounds().width, text.getLocalBounds().height));
+		shape.setSize(sf::Vector2f(text.getLocalBounds().size.x, text.getLocalBounds().size.y));
 
 		shape.setFillColor(shp_idle_color);
 	}
@@ -81,10 +75,7 @@ Button::Button(float x, float y, float width, float height, short text_size, sf:
 		text.setCharacterSize(text_size);
 		text.setOutlineThickness(3.f);
 		text.setOutlineColor(sf::Color(0, 0, 0, 0));
-		text.setPosition(
-			shape.getPosition().x + (shape.getGlobalBounds().width / 2.f) - text.getLocalBounds().width / 2.f - text.getLocalBounds().left,
-			shape.getPosition().y + (shape.getGlobalBounds().height / 2.f) - text.getLocalBounds().height / 2.f - text.getLocalBounds().top
-		);
+		text.setPosition(sf::Vector2f(shape.getPosition().x + (shape.getGlobalBounds().size.x / 2.f) - text.getLocalBounds().size.x / 2.f - text.getLocalBounds().position.x, shape.getPosition().y + (shape.getGlobalBounds().size.y / 2.f) - text.getLocalBounds().size.y / 2.f - text.getLocalBounds().position.y));
 		FloatRect g = text.getLocalBounds();
 		shape.setFillColor(shp_idle_color);
 	}
@@ -94,19 +85,19 @@ Button::Button(float x, float y, float width, float height, short text_size, sf:
 	}
 
 	float Button::getHeight(){
-		return shape.getGlobalBounds().height;
+		return shape.getGlobalBounds().size.y;
 	}
 
 	float Button::getWidth(){
-		return shape.getGlobalBounds().width;
+		return shape.getGlobalBounds().size.x;
 	}
 
 	float Button::getTextHeight(){
-		return text.getLocalBounds().height;
+		return text.getLocalBounds().size.y;
 	}
 
 	float Button::getTextWidth(){
-		return text.getLocalBounds().width;
+		return text.getLocalBounds().size.x;
 	}
 
 	short* Button::getButtonState(){
@@ -118,20 +109,17 @@ Button::Button(float x, float y, float width, float height, short text_size, sf:
 	}
 
 	FloatRect Button::getLocalBounds(){
-		return FloatRect(position, Vector2f(shape.getLocalBounds().width, shape.getLocalBounds().height));
+		return FloatRect(position, Vector2f(shape.getLocalBounds().size.x, shape.getLocalBounds().size.y));
 	}
 
 	FloatRect Button::getGlobalBounds(){
-		return FloatRect(position, Vector2f(shape.getLocalBounds().width, shape.getLocalBounds().height));
+		return FloatRect(position, Vector2f(shape.getLocalBounds().size.x, shape.getLocalBounds().size.y));
 	}
 
 	void Button::setPosition(Vector2f new_position){
 		position = new_position;
 		shape.setPosition(position);
-		text.setPosition(
-			shape.getPosition().x + (shape.getGlobalBounds().width / 2.f) - text.getLocalBounds().width / 2.f - text.getLocalBounds().left,
-			shape.getPosition().y + (shape.getGlobalBounds().height / 2.f) - text.getLocalBounds().height / 2.f - text.getLocalBounds().top
-		);
+		text.setPosition(sf::Vector2f(shape.getPosition().x + (shape.getGlobalBounds().size.x / 2.f) - text.getLocalBounds().size.x / 2.f - text.getLocalBounds().position.x, shape.getPosition().y + (shape.getGlobalBounds().size.y / 2.f) - text.getLocalBounds().size.y / 2.f - text.getLocalBounds().position.y));
 	}
 
 	void Button::setPositionX(float x){
@@ -170,27 +158,22 @@ Button::Button(float x, float y, float width, float height, short text_size, sf:
 	}
 
 	void Button::updatePosition(FloatRect view_cords) {
-		shape.setPosition(
-			view_cords.left - view_cords.width / 2 + position.x,
-			view_cords.top - view_cords.height / 2 + position.y);
-		text.setPosition(
-			shape.getPosition().x + (shape.getGlobalBounds().width / 2.f) - text.getLocalBounds().width / 2.f - text.getLocalBounds().left,
-			shape.getPosition().y + (shape.getGlobalBounds().height / 2.f) - text.getLocalBounds().height / 2.f - text.getLocalBounds().top
-		);
+		shape.setPosition(sf::Vector2f(view_cords.position.x - view_cords.size.x / 2 + position.x, view_cords.position.y - view_cords.size.y / 2 + position.y));
+		text.setPosition(sf::Vector2f(shape.getPosition().x + (shape.getGlobalBounds().size.x / 2.f) - text.getLocalBounds().size.x / 2.f - text.getLocalBounds().position.x, shape.getPosition().y + (shape.getGlobalBounds().size.y / 2.f) - text.getLocalBounds().size.y / 2.f - text.getLocalBounds().position.y));
 	}
 	
 	void Button::update(Vector2f mouse_pos, FloatRect view_cords){
 		updatePosition(view_cords);
 
 		button_cstate = BUTTON_STATE::BTN_IDLE;
-		if (shape.getGlobalBounds().contains(mouse_pos.x + (view_cords.left - view_cords.width / 2), mouse_pos.y + (view_cords.top - view_cords.height / 2))) {
+		if (shape.getGlobalBounds().contains(Vector2(mouse_pos.x + (view_cords.position.x - view_cords.size.x / 2), mouse_pos.y + (view_cords.position.y - view_cords.size.y / 2)))) {
 			button_cstate = BUTTON_STATE::BTN_HOVERED;
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && button_prstate == BUTTON_STATE::BTN_HOVERED) {
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && button_prstate == BUTTON_STATE::BTN_HOVERED) {
 				button_cstate = BUTTON_STATE::BTN_ACTIVE;
 				button_prstate = BUTTON_STATE::BTN_ACTIVE;
 				//std::cout << "active" << std::endl;
 			}
-			if(!Mouse::isButtonPressed(sf::Mouse::Left)){
+			if(!Mouse::isButtonPressed(sf::Mouse::Button::Left)){
 				button_cstate = BUTTON_STATE::BTN_HOVERED;
 				button_prstate = BUTTON_STATE::BTN_HOVERED;
 				//std::cout << "hover" << std::endl;

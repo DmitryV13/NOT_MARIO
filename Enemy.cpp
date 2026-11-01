@@ -128,17 +128,13 @@ PL_SIDE Enemy::getPlayerSide(float playerX, float enemyX)
 
 void Enemy::set_position(const float x, const float y)
 {
-	observation_area.setPosition(
-		x - (observation_area.getGlobalBounds().width - (observation_area.getGlobalBounds().width / 2) - (Enemy_S.
-			getGlobalBounds().width / 2)),
-		(y - (observation_area.getGlobalBounds().height - Enemy_S.getGlobalBounds().height)));
+	observation_area.setPosition(sf::Vector2f(x - (observation_area.getGlobalBounds().size.x - (observation_area.getGlobalBounds().size.x / 2) - (Enemy_S.
+			getGlobalBounds().size.x / 2)), (y - (observation_area.getGlobalBounds().size.y - Enemy_S.getGlobalBounds().size.y))));
 
-	anim_area.setPosition(
-		x - (anim_area.getGlobalBounds().width - (anim_area.getGlobalBounds().width / 2) - (Enemy_S.
-			getGlobalBounds().width / 2)),
-		(y - (anim_area.getGlobalBounds().height - Enemy_S.getGlobalBounds().height)));
+	anim_area.setPosition(sf::Vector2f(x - (anim_area.getGlobalBounds().size.x - (anim_area.getGlobalBounds().size.x / 2) - (Enemy_S.
+			getGlobalBounds().size.x / 2)), (y - (anim_area.getGlobalBounds().size.y - Enemy_S.getGlobalBounds().size.y))));
 
-	Enemy_S.setPosition(x, y);
+	Enemy_S.setPosition(sf::Vector2f(x, y));
 }
 
 void Enemy::render(sf::RenderTarget& target)
@@ -251,16 +247,16 @@ void Enemy::walk(const float dir_x)
 
 bool Enemy::isPlayerInRadius(const sf::FloatRect& observationArea, const sf::FloatRect& playerBounds, float radius)
 {		
-	if (observation_area.getGlobalBounds().intersects(playerBounds))
+	if (observation_area.getGlobalBounds().findIntersection(playerBounds).has_value())
 	{
 		sf::Vector2f observationCenter = {
-			observationArea.left + observationArea.width / 2,
-			observationArea.top + observationArea.height / 2
+			observationArea.position.x + observationArea.size.x / 2,
+			observationArea.position.y + observationArea.size.y / 2
 		};
 
 		sf::Vector2f playerCenter = {
-			playerBounds.left + playerBounds.width / 2,
-			playerBounds.top + playerBounds.height / 2
+			playerBounds.position.x + playerBounds.size.x / 2,
+			playerBounds.position.y + playerBounds.size.y / 2
 		};
 
 		float distance = std::sqrt(
@@ -389,18 +385,18 @@ bool Enemy::update_collision_x()
 {
 	bool wasCollision = false;
 	sf::Vector2f newPosition(get_position().x, get_position().y);
-	for (int i = Enemy_S.getPosition().y / 64; i < (Enemy_S.getPosition().y + Enemy_S.getGlobalBounds().height) / 64; i
+	for (int i = Enemy_S.getPosition().y / 64; i < (Enemy_S.getPosition().y + Enemy_S.getGlobalBounds().size.y) / 64; i
 	     ++)
 	{
 		for (int j = (Enemy_S.getPosition().x + displacement.x) / 64; j < (Enemy_S.getPosition().x + displacement.x +
-			     Enemy_S.getGlobalBounds().width) / 64; j++)
+			     Enemy_S.getGlobalBounds().size.x) / 64; j++)
 		{
 			if (sandbox->outOfMap(i, j) && sandbox->isBlock(i, j) || j <= 0 || j > sandbox->getMapWidth() / 64)
 			{
 				wasCollision = true;
 				if (displacement.x >= 0)
 				{
-					newPosition.x = j * sandbox->getSizeTexture() - Enemy_S.getGlobalBounds().width;
+					newPosition.x = j * sandbox->getSizeTexture() - Enemy_S.getGlobalBounds().size.x;
 				}
 				if (displacement.x < 0)
 				{
@@ -418,11 +414,11 @@ bool Enemy::update_collision_x_jump()
 {
 	bool wasCollision = false;
 	sf::Vector2f newPosition(get_position().x, get_position().y);
-	for (int i = Enemy_S.getPosition().y / 64; i < (Enemy_S.getPosition().y + Enemy_S.getGlobalBounds().height) / 64; i
+	for (int i = Enemy_S.getPosition().y / 64; i < (Enemy_S.getPosition().y + Enemy_S.getGlobalBounds().size.y) / 64; i
 	     ++)
 	{
 		for (int j = (Enemy_S.getPosition().x + displacement.x) / 64; j < (Enemy_S.getPosition().x + displacement.x +
-			     Enemy_S.getGlobalBounds().width) / 64; j++)
+			     Enemy_S.getGlobalBounds().size.x) / 64; j++)
 		{
 			if (sandbox->outOfMap(i, j) && (i > 0 && sandbox->isBlock(i - 1, j)) || j <= 0 || j > sandbox->getMapWidth()
 				/ 64)
@@ -430,7 +426,7 @@ bool Enemy::update_collision_x_jump()
 				wasCollision = true;
 				if (displacement.x >= 0)
 				{
-					newPosition.x = j * sandbox->getSizeTexture() - Enemy_S.getGlobalBounds().width;
+					newPosition.x = j * sandbox->getSizeTexture() - Enemy_S.getGlobalBounds().size.x;
 				}
 				if (displacement.x < 0)
 				{
@@ -451,9 +447,9 @@ bool Enemy::update_collision_y()
 	sf::Vector2f newPosition(Enemy_S.getPosition().x, Enemy_S.getPosition().y);
 
 	for (int i = (Enemy_S.getPosition().y + displacement.y) / 64; i < (Enemy_S.getPosition().y + displacement.y +
-		     Enemy_S.getGlobalBounds().height) / 64; i++)
+		     Enemy_S.getGlobalBounds().size.y) / 64; i++)
 	{
-		for (int j = Enemy_S.getPosition().x / 64; j < (Enemy_S.getPosition().x + Enemy_S.getGlobalBounds().width) / 64;
+		for (int j = Enemy_S.getPosition().x / 64; j < (Enemy_S.getPosition().x + Enemy_S.getGlobalBounds().size.x) / 64;
 		     j++)
 		{
 			if (sandbox->outOfMap(i, j) && sandbox->isBlock(i, j))
@@ -463,7 +459,7 @@ bool Enemy::update_collision_y()
 				if (displacement.y > 0)
 				{
 					reset_jump_access();
-					newPosition.y = (i * sandbox->getSizeTexture() - Enemy_S.getGlobalBounds().height);
+					newPosition.y = (i * sandbox->getSizeTexture() - Enemy_S.getGlobalBounds().size.y);
 				}
 				if (displacement.y < 0)
 				{
@@ -482,7 +478,7 @@ bool Enemy::sting()
 {
 	FloatRect en = get_global_bounds();
 	FloatRect pl = player_info->getGlobalBounds();
-	return en.intersects(pl);
+	return en.findIntersection(pl).has_value();
 }
 
 void Enemy::jump_towards_player()
@@ -518,12 +514,12 @@ bool Enemy::canMoveForward() const
 	int centerY;
 	if (direction == 1)
 	{
-		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width / 2)) / 64);
+		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().size.x / 2)) / 64);
 		centerY = static_cast<int>(get_position().y / 64);
 	}
 	else
 	{
-		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width) / 2) / 64) - direction;
+		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().size.x) / 2) / 64) - direction;
 		centerY = static_cast<int>(get_position().y / 64);
 	}
 
@@ -545,7 +541,7 @@ bool Enemy::outside_sting()
 {
 	FloatRect en = get_global_bounds_anim();
 	FloatRect pl = player_info->getGlobalBounds();
-	return en.intersects(pl);
+	return en.findIntersection(pl).has_value();
 }
 
 bool Enemy::hit_a_wall() const
@@ -555,13 +551,13 @@ bool Enemy::hit_a_wall() const
 	int centerY;
 	if (direction == 1)
 	{
-		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width)) / 64) - direction;
-		centerY = static_cast<int>((get_position().y + (Enemy_S.getGlobalBounds().height / 2)) / 64);
+		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().size.x)) / 64) - direction;
+		centerY = static_cast<int>((get_position().y + (Enemy_S.getGlobalBounds().size.y / 2)) / 64);
 	}
 	else
 	{
-		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width)) / 64);
-		centerY = static_cast<int>((get_position().y + (Enemy_S.getGlobalBounds().height / 2)) / 64);
+		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().size.x)) / 64);
+		centerY = static_cast<int>((get_position().y + (Enemy_S.getGlobalBounds().size.y / 2)) / 64);
 	}
 
 
@@ -584,13 +580,13 @@ bool Enemy::canJumpForward() const
 	int centerY;
 	if (direction == 1)
 	{
-		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width / 2)) / 64);
-		centerY = static_cast<int>((get_position().y + (Enemy_S.getGlobalBounds().height-64/2 )) / 64);
+		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().size.x / 2)) / 64);
+		centerY = static_cast<int>((get_position().y + (Enemy_S.getGlobalBounds().size.y-64/2 )) / 64);
 	}
 	else
 	{
-		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().width) / 2) / 64);
-		centerY = static_cast<int>((get_position().y + (Enemy_S.getGlobalBounds().height-64/2 )) / 64);
+		centerX = static_cast<int>((get_position().x + (Enemy_S.getGlobalBounds().size.x) / 2) / 64);
+		centerY = static_cast<int>((get_position().y + (Enemy_S.getGlobalBounds().size.y-64/2 )) / 64);
 	}
 
 

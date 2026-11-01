@@ -1,10 +1,11 @@
 #pragma once
+#include "Global/Global.hpp"
 
 using namespace::sf;
 
 class Notification{
 private:
-	Text text;
+	Text text { Global::defaultFont };
 	bool active;
 	Vector2f position;
 	Vector2f norm_s;

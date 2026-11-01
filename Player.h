@@ -1,4 +1,5 @@
 #pragma once
+#include "Global/Global.hpp"
 
 #include "PLAYER_ANIMATION_SATES.h"
 #include "Map.h"
@@ -20,7 +21,7 @@ class Player{
 private:
     TileMap* sandbox;
     Texture player_T;
-    Sprite player_S;
+    Sprite player_S{ Global::dummyTexture };
 
     vector<Weapon*> weapons;
     short chosen_weapon;

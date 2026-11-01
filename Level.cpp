@@ -14,10 +14,13 @@
 		, regime(regime_)
 		, object_available(false){
 		//-1-random generation, 2-set positions
-		Font* font = new Font();
-		if (!font->loadFromFile("Fonts/Pixel.ttf"))
-		{
-			std::cout << "Error -> RoadMap -> couldn't load text font" << std::endl;
+		Font* font = nullptr;
+		try {
+			font = new sf::Font("Fonts/Pixel.ttf");
+		}
+		catch (const sf::Exception& e) {
+			std::cout << "Error -> RoadMap -> couldn't load text font: "
+				<< e.what() << std::endl;
 		}
 		//Chest* ooo=new Chest();
 		//
@@ -351,7 +354,7 @@
 	{
 		if (menu_timer.getElapsedTime().asSeconds() >= 0.2f)
 		{
-			if (Keyboard::isKeyPressed(Keyboard::BackSpace))
+			if (Keyboard::isKeyPressed(sf::Keyboard::Key::Backspace))
 			{
 				if (game_state == GAME_STATE::PAUSED)
 				{
@@ -363,7 +366,7 @@
 				}
 				menu_timer.restart();
 			}
-			if (Keyboard::isKeyPressed(Keyboard::Escape))
+			if (Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
 			{
 				game_state = GAME_STATE::FINISHED;
 			}
@@ -385,7 +388,7 @@
 		auto objects = sandbox.getObjects();
 		bool was_intersect = false;
 		for (int i = 0; i < objects.size(); i++) {
-			if (objects[i]->getGlobalBounds().intersects(player->getGlobalBounds())) {
+			if (objects[i]->getGlobalBounds().findIntersection(player->getGlobalBounds()).has_value()) {
 				was_intersect = true;
 				object_available = objects[i]->getOType();
 				available_object = objects[i];
@@ -447,39 +450,39 @@
 	
 	void Level::updateEvents()
 	{
-		while (window->pollEvent(event))
+		while (const std::optional event = window->pollEvent())
 		{
-			if (event.type == Event::Closed) {
+			if (event->is<sf::Event::Closed>()) {
 				window->close();
 			}
-			if (event.type == Event::KeyReleased)
+			if (const auto* key = event->getIf<sf::Event::KeyReleased>())
 			{
-				if (event.key.code == Keyboard::D)
+				if (key->code == sf::Keyboard::Key::D)
 				{
 					player->resetAnimationTimer();
 				}
-				if (event.key.code == Keyboard::A)
+				if (key->code == sf::Keyboard::Key::A)
 				{
 					player->resetAnimationTimer();
 				}
-				if (event.key.code == Keyboard::W)
+				if (key->code == sf::Keyboard::Key::W)
 				{
 					player->resetAnimationTimer();
 					player->resetIsFlying();
 				}
-				if (event.key.code == Keyboard::S)
+				if (key->code == sf::Keyboard::Key::S)
 				{
 					player->resetAnimationTimer();
 				}
-				if (event.key.code == Keyboard::Space)
+				if (key->code == sf::Keyboard::Key::Space)
 				{
 					player->resetAnimationTimer();
 					player->resetNTHJump();
 				}
 			}
-			if (event.type == sf::Event::MouseWheelScrolled)
+			if (const auto* wheel = event->getIf<sf::Event::MouseWheelScrolled>())
 			{
-				if (event.mouseWheelScroll.delta > 0)
+				if (wheel->delta > 0)
 				{
 					player->change_weapon(1);
 					//player->changeHP(-1);
@@ -489,8 +492,8 @@
 					player->change_weapon(-1);
 				}
 			}
-			if (event.type == Event::KeyPressed) {
-				if (event.key.code == Keyboard::E) {
+			if (const auto* key = event->getIf<sf::Event::KeyPressed>()) {
+				if (key->code == sf::Keyboard::Key::E) {
 					if (object_available == OBJECT_TYPE::CHEST) {
 						std::cout << "chest" << std::endl;
 						available_object->useObject();
@@ -781,7 +784,7 @@
 	
 	void Level::start()
 	{
-		//if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		//if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 		//	int y = 0;
 		//}
 		game_state = GAME_STATE::CONTINUES;

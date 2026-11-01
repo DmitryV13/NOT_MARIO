@@ -17,7 +17,7 @@ void Chest::filled_in()
     bool access_ = true;
     while (fin >> name_ >> amount_ >> max_ >> index_ >> frame_numbers >> rectLeft >> rectTop >> rectWidth >> rectHeight)
     {
-        items.push_back(new WarehouseItem{ name_, amount_, max_, access_, index_, sf::IntRect(rectLeft, rectTop, rectWidth, rectHeight), frame_numbers });
+        items.push_back(new WarehouseItem{ name_, amount_, max_, access_, index_, sf::IntRect(sf::Vector2i(rectLeft, rectTop), sf::Vector2i(rectWidth, rectHeight)), frame_numbers });
     }
 
     fin.close();
@@ -66,11 +66,11 @@ void Chest::animation_object()
         if (animationTimer.getElapsedTime().asSeconds() >= animation_time)
         {
             sf::IntRect pos = object_S.getTextureRect();
-            pos.left += animation_factor;
+            pos.position.x += animation_factor;
 
-            if (pos.left >= animation_factor * animation_quantity)
+            if (pos.position.x >= animation_factor * animation_quantity)
             {
-                pos.left -= animation_factor;
+                pos.position.x -= animation_factor;
                 object_S.setTextureRect(pos);
                 return;
             }
@@ -83,11 +83,11 @@ void Chest::animation_object()
         if (animationTimer.getElapsedTime().asSeconds() >= animation_time)
         {
             sf::IntRect pos = object_S.getTextureRect();
-            pos.left -= animation_factor;
+            pos.position.x -= animation_factor;
 
-            if (pos.left < 0)
+            if (pos.position.x < 0)
             {
-                pos.left += animation_factor;
+                pos.position.x += animation_factor;
                 object_S.setTextureRect(pos);
                 return;
             }

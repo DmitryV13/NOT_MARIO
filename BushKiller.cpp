@@ -63,16 +63,16 @@ void BushKiller::init_texture()
 
 void BushKiller::init_sprite()
 {
-	current_area = IntRect(0, 0, 2000, 1500);
+	current_area = IntRect(sf::Vector2i(0, 0), sf::Vector2i(2000, 1500));
 	observation_area.setTextureRect(current_area);
 
 	anim_area.setTexture(bush_killer_t_);
-	standard_frame = IntRect(0, 0, 64, 64);
+	standard_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(64, 64));
 	anim_area.setTextureRect(standard_frame);
 
 
 	//Enemy_S.setTexture(bush_killer_t_);
-	current_frame = IntRect(0, 0, 60, 60);
+	current_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(60, 60));
 	Enemy_S.setTextureRect(current_frame);
 }
 
@@ -83,26 +83,26 @@ void BushKiller::update_animation()
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.15f || get_animation_switch())
 		{
-			standard_frame.top = 256.f;
+			standard_frame.position.y = 256.f;
 			if (looks_to_the_right)
 			{
-				standard_frame.left += 64;
-				if (standard_frame.left >= 256)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 256)
 				{
-					standard_frame.left = 0.f;
+					standard_frame.position.x = 0.f;
 				}
-				standard_frame.width = 64;
+				standard_frame.size.x = 64;
 			}
 			else
 			{
-				standard_frame.height = 64.f;
+				standard_frame.size.y = 64.f;
 
-				standard_frame.left += 64;
-				if (standard_frame.left >= 320	)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 320	)
 				{
-					standard_frame.left = 64.f;
+					standard_frame.position.x = 64.f;
 				}
-				standard_frame.width = -64.f;
+				standard_frame.size.x = -64.f;
 			}
 
 			anim_area.setTextureRect(standard_frame);
@@ -113,27 +113,27 @@ void BushKiller::update_animation()
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.2f || get_animation_switch())
 		{
-			standard_frame.top = 320.f;
+			standard_frame.position.y = 320.f;
 
 			if (looks_to_the_right)
 			{
-				standard_frame.left += 64;
-				if (standard_frame.left >= 384)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 384)
 				{
-					standard_frame.left = 0.f;
+					standard_frame.position.x = 0.f;
 				}
-				standard_frame.width = 64;
+				standard_frame.size.x = 64;
 			}
 			else
 			{
-				standard_frame.height = 64.f;
+				standard_frame.size.y = 64.f;
 
-				standard_frame.left += 64;
-				if (standard_frame.left >= 448)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 448)
 				{
-					standard_frame.left = 64.f;
+					standard_frame.position.x = 64.f;
 				}
-				standard_frame.width = -64.f;
+				standard_frame.size.x = -64.f;
 			}
 
 			anim_area.setTextureRect(standard_frame);
@@ -146,27 +146,27 @@ void BushKiller::update_animation()
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.5f || get_animation_switch())
 		{
-			standard_frame.top = 0.f;
+			standard_frame.position.y = 0.f;
 
 			if (looks_to_the_right)
 			{
-				standard_frame.left += 64;
-				if (standard_frame.left >= 384)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 384)
 				{
-					standard_frame.left = 0.f;
+					standard_frame.position.x = 0.f;
 				}
-				standard_frame.width = 64;
+				standard_frame.size.x = 64;
 			}
 			else
 			{
-				standard_frame.height = 64.f;
+				standard_frame.size.y = 64.f;
 
-				standard_frame.left += 64;
-				if (standard_frame.left >= 448)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 448)
 				{
-					standard_frame.left = 64.f;
+					standard_frame.position.x = 64.f;
 				}
-				standard_frame.width = -64.f;
+				standard_frame.size.x = -64.f;
 			}
 
 			anim_area.setTextureRect(standard_frame);
@@ -177,27 +177,27 @@ void BushKiller::update_animation()
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
-			standard_frame.top = 192.f;
+			standard_frame.position.y = 192.f;
 
 			if (looks_to_the_right)
 			{
-				standard_frame.left += 64;
-				if (standard_frame.left >= 256)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 256)
 				{
-					standard_frame.left = 192.f;
+					standard_frame.position.x = 192.f;
 				}
-				standard_frame.width = 64;
+				standard_frame.size.x = 64;
 			}
 			else
 			{
-				standard_frame.height = 64.f;
+				standard_frame.size.y = 64.f;
 
-				standard_frame.left += 64;
-				if (standard_frame.left >= 320)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 320)
 				{
-					standard_frame.left = 256.f;
+					standard_frame.position.x = 256.f;
 				}
-				standard_frame.width = -64.f;
+				standard_frame.size.x = -64.f;
 			}
 
 			anim_area.setTextureRect(standard_frame);
@@ -208,27 +208,27 @@ void BushKiller::update_animation()
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
-			standard_frame.top = 384.F;
+			standard_frame.position.y = 384.F;
 
 			if (looks_to_the_right)
 			{
-				standard_frame.left += 64;
-				if (standard_frame.left >= 320)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 320)
 				{
-					standard_frame.left = 256.f;
+					standard_frame.position.x = 256.f;
 				}
-				standard_frame.width = 64;
+				standard_frame.size.x = 64;
 			}
 			else
 			{
-				standard_frame.height = 64.f;
+				standard_frame.size.y = 64.f;
 
-				standard_frame.left += 64;
-				if (standard_frame.left >= 384)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 384)
 				{
-					standard_frame.left = 320.f;
+					standard_frame.position.x = 320.f;
 				}
-				standard_frame.width = -64.f;
+				standard_frame.size.x = -64.f;
 			}
 
 			anim_area.setTextureRect(standard_frame);
@@ -239,27 +239,27 @@ void BushKiller::update_animation()
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
-			standard_frame.top = 448.F;
+			standard_frame.position.y = 448.F;
 
 			if (looks_to_the_right)
 			{
-				standard_frame.left += 64;
-				if (standard_frame.left >= 256)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 256)
 				{
-					standard_frame.left = 0.f;
+					standard_frame.position.x = 0.f;
 				}
-				standard_frame.width = 64;
+				standard_frame.size.x = 64;
 			}
 			else
 			{
-				standard_frame.height = 64.f;
+				standard_frame.size.y = 64.f;
 
-				standard_frame.left += 64;
-				if (standard_frame.left >= 320)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 320)
 				{
-					standard_frame.left = 64.f;
+					standard_frame.position.x = 64.f;
 				}
-				standard_frame.width = -64.f;
+				standard_frame.size.x = -64.f;
 			}
 
 			anim_area.setTextureRect(standard_frame);
@@ -270,27 +270,27 @@ void BushKiller::update_animation()
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
-			standard_frame.top = 128.f;
+			standard_frame.position.y = 128.f;
 
 			if (looks_to_the_right)
 			{
-				standard_frame.left += 64;
-				if (standard_frame.left >= 256)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 256)
 				{
-					standard_frame.left = 0.f;
+					standard_frame.position.x = 0.f;
 				}
-				standard_frame.width = 64;
+				standard_frame.size.x = 64;
 			}
 			else
 			{
-				standard_frame.height = 64.f;
+				standard_frame.size.y = 64.f;
 
-				standard_frame.left += 64;
-				if (standard_frame.left >= 320)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 320)
 				{
-					standard_frame.left = 64.f;
+					standard_frame.position.x = 64.f;
 				}
-				standard_frame.width = -64.f;
+				standard_frame.size.x = -64.f;
 			}
 
 			anim_area.setTextureRect(standard_frame);
@@ -301,27 +301,27 @@ void BushKiller::update_animation()
 	{
 		if (animation_timer.getElapsedTime().asSeconds() >= 0.1f || get_animation_switch())
 		{
-			standard_frame.top = 64.F;
+			standard_frame.position.y = 64.F;
 
 			if (looks_to_the_right)
 			{
-				standard_frame.left += 64;
-				if (standard_frame.left >= 384)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 384)
 				{
-					standard_frame.left = 320.f;
+					standard_frame.position.x = 320.f;
 				}
-				standard_frame.width = 64;
+				standard_frame.size.x = 64;
 			}
 			else
 			{
-				standard_frame.height = 64.f;
+				standard_frame.size.y = 64.f;
 
-				standard_frame.left += 64;
-				if (standard_frame.left >= 448)
+				standard_frame.position.x += 64;
+				if (standard_frame.position.x >= 448)
 				{
-					standard_frame.left = 384.f;
+					standard_frame.position.x = 384.f;
 				}
-				standard_frame.width = -64.f;
+				standard_frame.size.x = -64.f;
 			}
 
 			anim_area.setTextureRect(standard_frame);
@@ -352,12 +352,12 @@ void BushKiller::reset_Timer()
 		//looks();
 		if (looks_to_the_right)
 		{
-			standard_frame.left = 0.f;
+			standard_frame.position.x = 0.f;
 			animation_timer.restart();
 		}
 		else
 		{
-			standard_frame.left = 64.f;
+			standard_frame.position.x = 64.f;
 			animation_timer.restart();
 		}
 		animation_state_past = animation_state;
@@ -368,7 +368,7 @@ bool BushKiller::outside_sting()
 {
 	FloatRect en = get_global_bounds_anim();
 	FloatRect pl = player_info->getGlobalBounds();
-	return en.intersects(pl);
+	return en.findIntersection(pl).has_value();
 }
 
 void BushKiller::looks()
@@ -438,10 +438,10 @@ void BushKiller::attack()
 {
 	if (leaf_spawn.getElapsedTime().asSeconds() >= .4f) {
 		vector<float> cord;
-		cord.push_back(get_position().x+get_global_bounds().width/2);
-		cord.push_back(get_position().y+get_global_bounds().height/2 + 10);
-		cord.push_back(player_info->getPosition().x+player_info->getGlobalBounds().width/2);
-		cord.push_back(player_info->getPosition().y+player_info->getGlobalBounds().height/2);
+		cord.push_back(get_position().x+get_global_bounds().size.x /2);
+		cord.push_back(get_position().y+get_global_bounds().size.y /2 + 10);
+		cord.push_back(player_info->getPosition().x+player_info->getGlobalBounds().size.x/2);
+		cord.push_back(player_info->getPosition().y+player_info->getGlobalBounds().size.y/2);
 		killer_leaf_SH.push_back(new killer_leaf(*sandbox, cord, player_info));
 		leaf_spawn.restart();
 	}
@@ -663,7 +663,7 @@ bool BushKiller::search_for_enemies()
 
 	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
 	//looks();
-	if (look.intersects(pl))
+	if (look.findIntersection(pl).has_value())
 	{
 		return true;
 	}

@@ -40,7 +40,6 @@ private:
 	TextureManager* t_manager;
 	Warehouse* warehouse;
 
-	Event event;
 	Player* player;
 	TileMap sandbox;
 	MyView myView;

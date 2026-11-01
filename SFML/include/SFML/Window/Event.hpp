@@ -62,7 +62,7 @@ public:
     struct KeyEvent
     {
         Keyboard::Key code;          //!< Code of the key that has been pressed
-        Keyboard::Scancode scancode; //!< Physical code of the key that has been pressed
+        sf::Keyboard::Key::Scancode scancode; //!< Physical code of the key that has been pressed
         bool          alt;           //!< Is the Alt key pressed?
         bool          control;       //!< Is the Control key pressed?
         bool          shift;         //!< Is the Shift key pressed?
@@ -271,12 +271,12 @@ public:
 ///         window.close();
 ///
 ///     // The escape key was pressed
-///     if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape))
+///     if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Key::Escape))
 ///         window.close();
 ///
 ///     // The window was resized
 ///     if (event.type == sf::Event::Resized)
-///         doSomethingWithTheNewSize(event.size.width, event.size.height);
+///         doSomethingWithTheNewSize(event.size.size.x, event.size.size.y);
 ///
 ///     // etc ...
 /// }

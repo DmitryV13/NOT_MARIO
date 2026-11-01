@@ -397,8 +397,8 @@ public:
     ///
     /// \return The scancode corresponding to the key under the current
     ///         keyboard layout used by the operating system, or
-    ///         sf::Keyboard::Scan::Unknown when the key cannot be mapped
-    ///         to a sf::Keyboard::Scancode.
+    ///         sf::Keyboard::Key::Scan::Unknown when the key cannot be mapped
+    ///         to a sf::Keyboard::Key::Scancode.
     ///
     /// \see localize
     ///
@@ -413,12 +413,12 @@ public:
     /// used in user interfaces, as the description for the key takes
     /// the users keyboard layout into consideration.
     ///
-    /// \warning The result is OS-dependent: for example, sf::Keyboard::Scan::LSystem
+    /// \warning The result is OS-dependent: for example, sf::Keyboard::Key::Scan::LSystem
     ///          is "Left Meta" on Linux, "Left Windows" on Windows and
     ///          "Left Command" on macOS.
     ///
     /// The current keyboard layout set by the operating system is used to
-    /// interpret the scancode: for example, sf::Keyboard::Semicolon is
+    /// interpret the scancode: for example, sf::Keyboard::Key::Semicolon is
     /// mapped to ";" for layout and to "é" for others.
     ///
     /// \return The localized description of the code
@@ -476,11 +476,11 @@ public:
 /// {
 ///     // move right...
 /// }
-/// else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+/// else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
 /// {
 ///     // quit...
 /// }
-/// else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Grave))
+/// else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Scan::Grave))
 /// {
 ///     // open in-game command line (if it's not already open)
 /// }

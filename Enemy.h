@@ -1,4 +1,5 @@
 #pragma once
+#include "Global/Global.hpp"
 
 #include "Map.h"
 #include "TileMap.h"
@@ -53,9 +54,9 @@ protected:
 	GeneralInfo* player_info;
 
 	Texture Enemy_T;
-	Sprite Enemy_S;
-	Sprite observation_area;
-	Sprite anim_area;
+	Sprite Enemy_S{ Global::dummyTexture };
+	Sprite observation_area{ Global::dummyTexture };
+	Sprite anim_area{ Global::dummyTexture };
 	IntRect current_frame;
 	IntRect current_area;
 	IntRect standard_frame;

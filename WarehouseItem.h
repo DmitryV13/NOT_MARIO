@@ -4,7 +4,7 @@ using namespace::sf;
 
 class WarehouseItem{
 private:
-	int amount;//кол-во
+	int amount;//пїЅпїЅпїЅ-пїЅпїЅ
 	int max;// = 0
 	bool access;//true
 

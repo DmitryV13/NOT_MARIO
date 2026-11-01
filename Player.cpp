@@ -39,16 +39,16 @@
 
     void Player::initSprite(){
         player_S.setTexture(player_T);
-        currentFrame = IntRect(2, 80, 48, 70);
+        currentFrame = IntRect(sf::Vector2i(2, 80), sf::Vector2i(48, 70));
         player_S.setTextureRect(currentFrame);
         //initial position
-        player_S.setPosition(10, 10);
+        player_S.setPosition(sf::Vector2f(10, 10));
 
     }
 
     void Player::initSprite(Vector2f position){
         player_S.setTexture(player_T);
-        currentFrame = IntRect(2, 80, 48, 70);
+        currentFrame = IntRect(sf::Vector2i(2, 80), sf::Vector2i(48, 70));
         player_S.setTextureRect(currentFrame);
         //initial position
         player_S.setPosition(position);
@@ -97,9 +97,9 @@
         if (info->getHP() <= 0) {
             alive = false;
             animationState == PLAYER_ANIMATION_STATES::DEAD;
-            currentFrame.top = 303;
-            currentFrame.left = 288;
-            currentFrame.width = 48;
+            currentFrame.position.y = 303;
+            currentFrame.position.x = 288;
+            currentFrame.size.x = 48;
             animationTimer.restart();
             player_S.setTextureRect(currentFrame);
         }
@@ -234,38 +234,38 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
             animationState = PLAYER_ANIMATION_STATES::IDLE_LEFT;
         }
 
-        if (Keyboard::isKeyPressed(Keyboard::D)) {
+        if (Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
             movingDirection = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
             walk(14.f);
             animationState = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
         }
-        else if (Keyboard::isKeyPressed(Keyboard::A)) {
+        else if (Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
             movingDirection = PLAYER_ANIMATION_STATES::MOVING_LEFT;
             walk(-14.f);
             animationState = PLAYER_ANIMATION_STATES::MOVING_LEFT;
         }
 
-        if (Keyboard::isKeyPressed(Keyboard::W)) {
+        if (Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
             onGround = false;
             isJumping = false;
             fly(-1.4f);
             animationState = PLAYER_ANIMATION_STATES::MOVING_UP;
         }
-        else if (Keyboard::isKeyPressed(Keyboard::S)) {
+        else if (Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
             //untill water will be done it won't have implementation
             
             //move(0.f, 1.f);
             //animationState = PLAYER_ANIMATION_STATES::MOVING_DOWN;
         }
-        if (Keyboard::isKeyPressed(Keyboard::Space)) {
+        if (Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
             jump(-20.0f);
         }
-        if (Mouse::isButtonPressed(Mouse::Left)) {
+        if (Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
             //std::cout << player_S.getPosition().x << " " << getPosition().y << std::endl;
             if (chosen_weapon < weapons.size())
                 weapons[chosen_weapon]->attack(movingDirection, Vector2f(Mouse::getPosition(*window)), view_cords, true);
         }
-        if (!Mouse::isButtonPressed(Mouse::Left)) {
+        if (!Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
             if (chosen_weapon < weapons.size())
                 weapons[chosen_weapon]->attack(movingDirection, Vector2f(Mouse::getPosition(*window)), view_cords, false);
             
@@ -276,24 +276,24 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
     void Player::updateAnimation(){
         if (animationState == PLAYER_ANIMATION_STATES::IDLE_LEFT) {
             if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
-                currentFrame.top = 80;
-                currentFrame.left += 48;
-                if (currentFrame.left >= 336.f) {
-                    currentFrame.left = 48.f;
+                currentFrame.position.y = 80;
+                currentFrame.position.x += 48;
+                if (currentFrame.position.x >= 336.f) {
+                    currentFrame.position.x = 48.f;
                 }
-                currentFrame.width = -48;
+                currentFrame.size.x = -48;
                 animationTimer.restart();
                 player_S.setTextureRect(currentFrame);
             }
         }else
             if(animationState == PLAYER_ANIMATION_STATES::IDLE_RIGHT) {
                 if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
-                    currentFrame.top = 80;
-                    currentFrame.left += 48;
-                    if (currentFrame.left >= 288.f) {
-                        currentFrame.left = 0.f;
+                    currentFrame.position.y = 80;
+                    currentFrame.position.x += 48;
+                    if (currentFrame.position.x >= 288.f) {
+                        currentFrame.position.x = 0.f;
                     }
-                    currentFrame.width = 48;
+                    currentFrame.size.x = 48;
                     animationTimer.restart();
                     player_S.setTextureRect(currentFrame);
                 }
@@ -301,24 +301,24 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         else 
         if (animationState == PLAYER_ANIMATION_STATES::MOVING_RIGHT) {
             if (animationTimer.getElapsedTime().asSeconds() >= 0.05f || getAnimationSwitch()) {
-                currentFrame.top = 160;
-                currentFrame.left += 48;
-                if (currentFrame.left >= 288.f) {
-                    currentFrame.left = 0.f;
+                currentFrame.position.y = 160;
+                currentFrame.position.x += 48;
+                if (currentFrame.position.x >= 288.f) {
+                    currentFrame.position.x = 0.f;
                 }
-                currentFrame.width = 48;
+                currentFrame.size.x = 48;
                 player_S.setTextureRect(currentFrame);
                 animationTimer.restart();
             }
         }
         else if (animationState == PLAYER_ANIMATION_STATES::MOVING_LEFT) {
             if (animationTimer.getElapsedTime().asSeconds() >= 0.05f || getAnimationSwitch()) {
-                currentFrame.top = 160;
-                currentFrame.left -= 48;
-                if (currentFrame.left <= 0.f) {
-                    currentFrame.left = 288.f;
+                currentFrame.position.y = 160;
+                currentFrame.position.x -= 48;
+                if (currentFrame.position.x <= 0.f) {
+                    currentFrame.position.x = 288.f;
                 }
-                currentFrame.width = -48;
+                currentFrame.size.x = -48;
                 player_S.setTextureRect(currentFrame);
                 animationTimer.restart();
             }
@@ -329,24 +329,24 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         else if (animationState == PLAYER_ANIMATION_STATES::MOVING_UP) {
             if (movingDirection==PLAYER_ANIMATION_STATES::MOVING_RIGHT) {
                 if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
-                    currentFrame.top = 240;
-                    currentFrame.left += 48;
-                    if (currentFrame.left >= 288.f) {
-                        currentFrame.left = 0.f;
+                    currentFrame.position.y = 240;
+                    currentFrame.position.x += 48;
+                    if (currentFrame.position.x >= 288.f) {
+                        currentFrame.position.x = 0.f;
                     }
-                    currentFrame.width = 48;
+                    currentFrame.size.x = 48;
                     animationTimer.restart();
                     player_S.setTextureRect(currentFrame);
                 }
             }
             else {
                 if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
-                    currentFrame.top = 240;
-                    currentFrame.left += 48;
-                    if (currentFrame.left >= 336.f) {
-                        currentFrame.left = 48.f;
+                    currentFrame.position.y = 240;
+                    currentFrame.position.x += 48;
+                    if (currentFrame.position.x >= 336.f) {
+                        currentFrame.position.x = 48.f;
                     }
-                    currentFrame.width = -48;
+                    currentFrame.size.x = -48;
                     animationTimer.restart();
                     player_S.setTextureRect(currentFrame);
                 }
@@ -354,9 +354,9 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         }
         //else if (animationState == PLAYER_ANIMATION_STATES::MOVING_DOWN) {
         //    if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
-        //        currentFrame.left += 75;
-        //        if (currentFrame.left >= 450.f) {
-        //            currentFrame.left = 0.f;
+        //        currentFrame.position.x += 75;
+        //        if (currentFrame.position.x >= 450.f) {
+        //            currentFrame.position.x = 0.f;
         //        }
         //
         //        animationTimer.restart();
@@ -365,9 +365,9 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         //}
         //else if (animationState == PLAYER_ANIMATION_STATES::JUMPING) {
         //    if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
-        //        currentFrame.left += 75;
-        //        if (currentFrame.left >= 450.f) {
-        //            currentFrame.left = 0.f;
+        //        currentFrame.position.x += 75;
+        //        if (currentFrame.position.x >= 450.f) {
+        //            currentFrame.position.x = 0.f;
         //        }
         //
         //        animationTimer.restart();
@@ -376,9 +376,9 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         //}
         //else if (animationState == PLAYER_ANIMATION_STATES::FALLING) {
         //    if (animationTimer.getElapsedTime().asSeconds() >= 0.2f || getAnimationSwitch()) {
-        //        currentFrame.left += 75;
-        //        if (currentFrame.left >= 450.f) {
-        //            currentFrame.left = 0.f;
+        //        currentFrame.position.x += 75;
+        //        if (currentFrame.position.x >= 450.f) {
+        //            currentFrame.position.x = 0.f;
         //        }
         //
         //        animationTimer.restart();
@@ -427,9 +427,9 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         if (info->getHP() <= 0) {
             alive = false;
             animationState = PLAYER_ANIMATION_STATES::DEAD;
-            currentFrame.top = 320;
-            currentFrame.left = 288;
-            currentFrame.width = 48;
+            currentFrame.position.y = 320;
+            currentFrame.position.x = 288;
+            currentFrame.size.x = 48;
             animationTimer.restart();
             player_S.setTextureRect(currentFrame);
         }
@@ -438,12 +438,12 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
     bool Player::updateCollisionX(){
         bool wasCollision = false;
         Vector2f newPosition(getPosition().x, getPosition().y);
-        for (int i = player_S.getPosition().y / 64; i < (player_S.getPosition().y + player_S.getGlobalBounds().height) / 64; i++) {
-            for (int j = (player_S.getPosition().x + info->getVelocity().x) / 64; j < (player_S.getPosition().x + info->getVelocity().x + player_S.getGlobalBounds().width) / 64; j++) {
+        for (int i = player_S.getPosition().y / 64; i < (player_S.getPosition().y + player_S.getGlobalBounds().size.y) / 64; i++) {
+            for (int j = (player_S.getPosition().x + info->getVelocity().x) / 64; j < (player_S.getPosition().x + info->getVelocity().x + player_S.getGlobalBounds().size.x) / 64; j++) {
                 if (sandbox->isBlock(i, j)) {
                     if (info->getVelocity().x > 0) {
                         wasCollision = true;
-                        newPosition.x = j * sandbox->getSizeTexture() - player_S.getGlobalBounds().width;
+                        newPosition.x = j * sandbox->getSizeTexture() - player_S.getGlobalBounds().size.x;
                     }
                     if (info->getVelocity().x < 0) {
                         wasCollision = true;
@@ -453,7 +453,7 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
                 //std::cout << sandbox->getInteraction(i, j) << std::endl;
             }
         }
-        player_S.setPosition(newPosition.x, newPosition.y);
+        player_S.setPosition(sf::Vector2f(newPosition.x, newPosition.y));
         return wasCollision;
     }
     
@@ -461,12 +461,12 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         bool wasCollision = false;
         Vector2f newPosition(player_S.getPosition().x, player_S.getPosition().y);
         
-        for (int i = (player_S.getPosition().y + info->getVelocity().y) / 64; i < (player_S.getPosition().y + info->getVelocity().y + player_S.getGlobalBounds().height) / 64; i++) {
-            for (int j = player_S.getPosition().x / 64; j < (player_S.getPosition().x + player_S.getGlobalBounds().width) / 64; j++) {
+        for (int i = (player_S.getPosition().y + info->getVelocity().y) / 64; i < (player_S.getPosition().y + info->getVelocity().y + player_S.getGlobalBounds().size.y) / 64; i++) {
+            for (int j = player_S.getPosition().x / 64; j < (player_S.getPosition().x + player_S.getGlobalBounds().size.x) / 64; j++) {
                 if (sandbox->isBlock(i, j)) {
                     if (info->getVelocity().y > 0) {
                         wasCollision = true;
-                        newPosition.y = (i * sandbox->getSizeTexture() - player_S.getGlobalBounds().height);
+                        newPosition.y = (i * sandbox->getSizeTexture() - player_S.getGlobalBounds().size.y);
                         resetJumpAccess();
                     }
                     if (info->getVelocity().y < 0) {
@@ -482,11 +482,11 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
     }
 
     void Player::updateCollision() {
-        if ((getPosition().y + info->getVelocity().y + getGlobalBounds().height) > sandbox->getMapHeight()) {
+        if ((getPosition().y + info->getVelocity().y + getGlobalBounds().size.y) > sandbox->getMapHeight()) {
             resetVelocityY();
             setPosition(
                 getPosition().x,
-                sandbox->getMapHeight() - getGlobalBounds().height);
+                sandbox->getMapHeight() - getGlobalBounds().size.y);
             info->setVelocityY(0.f);
             resetJumpAccess();
         }
@@ -496,9 +496,9 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
                 0);
             info->setVelocityY(0.f);
         }
-        if ((getPosition().x + info->getVelocity().x + getGlobalBounds().width) > sandbox->getMapWidth()) {
+        if ((getPosition().x + info->getVelocity().x + getGlobalBounds().size.x) > sandbox->getMapWidth()) {
             setPosition(
-                sandbox->getMapWidth() - getGlobalBounds().width,
+                sandbox->getMapWidth() - getGlobalBounds().size.x,
                 getPosition().y);
             info->setVelocityX(0.f);
         }
@@ -563,7 +563,7 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
     //}
 
     void Player::setPosition(const float x, const float y) {
-        player_S.setPosition(x, y);
+        player_S.setPosition(sf::Vector2f(x, y));
     }
 
     void Player::resetVelocityY() {

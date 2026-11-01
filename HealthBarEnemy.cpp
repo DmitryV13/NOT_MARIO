@@ -12,13 +12,13 @@ void HealthBarEnemy::init_texture()
 void HealthBarEnemy::init_sprite()
 {
 	HealthBarEnemy_S_.setTexture(HealthBarEnemy_t_);
-	standard_frame = IntRect(0, 0, 90, 13);
+	standard_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(90, 13));
 	HealthBarEnemy_S_.setTextureRect(standard_frame);
 }
 
 void HealthBarEnemy::set_position(const float x, const float y)
 {
-	HealthBarEnemy_S_.setPosition(x, y);
+	HealthBarEnemy_S_.setPosition(sf::Vector2f(x, y));
 }
 
 HealthBarEnemy::HealthBarEnemy()
@@ -42,10 +42,10 @@ void HealthBarEnemy::update_animation()
 		while (healthPercentage > procent)
 		{
 			procent += 0.0833333333f;
-			standard_frame.top += 14;
-			standard_frame.left = 0.f;
-			standard_frame.height = 14.f;
-			standard_frame.width = 90.f;
+			standard_frame.position.y += 14;
+			standard_frame.position.x = 0.f;
+			standard_frame.size.y = 14.f;
+			standard_frame.size.x = 90.f;
 
 			HealthBarEnemy_S_.setTextureRect(standard_frame);
 		}
@@ -70,11 +70,9 @@ void HealthBarEnemy::setHP_cur(short HP)
 
 void HealthBarEnemy::update(Sprite sp_en)
 {
-	HealthBarEnemy_S_.setPosition(
-		sp_en.getPosition().x - (HealthBarEnemy_S_.getGlobalBounds().width - (HealthBarEnemy_S_.getGlobalBounds().width
+	HealthBarEnemy_S_.setPosition(sf::Vector2f(sp_en.getPosition().x - (HealthBarEnemy_S_.getGlobalBounds().size.x - (HealthBarEnemy_S_.getGlobalBounds().size.x
 			/ 2) - (sp_en.
-			        getGlobalBounds().width / 2)),
-		(sp_en.getPosition().y - (HealthBarEnemy_S_.getGlobalBounds().height)));
+			        getGlobalBounds().size.x / 2)), (sp_en.getPosition().y - (HealthBarEnemy_S_.getGlobalBounds().size.y))));
 
 	update_animation();
 }

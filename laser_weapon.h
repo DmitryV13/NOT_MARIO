@@ -1,4 +1,5 @@
 #pragma once
+#include "Global/Global.hpp"
 #include "Map.h"
 #include "TileMap.h"
 #include "GeneralInfo.h"
@@ -24,8 +25,8 @@ protected:
 	TileMap* sandbox;
 	short attack;
 	Texture laser_T;
-	Sprite laser_S;
-	Sprite laser_area;
+	Sprite laser_S{ Global::dummyTexture };
+	Sprite laser_area{ Global::dummyTexture };
 	IntRect current_frame;
 	Clock animation_timer;
 	Clock laser_timer;

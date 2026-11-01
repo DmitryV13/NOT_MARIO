@@ -1,4 +1,5 @@
 #pragma once
+#include "Global/Global.hpp"
 
 #include "TileMap.h"
 #include "kusaka.h"
@@ -13,7 +14,7 @@ private:
 	TileMap* sandbox;
 
 	Texture projectile_T;
-	Sprite projectile_S;
+	Sprite projectile_S{ Global::dummyTexture };
 
 	vector<vector<Enemy*>*> enemies;
 

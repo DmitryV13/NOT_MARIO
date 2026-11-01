@@ -368,3 +368,6 @@ FodyWeavers.xsd
 /Weapon.cpp
 /Sword.cpp
 /Weapon.h
+
+# Deprecated SFML Files
+/SFML

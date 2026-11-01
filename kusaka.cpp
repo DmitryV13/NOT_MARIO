@@ -50,19 +50,19 @@ void kusaka::init_texture()
 
 void kusaka::init_sprite()
 {
-	current_area = IntRect(0, 0, 1280, 192);
+	current_area = IntRect(sf::Vector2i(0, 0), sf::Vector2i(1280, 192));
 	observation_area.setTextureRect(current_area);
 
 
 	anim_area.setTexture(kusaka_t_);
-	standard_frame = IntRect(0, 0, 90, 55);
+	standard_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(90, 55));
 	anim_area.setTextureRect(standard_frame);
 
 
 
 	//Enemy_T = init_texture();
 	//Enemy_S.setTexture(kusaka_t_);
-	current_frame = IntRect(0, 0, 64, 55);
+	current_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(64, 55));
 	Enemy_S.setTextureRect(current_frame);
 }
 
@@ -75,23 +75,23 @@ void kusaka::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				standard_frame.left += 90;
-				if (standard_frame.left >= 810.f)
+				standard_frame.position.x += 90;
+				if (standard_frame.position.x >= 810.f)
 				{
-					standard_frame.left = 0.f;
+					standard_frame.position.x = 0.f;
 				}
-				standard_frame.width = 90;
-				standard_frame.top = 0;
+				standard_frame.size.x = 90;
+				standard_frame.position.y = 0;
 			}
 			else
 			{
-				standard_frame.left += 90;
-				if (standard_frame.left >= 900.f)
+				standard_frame.position.x += 90;
+				if (standard_frame.position.x >= 900.f)
 				{
-					standard_frame.left = 90.f;
+					standard_frame.position.x = 90.f;
 				}
-				standard_frame.width = -90;
-				standard_frame.top = 0;
+				standard_frame.size.x = -90;
+				standard_frame.position.y = 0;
 			}
 
 			anim_area.setTextureRect(standard_frame);
@@ -104,23 +104,23 @@ void kusaka::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				standard_frame.left += 90;
-				if (standard_frame.left >= 450.f)
+				standard_frame.position.x += 90;
+				if (standard_frame.position.x >= 450.f)
 				{
-					standard_frame.left = 0.f;
+					standard_frame.position.x = 0.f;
 				}
-				standard_frame.width = 90;
-				standard_frame.top = 281;
+				standard_frame.size.x = 90;
+				standard_frame.position.y = 281;
 			}
 			else
 			{
-				standard_frame.left += 90;
-				if (standard_frame.left >= 540.f)
+				standard_frame.position.x += 90;
+				if (standard_frame.position.x >= 540.f)
 				{
-					standard_frame.left = 90.f;
+					standard_frame.position.x = 90.f;
 				}
-				standard_frame.width = -90;
-				standard_frame.top = 281;
+				standard_frame.size.x = -90;
+				standard_frame.position.y = 281;
 			}
 
 			anim_area.setTextureRect(standard_frame);
@@ -133,23 +133,23 @@ void kusaka::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				standard_frame.left += 90;
-				if (standard_frame.left >= 810.f)
+				standard_frame.position.x += 90;
+				if (standard_frame.position.x >= 810.f)
 				{
-					standard_frame.left = 0.f;
+					standard_frame.position.x = 0.f;
 				}
-				standard_frame.width = 90;
-				standard_frame.top = 0;
+				standard_frame.size.x = 90;
+				standard_frame.position.y = 0;
 			}
 			else
 			{
-				standard_frame.left += 90;
-				if (standard_frame.left >= 900.f)
+				standard_frame.position.x += 90;
+				if (standard_frame.position.x >= 900.f)
 				{
-					standard_frame.left = 90.f;
+					standard_frame.position.x = 90.f;
 				}
-				standard_frame.width = -90;
-				standard_frame.top = 0;
+				standard_frame.size.x = -90;
+				standard_frame.position.y = 0;
 			}
 
 			anim_area.setTextureRect(standard_frame);
@@ -163,23 +163,23 @@ void kusaka::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				standard_frame.left += 90;
-				if (standard_frame.left >= 810.f)
+				standard_frame.position.x += 90;
+				if (standard_frame.position.x >= 810.f)
 				{
-					standard_frame.left = 90.f;
+					standard_frame.position.x = 90.f;
 				}
-				standard_frame.width = 90;
-				standard_frame.top = 70;
+				standard_frame.size.x = 90;
+				standard_frame.position.y = 70;
 			}
 			else
 			{
-				standard_frame.left += 90;
-				if (standard_frame.left >= 900.f)
+				standard_frame.position.x += 90;
+				if (standard_frame.position.x >= 900.f)
 				{
-					standard_frame.left = 90.f;
+					standard_frame.position.x = 90.f;
 				}
-				standard_frame.width = -90;
-				standard_frame.top = 70;
+				standard_frame.size.x = -90;
+				standard_frame.position.y = 70;
 			}
 
 
@@ -193,29 +193,29 @@ void kusaka::update_animation()
 		{
 			if (count_shot == 0)
 			{
-				standard_frame.left = 0.f;
+				standard_frame.position.x = 0.f;
 			}
 			count_shot++;
 
 			if (looks_to_the_right)
 			{
-				standard_frame.left += 90;
-				if (standard_frame.left >= 810.f)
+				standard_frame.position.x += 90;
+				if (standard_frame.position.x >= 810.f)
 				{
-					standard_frame.left = 0.f;
+					standard_frame.position.x = 0.f;
 				}
-				standard_frame.width = 90;
-				standard_frame.top = 70;
+				standard_frame.size.x = 90;
+				standard_frame.position.y = 70;
 			}
 			else
 			{
-				standard_frame.left += 90;
-				if (standard_frame.left >= 900.f)
+				standard_frame.position.x += 90;
+				if (standard_frame.position.x >= 900.f)
 				{
-					standard_frame.left = 90.f;
+					standard_frame.position.x = 90.f;
 				}
-				standard_frame.width = -90;
-				standard_frame.top = 70;
+				standard_frame.size.x = -90;
+				standard_frame.position.y = 70;
 			}
 
 			anim_area.setTextureRect(standard_frame);
@@ -229,23 +229,23 @@ void kusaka::update_animation()
 			animation_counter_think--;
 			if (looks_to_the_right)
 			{
-				standard_frame.left += 90;
-				if (standard_frame.left >= 810.f)
+				standard_frame.position.x += 90;
+				if (standard_frame.position.x >= 810.f)
 				{
-					standard_frame.left = 0.f;
+					standard_frame.position.x = 0.f;
 				}
-				standard_frame.width = 90;
-				standard_frame.top = 140;
+				standard_frame.size.x = 90;
+				standard_frame.position.y = 140;
 			}
 			else
 			{
-				standard_frame.left += 90;
-				if (standard_frame.left >= 900.f)
+				standard_frame.position.x += 90;
+				if (standard_frame.position.x >= 900.f)
 				{
-					standard_frame.left = 90.f;
+					standard_frame.position.x = 90.f;
 				}
-				standard_frame.width = -90;
-				standard_frame.top = 140;
+				standard_frame.size.x = -90;
+				standard_frame.position.y = 140;
 			}
 
 
@@ -259,23 +259,23 @@ void kusaka::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				standard_frame.left += 90;
-				if (standard_frame.left >= 450.f)
+				standard_frame.position.x += 90;
+				if (standard_frame.position.x >= 450.f)
 				{
-					standard_frame.left = 360.f;
+					standard_frame.position.x = 360.f;
 				}
-				standard_frame.width = 90;
-				standard_frame.top = 350;
+				standard_frame.size.x = 90;
+				standard_frame.position.y = 350;
 			}
 			else
 			{
-				standard_frame.left += 90;
-				if (standard_frame.left >= 540.f)
+				standard_frame.position.x += 90;
+				if (standard_frame.position.x >= 540.f)
 				{
-					standard_frame.left = 450.f;
+					standard_frame.position.x = 450.f;
 				}
-				standard_frame.width = -90;
-				standard_frame.top = 350;
+				standard_frame.size.x = -90;
+				standard_frame.position.y = 350;
 			}
 
 			anim_area.setTextureRect(standard_frame);
@@ -288,23 +288,23 @@ void kusaka::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				standard_frame.left += 90;
-				if (standard_frame.left >= 810.f)
+				standard_frame.position.x += 90;
+				if (standard_frame.position.x >= 810.f)
 				{
-					standard_frame.left = 0.f;
+					standard_frame.position.x = 0.f;
 				}
-				standard_frame.width = 90;
-				standard_frame.top = 0;
+				standard_frame.size.x = 90;
+				standard_frame.position.y = 0;
 			}
 			else
 			{
-				standard_frame.left += 90;
-				if (standard_frame.left >= 900.f)
+				standard_frame.position.x += 90;
+				if (standard_frame.position.x >= 900.f)
 				{
-					standard_frame.left = 90.f;
+					standard_frame.position.x = 90.f;
 				}
-				standard_frame.width = -90;
-				standard_frame.top = 0;
+				standard_frame.size.x = -90;
+				standard_frame.position.y = 0;
 			}
 
 			anim_area.setTextureRect(standard_frame);
@@ -317,23 +317,23 @@ void kusaka::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				standard_frame.left += 90;
-				if (standard_frame.left >= 450.f)
+				standard_frame.position.x += 90;
+				if (standard_frame.position.x >= 450.f)
 				{
-					standard_frame.left = 0.f;
+					standard_frame.position.x = 0.f;
 				}
-				standard_frame.width = 90;
-				standard_frame.top = 208;
+				standard_frame.size.x = 90;
+				standard_frame.position.y = 208;
 			}
 			else
 			{
-				standard_frame.left += 90;
-				if (standard_frame.left >= 540.f)
+				standard_frame.position.x += 90;
+				if (standard_frame.position.x >= 540.f)
 				{
-					standard_frame.left = 90.f;
+					standard_frame.position.x = 90.f;
 				}
-				standard_frame.width = -90;
-				standard_frame.top = 208;
+				standard_frame.size.x = -90;
+				standard_frame.position.y = 208;
 			}
 
 			anim_area.setTextureRect(standard_frame);
@@ -375,7 +375,7 @@ void kusaka::attack()
 		displacement_max = 1.f;
 		FloatRect en = get_global_bounds();
 		FloatRect pl = player_info->getGlobalBounds();
-		if (pl.left < en.left)
+		if (pl.position.x < en.position.x)
 		{
 			if (looks_to_the_right)
 			{
@@ -383,7 +383,7 @@ void kusaka::attack()
 				looks_to_the_left = true;
 			}
 		}
-		else if (pl.left > en.left)
+		else if (pl.position.x > en.position.x)
 		{
 			if (looks_to_the_left)
 			{
@@ -453,13 +453,13 @@ bool kusaka::search_for_enemies()
 	FloatRect pl = player_info->getGlobalBounds();
 
 	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
-	if (playerSide == PL_SIDE::RIGHT && look.intersects(pl))
+	if (playerSide == PL_SIDE::RIGHT && look.findIntersection(pl).has_value())
 	{
 		player_l_r[1] = true;
 		player_l_r[0] = false;
 		return true;
 	}
-	else if (playerSide == PL_SIDE::LEFT && look.intersects(pl))
+	else if (playerSide == PL_SIDE::LEFT && look.findIntersection(pl).has_value())
 	{
 		player_l_r[0] = true;
 		player_l_r[1] = false;
@@ -827,7 +827,7 @@ void kusaka::update_movement()
 
 	//if (on_ground && canMoveForward())
 	//{
-	//	// Враг может двигаться вперед
+	//	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	//	moving *= -1.f;
 	//}
 
@@ -885,9 +885,9 @@ bool kusaka::update_collision_move_x()
 	sf::Vector2f startPosition = get_position();
 	sf::Vector2f newPosition = startPosition;
 
-	for (float y = Enemy_S.getPosition().y; y < Enemy_S.getPosition().y + Enemy_S.getGlobalBounds().height; y++)
+	for (float y = Enemy_S.getPosition().y; y < Enemy_S.getPosition().y + Enemy_S.getGlobalBounds().size.y; y++)
 	{
-		for (float x = Enemy_S.getPosition().x; x < Enemy_S.getPosition().x + Enemy_S.getGlobalBounds().width; x++)
+		for (float x = Enemy_S.getPosition().x; x < Enemy_S.getPosition().x + Enemy_S.getGlobalBounds().size.x; x++)
 		{
 			int i = static_cast<int>(y / blockSize);
 			int j = static_cast<int>(x / blockSize);

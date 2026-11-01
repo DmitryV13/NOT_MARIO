@@ -1,4 +1,5 @@
 #pragma once
+#include "Global/Global.hpp"
 
 #include "PLAYER_ANIMATION_SATES.h"
 #include "TileMap.h"
@@ -14,7 +15,7 @@ private:
 	TileMap* sandbox;
 
 	Texture arrow_T;
-	Sprite arrow_S;
+	Sprite arrow_S{ Global::dummyTexture };
 
 	vector<vector<Enemy*>*> enemies;
 

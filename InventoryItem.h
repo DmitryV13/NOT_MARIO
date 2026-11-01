@@ -1,4 +1,5 @@
 #pragma once
+#include "Global/Global.hpp"
 #include "BasicImage.h"
 #include "ResourceInfo.h"
 #include "InterfaceItem.h"
@@ -16,7 +17,7 @@ protected:
 	BasicImage* image;
 	ResourceInfo* r_info;
 	Font* font;
-	Text text;
+	Text text { Global::defaultFont };
 
 	int text_size;
 	float width;

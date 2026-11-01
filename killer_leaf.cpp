@@ -12,7 +12,7 @@ void killer_leaf::init_texture()
 void killer_leaf::init_sprite()
 {
 	leaf_S.setTexture(leaf_T);
-	current_frame = IntRect(120, 0,9, 10);
+	current_frame = IntRect(sf::Vector2i(120, 0), sf::Vector2i(9, 10));
 	leaf_S.setTextureRect(current_frame);
 }
 
@@ -48,7 +48,7 @@ const FloatRect killer_leaf::get_global_bounds() const
 
 void killer_leaf::set_position(const float x, const float y)
 {
-	leaf_S.setPosition(x, y);
+	leaf_S.setPosition(sf::Vector2f(x, y));
 }
 
 void killer_leaf::render(sf::RenderTarget& target)
@@ -64,7 +64,7 @@ void killer_leaf::update()
 	displacement.y = moveY;
 	if (update_collision_x()) { displacement.x = 0.f; extermination_flag = true; }
 	if (update_collision_y()) { displacement.y = 0.f;  extermination_flag = true; }
-	if (get_global_bounds().intersects(player_info->getGlobalBounds()))extermination_flag = true;
+	if (get_global_bounds().findIntersection(player_info->getGlobalBounds()).has_value())extermination_flag = true;
 	leaf_S.move(displacement);
 	update_animation();
 }
@@ -75,10 +75,10 @@ void killer_leaf::update_animation()
 	{
 		
 		
-			current_frame.left += 9;
-			if (current_frame.left >= 45)
+			current_frame.position.x += 9;
+			if (current_frame.position.x >= 45)
 			{
-				current_frame.left = 0.f;
+				current_frame.position.x = 0.f;
 			}
 
 
@@ -97,18 +97,18 @@ bool killer_leaf::update_collision_x()
 {
 	bool wasCollision = false;
 	sf::Vector2f newPosition(get_position().x, get_position().y);
-	for (int i = leaf_S.getPosition().y / 64; i < (leaf_S.getPosition().y + leaf_S.getGlobalBounds().height) / 64; i
+	for (int i = leaf_S.getPosition().y / 64; i < (leaf_S.getPosition().y + leaf_S.getGlobalBounds().size.y) / 64; i
 		++)
 	{
 		for (int j = (leaf_S.getPosition().x + displacement.x) / 64; j < (leaf_S.getPosition().x + displacement.x +
-			leaf_S.getGlobalBounds().width) / 64; j++)
+			leaf_S.getGlobalBounds().size.x) / 64; j++)
 		{
 			if (sandbox->outOfMap(i, j) && sandbox->isBlock(i, j) || j <= 0 || j > sandbox->getMapWidth() / 64)
 			{
 				wasCollision = true;
 				if (displacement.x >= 0)
 				{
-					newPosition.x = j * sandbox->getSizeTexture() - leaf_S.getGlobalBounds().width;
+					newPosition.x = j * sandbox->getSizeTexture() - leaf_S.getGlobalBounds().size.x;
 				}
 				if (displacement.x < 0)
 				{
@@ -128,9 +128,9 @@ bool killer_leaf::update_collision_y()
 	sf::Vector2f newPosition(leaf_S.getPosition().x, leaf_S.getPosition().y);
 
 	for (int i = (leaf_S.getPosition().y + displacement.y) / 64; i < (leaf_S.getPosition().y + displacement.y +
-		leaf_S.getGlobalBounds().height) / 64; i++)
+		leaf_S.getGlobalBounds().size.y) / 64; i++)
 	{
-		for (int j = leaf_S.getPosition().x / 64; j < (leaf_S.getPosition().x + leaf_S.getGlobalBounds().width) / 64;
+		for (int j = leaf_S.getPosition().x / 64; j < (leaf_S.getPosition().x + leaf_S.getGlobalBounds().size.x) / 64;
 			j++)
 		{
 			if (sandbox->outOfMap(i, j) && sandbox->isBlock(i, j))
@@ -138,7 +138,7 @@ bool killer_leaf::update_collision_y()
 				wasCollision = true;
 				if (displacement.y > 0)
 				{
-					newPosition.y = (i * sandbox->getSizeTexture() - leaf_S.getGlobalBounds().height);
+					newPosition.y = (i * sandbox->getSizeTexture() - leaf_S.getGlobalBounds().size.y);
 				}
 				if (displacement.y < 0)
 				{
@@ -154,7 +154,7 @@ bool killer_leaf::update_collision_y()
 
 void killer_leaf::damage()
 {
-	if(get_global_bounds().intersects(player_info->getGlobalBounds()))
+	if(get_global_bounds().findIntersection(player_info->getGlobalBounds()).has_value())
 	{
 		player_info->changeHP(-attack - (rand() % 5));
 	}

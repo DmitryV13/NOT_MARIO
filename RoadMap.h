@@ -1,4 +1,5 @@
 #pragma once
+#include "Global/Global.hpp"
 #include "PAGE_STATE.h"
 #include "POP_UP_WINDOW_STATE.h"
 #include "BUTTON_STATE.h"
@@ -31,7 +32,7 @@ private:
 
 	TextureManager* t_manager;
 
-	Sprite background;
+	Sprite background{ Global::dummyTexture };
 
 	Font* font;
 	Color menuColor;

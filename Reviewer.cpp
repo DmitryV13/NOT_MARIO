@@ -19,15 +19,15 @@
 			current_image = 0;
 		}
 		images.push_back(new AnimatedImage(t_manager, index, name, first_frame, frames_number_));
-		float scale = (max_width / images[images.size() - 1]->getLocalBounds().width) <
-			(max_height / images[images.size() - 1]->getLocalBounds().height) ?
-			(max_width / images[images.size() - 1]->getLocalBounds().width) :
-			(max_height / images[images.size() - 1]->getLocalBounds().height);
+		float scale = (max_width / images[images.size() - 1]->getLocalBounds().size.x) <
+			(max_height / images[images.size() - 1]->getLocalBounds().size.y) ?
+			(max_width / images[images.size() - 1]->getLocalBounds().size.x) :
+			(max_height / images[images.size() - 1]->getLocalBounds().size.y);
 
 		images[images.size() - 1]->setScale(scale);
 		images[images.size() - 1]->setPosition(
-			position.x + (max_width - images[images.size() - 1]->getGlobalBounds().width) / 2,
-			position.y + (max_height - images[images.size() - 1]->getGlobalBounds().height) / 2
+			position.x + (max_width - images[images.size() - 1]->getGlobalBounds().size.x) / 2,
+			position.y + (max_height - images[images.size() - 1]->getGlobalBounds().size.y) / 2
 		);
 	}
 
@@ -36,14 +36,14 @@
 			current_image = 0;
 		}
 		images.push_back(new AnimatedImage(t_manager, w_object, name));
-		short scale = (max_width / images[images.size() - 1]->getLocalBounds().width) <
-			(max_height / images[images.size() - 1]->getLocalBounds().height) ?
-			(max_width / images[images.size() - 1]->getLocalBounds().width) :
-			(max_height / images[images.size() - 1]->getLocalBounds().height);
+		short scale = (max_width / images[images.size() - 1]->getLocalBounds().size.x) <
+			(max_height / images[images.size() - 1]->getLocalBounds().size.y) ?
+			(max_width / images[images.size() - 1]->getLocalBounds().size.x) :
+			(max_height / images[images.size() - 1]->getLocalBounds().size.y);
 		images[images.size() - 1]->setScale(scale);
 		images[images.size() - 1]->setPosition(
-			position.x + (max_width - images[images.size() - 1]->getGlobalBounds().width) / 2,
-			position.y + (max_height - images[images.size() - 1]->getGlobalBounds().height) / 2
+			position.x + (max_width - images[images.size() - 1]->getGlobalBounds().size.x) / 2,
+			position.y + (max_height - images[images.size() - 1]->getGlobalBounds().size.y) / 2
 		);
 	}
 
@@ -52,14 +52,14 @@
 			current_image = 0;
 		}
 		images.push_back(new BasicImage(t_manager, index, name, first_frame));
-		short scale = (max_width / images[images.size() - 1]->getLocalBounds().width) <
-			(max_height / images[images.size() - 1]->getLocalBounds().height) ?
-			(max_width / images[images.size() - 1]->getLocalBounds().width) :
-			(max_height / images[images.size() - 1]->getLocalBounds().height);
+		short scale = (max_width / images[images.size() - 1]->getLocalBounds().size.x) <
+			(max_height / images[images.size() - 1]->getLocalBounds().size.y) ?
+			(max_width / images[images.size() - 1]->getLocalBounds().size.x) :
+			(max_height / images[images.size() - 1]->getLocalBounds().size.y);
 		images[images.size() - 1]->setScale(scale);
 		images[images.size() - 1]->setPosition(
-			position.x + (max_width - images[images.size() - 1]->getGlobalBounds().width) / 2,
-			position.y + (max_height - images[images.size() - 1]->getGlobalBounds().height) / 2
+			position.x + (max_width - images[images.size() - 1]->getGlobalBounds().size.x) / 2,
+			position.y + (max_height - images[images.size() - 1]->getGlobalBounds().size.y) / 2
 		);
 	}
 
@@ -68,25 +68,25 @@
 			current_image = 0;
 		}
 		images.push_back(new BasicImage(t_manager, w_object, name));
-		short scale = (max_width / images[images.size() - 1]->getLocalBounds().width) <
-			(max_height / images[images.size() - 1]->getLocalBounds().height) ?
-			(max_width / images[images.size() - 1]->getLocalBounds().width) :
-			(max_height / images[images.size() - 1]->getLocalBounds().height);
+		short scale = (max_width / images[images.size() - 1]->getLocalBounds().size.x) <
+			(max_height / images[images.size() - 1]->getLocalBounds().size.y) ?
+			(max_width / images[images.size() - 1]->getLocalBounds().size.x) :
+			(max_height / images[images.size() - 1]->getLocalBounds().size.y);
 		images[images.size() - 1]->setScale(scale);
 		images[images.size() - 1]->setPosition(
-			position.x + (max_width - images[images.size() - 1]->getGlobalBounds().width) / 2,
-			position.y + (max_height - images[images.size() - 1]->getGlobalBounds().height) / 2
+			position.x + (max_width - images[images.size() - 1]->getGlobalBounds().size.x) / 2,
+			position.y + (max_height - images[images.size() - 1]->getGlobalBounds().size.y) / 2
 		);
 	}
 
 	void Reviewer::setPosition(Vector2f position_){
 		position = position_;
 		for (auto i : images) {
-			float x = position.x + (max_width - i->getGlobalBounds().width) / 2;
-			float y = position.y + (max_height - i->getGlobalBounds().height) / 2;
+			float x = position.x + (max_width - i->getGlobalBounds().size.x) / 2;
+			float y = position.y + (max_height - i->getGlobalBounds().size.y) / 2;
 			i->setPosition(
-				position.x + (max_width - i->getGlobalBounds().width) / 2,
-				position.y + (max_height - i->getGlobalBounds().height) / 2
+				position.x + (max_width - i->getGlobalBounds().size.x) / 2,
+				position.y + (max_height - i->getGlobalBounds().size.y) / 2
 			);
 		}
 	}
@@ -112,8 +112,8 @@
 
 	void Reviewer::update(Vector2f mouse_pos, FloatRect view_cords){
 		setPosition(Vector2f(
-			position.x + view_cords.left - view_cords.width / 2,
-			position.y + view_cords.top - view_cords.height / 2)
+			position.x + view_cords.position.x - view_cords.size.x / 2,
+			position.y + view_cords.position.y - view_cords.size.y / 2)
 		);
 		if (!images.empty()) {
 			images[current_image]->update(mouse_pos, view_cords);

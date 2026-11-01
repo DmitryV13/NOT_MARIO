@@ -135,7 +135,7 @@ private:
 /// circle.setRadius(150);
 /// circle.setOutlineColor(sf::Color::Red);
 /// circle.setOutlineThickness(5);
-/// circle.setPosition(10, 20);
+/// circle.setPosition(sf::Vector2f(10, 20));
 /// ...
 /// window.draw(circle);
 /// \endcode

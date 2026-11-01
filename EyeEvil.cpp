@@ -46,11 +46,11 @@ void EyeEvil::init_texture()
 
 void EyeEvil::init_sprite()
 {
-	current_area = IntRect(0, 0, 640, 67);
+	current_area = IntRect(sf::Vector2i(0, 0), sf::Vector2i(640, 67));
 	observation_area.setTextureRect(current_area);
 
 	Enemy_S.setTexture(Enemy_T);
-	current_frame = IntRect(0, 0, 60, 55.4);
+	current_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(60, 55.4));
 	Enemy_S.setTextureRect(current_frame);
 }
 
@@ -249,12 +249,12 @@ void EyeEvil::update_movement()
 	}*/
 	//if (on_ground && !canMoveForward())
 	//{
-	//	// Враг может двигаться вперед
+	//	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	//	walk(moving);
 	//}
 	//else
 	//{
-	//	// Враг не может двигаться вперед, разворачиваемся
+	//	// пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	//	moving *= -1.f;
 	//}
 	if (moving > 0)
@@ -312,23 +312,23 @@ void EyeEvil::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 60;
-				if (current_frame.left >= 360.f)
+				current_frame.position.x += 60;
+				if (current_frame.position.x >= 360.f)
 				{
-					current_frame.left = 0.f;
+					current_frame.position.x = 0.f;
 				}
-				current_frame.width = 60;
-				current_frame.top = 0;
+				current_frame.size.x = 60;
+				current_frame.position.y = 0;
 			}
 			else
 			{
-				current_frame.left += 60;
-				if (current_frame.left >= 420.f)
+				current_frame.position.x += 60;
+				if (current_frame.position.x >= 420.f)
 				{
-					current_frame.left = 60.f;
+					current_frame.position.x = 60.f;
 				}
-				current_frame.width = -60;
-				current_frame.top = 0;
+				current_frame.size.x = -60;
+				current_frame.position.y = 0;
 			}
 
 			Enemy_S.setTextureRect(current_frame);
@@ -342,23 +342,23 @@ void EyeEvil::update_animation()
 			animation_counter_think--;
 			if (looks_to_the_right)
 			{
-				current_frame.left += 60;
-				if (current_frame.left >= 360.f)
+				current_frame.position.x += 60;
+				if (current_frame.position.x >= 360.f)
 				{
-					current_frame.left = 0.f;
+					current_frame.position.x = 0.f;
 				}
-				current_frame.width = 60;
-				current_frame.top = 180;
+				current_frame.size.x = 60;
+				current_frame.position.y = 180;
 			}
 			else
 			{
-				current_frame.left += 60;
-				if (current_frame.left >= 420.f)
+				current_frame.position.x += 60;
+				if (current_frame.position.x >= 420.f)
 				{
-					current_frame.left = 60.f;
+					current_frame.position.x = 60.f;
 				}
-				current_frame.width = -60;
-				current_frame.top = 180;
+				current_frame.size.x = -60;
+				current_frame.position.y = 180;
 			}
 
 
@@ -374,31 +374,31 @@ void EyeEvil::update_animation()
 			{
 				if (search_for_enemies())
 				{
-					if (attention_counter == 3)current_frame.left = 0.f;
+					if (attention_counter == 3)current_frame.position.x = 0.f;
 					attention_counter--;
-					current_frame.left += 60;
+					current_frame.position.x += 60;
 				}
-				if (current_frame.left >= 360.f)
+				if (current_frame.position.x >= 360.f)
 				{
-					current_frame.left = 180.f;
+					current_frame.position.x = 180.f;
 				}
-				current_frame.top = 120;
-				current_frame.width = 60;
+				current_frame.position.y = 120;
+				current_frame.size.x = 60;
 			}
 			else
 			{
 				if (search_for_enemies())
 				{
-					if (attention_counter == 3)current_frame.left = 60.f;
+					if (attention_counter == 3)current_frame.position.x = 60.f;
 					attention_counter--;
-					current_frame.left += 60;
+					current_frame.position.x += 60;
 				}
-				if (current_frame.left >= 420.f)
+				if (current_frame.position.x >= 420.f)
 				{
-					current_frame.left = 240.f;
+					current_frame.position.x = 240.f;
 				}
-				current_frame.top = 120;
-				current_frame.width = -60;
+				current_frame.position.y = 120;
+				current_frame.size.x = -60;
 			}
 
 
@@ -412,23 +412,23 @@ void EyeEvil::update_animation()
 		{
 			if (looks_to_the_left)
 			{
-				current_frame.left += 60;
-				if (current_frame.left >= 420.f)
+				current_frame.position.x += 60;
+				if (current_frame.position.x >= 420.f)
 				{
-					current_frame.left = 60.f;
+					current_frame.position.x = 60.f;
 				}
-				current_frame.width = -60;
-				current_frame.top = 60;
+				current_frame.size.x = -60;
+				current_frame.position.y = 60;
 			}
 			else
 			{
-				current_frame.left += 60;
-				if (current_frame.left >= 360.f)
+				current_frame.position.x += 60;
+				if (current_frame.position.x >= 360.f)
 				{
-					current_frame.left = 0.f;
+					current_frame.position.x = 0.f;
 				}
-				current_frame.width = 60;
-				current_frame.top = 60;
+				current_frame.size.x = 60;
+				current_frame.position.y = 60;
 			}
 
 
@@ -443,23 +443,23 @@ void EyeEvil::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				current_frame.left += 60;
-				if (current_frame.left >= 360.f)
+				current_frame.position.x += 60;
+				if (current_frame.position.x >= 360.f)
 				{
-					current_frame.left = 180.f;
+					current_frame.position.x = 180.f;
 				}
-				current_frame.width = 60;
-				current_frame.top = 60;
+				current_frame.size.x = 60;
+				current_frame.position.y = 60;
 			}
 			else
 			{
-				current_frame.left += 60;
-				if (current_frame.left >= 420.f)
+				current_frame.position.x += 60;
+				if (current_frame.position.x >= 420.f)
 				{
-					current_frame.left = 240.f;
+					current_frame.position.x = 240.f;
 				}
-				current_frame.width = -60;
-				current_frame.top = 60;
+				current_frame.size.x = -60;
+				current_frame.position.y = 60;
 			}
 
 
@@ -473,29 +473,29 @@ void EyeEvil::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				if (attention_counter == 3)current_frame.left = 0.f;
+				if (attention_counter == 3)current_frame.position.x = 0.f;
 				attention_counter--;
-				current_frame.left += 60;
+				current_frame.position.x += 60;
 
-				if (current_frame.left >= 360.f)
+				if (current_frame.position.x >= 360.f)
 				{
-					current_frame.left = 300.f;
+					current_frame.position.x = 300.f;
 				}
-				current_frame.top = 240;
-				current_frame.width = 60;
+				current_frame.position.y = 240;
+				current_frame.size.x = 60;
 			}
 			else
 			{
-				if (attention_counter == 3)current_frame.left = 60.f;
+				if (attention_counter == 3)current_frame.position.x = 60.f;
 				attention_counter--;
-				current_frame.left += 60;
+				current_frame.position.x += 60;
 
-				if (current_frame.left >= 420.f)
+				if (current_frame.position.x >= 420.f)
 				{
-					current_frame.left = 360.f;
+					current_frame.position.x = 360.f;
 				}
-				current_frame.top = 240;
-				current_frame.width = -60;
+				current_frame.position.y = 240;
+				current_frame.size.x = -60;
 			}
 
 
@@ -509,29 +509,29 @@ void EyeEvil::update_animation()
 		{
 			if (looks_to_the_right)
 			{
-				if (attention_counter == 3)current_frame.left = 60.f;
+				if (attention_counter == 3)current_frame.position.x = 60.f;
 				attention_counter--;
-				current_frame.left += 60;
+				current_frame.position.x += 60;
 
-				if (current_frame.left >= 300.f)
+				if (current_frame.position.x >= 300.f)
 				{
-					current_frame.left = 240.f;
+					current_frame.position.x = 240.f;
 				}
-				current_frame.top = 240;
-				current_frame.width = 60;
+				current_frame.position.y = 240;
+				current_frame.size.x = 60;
 			}
 			else
 			{
-				if (attention_counter == 3)current_frame.left = 180.f;
+				if (attention_counter == 3)current_frame.position.x = 180.f;
 				attention_counter--;
-				current_frame.left += 60;
+				current_frame.position.x += 60;
 
-				if (current_frame.left >= 360.f)
+				if (current_frame.position.x >= 360.f)
 				{
-					current_frame.left = 300.f;
+					current_frame.position.x = 300.f;
 				}
-				current_frame.top = 240;
-				current_frame.width = -60;
+				current_frame.position.y = 240;
+				current_frame.size.x = -60;
 			}
 
 
@@ -647,11 +647,11 @@ bool EyeEvil::search_for_enemies()
 	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
 	if (playerSide == PL_SIDE::RIGHT && looks_to_the_right)
 	{
-		return en.intersects(pl);
+		return en.findIntersection(pl).has_value();
 	}
 	else if (playerSide == PL_SIDE::LEFT && looks_to_the_left)
 	{
-		return en.intersects(pl);
+		return en.findIntersection(pl).has_value();
 	}
 
 

@@ -1,4 +1,5 @@
 #pragma once
+#include "Global/Global.hpp"
 #include "InterfaceItem.h"
 #include "TextureManager.h"
 #include "Warehouse.h"
@@ -8,7 +9,7 @@ using namespace sf;
 
 class ScaleParameterBar : public InterfaceItem{
 private:
-	Sprite scale_bar;
+	Sprite scale_bar{ Global::dummyTexture };
 	float* resource;
 	float max_value;
 

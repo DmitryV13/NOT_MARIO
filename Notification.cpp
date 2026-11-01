@@ -19,8 +19,8 @@
 
 	Notification::Notification(FloatRect object_cords, short text_size, sf::Font* font_, string text_, Color text_color)
 		:active(false){
-		position.x = object_cords.left + object_cords.width / 2;
-		position.y = object_cords.top + object_cords.height / 2;
+		position.x = object_cords.position.x + object_cords.size.x / 2;
+		position.y = object_cords.position.y + object_cords.size.y / 2;
 		text.setFont(*font_);
 		text.setString(text_);
 		text.setFillColor(text_color);

@@ -9,7 +9,7 @@
 
 		w_background = new ComposedIMG(width, height, 6, manager, 2);
 		w_background->setPosition("center", "center", screen_width, screen_height);
-		position = Vector2f(w_background->getLocalBounds().left, w_background->getLocalBounds().top);
+		position = Vector2f(w_background->getLocalBounds().position.x, w_background->getLocalBounds().position.y);
 	}
 
 	PopUpWindow::PopUpWindow(double screen_width, double screen_height, int width_, int height_, RenderWindow* window_, string positionX, string positionY) 
@@ -19,7 +19,7 @@
 
 		w_background = new ComposedIMG(width, height, 6, manager, 1);
 		w_background->setPosition(positionX, positionY, screen_width, screen_height);
-		position = Vector2f(w_background->getLocalBounds().left, w_background->getLocalBounds().top);
+		position = Vector2f(w_background->getLocalBounds().position.x, w_background->getLocalBounds().position.y);
 	}
 
 	PopUpWindow::PopUpWindow(double screen_width, double screen_height, int width_, int height_, RenderWindow* window_, string positionX, int y) 
@@ -29,7 +29,7 @@
 
 		w_background = new ComposedIMG(width, height, 6, manager, 1);
 		w_background->setPosition(positionX, y, screen_width, screen_height);
-		position = Vector2f(w_background->getLocalBounds().left, w_background->getLocalBounds().top);
+		position = Vector2f(w_background->getLocalBounds().position.x, w_background->getLocalBounds().position.y);
 	}
 
 	PopUpWindow::PopUpWindow(double screen_width, double screen_height, int width_, int height_, RenderWindow* window_, int x, string positionY) 
@@ -39,7 +39,7 @@
 
 		w_background = new ComposedIMG(width, height, 6, manager, 1);
 		w_background->setPosition(x, positionY, screen_width, screen_height);
-		position = Vector2f(w_background->getLocalBounds().left, w_background->getLocalBounds().top);
+		position = Vector2f(w_background->getLocalBounds().position.x, w_background->getLocalBounds().position.y);
 	}
 	
 	PopUpWindow::~PopUpWindow(){
@@ -71,8 +71,8 @@
 	int PopUpWindow::getMaxGroupsHeight(short index){
 		int height = 0;
 		for (size_t i = 0; i < groups[index].size(); i++){
-			if (groups[index][i]->getLocalBounds().height > height) {
-				height = groups[index][i]->getLocalBounds().height;
+			if (groups[index][i]->getLocalBounds().size.y > height) {
+				height = groups[index][i]->getLocalBounds().size.y;
 			}
 		}
 		return height;
@@ -84,7 +84,7 @@
 
 	void PopUpWindow::addLabel(double screen_width, double screen_height, const string& label_text, Font* font_, int text_size, short offset){
 		label = new Label(label_text, font_, text_size, manager, 0);
-		label->setPosition("center", (screen_height - height) / 2 - label->getLocalBounds().height - offset, screen_width, screen_height);
+		label->setPosition("center", (screen_height - height) / 2 - label->getLocalBounds().size.y - offset, screen_width, screen_height);
 	}
 
 	void PopUpWindow::addGroup(short fill_p_w, short fill_p_h, short index, string name, int name_size, Font* font){
@@ -94,7 +94,7 @@
 		}
 		int new_gposition_x = position.x;
 		for (size_t i = 0; i < groups[index].size(); i++) {
-			new_gposition_x += groups[index][i]->getLocalBounds().width;
+			new_gposition_x += groups[index][i]->getLocalBounds().size.x;
 		}
 
 		groups[index].push_back(new Group(new_gposition_x, new_gposition_y, fill_p_w * width / 100, fill_p_h * height / 100));
@@ -108,7 +108,7 @@
 		}
 		int new_gposition_x = position.x;
 		for (size_t i = 0; i < groups[index].size(); i++) {
-			new_gposition_x += groups[index][i]->getLocalBounds().width;
+			new_gposition_x += groups[index][i]->getLocalBounds().size.x;
 		}
 
 		groups[index].push_back(new Group(new_gposition_x, new_gposition_y, fill_p_w * width / 100, fill_p_h * height / 100));
@@ -139,7 +139,7 @@
 		
 		int new_gposition_x = position.x;
 		for (size_t i = 0; i < groups[index].size(); i++) {
-			new_gposition_x += groups[index][i]->getLocalBounds().width;
+			new_gposition_x += groups[index][i]->getLocalBounds().size.x;
 		}
 		
 		return new CRect<float>(new_gposition_x, new_gposition_y, fill_p_w * width / 100, fill_p_h * height / 100);

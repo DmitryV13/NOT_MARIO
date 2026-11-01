@@ -1,4 +1,5 @@
 #pragma once
+#include "Global/Global.hpp"
 #include "RoadMap.h"
 #include "Setting.h"
 #include "Exit.h"
@@ -15,14 +16,13 @@ private:
 	TextureManager* t_manager;
 	short menuGUIS;
 
-	Event event;
 	View view;
 	RenderWindow window;
 	unordered_map<short, Color> menuMainColor;
 	Texture menu_T;
 	Texture background_T;
-	Sprite menu_S;
-	Sprite background_S;
+	Sprite menu_S{ Global::dummyTexture };
+	Sprite background_S{ Global::dummyTexture };
 
 	IntRect selected_cords;
 	Vector2f selected_position;

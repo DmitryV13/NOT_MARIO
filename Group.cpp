@@ -29,8 +29,8 @@
 	float Group::getMaxELHeight(short index){
 		float height = 0;
 		for (size_t i = 0; i < g_elements[index].size(); i++) {
-			if (g_elements[index][i]->getGlobalBounds().height > height) {
-				height = g_elements[index][i]->getGlobalBounds().height;
+			if (g_elements[index][i]->getGlobalBounds().size.y > height) {
+				height = g_elements[index][i]->getGlobalBounds().size.y;
 			}
 		}
 		return height;
@@ -109,7 +109,7 @@
 			float height_acc = 0;
 			for (auto i = g_elements.begin(); i != g_elements.end(); ++i) {
 				for (auto j = i->begin(); j != i->end(); ++j) {
-					float el_offset = (getMaxELHeight(i - g_elements.begin()) - (*j)->getGlobalBounds().height) / 2;
+					float el_offset = (getMaxELHeight(i - g_elements.begin()) - (*j)->getGlobalBounds().size.y) / 2;
 					(*j)->setPositionY(outer_height - inner_height + space_edge + position.y
 						+ height_acc + el_offset + (i - g_elements.begin()) * add_offset);
 				}
@@ -191,14 +191,14 @@
 			for (size_t i = 0; i < g_elements.size(); i++) {
 				float elements_width = 0;
 				for (size_t j = 0; j < g_elements[i].size(); j++) {
-					elements_width += g_elements[i][j]->getGlobalBounds().width;
+					elements_width += g_elements[i][j]->getGlobalBounds().size.x;
 				}
 				float space_arnd = (inner_width - elements_width) / (g_elements[i].size() + 1);
 				float width_acc = 0;
 				for (auto j = g_elements[i].begin(); j != g_elements[i].end(); ++j) {
 					(*j)->setPositionX(space_arnd + position.x + width_acc
 						+ (j - g_elements[i].begin()) * space_arnd);
-					width_acc += (*j)->getGlobalBounds().width;
+					width_acc += (*j)->getGlobalBounds().size.x;
 				}
 			}
 			return;
@@ -214,10 +214,10 @@
 			for (size_t i = 0; i < g_elements.size(); i++) {
 				float elements_width = 0;
 				for (size_t j = 0; j < g_elements[i].size(); j++) {
-					elements_width += g_elements[i][j]->getGlobalBounds().width;
+					elements_width += g_elements[i][j]->getGlobalBounds().size.x;
 				}
 				if (add_parameter == "auto") {
-					add_offset = g_elements[i][0]->getGlobalBounds().width/2;
+					add_offset = g_elements[i][0]->getGlobalBounds().size.x/2;
 				}
 				float space_btwn = (g_elements[i].size() - 1) != 0 ? (inner_width - elements_width
 					- add_offset * 2) / (g_elements[i].size() - 1) : 0;
@@ -228,7 +228,7 @@
 						+ width_acc + (j - g_elements[i].begin()) * space_btwn;
 					(*j)->setPositionX(add_offset + position.x
 						+ width_acc + (j - g_elements[i].begin()) * space_btwn);
-					width_acc += (*j)->getGlobalBounds().width;
+					width_acc += (*j)->getGlobalBounds().size.x;
 				}
 			}
 			return;
@@ -244,10 +244,10 @@
 			for (size_t i = 0; i < g_elements.size(); i++) {
 				float elements_width = 0;
 				for (size_t j = 0; j < g_elements[i].size(); j++) {
-					elements_width += g_elements[i][j]->getGlobalBounds().width;
+					elements_width += g_elements[i][j]->getGlobalBounds().size.x;
 				}
 				if (add_parameter == "auto") {
-					add_offset = g_elements[i][0]->getGlobalBounds().width / 2;
+					add_offset = g_elements[i][0]->getGlobalBounds().size.x / 2;
 				}
 				float space_edge = (inner_width - elements_width
 					- add_offset * (g_elements[i].size() - 1)) / 2;
@@ -255,7 +255,7 @@
 				for (auto j = g_elements[i].begin(); j != g_elements[i].end(); ++j) {
 					(*j)->setPositionX(space_edge + position.x
 						+ width_acc + ((j - g_elements[i].begin()) * add_offset));
-					width_acc += (*j)->getGlobalBounds().width;
+					width_acc += (*j)->getGlobalBounds().size.x;
 				}
 			}
 			return;
@@ -279,13 +279,13 @@
 
 			for (size_t i = 0; i < g_elements.size(); i++) {
 				if (add_parameter == "auto") {
-					add_offset = g_elements[i][0]->getGlobalBounds().width / 2;
+					add_offset = g_elements[i][0]->getGlobalBounds().size.x / 2;
 				}
 				float width_acc = 0;
 				for (auto j = g_elements[i].begin(); j != g_elements[i].end(); ++j) {
 					(*j)->setPositionX(z * add_offset + position.x
 						+ width_acc + ((j - g_elements[i].begin()) * add_offset));
-					width_acc += (*j)->getGlobalBounds().width;
+					width_acc += (*j)->getGlobalBounds().size.x;
 				}
 			}
 			return;
@@ -310,10 +310,10 @@
 			for (size_t i = 0; i < g_elements.size(); i++) {
 				float elements_width = 0;
 				for (size_t j = 0; j < g_elements[i].size(); j++) {
-					elements_width += g_elements[i][j]->getGlobalBounds().width;
+					elements_width += g_elements[i][j]->getGlobalBounds().size.x;
 				}
 				if (add_parameter == "auto") {
-					add_offset = g_elements[i][0]->getGlobalBounds().width / 2;
+					add_offset = g_elements[i][0]->getGlobalBounds().size.x / 2;
 				}
 				float space_edge = inner_width - elements_width
 					- add_offset * (g_elements[i].size() - z);
@@ -321,7 +321,7 @@
 				for (auto j = g_elements[i].begin(); j != g_elements[i].end(); ++j) {
 					(*j)->setPositionX(space_edge + position.x
 						+ width_acc + ((j - g_elements[i].begin()) * add_offset));
-					width_acc += (*j)->getGlobalBounds().width;
+					width_acc += (*j)->getGlobalBounds().size.x;
 				}
 			}
 			return;
@@ -381,18 +381,17 @@
 	}
 
 	void Group::addGroupName(string text_name, int name_size, Font* font){
-		name = new Text();
-		name->setFont(*font);
+		name = new Text(*font);
 		name->setString(text_name);
 		name->setFillColor(sf::Color::White);
 		name->setCharacterSize(name_size);
 		name->setOutlineThickness(3.f);
 		name->setOutlineColor(sf::Color(0, 0, 0, 0));
-		name->setPosition(
-			position.x + (outer_width - name->getLocalBounds().width) / 2 - name->getLocalBounds().left,
-			position.y + name->getLocalBounds().height / 4 - name->getLocalBounds().top
-		);
-		inner_height = outer_height - name->getLocalBounds().height - name->getLocalBounds().height / 2;
+		name->setPosition(Vector2(
+			position.x + (outer_width - name->getLocalBounds().size.x) / 2 - name->getLocalBounds().position.x,
+			position.y + name->getLocalBounds().size.y / 4 - name->getLocalBounds().position.y
+		));
+		inner_height = outer_height - name->getLocalBounds().size.y - name->getLocalBounds().size.y / 2;
 		g1.setSize(Vector2f(inner_width - 2, inner_height - 2));
 		g2.setSize(Vector2f(inner_width - 2, outer_height - inner_height - 2));
 	}
@@ -402,11 +401,11 @@
 		for (size_t i = 0; i < index; i++) {
 			new_eposition_y += getMaxELHeight(i);
 		}
-		new_eposition_y += 2 * (name == nullptr ? 0 : name->getLocalBounds().width);
+		new_eposition_y += 2 * (name == nullptr ? 0 : name->getLocalBounds().size.x);
 		
 		int new_eposition_x = position.x;
 		for (size_t i = 0; i < g_elements[index].size(); i++) {
-			new_eposition_x += g_elements[index][i]->getGlobalBounds().width;
+			new_eposition_x += g_elements[index][i]->getGlobalBounds().size.x;
 		}
 
 		g_elements[index].push_back(new Group(new_eposition_x, new_eposition_y, fill_p_w * inner_width / 100, fill_p_h * inner_height / 100));
@@ -423,7 +422,7 @@
 
 		int new_eposition_x = position.x;
 		for (size_t i = 0; i < g_elements[index_g].size(); i++) {
-			new_eposition_x += g_elements[index_g][i]->getGlobalBounds().width;
+			new_eposition_x += g_elements[index_g][i]->getGlobalBounds().size.x;
 		}
 		g_elements[index_g].push_back(new Button(new_eposition_x, new_eposition_y, text_size, font, btn_name, btn_color, btn_id));
 	}
@@ -439,7 +438,7 @@
 
 		int new_eposition_x = position.x;
 		for (size_t i = 0; i < g_elements[index_g].size(); i++) {
-			new_eposition_x += g_elements[index_g][i]->getGlobalBounds().width;
+			new_eposition_x += g_elements[index_g][i]->getGlobalBounds().size.x;
 		}
 		Button* btn = new Button(new_eposition_x, new_eposition_y, width, height, text_size, font, btn_name, outline, btn_id);
 		btn->setColors(btn_hcolor, btn_icolor, shp_hcolor, shp_icolor);
@@ -457,7 +456,7 @@
 
 		int new_eposition_x = position.x;
 		for (size_t i = 0; i < g_elements[index_g].size(); i++) {
-			new_eposition_x += g_elements[index_g][i]->getGlobalBounds().width;
+			new_eposition_x += g_elements[index_g][i]->getGlobalBounds().size.x;
 		}
 		ImageButton* btn = new ImageButton(new_eposition_x, new_eposition_y, width, height, text_size, font, btn_name, t_manager, index_t, name, outline, btn_id);
 		btn->setColors(btn_hcolor, btn_icolor, shp_hcolor, shp_icolor);
@@ -474,7 +473,7 @@
 
 		int new_gposition_x = position.x;
 		for (size_t i = 0; i < g_elements[index].size(); i++) {
-			new_gposition_x += g_elements[index][i]->getGlobalBounds().width;
+			new_gposition_x += g_elements[index][i]->getGlobalBounds().size.x;
 		}
 
 		return new CRect<float>(new_gposition_x, new_gposition_y, fill_p_w * inner_width / 100, fill_p_h * inner_height / 100);
@@ -490,17 +489,17 @@
 
 	void Group::update(Vector2f mouse_pos, FloatRect view_cords){
 		if (name != nullptr) {
-			name->setPosition(
-				view_cords.left - view_cords.width / 2 + position.x + (outer_width - name->getLocalBounds().width) / 2 - name->getLocalBounds().left,
-				view_cords.top - view_cords.height / 2 + position.y - name->getLocalBounds().top + name->getLocalBounds().height/4
-			);
+			name->setPosition(Vector2(
+				view_cords.position.x - view_cords.size.x / 2 + position.x + (outer_width - name->getLocalBounds().size.x) / 2 - name->getLocalBounds().position.x,
+				view_cords.position.y - view_cords.size.y / 2 + position.y - name->getLocalBounds().position.y + name->getLocalBounds().size.y/4
+			));
 		}
 
-		g0.setPosition(position.x + 1, position.y + 1);
-		g1.setPosition(position.x + 1, position.y + 1 + outer_height - inner_height);
-		g2.setPosition(position.x + 1, position.y + 1);
+		g0.setPosition(sf::Vector2f(position.x + 1, position.y + 1));
+		g1.setPosition(sf::Vector2f(position.x + 1, position.y + 1 + outer_height - inner_height));
+		g2.setPosition(sf::Vector2f(position.x + 1, position.y + 1));
 		background.setPosition(position);
-		if (FloatRect(mouse_pos, Vector2f(100, 100)).intersects(g0.getGlobalBounds())) {
+		if (FloatRect(mouse_pos, Vector2f(100, 100)).findIntersection(g0.getGlobalBounds()).has_value()) {
 			g0.setOutlineColor(Color::Green);
 			g1.setOutlineColor(Color::Blue);
 			g2.setOutlineColor(Color::Red);
@@ -511,18 +510,10 @@
 			g2.setOutlineColor(Color(0, 0, 0, 0));
 		}
 
-		background.setPosition(view_cords.left - view_cords.width / 2 + position.x,
-			view_cords.top - view_cords.height / 2 + position.y
-		);
-		g0.setPosition(view_cords.left - view_cords.width / 2 + g0.getPosition().x,
-			view_cords.top - view_cords.height / 2 + g0.getPosition().y
-		);
-		g1.setPosition(view_cords.left - view_cords.width / 2 + g1.getPosition().x,
-			view_cords.top - view_cords.height / 2 + g1.getPosition().y
-		);
-		g2.setPosition(view_cords.left - view_cords.width / 2 + g2.getPosition().x,
-			view_cords.top - view_cords.height / 2 + g2.getPosition().y
-		);
+		background.setPosition(sf::Vector2f(view_cords.position.x - view_cords.size.x / 2 + position.x, view_cords.position.y - view_cords.size.y / 2 + position.y));
+		g0.setPosition(sf::Vector2f(view_cords.position.x - view_cords.size.x / 2 + g0.getPosition().x, view_cords.position.y - view_cords.size.y / 2 + g0.getPosition().y));
+		g1.setPosition(sf::Vector2f(view_cords.position.x - view_cords.size.x / 2 + g1.getPosition().x, view_cords.position.y - view_cords.size.y / 2 + g1.getPosition().y));
+		g2.setPosition(sf::Vector2f(view_cords.position.x - view_cords.size.x / 2 + g2.getPosition().x, view_cords.position.y - view_cords.size.y / 2 + g2.getPosition().y));
 
 
 		for (auto i : g_elements) {

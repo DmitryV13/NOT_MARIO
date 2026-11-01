@@ -28,7 +28,7 @@
     }
     
     sf::Sprite Tile::render_tile(int i, int j){
-        tile_S.setPosition(j * 64, i * 64);
+        tile_S.setPosition(sf::Vector2f(j * 64, i * 64));
         return tile_S;
     }
     
@@ -38,7 +38,7 @@
             std::cout << "Error -> Tile -> couldn't load texture";
         }
         tile_S.setTexture(tile_T);
-        tile_S.setTextureRect(sf::IntRect(0, 0, texture_size_W, texture_size_H));
+        tile_S.setTextureRect(sf::IntRect(sf::Vector2i(0, 0), sf::Vector2i(texture_size_W, texture_size_H)));
     }
     
     bool Tile::give_player_info(){
