@@ -22,6 +22,7 @@ MyView::MyView(TileMap& map, double screenWidth_, double screenHeight_)
 	viewScreen.position.y = windowTop + ((screenHeight - viewScreen.size.y) / 2);
 }
 
+// calculation is based on players' global bounds
 void MyView::updateView(FloatRect coordinates) {
 	updateLeft(coordinates.position.x);
 	updateRight(coordinates.position.x + coordinates.size.x);
@@ -30,7 +31,7 @@ void MyView::updateView(FloatRect coordinates) {
 }
 
 void MyView::updateLeft(double left) {
-	double offset = (viewScreen.position.x - left);
+	double offset = viewScreen.position.x - left;
 	if (offset > 0) {
 		if (windowLeft - offset > absoluteLeft) {
 			viewScreen.position.x -= offset;
@@ -39,8 +40,11 @@ void MyView::updateLeft(double left) {
 		}
 		else {
 			offset = 0;
+			windowLeft = absoluteLeft;
+			windowRight = absoluteLeft + screenWidth;
+			viewScreen.position.x = windowLeft + (screenWidth - viewScreen.size.x) / 2;
 			view = sf::View(sf::FloatRect(
-				{ static_cast<float>(absoluteLeft), static_cast<float>(windowTop) },
+				{ static_cast<float>(windowLeft), static_cast<float>(windowTop) },
 				{ static_cast<float>(screenWidth), static_cast<float>(screenHeight) }
 			));
 		}
@@ -52,7 +56,7 @@ void MyView::updateLeft(double left) {
 }
 
 void MyView::updateRight(double right) {
-	double offset = (right - (viewScreen.position.x + viewScreen.size.x));
+	double offset = right - (viewScreen.position.x + viewScreen.size.x);
 	if (offset > 0) {
 		if (windowRight + offset < absoluteRight) {
 			viewScreen.position.x += offset;
@@ -61,8 +65,11 @@ void MyView::updateRight(double right) {
 		}
 		else {
 			offset = 0;
+			windowRight = absoluteRight;
+			windowLeft = absoluteRight - screenWidth;
+			viewScreen.position.x = windowLeft + (screenWidth - viewScreen.size.x) / 2;
 			view = sf::View(sf::FloatRect(
-				{ static_cast<float>(absoluteRight - screenWidth), static_cast<float>(windowTop) },
+				{ static_cast<float>(windowLeft), static_cast<float>(windowTop) },
 				{ static_cast<float>(screenWidth), static_cast<float>(screenHeight) }
 			));
 		}
@@ -83,8 +90,11 @@ void MyView::updateTop(double top) {
 		}
 		else {
 			offset = 0;
+			windowTop = absoluteTop;
+			windowBottom = absoluteTop + screenHeight;
+			viewScreen.position.y = windowTop + (screenHeight - viewScreen.size.y) / 2;
 			view = sf::View(sf::FloatRect(
-				{ static_cast<float>(windowLeft), static_cast<float>(absoluteTop) },
+				{ static_cast<float>(windowLeft), static_cast<float>(windowTop) },
 				{ static_cast<float>(screenWidth), static_cast<float>(screenHeight) }
 			));
 		}
@@ -105,8 +115,11 @@ void MyView::updateBottom(double bottom) {
 		}
 		else {
 			offset = 0;
+			windowTop = absoluteBottom - screenHeight;
+			windowBottom = absoluteBottom;
+			viewScreen.position.y = windowTop + (screenHeight - viewScreen.size.y) / 2;
 			view = sf::View(sf::FloatRect(
-				{ static_cast<float>(windowLeft), static_cast<float>(absoluteBottom - screenHeight) },
+				{ static_cast<float>(windowLeft), static_cast<float>(windowTop) },
 				{ static_cast<float>(screenWidth), static_cast<float>(screenHeight) }
 			));
 		}

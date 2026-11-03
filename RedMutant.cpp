@@ -22,7 +22,7 @@ RedMutant::RedMutant(TileMap& map, GeneralInfo* player_info,short regime)
 }
 void RedMutant::updateHP_bar()
 {
-	hp_bar->update(Enemy_S);
+	hp_bar->update(Enemy_S.getGlobalBounds());
 
 }
 RedMutant::RedMutant(TileMap& map, GeneralInfo* player_info_, float pos_x, float pos_y) :
@@ -55,8 +55,8 @@ void RedMutant::init_texture()
 
 void RedMutant::init_sprite()
 {
-	current_area = IntRect(sf::Vector2i(0, 0), sf::Vector2i(1280, 256));
-	observation_area.setTextureRect(current_area);
+	current_area = FloatRect(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280, 256));
+	observation_area = current_area;
 
 	Enemy_S.setTexture(chubacabra_t_);
 	current_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(60, 88));
@@ -194,7 +194,7 @@ void RedMutant::update_movement()
 				red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_RUN;
 			}
 			else red_mutant_state = RED_MUTANT_STATE::RED_MUTANT_IDLE;
-			//if (isPlayerInRadius(observation_area.getGlobalBounds(), player_info->getGlobalBounds(), 192))
+	//if (isPlayerInRadius(observation_area, player_info->getGlobalBounds(), 192))
 			//{
 			//	if (count_jump == 0)
 			//	{
@@ -929,7 +929,7 @@ void RedMutant::attack()
 	}
 
 
-	if (!isPlayerInRadius(observation_area.getGlobalBounds(), player_info->getGlobalBounds(), 128))
+	if (!isPlayerInRadius(observation_area, player_info->getGlobalBounds(), 128))
 	{
 		reset_attention();
 		//float intersectionRadius = 50.0f;
@@ -1018,7 +1018,7 @@ void RedMutant::clear_shot()
 
 bool RedMutant::search_for_enemies()
 {
-	FloatRect look = observation_area.getGlobalBounds();
+	FloatRect look = observation_area;
 	FloatRect pl = player_info->getGlobalBounds();
 
 	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);

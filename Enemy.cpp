@@ -100,7 +100,7 @@ const FloatRect Enemy::get_global_bounds() const
 }
 const FloatRect Enemy::get_global_bounds_anim() const
 {
-	return anim_area.getGlobalBounds();
+	return anim_area;
 }
 
 short Enemy::getHP()
@@ -128,18 +128,17 @@ PL_SIDE Enemy::getPlayerSide(float playerX, float enemyX)
 
 void Enemy::set_position(const float x, const float y)
 {
-	observation_area.setPosition(sf::Vector2f(x - (observation_area.getGlobalBounds().size.x - (observation_area.getGlobalBounds().size.x / 2) - (Enemy_S.
-			getGlobalBounds().size.x / 2)), (y - (observation_area.getGlobalBounds().size.y - Enemy_S.getGlobalBounds().size.y))));
+	observation_area.position = sf::Vector2f(x - (observation_area.size.x - (observation_area.size.x / 2) - (Enemy_S.
+			getGlobalBounds().size.x / 2)), (y - (observation_area.size.y - Enemy_S.getGlobalBounds().size.y)));
 
-	anim_area.setPosition(sf::Vector2f(x - (anim_area.getGlobalBounds().size.x - (anim_area.getGlobalBounds().size.x / 2) - (Enemy_S.
-			getGlobalBounds().size.x / 2)), (y - (anim_area.getGlobalBounds().size.y - Enemy_S.getGlobalBounds().size.y))));
+	anim_area.position = sf::Vector2f(x - (anim_area.size.x - (anim_area.size.x / 2) - (Enemy_S.
+			getGlobalBounds().size.x / 2)), (y - (anim_area.size.y - Enemy_S.getGlobalBounds().size.y)));
 
 	Enemy_S.setPosition(sf::Vector2f(x, y));
 }
 
 void Enemy::render(sf::RenderTarget& target)
 {
-	target.draw(anim_area);
 	target.draw(Enemy_S);
 	hp_bar->render(target);
 }
@@ -247,7 +246,7 @@ void Enemy::walk(const float dir_x)
 
 bool Enemy::isPlayerInRadius(const sf::FloatRect& observationArea, const sf::FloatRect& playerBounds, float radius)
 {		
-	if (observation_area.getGlobalBounds().findIntersection(playerBounds).has_value())
+	if (observationArea.findIntersection(playerBounds).has_value())
 	{
 		sf::Vector2f observationCenter = {
 			observationArea.position.x + observationArea.size.x / 2,
@@ -376,8 +375,8 @@ void Enemy::update_physics()
 	//if (player_contact())displacement.x *= 1.3f;
 
 	Enemy_S.move(displacement);
-	observation_area.move(displacement);
-	anim_area.move(displacement);
+	observation_area.position += displacement;
+	anim_area.position += displacement;
 }
 
 // collision x

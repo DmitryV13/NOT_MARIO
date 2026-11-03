@@ -72,12 +72,12 @@
         info->setGlobalBounds(player_S.getGlobalBounds());
         info->setPosition(player_S.getPosition());
 
-        velocityMax = 6.f;
+        velocityMax = 10.f;
         velocityMin = 0.5f;
-        acceleration = 1.7f;
+        acceleration = 2.7f;
         deceleration = 0.77f;//0.77
-        gravity = 2.5f;
-        velocityMaxY = 15.f;
+        gravity = 3.5f;
+        velocityMaxY = 40.f;
 
         spaceRealeased = false;
         onGround = false;
@@ -440,6 +440,9 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         Vector2f newPosition(getPosition().x, getPosition().y);
         for (int i = player_S.getPosition().y / 64; i < (player_S.getPosition().y + player_S.getGlobalBounds().size.y) / 64; i++) {
             for (int j = (player_S.getPosition().x + info->getVelocity().x) / 64; j < (player_S.getPosition().x + info->getVelocity().x + player_S.getGlobalBounds().size.x) / 64; j++) {
+                if (!sandbox->outOfMap(i, j)) {
+                    continue;
+                }
                 if (sandbox->isBlock(i, j)) {
                     if (info->getVelocity().x > 0) {
                         wasCollision = true;
@@ -463,6 +466,9 @@ void Player::update(RenderWindow* window, FloatRect view_cords){
         
         for (int i = (player_S.getPosition().y + info->getVelocity().y) / 64; i < (player_S.getPosition().y + info->getVelocity().y + player_S.getGlobalBounds().size.y) / 64; i++) {
             for (int j = player_S.getPosition().x / 64; j < (player_S.getPosition().x + player_S.getGlobalBounds().size.x) / 64; j++) {
+                if (!sandbox->outOfMap(i, j)) {
+                    continue;
+                }
                 if (sandbox->isBlock(i, j)) {
                     if (info->getVelocity().y > 0) {
                         wasCollision = true;

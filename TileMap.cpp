@@ -74,9 +74,11 @@ sf::Vector2f TileMap::cord_enemy()
 
 void TileMap::init_background()
 {
-	if (!background_T.loadFromFile("Textures/Textures_map/background_1.png"))
+	background_loaded = background_T.loadFromFile("Textures/Textures_map/background_1.png");
+	if (!background_loaded)
 	{
-		std::cout << "Error -> background -> couldn't load texture";
+		std::cout << "Error -> background -> couldn't load texture" << std::endl;
+		return;
 	}
 	backround_S.setTexture(background_T);
 	init_coeff(backround_S.getTextureRect());
@@ -95,6 +97,9 @@ void TileMap::init_tilemap(float mapH, float mapW)
 		tilemap[i] = new Tile **[mapW];
 		for (int j = 0; j < mapW; ++j) {
 			tilemap[i][j] = new Tile *[3];
+			tilemap[i][j][0] = nullptr;
+			tilemap[i][j][1] = nullptr;
+			tilemap[i][j][2] = nullptr;
 		}
 	}
 }
@@ -174,6 +179,9 @@ void TileMap::init_level(short int level)
 
 void TileMap::init_objects(short int level)
 {
+	if (level < 4) {
+		return;
+	}
 	std::string level_ = std::to_string(level-3);
 	std::string path = "Maps/level"+level_+"/Object.txt";
 	std::ifstream fin;
@@ -196,6 +204,9 @@ void TileMap::init_objects(short int level)
 
 void TileMap::init_animObjects(short int level)
 {
+	if (level < 4) {
+		return;
+	}
 	std::string level_ = std::to_string(level-3);
 	std::string path = "Maps/level"+level_+"/AnimObject.txt";
 	std::ifstream fin;
@@ -217,6 +228,9 @@ void TileMap::init_animObjects(short int level)
 
 void TileMap::init_movingObjects(short int level)
 {
+	if (level < 4) {
+		return;
+	}
 	std::string level_ = std::to_string(level-3);
 	std::string path = "Maps/level"+level_+"/MovingObject.txt";
 	std::ifstream fin;
@@ -240,6 +254,9 @@ void TileMap::init_movingObjects(short int level)
 
 void TileMap::init_movingAnimObjects(short int level)
 {
+	if (level < 4) {
+		return;
+	}
 	std::string level_ = std::to_string(level-3);
 	std::string path = "Maps/level"+level_+"/MovingAnimObject.txt";
 	std::ifstream fin;
@@ -262,6 +279,9 @@ void TileMap::init_movingAnimObjects(short int level)
 
 void TileMap::init_switch(short int level)
 {
+	if (level < 4) {
+		return;
+	}
 	std::string level_ = std::to_string(level-3);
 	//std::vector<Object*> tmpObject;
 	std::string path_ = "Maps/level"+level_+"/forSwitch.txt";
@@ -312,6 +332,9 @@ void TileMap::init_switch(short int level)
 
 void TileMap::init_chest(short int level)
 {
+	if (level < 4) {
+		return;
+	}
 	std::string level_ = std::to_string(level-3);
 	std::string path = "Maps/level"+level_+"/Chest.txt";
 	std::ifstream fin;
@@ -347,10 +370,8 @@ void TileMap::init_tile_list()
 	tile_list['r'] = new Tile("ground7", 1, sizeTexture, sizeTexture, 'r');
 	tile_list['W'] = new TileAnim("water_top_layer", 2, sizeTexture, sizeTexture, 'W', 64, 4, 0.5);
 	tile_list['w'] = new TileAnim("water_down_layer", 2, sizeTexture, sizeTexture, 'w', 64, 4, 0.5);
-	tile_list['`'] = new Tile();
-
 	//�������������� � ������������ �����.
-	tile_list['^'] = new Tile("ladder1", 0, sizeTexture, sizeTexture, '.');
+	tile_list['^'] = new Tile("ladder1", 0, sizeTexture, sizeTexture, '^');
 	tile_list['_'] = new Tile("ladder2", 0, sizeTexture, sizeTexture, '_');
 	tile_list['-'] = new Tile("ladder3", 0, sizeTexture, sizeTexture, '-');
 	tile_list['='] = new Tile("ladder4", 0, sizeTexture, sizeTexture, '=');
@@ -404,7 +425,8 @@ Tile* TileMap::give_tile(char letter)
 	{
 		return it->second;
 	}
-	return tile_list['`'];
+	std::cout << "Error -> tile for " << letter << " not found" << std::endl;
+	return nullptr;
 }
 
 Tile* TileMap::give_tile_back(char letter)
@@ -414,7 +436,8 @@ Tile* TileMap::give_tile_back(char letter)
 	{
 		return it->second;
 	}
-	return tile_list['`'];
+	std::cout << "Error -> tile for " << letter << " not found" << std::endl;
+	return nullptr;
 }
 
 Tile* TileMap::give_tile_front(char letter)
@@ -424,7 +447,8 @@ Tile* TileMap::give_tile_front(char letter)
 	{
 		return it->second;
 	}
-	return tile_list['`'];
+	std::cout << "Error -> tile for "<< letter << " not found"<< std::endl;
+	return nullptr;
 }
 
 void TileMap::first_renderObject(sf::RenderTarget& target)
@@ -439,6 +463,8 @@ void TileMap::first_renderObject(sf::RenderTarget& target)
 
 void TileMap::background_render(sf::RenderTarget& target, sf::FloatRect view_cords)
 {
+	if (!background_loaded)
+		return;
 	float x, y, l, k;
 	l = (view_cords.position.x - (view_cords.size.x / 2));
 	k = (view_cords.position.y - (view_cords.size.y / 2));
@@ -470,12 +496,15 @@ void TileMap::first_render(sf::RenderTarget& target, sf::FloatRect view_cords)
 	if (finish_j < mapW - 1) finish_j = finish_j + 2;
 
 
-	for (int i = start_i; i < finish_i; i++)
+	for (int i = start_i; i < finish_i && i < mapH; i++)
 	{
-		for (int j = start_j; j < finish_j; j++)
+		for (int j = start_j; j < finish_j && j < mapW; j++)
 		{
 			for (int k = 0; k < 2; k++)
 			{
+				if (tilemap[i] == nullptr || tilemap[i][j] == nullptr || tilemap[i][j][k] == nullptr) {
+					continue;
+				}
 				target.draw(tilemap[i][j][k]->render_tile(i, j));
 			}
 		}
@@ -503,10 +532,13 @@ void TileMap::second_render(sf::RenderTarget& target, sf::FloatRect view_cords)
 	if (finish_i < mapH - 1) finish_i = finish_i + 2;
 	if (finish_j < mapW - 1) finish_j = finish_j + 2;
 
-	for (int i = start_i; i < finish_i; i++)
+	for (int i = start_i; i < finish_i && i < mapH; i++)
 	{
-		for (int j = start_j; j < finish_j; j++)
+		for (int j = start_j; j < finish_j && j < mapW; j++)
 		{
+			if (tilemap[i] == nullptr || tilemap[i][j] == nullptr || tilemap[i][j][2] == nullptr) {
+				continue;
+			}
 			target.draw(tilemap[i][j][2]->render_tile(i, j));
 		}
 	}
@@ -516,14 +548,23 @@ void TileMap::update(sf::RenderTarget& target, sf::FloatRect view_cords)
 {
 	for (auto& it : tile_list_back)
 	{
+		if (it.second == nullptr) {
+			continue;
+		}
 		it.second->tile_animation();
 	}
 	for (auto& it : tile_list)
 	{
+		if (it.second == nullptr) {
+			continue;
+		}
 		it.second->tile_animation();
 	}
 	for (auto& it : tile_list_front)
 	{
+		if (it.second == nullptr) {
+			continue;
+		}
 		it.second->tile_animation();
 	}
 }
@@ -545,9 +586,9 @@ float TileMap::getSizeTexture()
 
 bool TileMap::isBlock(int i, int j)
 {
-	if (tilemap[i][j][1]->get_interaction() == 1)
-		return true;
-	return false;
+	if (!outOfMap(i, j) || tilemap[i][j][1] == nullptr)
+		return false;
+	return tilemap[i][j][1]->get_interaction() == 1;
 }
 
 bool TileMap::outOfMap(int i, int j)
@@ -561,25 +602,33 @@ bool TileMap::outOfMap(int i, int j)
 
 void TileMap::add_tile(int i, int j, char association)
 {
-	if (tilemap[i][j][1] == tile_list['`'])
+	if (!outOfMap(i, j))
+		return;
+	if (tilemap[i][j][1] == nullptr)
 	{
-		tilemap[i][j][1] = tile_list[association];
+		auto it = tile_list.find(association);
+		if (it != tile_list.end())
+			tilemap[i][j][1] = it->second;
 	}
 }
 
 void TileMap::delete_tile(int i, int j, char association)
 {
-	if (tilemap[i][j][0] != tile_list['`'])
+	if (!outOfMap(i, j))
+		return;
+	if (tilemap[i][j][0] != nullptr)
 	{
-		tilemap[i][j][1] = tile_list['`'];
+		tilemap[i][j][1] = nullptr;
 		return;
 	}
-	tilemap[i][j][1] = tile_list['`'];
+	tilemap[i][j][1] = nullptr;
 	tilemap[i][j][0] = give_tile_back(association);
 }
 
 bool TileMap::isOccupied(int i, int j)
 {
+	if (!outOfMap(i, j) || tilemap[i][j][1] == nullptr)
+		return false;
 	return tilemap[i][j][1]->give_player_info();
 }
 
@@ -588,6 +637,8 @@ void TileMap::updatePlayerPresence(int indexI[], int indexJ[]){
 }
 
 short TileMap::getInteraction(int i, int j){
+	if (!outOfMap(i, j) || tilemap[i][j][1] == nullptr)
+		return 0;
 	return tilemap[i][j][1]->get_interaction();
 }
 

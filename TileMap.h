@@ -19,6 +19,7 @@ private:
 	int bim = 2;
 	sf::Texture background_T;
 	sf::Sprite backround_S{ Global::dummyTexture };
+	bool background_loaded = false;
 
 	Tile ****tilemap;
 	std::vector<Object*> object;
