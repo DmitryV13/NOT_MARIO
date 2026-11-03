@@ -55,7 +55,7 @@ private:
 
 	short object_available;
 
-	int num_of_enemy_{ 12 };
+	int num_of_enemy_{ 1 };
 	short regime;
 	double screenWidth;
 	double screenHeight;

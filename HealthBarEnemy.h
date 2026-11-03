@@ -34,7 +34,7 @@ public:
 	void update_animation();
 	void reset_Timer();
 	void setHP_cur(short);
-	void update(Sprite);
+	void update(FloatRect);
 	void SET_ST_HP(short HP);
 	void render(sf::RenderTarget& target);
 

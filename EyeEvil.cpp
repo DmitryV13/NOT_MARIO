@@ -46,8 +46,8 @@ void EyeEvil::init_texture()
 
 void EyeEvil::init_sprite()
 {
-	current_area = IntRect(sf::Vector2i(0, 0), sf::Vector2i(640, 67));
-	observation_area.setTextureRect(current_area);
+	current_area = FloatRect(sf::Vector2f(0.f, 0.f), sf::Vector2f(640, 67));
+	observation_area = current_area;
 
 	Enemy_S.setTexture(Enemy_T);
 	current_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(60, 55.4));
@@ -72,7 +72,7 @@ void EyeEvil::changeHP(short i)
 
 void EyeEvil::updateHP_bar()
 {
-	hp_bar->update(Enemy_S);
+	hp_bar->update(Enemy_S.getGlobalBounds());
 
 }
 
@@ -642,7 +642,7 @@ void EyeEvil::reset_attention()
 
 bool EyeEvil::search_for_enemies()
 {
-	FloatRect en = observation_area.getGlobalBounds();
+	FloatRect en = observation_area;
 	FloatRect pl = player_info->getGlobalBounds();
 	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
 	if (playerSide == PL_SIDE::RIGHT && looks_to_the_right)

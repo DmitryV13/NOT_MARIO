@@ -12,17 +12,18 @@ void HornetHive::init_texture()
 
 void HornetHive::init_sprite()
 {
-	current_area = IntRect(sf::Vector2i(0, 0), sf::Vector2i(2000, 400));
-	observation_area.setTextureRect(current_area);
+	current_area = FloatRect(sf::Vector2f(0.f, 0.f), sf::Vector2f(2000, 400));
+	observation_area = current_area;
 
-	anim_area.setTexture(HornetHive_t_);
+	Enemy_S.setTexture(HornetHive_t_);
 	standard_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(64, 64));
-	anim_area.setTextureRect(standard_frame);
+	anim_area = static_cast<sf::FloatRect>(standard_frame);
+	Enemy_S.setTextureRect(standard_frame);
 
 
 	//Enemy_S.setTexture(Wolf_Boss_t_);
-	current_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(64, 50));
-	Enemy_S.setTextureRect(current_frame);
+	//current_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(64, 50));
+	//Enemy_S.setTextureRect(current_frame);
 }
 
 
@@ -134,7 +135,7 @@ void HornetHive::update_animation()
 
 			
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -154,7 +155,7 @@ void HornetHive::update_animation()
 			
 			
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -173,7 +174,7 @@ void HornetHive::update_animation()
 				standard_frame.size.x = 64;
 			
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -280,7 +281,7 @@ void HornetHive::update_physics()
 	//if (player_contact())displacement.x *= 1.3f;
 
 	Enemy_S.move(displacement);
-	observation_area.move(displacement);
+	observation_area.position += displacement;
 	set_position_AR(get_position().x, get_position().y);
 }
 
@@ -291,11 +292,11 @@ bool HornetHive::HIVE_LIFE() const
 
 void HornetHive::set_position_AR(const float x, const float y)
 {
-	observation_area.setPosition(sf::Vector2f(x - (observation_area.getGlobalBounds().size.x - (observation_area.getGlobalBounds().size.x / 2) - (Enemy_S.
-			getGlobalBounds().size.x / 2)), (y - (observation_area.getGlobalBounds().size.y - Enemy_S.getGlobalBounds().size.y))));
+	observation_area.position = sf::Vector2f(x - (observation_area.size.x - (observation_area.size.x / 2) - (Enemy_S.
+			getGlobalBounds().size.x / 2)), (y - (observation_area.size.y - Enemy_S.getGlobalBounds().size.y)));
 
-	anim_area.setPosition(sf::Vector2f(x - (anim_area.getGlobalBounds().size.x - (anim_area.getGlobalBounds().size.x / 2) - (Enemy_S.
-			getGlobalBounds().size.x / 2)), (y - (anim_area.getGlobalBounds().size.y - Enemy_S.getGlobalBounds().size.y-4))));
+	//anim_area.position = sf::Vector2f(x - (anim_area.size.x - (anim_area.size.x / 2) - (Enemy_S.
+	//		getGlobalBounds().size.x / 2)), (y - (anim_area.size.y - Enemy_S.getGlobalBounds().size.y-4)));
 
 	Enemy_S.setPosition(sf::Vector2f(x, y));
 }

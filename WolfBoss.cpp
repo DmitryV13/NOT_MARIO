@@ -77,17 +77,18 @@ void WolfBoss::init_texture()
 
 void WolfBoss::init_sprite()
 {
-	current_area = IntRect(sf::Vector2i(0, 0), sf::Vector2i(2000, 200));
-	observation_area.setTextureRect(current_area);
+	current_area = FloatRect(sf::Vector2f(0.f, 0.f), sf::Vector2f(2000, 200));
+	observation_area = current_area;
 
-	anim_area.setTexture(Wolf_Boss_t_);
+	Enemy_S.setTexture(Wolf_Boss_t_);
 	standard_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(250, 250));
-	anim_area.setTextureRect(standard_frame);
+	anim_area = static_cast<sf::FloatRect>(standard_frame);
+	Enemy_S.setTextureRect(standard_frame);
 
 
 	//Enemy_S.setTexture(Wolf_Boss_t_);
-	current_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(128, 128));
-	Enemy_S.setTextureRect(current_frame);
+	//current_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(128, 128));
+	//Enemy_S.setTextureRect(current_frame);
 }
 
 
@@ -122,7 +123,7 @@ void WolfBoss::update_animation()
 				standard_frame.position.y = 0;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -155,7 +156,7 @@ void WolfBoss::update_animation()
 				standard_frame.size.x = -250.f;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -188,7 +189,7 @@ void WolfBoss::update_animation()
 				standard_frame.size.x = -250.f;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 
 			animation_timer.restart();
 		}
@@ -202,7 +203,7 @@ void WolfBoss::update_animation()
 			if (looks_to_the_right)
 			{
 				standard_frame.position.x += 250;
-				if (!search_for_enemies()|| !isPlayerInRadius(observation_area.getGlobalBounds(), player_info->getGlobalBounds(), 300))
+				if (!search_for_enemies()|| !isPlayerInRadius(observation_area, player_info->getGlobalBounds(), 300))
 				{
 					if (standard_frame.position.x >= 750)
 					{
@@ -222,7 +223,7 @@ void WolfBoss::update_animation()
 			else
 			{
 				standard_frame.position.x += 250;
-				if (!search_for_enemies() || !isPlayerInRadius(observation_area.getGlobalBounds(), player_info->getGlobalBounds(), 300))
+				if (!search_for_enemies() || !isPlayerInRadius(observation_area, player_info->getGlobalBounds(), 300))
 				{
 					if (standard_frame.position.x >= 1000)
 					{
@@ -240,7 +241,7 @@ void WolfBoss::update_animation()
 				standard_frame.size.x = -250.f;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -274,7 +275,7 @@ void WolfBoss::update_animation()
 					standard_frame.size.x = -250;
 				}
 			}
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -304,7 +305,7 @@ void WolfBoss::update_animation()
 				}
 				standard_frame.size.x = -250.f;
 			}
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -335,7 +336,7 @@ void WolfBoss::update_animation()
 				}
 				standard_frame.size.x = -250.f;
 			}
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -366,7 +367,7 @@ void WolfBoss::update_animation()
 				}
 				standard_frame.size.x = -250.f;
 			}
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -397,7 +398,7 @@ void WolfBoss::update_animation()
 				}
 				standard_frame.size.x = -250.f;
 			}
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 		}
@@ -428,7 +429,7 @@ void WolfBoss::update_animation()
 				}
 				standard_frame.size.x = -250.f;
 			}
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 		}
@@ -459,7 +460,7 @@ void WolfBoss::update_animation()
 				}
 				standard_frame.size.x = -250.f;
 			}
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 		}
@@ -490,7 +491,7 @@ void WolfBoss::update_animation()
 				}
 				standard_frame.size.x = -250.f;
 			}
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 		}
@@ -580,7 +581,7 @@ void WolfBoss::changeHP(short i)
 
 void WolfBoss::updateHP_bar()
 {
-	hp_bar->update(Enemy_S);
+			hp_bar->update(Enemy_S.getGlobalBounds());
 
 }
 
@@ -607,7 +608,7 @@ void WolfBoss::update_movement()
 
 			displacement.x = 0.f;
 			animation_state = ENEMY_ANIMATION_STATES::ENEMY_SLEEP;
-			if (isPlayerInRadius(observation_area.getGlobalBounds(), player_info->getGlobalBounds(), 300) ||
+			if (isPlayerInRadius(observation_area, player_info->getGlobalBounds(), 300) ||
 				boss_state_past == boss_state)
 			{
 				reset_Timer();
@@ -1282,7 +1283,7 @@ void WolfBoss::clear_shot()
 
 bool WolfBoss::search_for_enemies()
 {
-	FloatRect look = observation_area.getGlobalBounds();
+	FloatRect look = observation_area;
 	FloatRect pl = player_info->getGlobalBounds();
 
 	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);

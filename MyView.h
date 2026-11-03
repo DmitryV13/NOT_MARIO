@@ -6,13 +6,13 @@ using namespace::sf;
 
 class MyView{
 private:
-	// characteristics of map
+	// characteristics of the map
 	double absoluteLeft;
 	double absoluteTop;
 	double absoluteRight;
 	double absoluteBottom;
 
-	// characteristics of window
+	// characteristics of the displayed window
 	double windowLeft;
 	double windowTop;
 	double windowRight;
@@ -21,6 +21,7 @@ private:
 	double screenWidth;
 	double screenHeight;
 
+	// zero screen movement area for player
 	FloatRect viewScreen;
 public:
 	View view;

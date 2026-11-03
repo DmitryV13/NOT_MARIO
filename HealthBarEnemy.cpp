@@ -68,11 +68,10 @@ void HealthBarEnemy::setHP_cur(short HP)
 	HP_cur = HP;
 }
 
-void HealthBarEnemy::update(Sprite sp_en)
+void HealthBarEnemy::update(FloatRect sp_en)
 {
-	HealthBarEnemy_S_.setPosition(sf::Vector2f(sp_en.getPosition().x - (HealthBarEnemy_S_.getGlobalBounds().size.x - (HealthBarEnemy_S_.getGlobalBounds().size.x
-			/ 2) - (sp_en.
-			        getGlobalBounds().size.x / 2)), (sp_en.getPosition().y - (HealthBarEnemy_S_.getGlobalBounds().size.y))));
+	HealthBarEnemy_S_.setPosition(sf::Vector2f(sp_en.position.x - (HealthBarEnemy_S_.getGlobalBounds().size.x - (HealthBarEnemy_S_.getGlobalBounds().size.x
+			/ 2) - (sp_en.size.x / 2)), (sp_en.position.y - (HealthBarEnemy_S_.getGlobalBounds().size.y))));
 
 	update_animation();
 }

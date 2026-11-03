@@ -50,20 +50,21 @@ void kusaka::init_texture()
 
 void kusaka::init_sprite()
 {
-	current_area = IntRect(sf::Vector2i(0, 0), sf::Vector2i(1280, 192));
-	observation_area.setTextureRect(current_area);
+	current_area = FloatRect(sf::Vector2f(0.f, 0.f), sf::Vector2f(1280, 192));
+	observation_area = current_area;
 
 
-	anim_area.setTexture(kusaka_t_);
+	Enemy_S.setTexture(kusaka_t_);
 	standard_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(90, 55));
-	anim_area.setTextureRect(standard_frame);
+	anim_area = static_cast<sf::FloatRect>(standard_frame);
+	Enemy_S.setTextureRect(standard_frame);
 
 
 
 	//Enemy_T = init_texture();
 	//Enemy_S.setTexture(kusaka_t_);
-	current_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(64, 55));
-	Enemy_S.setTextureRect(current_frame);
+	//current_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(64, 55));
+	//Enemy_S.setTextureRect(current_frame);
 }
 
 
@@ -94,7 +95,7 @@ void kusaka::update_animation()
 				standard_frame.position.y = 0;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -123,7 +124,7 @@ void kusaka::update_animation()
 				standard_frame.position.y = 281;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -152,7 +153,7 @@ void kusaka::update_animation()
 				standard_frame.position.y = 0;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -183,7 +184,7 @@ void kusaka::update_animation()
 			}
 
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -218,7 +219,7 @@ void kusaka::update_animation()
 				standard_frame.position.y = 70;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -249,7 +250,7 @@ void kusaka::update_animation()
 			}
 
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -278,7 +279,7 @@ void kusaka::update_animation()
 				standard_frame.position.y = 350;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -307,7 +308,7 @@ void kusaka::update_animation()
 				standard_frame.position.y = 0;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -336,7 +337,7 @@ void kusaka::update_animation()
 				standard_frame.position.y = 208;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -359,7 +360,7 @@ void kusaka::shot()
 void kusaka::attack()
 {
 	//if (animation_state != ENEMY_ANIMATION_STATES::ENEMY_SHOT)animation_state = ENEMY_ANIMATION_STATES::ENEMY_ATTENTION;
-	//if (isPlayerInRadius(observation_area.getGlobalBounds(), player_info->getGlobalBounds(), 192))
+	//if (isPlayerInRadius(observation_area, player_info->getGlobalBounds(), 192))
 	//{
 	//	if (count_jump == 0)
 	//	{
@@ -449,7 +450,7 @@ void kusaka::clear_shot()
 
 bool kusaka::search_for_enemies()
 {
-	FloatRect look = observation_area.getGlobalBounds();
+	FloatRect look = observation_area;
 	FloatRect pl = player_info->getGlobalBounds();
 
 	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
@@ -667,7 +668,7 @@ void kusaka::update_movement()
 			{
 				kusaka_state = KUSAKA_STATE::KUSAKA_RUN;
 			}
-			if (isPlayerInRadius(observation_area.getGlobalBounds(), player_info->getGlobalBounds(), 192))
+			if (isPlayerInRadius(observation_area, player_info->getGlobalBounds(), 192))
 			{
 				if (count_jump == 0)
 				{

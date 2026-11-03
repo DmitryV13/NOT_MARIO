@@ -11,17 +11,18 @@ void hornet::init_texture()
 
 void hornet::init_sprite()
 {
-	current_area = IntRect(sf::Vector2i(0, 0), sf::Vector2i(2000, 400));
-	observation_area.setTextureRect(current_area);
+	current_area = FloatRect(sf::Vector2f(0.f, 0.f), sf::Vector2f(2000, 400));
+	observation_area = current_area;
 
-	anim_area.setTexture(hornet_t_);
+	Enemy_S.setTexture(hornet_t_);
 	standard_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(64, 76));
-	anim_area.setTextureRect(standard_frame);
+	anim_area = static_cast<sf::FloatRect>(standard_frame);
+	Enemy_S.setTextureRect(standard_frame);
 
 
 	//Enemy_S.setTexture(Wolf_Boss_t_);
-	current_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(30, 30));
-	Enemy_S.setTextureRect(current_frame);
+	//current_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(30, 30));
+	//Enemy_S.setTextureRect(current_frame);
 }
 
 hornet::hornet(TileMap& map, GeneralInfo* player_info,short regime): Enemy(map, player_info,regime), player_info_(player_info)
@@ -193,7 +194,7 @@ void hornet::update_animation()
 				standard_frame.size.x = -64.f;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -221,7 +222,7 @@ void hornet::update_animation()
 				standard_frame.size.x = -64.f;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -251,7 +252,7 @@ void hornet::update_animation()
 				standard_frame.size.x = -64.f;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -280,7 +281,7 @@ void hornet::update_animation()
 				standard_frame.size.x = -64.f;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -309,7 +310,7 @@ void hornet::update_animation()
 				standard_frame.size.x = -64.f;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -332,7 +333,7 @@ void hornet::shot()
 
 bool hornet::search_for_enemies()
 {
-	FloatRect look = observation_area.getGlobalBounds();
+	FloatRect look = observation_area;
 	FloatRect pl = player_info->getGlobalBounds();
 
 	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);

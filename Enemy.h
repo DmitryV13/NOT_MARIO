@@ -55,10 +55,10 @@ protected:
 
 	Texture Enemy_T;
 	Sprite Enemy_S{ Global::dummyTexture };
-	Sprite observation_area{ Global::dummyTexture };
-	Sprite anim_area{ Global::dummyTexture };
+	FloatRect observation_area;
+	FloatRect anim_area;
 	IntRect current_frame;
-	IntRect current_area;
+	FloatRect current_area;
 	IntRect standard_frame;
 	Clock animation_timer;
 	Clock blow_timer;

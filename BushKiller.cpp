@@ -63,17 +63,18 @@ void BushKiller::init_texture()
 
 void BushKiller::init_sprite()
 {
-	current_area = IntRect(sf::Vector2i(0, 0), sf::Vector2i(2000, 1500));
-	observation_area.setTextureRect(current_area);
+	current_area = FloatRect(sf::Vector2f(0.f, 0.f), sf::Vector2f(2000, 1500));
+	observation_area = current_area;
 
-	anim_area.setTexture(bush_killer_t_);
+	Enemy_S.setTexture(bush_killer_t_);
 	standard_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(64, 64));
-	anim_area.setTextureRect(standard_frame);
+	anim_area = static_cast<sf::FloatRect>(standard_frame);
+	Enemy_S.setTextureRect(standard_frame);
 
 
 	//Enemy_S.setTexture(bush_killer_t_);
-	current_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(60, 60));
-	Enemy_S.setTextureRect(current_frame);
+	//current_frame = IntRect(sf::Vector2i(0, 0), sf::Vector2i(60, 60));
+	//Enemy_S.setTextureRect(current_frame);
 }
 
 
@@ -105,7 +106,7 @@ void BushKiller::update_animation()
 				standard_frame.size.x = -64.f;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -136,7 +137,7 @@ void BushKiller::update_animation()
 				standard_frame.size.x = -64.f;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -169,7 +170,7 @@ void BushKiller::update_animation()
 				standard_frame.size.x = -64.f;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -200,7 +201,7 @@ void BushKiller::update_animation()
 				standard_frame.size.x = -64.f;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -231,7 +232,7 @@ void BushKiller::update_animation()
 				standard_frame.size.x = -64.f;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -262,7 +263,7 @@ void BushKiller::update_animation()
 				standard_frame.size.x = -64.f;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 	}
@@ -293,7 +294,7 @@ void BushKiller::update_animation()
 				standard_frame.size.x = -64.f;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 		}
@@ -324,7 +325,7 @@ void BushKiller::update_animation()
 				standard_frame.size.x = -64.f;
 			}
 
-			anim_area.setTextureRect(standard_frame);
+			Enemy_S.setTextureRect(standard_frame);
 			animation_timer.restart();
 		}
 		}
@@ -658,7 +659,7 @@ void BushKiller::clear_shot()
 
 bool BushKiller::search_for_enemies()
 {
-	FloatRect look = observation_area.getGlobalBounds();
+	FloatRect look = observation_area;
 	FloatRect pl = player_info->getGlobalBounds();
 
 	PL_SIDE playerSide = getPlayerSide(player_info->getPosition().x, get_position().x);
