@@ -1,0 +1,52 @@
+<Project>
+  <PropertyGroup>
+    <SfmlVersion>3.1.0</SfmlVersion>
+    <!-- If the SFML_DIR environment variable is set, it is used; otherwise, the directory in the user's profile is used. -->
+    <SfmlDir Condition="'$(SFML_DIR)' != ''">$([MSBuild]::EnsureTrailingSlash('$(SFML_DIR)'))</SfmlDir>
+    <SfmlDir Condition="'$(SFML_DIR)' == ''">$(USERPROFILE)\libraries\SFML-$(SfmlVersion)\</SfmlDir>
+  </PropertyGroup>
+
+  <!-- Download SFML before building if it is not already present. -->
+  <Target Name="EnsureSfml" BeforeTargets="PrepareForBuild" Condition="!Exists('$(SfmlDir)include\SFML')">
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildThisFileDirectory)setup_sfml.ps1&quot; -Version $(SfmlVersion) -Target &quot;$(SfmlDir).&quot;" />
+  </Target>
+
+  <!-- Common settings for all configurations. -->
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SfmlDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SfmlDir)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <!-- Debug -->
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+    <Link>
+      <AdditionalDependencies>sfml-system-d.lib;sfml-network-d.lib;sfml-audio-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <!-- Release -->
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
+    <Link>
+      <AdditionalDependencies>sfml-system.lib;sfml-network.lib;sfml-audio.lib;sfml-window.lib;sfml-graphics.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <!-- Copy DLLs to x64\Debug or x64\Release after the build -->
+  <Target Name="CopySfmlDlls" AfterTargets="Build" Condition="'$(ConfigurationType)'=='Application'">
+	<ItemGroup>
+		<SfmlDlls Condition="'$(Configuration)'=='Debug'"
+				  Include="$(SfmlDir)bin\sfml-*-d-3.dll" />
+		<SfmlDlls Condition="'$(Configuration)'!='Debug'"
+				  Include="$(SfmlDir)bin\sfml-*-3.dll"
+				  Exclude="$(SfmlDir)bin\sfml-*-d-3.dll" />
+		<!-- For compatibility with different SFML builds, copy openal32.dll only if it exists -->
+		<SfmlDlls Include="$(SfmlDir)bin\openal32.dll" Condition="Exists('$(SfmlDir)bin\openal32.dll')" />
+	</ItemGroup>
+	<Copy SourceFiles="@(SfmlDlls)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+  </Target>
+</Project>
