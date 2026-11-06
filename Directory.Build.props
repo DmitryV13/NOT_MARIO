@@ -16,6 +16,7 @@
     <ClCompile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>$(SfmlDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+	  <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)src\codebase\include;$(SfmlDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SfmlDir)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
