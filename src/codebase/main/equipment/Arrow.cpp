@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Arrow.h"
+#include "equipment/Arrow.h"
 
 	Arrow::Arrow(Vector2f init_pos, short side_ ,TileMap* sandbox_, const vector<vector<Enemy*>*>& enemies_)
 		:enemies(enemies_), side(side_), speed(10), sandbox(sandbox_){

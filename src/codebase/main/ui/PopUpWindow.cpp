@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "PopUpWindow.h"
+#include "ui/PopUpWindow.h"
 
 
 	PopUpWindow::PopUpWindow(double screen_width, double screen_height, int width_, int height_, RenderWindow* window_)

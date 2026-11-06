@@ -1,9 +1,9 @@
 
 #include "stdafx.h"
-#include "Enemy.h"
+#include "units/enemies/Enemy.h"
 
-#include "laser_weapon.h"
-#include "TileMap.h"
+#include "units/enemies/laser_weapon.h"
+#include "map/TileMap.h"
 
 
 sf::Vector2f Enemy::generate_random_start_position(int mapWidth, int mapHeight)

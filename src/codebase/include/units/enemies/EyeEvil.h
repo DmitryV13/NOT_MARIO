@@ -1,5 +1,5 @@
 #pragma once
-#include "Enemy.h"
+#include "units/enemies/Enemy.h"
 
 enum class EYE_EVIL_STATE
 {

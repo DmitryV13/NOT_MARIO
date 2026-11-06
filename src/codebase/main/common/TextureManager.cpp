@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "TextureManager.h"
+#include "common/TextureManager.h"
 
 	TextureManager::TextureManager(){
 		//single

@@ -1,6 +1,6 @@
 #pragma once
-#include "Global/Global.hpp"
-#include "TextureManager.h"
+#include "common/Global.hpp"
+#include "common/TextureManager.h"
 using namespace::sf;
 
 class ComposedIMG{

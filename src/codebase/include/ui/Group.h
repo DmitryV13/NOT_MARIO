@@ -1,7 +1,7 @@
 #pragma once
-#include "InterfaceItem.h"
-#include "INTERFACE_ITEM_TYPE.h"
-#include "ImageButton.h"
+#include "ui/InterfaceItem.h"
+#include "ui/enums/INTERFACE_ITEM_TYPE.h"
+#include "ui/ImageButton.h"
 
 class Group : public InterfaceItem{
 protected:

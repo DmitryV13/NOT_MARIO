@@ -1,9 +1,9 @@
 #pragma once
-#include "Global/Global.hpp"
+#include "common/Global.hpp"
 
-#include "Map.h"
-#include "TileMap.h"
-#include "GeneralInfo.h"
+#include "map/Map.h"
+#include "map/TileMap.h"
+#include "units/player/GeneralInfo.h"
 
 using sf::Sprite;
 using sf::RenderWindow;

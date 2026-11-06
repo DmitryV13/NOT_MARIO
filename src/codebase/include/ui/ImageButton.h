@@ -1,6 +1,6 @@
 #pragma once
-#include "Global/Global.hpp"
-#include "Button.h"
+#include "common/Global.hpp"
+#include "ui/Button.h"
 
 using namespace::sf;
 

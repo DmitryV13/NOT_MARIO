@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "ComposedIMG.h"
+#include "ui/ComposedIMG.h"
 
 	ComposedIMG::ComposedIMG(int width_, int height_, int original_size, TextureManager* manager, int index)
 		: width(width_), height(height_), origin_size(original_size), scale(1){

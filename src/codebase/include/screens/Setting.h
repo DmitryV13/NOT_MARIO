@@ -1,5 +1,5 @@
 #pragma once
-#include "MainMenuOption.h"
+#include "screens/MainMenuOption.h"
 
 using namespace sf;
 

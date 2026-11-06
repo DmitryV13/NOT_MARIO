@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "AnimatedImage.h"
+#include "ui/AnimatedImage.h"
 
 	AnimatedImage::AnimatedImage(TextureManager* t_manager, Warehouse* w_object, string name)
 	: BasicImage(t_manager, w_object, name){

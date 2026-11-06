@@ -1,18 +1,18 @@
 #pragma once
-#include "Global/Global.hpp"
+#include "common/Global.hpp"
 
-#include "PLAYER_ANIMATION_SATES.h"
-#include "Map.h"
-#include "TileMap.h"
-#include "Fist.h"
-#include "Sword.h"
-#include "CombatStaff.h"
-#include "Bow.h"
-#include "kusaka.h"
-#include "EyeEvil.h"
-#include "WolfBoss.h"
-#include "RedMutant.h"
-#include "GeneralInfo.h"
+#include "units/player/enums/PLAYER_ANIMATION_SATES.h"
+#include "map/Map.h"
+#include "map/TileMap.h"
+#include "equipment/Fist.h"
+#include "equipment/Sword.h"
+#include "equipment/CombatStaff.h"
+#include "equipment/Bow.h"
+#include "units/enemies/kusaka.h"
+#include "units/enemies/EyeEvil.h"
+#include "units/enemies/WolfBoss.h"
+#include "units/enemies/RedMutant.h"
+#include "units/player/GeneralInfo.h"
 
 using namespace::sf;
 

@@ -1,12 +1,12 @@
 #pragma once
-#include "Global/Global.hpp"
+#include "common/Global.hpp"
 
-#include "Map.h"
-#include "TileMap.h"
-#include "laser_weapon.h"
-#include "GeneralInfo.h"
-#include "HealthBarEnemy.h"
-#include "killer_leaf.h"
+#include "map/Map.h"
+#include "map/TileMap.h"
+#include "units/enemies/laser_weapon.h"
+#include "units/player/GeneralInfo.h"
+#include "units/enemies/HealthBarEnemy.h"
+#include "units/enemies/killer_leaf.h"
 
 using sf::Sprite;
 using sf::RenderWindow;

@@ -1,7 +1,7 @@
 #pragma once
-#include "Global/Global.hpp"
-#include "TextureManager.h"
-#include "Warehouse.h"
+#include "common/Global.hpp"
+#include "common/TextureManager.h"
+#include "game/Warehouse.h"
 
 using namespace::sf;
 

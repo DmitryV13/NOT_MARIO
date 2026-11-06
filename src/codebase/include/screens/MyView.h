@@ -1,6 +1,6 @@
 #pragma once
 
-#include "TileMap.h"
+#include "map/TileMap.h"
 
 using namespace::sf;
 

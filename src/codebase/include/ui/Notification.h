@@ -1,5 +1,5 @@
 #pragma once
-#include "Global/Global.hpp"
+#include "common/Global.hpp"
 
 using namespace::sf;
 

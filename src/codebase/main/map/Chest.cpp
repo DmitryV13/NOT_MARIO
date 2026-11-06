@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "chest.h"
+#include "map/Chest.h"
 
 void Chest::filled_in()
 {

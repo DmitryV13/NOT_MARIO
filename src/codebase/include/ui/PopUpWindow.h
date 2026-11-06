@@ -1,12 +1,12 @@
 #pragma once
-#include "Button.h"
-#include "Reviewer.h"
-#include "ComposedIMG.h"
-#include "Label.h"
-#include "Group.h"
-#include "BUTTON_STATE.h"
-#include "POP_UP_WINDOW_STATE.h"
-#include "CallbacksHandler.h"
+#include "ui/Button.h"
+#include "ui/Reviewer.h"
+#include "ui/ComposedIMG.h"
+#include "ui/Label.h"
+#include "ui/Group.h"
+#include "ui/enums/BUTTON_STATE.h"
+#include "ui/enums/POP_UP_WINDOW_STATE.h"
+#include "ui/CallbacksHandler.h"
 
 class PopUpWindow{
 private:

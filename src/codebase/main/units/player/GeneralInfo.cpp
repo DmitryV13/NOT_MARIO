@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "GeneralInfo.h"
+#include "units/player/GeneralInfo.h"
 
     GeneralInfo::GeneralInfo(int HP_, int mana_)
         : HP(HP_), mana(mana_), max_mana(mana), max_HP(HP), stan_time(0.f), mana_is_used(false){

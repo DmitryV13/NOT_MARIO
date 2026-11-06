@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "ScaleParametrBar.h"
+#include "ui/ScaleParametrBar.h"
 
 
 	ScaleParameterBar::ScaleParameterBar(){

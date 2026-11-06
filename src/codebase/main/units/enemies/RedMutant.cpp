@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "RedMutant.h"
+#include "units/enemies/RedMutant.h"
 
 RedMutant::RedMutant(TileMap& map, GeneralInfo* player_info,short regime)
 	: Enemy(map, player_info,regime)

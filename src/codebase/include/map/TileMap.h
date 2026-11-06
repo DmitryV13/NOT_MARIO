@@ -1,15 +1,15 @@
 #pragma once
-#include "Global/Global.hpp"
-#include "Tile.h"
-#include "TileAnim.h"
-#include "TileFactory.h"
-#include "Object.h"
-#include "AnimObject.h"
-#include "MovingAnimObject.h"
-#include "MovingObject.h"
-#include "Chest.h"
-#include "Switch.h"
-#include "WarehouseItem.h"
+#include "common/Global.hpp"
+#include "map/Tile.h"
+#include "map/TileAnim.h"
+#include "map/TileFactory.h"
+#include "map/Object.h"
+#include "map/AnimObject.h"
+#include "map/MovingAnimObject.h"
+#include "map/MovingObject.h"
+#include "map/Chest.h"
+#include "map/Switch.h"
+#include "game/WarehouseItem.h"
 
 
 

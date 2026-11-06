@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Projectile.h"
+#include "equipment/Projectile.h"
 
 	Projectile::Projectile(Vector2f init_pos, Vector2f dest_pos_, TileMap* sandbox_, const vector<vector<Enemy*>*>& enemies_)
 		:enemies(enemies_), dest_pos(dest_pos_), speed(10), sandbox(sandbox_) {

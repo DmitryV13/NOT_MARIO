@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "BushKiller.h"
+#include "units/enemies/BushKiller.h"
 
 
 BushKiller::BushKiller(TileMap& map, GeneralInfo* player_info,short regime)

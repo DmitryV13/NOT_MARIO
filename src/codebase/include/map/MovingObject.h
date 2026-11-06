@@ -1,5 +1,5 @@
 #pragma once
-#include "Object.h"
+#include "map/Object.h"
 class MovingObject : public Object
 {
 private:

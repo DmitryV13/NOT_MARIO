@@ -1,6 +1,6 @@
 #pragma once
-#include "AnimObject.h"
-#include "WarehouseItem.h"
+#include "map/AnimObject.h"
+#include "game/WarehouseItem.h"
 #include "random"
 
 class Chest : public AnimObject

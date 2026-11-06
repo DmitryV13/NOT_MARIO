@@ -1,9 +1,9 @@
 #pragma once
-#include "Global/Global.hpp"
-#include "TextureManager.h"
-#include "Warehouse.h"
-#include "InterfaceItem.h"
-#include "INTERFACE_ITEM_TYPE.h"
+#include "common/Global.hpp"
+#include "common/TextureManager.h"
+#include "game/Warehouse.h"
+#include "ui/InterfaceItem.h"
+#include "ui/enums/INTERFACE_ITEM_TYPE.h"
 
 using namespace::sf;
 

@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "MyView.h"
+#include "screens/MyView.h"
 
 MyView::MyView(TileMap& map, double screenWidth_, double screenHeight_)
 	:absoluteRight(map.getMapWidth())

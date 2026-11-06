@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "HealthBarEnemy.h"
+#include "units/enemies/HealthBarEnemy.h"
 
 void HealthBarEnemy::init_texture()
 {

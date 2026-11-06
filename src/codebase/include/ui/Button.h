@@ -1,9 +1,9 @@
 #pragma once
-#include "Global/Global.hpp"
-#include "InterfaceItem.h"
-#include "INTERFACE_ITEM_TYPE.h"
-#include "BUTTON_STATE.h"
-#include "TextureManager.h"
+#include "common/Global.hpp"
+#include "ui/InterfaceItem.h"
+#include "ui/enums/INTERFACE_ITEM_TYPE.h"
+#include "ui/enums/BUTTON_STATE.h"
+#include "common/TextureManager.h"
 
 
 class Button : public InterfaceItem{

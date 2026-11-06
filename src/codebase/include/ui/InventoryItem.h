@@ -1,12 +1,12 @@
 #pragma once
-#include "Global/Global.hpp"
-#include "BasicImage.h"
-#include "ResourceInfo.h"
-#include "InterfaceItem.h"
-#include "INTERFACE_ITEM_TYPE.h"
-#include "TextureManager.h"
-#include "Warehouse.h"
-#include "FormItem.h"
+#include "common/Global.hpp"
+#include "ui/BasicImage.h"
+#include "ui/ResourceInfo.h"
+#include "ui/InterfaceItem.h"
+#include "ui/enums/INTERFACE_ITEM_TYPE.h"
+#include "common/TextureManager.h"
+#include "game/Warehouse.h"
+#include "ui/FormItem.h"
 
 using namespace::sf;
 

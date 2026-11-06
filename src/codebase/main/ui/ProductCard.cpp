@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "ProductCard.h"
+#include "ui/ProductCard.h"
 
 	ProductCard::ProductCard(int price_, int amount_, float p_coefficient_, int* source_)
 	: price(price_), amount(amount_), source(source_), p_coefficient(p_coefficient_){

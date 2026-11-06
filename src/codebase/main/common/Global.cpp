@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Global.hpp"
+#include "common/Global.hpp"
 
 namespace Global {
     sf::Texture dummyTexture("Textures/dummy.png");

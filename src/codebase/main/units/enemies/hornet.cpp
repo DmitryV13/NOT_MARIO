@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "hornet.h"
+#include "units/enemies/hornet.h"
 
 void hornet::init_texture()
 {

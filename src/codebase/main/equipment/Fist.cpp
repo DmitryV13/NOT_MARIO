@@ -1,2 +1,2 @@
 #include "stdafx.h"
-#include "Fist.h"
+#include "equipment/Fist.h"

@@ -1,6 +1,6 @@
 #pragma once
 #include <random>
-#include "Tile.h"
+#include "map/Tile.h"
 #include "random"
 class coord;
 

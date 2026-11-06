@@ -1,6 +1,6 @@
 #pragma once
-#include "Global/Global.hpp"
-#include "OBJECT_TYPE.h"
+#include "common/Global.hpp"
+#include "map/enums/OBJECT_TYPE.h"
 
 class Object
 {

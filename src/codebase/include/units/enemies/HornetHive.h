@@ -1,5 +1,5 @@
 #pragma once
-#include "Enemy.h"
+#include "units/enemies/Enemy.h"
 
 using sf::Sprite;
 using sf::RenderWindow;

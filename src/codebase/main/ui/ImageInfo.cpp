@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "ImageInfo.h"
+#include "ui/ImageInfo.h"
 
 	ImageInfo::ImageInfo(){
 		ii_type = INTERFACE_ITEM_TYPE::IMAGE_INFO;

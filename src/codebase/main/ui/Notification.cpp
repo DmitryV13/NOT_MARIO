@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Notification.h"
+#include "ui/Notification.h"
 
 	Notification::Notification(float x, float y, float dest_x, float dest_y, short text_size, sf::Font* font_, string text_, Color text_color)
 		:position(Vector2f(x, y)), active(false){

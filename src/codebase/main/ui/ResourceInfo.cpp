@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "ResourceInfo.h"
+#include "ui/ResourceInfo.h"
 
 	ResourceInfo::ResourceInfo(){
 	}

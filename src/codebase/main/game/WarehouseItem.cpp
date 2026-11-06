@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "WarehouseItem.h"
+#include "game/WarehouseItem.h"
 
 	WarehouseItem::WarehouseItem(string name_, int amount_, int max_, bool access_)
 		:amount(amount_), max(max_), access(access_), name(name_){

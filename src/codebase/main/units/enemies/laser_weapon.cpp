@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "laser_weapon.h"
+#include "units/enemies/laser_weapon.h"
 
 laser_weapon::laser_weapon(TileMap& map, int compar, float i,
                            float j, bool direction, GeneralInfo* player_info_)

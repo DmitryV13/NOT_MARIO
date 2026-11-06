@@ -1,8 +1,8 @@
 #pragma once
-#include "Group.h"
-#include "FormItem.h"
-#include "FORM_ITEM_STATE.h"
-#include "CheckboxItem.h"
+#include "ui/Group.h"
+#include "ui/FormItem.h"
+#include "ui/enums/FORM_ITEM_STATE.h"
+#include "ui/CheckboxItem.h"
 
 using namespace::sf;
 

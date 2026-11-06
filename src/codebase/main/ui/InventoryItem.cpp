@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "InventoryItem.h"
+#include "ui/InventoryItem.h"
 
 	InventoryItem::InventoryItem(float x, float y, float width_, float height_, int text_size_, Font* font_)
 		:position(Vector2f(x, y)), width(width_), height(height_), text_size(text_size_), font(font_){

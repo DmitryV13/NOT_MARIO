@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Game.h"
+#include "game/Game.h"
 
 	Game::Game(double screen_w, double screen_h)
 		: screen_width(screen_w)

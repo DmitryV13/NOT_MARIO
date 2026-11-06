@@ -1,6 +1,6 @@
 #pragma once
-#include "AnimObject.h"
-#include "MovingObject.h"
+#include "map/AnimObject.h"
+#include "map/MovingObject.h"
 class Switch : public AnimObject
 {
 private:

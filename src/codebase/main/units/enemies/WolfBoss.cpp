@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "WolfBoss.h"
+#include "units/enemies/WolfBoss.h"
 
 
 WolfBoss::WolfBoss(TileMap& map, GeneralInfo* player_info,short regime)

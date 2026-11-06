@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "TileAnim.h"
+#include "map/TileAnim.h"
 
 TileAnim::TileAnim() : Tile()
 {

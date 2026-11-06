@@ -1,8 +1,8 @@
 #pragma once
-#include "Global/Global.hpp"
-#include "RoadMap.h"
-#include "Setting.h"
-#include "Exit.h"
+#include "common/Global.hpp"
+#include "screens/RoadMap.h"
+#include "screens/Setting.h"
+#include "screens/Exit.h"
 
 using namespace sf;
 

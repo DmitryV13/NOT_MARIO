@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "InterfaceItem.h"
+#include "ui/InterfaceItem.h"
 
 	void InterfaceItem::render(sf::RenderTarget* target){
 	}

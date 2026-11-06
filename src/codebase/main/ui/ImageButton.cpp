@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "ImageButton.h"
+#include "ui/ImageButton.h"
 
 	ImageButton::ImageButton(float x, float y, float width, float height, short text_size, sf::Font* font_
 		, string text_, TextureManager* t_manager, int index, string name_, bool outline, int id_)

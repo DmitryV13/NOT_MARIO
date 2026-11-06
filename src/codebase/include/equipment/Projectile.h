@@ -1,11 +1,11 @@
 #pragma once
-#include "Global/Global.hpp"
+#include "common/Global.hpp"
 
-#include "TileMap.h"
-#include "kusaka.h"
-#include "EyeEvil.h"
-#include "WolfBoss.h"
-#include "RedMutant.h"
+#include "map/TileMap.h"
+#include "units/enemies/kusaka.h"
+#include "units/enemies/EyeEvil.h"
+#include "units/enemies/WolfBoss.h"
+#include "units/enemies/RedMutant.h"
 
 using namespace::sf;
 

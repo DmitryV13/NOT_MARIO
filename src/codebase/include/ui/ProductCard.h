@@ -1,9 +1,9 @@
 #pragma once
-#include "Group.h"
-#include "InterfaceItem.h"
-#include "INTERFACE_ITEM_TYPE.h"
-#include "PURCHASE.h"
-#include "Notification.h"
+#include "ui/Group.h"
+#include "ui/InterfaceItem.h"
+#include "ui/enums/INTERFACE_ITEM_TYPE.h"
+#include "screens/enums/PURCHASE.h"
+#include "ui/Notification.h"
 
 using namespace::sf;
 

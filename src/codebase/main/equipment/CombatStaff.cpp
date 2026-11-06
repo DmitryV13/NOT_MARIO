@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "CombatStaff.h"
+#include "equipment/CombatStaff.h"
 
     CombatStaff::CombatStaff(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_, 
         const vector<vector<Enemy*>*>& enemies_, GeneralInfo* p_info_)

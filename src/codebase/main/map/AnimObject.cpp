@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "AnimObject.h"
+#include "map/AnimObject.h"
 
 AnimObject::AnimObject() : Object()
 {

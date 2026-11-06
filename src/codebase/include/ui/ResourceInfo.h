@@ -1,5 +1,5 @@
 #pragma once
-#include "ImageInfo.h"
+#include "ui/ImageInfo.h"
 
 using namespace::sf;
 

@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "kusaka.h"
+#include "units/enemies/kusaka.h"
 
 kusaka::kusaka(TileMap& map, GeneralInfo* player_info,short regime)
 	: Enemy(map, player_info,regime)

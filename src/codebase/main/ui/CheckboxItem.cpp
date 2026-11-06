@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "CheckboxItem.h"
+#include "ui/CheckboxItem.h"
 
 	CheckboxItem::CheckboxItem(float x, float y, float width_, float height_, int text_size_, Font* font)
 		:InventoryItem(x, y, width_, height_, text_size_, font) {

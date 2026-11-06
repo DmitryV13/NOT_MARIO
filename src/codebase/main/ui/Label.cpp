@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Label.h"
+#include "ui/Label.h"
 
 	Label::Label(const string& label_text_, Font* font_, int text_size_, TextureManager* manager, int index)
 		:text_size(text_size_){

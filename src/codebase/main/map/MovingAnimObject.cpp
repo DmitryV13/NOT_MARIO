@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "MovingAnimObject.h"
+#include "map/MovingAnimObject.h"
 
 MovingAnimObject::MovingAnimObject() : AnimObject()
 {

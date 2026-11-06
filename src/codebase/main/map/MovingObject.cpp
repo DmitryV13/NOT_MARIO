@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "MovingObject.h"
+#include "map/MovingObject.h"
 
 MovingObject::MovingObject() : Object()
 {

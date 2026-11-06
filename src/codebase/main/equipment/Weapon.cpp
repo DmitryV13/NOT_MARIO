@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Weapon.h"
+#include "equipment/Weapon.h"
 
 	void Weapon::update(Vector2f player_position, short player_side, RenderWindow* window, FloatRect view_cords){
 	}

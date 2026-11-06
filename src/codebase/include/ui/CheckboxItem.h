@@ -1,8 +1,8 @@
 #pragma once
-#include "InventoryItem.h"
-#include "FormItem.h"
-#include "FORM_ITEM_STATE.h"
-#include "INTERFACE_ITEM_TYPE.h"
+#include "ui/InventoryItem.h"
+#include "ui/FormItem.h"
+#include "ui/enums/FORM_ITEM_STATE.h"
+#include "ui/enums/INTERFACE_ITEM_TYPE.h"
 
 using namespace::sf;
 

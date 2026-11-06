@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Setting.h"
+#include "screens/Setting.h"
 
 	void Setting::enter(RenderWindow* window){
 	

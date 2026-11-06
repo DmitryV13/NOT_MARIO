@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Reviewer.h"
+#include "ui/Reviewer.h"
 
 	Reviewer::Reviewer(float x, float y, float width_, float height_)
 		: max_height(height_), max_width(width_), position(Vector2f(x, y)){

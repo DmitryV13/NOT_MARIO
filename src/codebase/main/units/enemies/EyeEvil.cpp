@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "EyeEvil.h"
+#include "units/enemies/EyeEvil.h"
 
 
 EyeEvil::EyeEvil(TileMap& map, GeneralInfo* player_info,short regime)

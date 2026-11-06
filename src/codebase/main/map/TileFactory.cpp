@@ -1,6 +1,6 @@
 
 #include "stdafx.h"
-#include "TileFactory.h"
+#include "map/TileFactory.h"
 
 TileFactory::TileFactory(float temp_W, float temp_H, short int level) :
     generation_template(template_W, std::vector<char>(template_H)),

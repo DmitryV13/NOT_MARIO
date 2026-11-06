@@ -1,2 +1,2 @@
 #include "stdafx.h"
-#include "SliderControl.h"
+#include "ui/SliderControl.h"

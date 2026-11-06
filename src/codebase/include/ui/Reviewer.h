@@ -1,7 +1,7 @@
 #pragma once
-#include "AnimatedImage.h"
-#include "InterfaceItem.h"
-#include "INTERFACE_ITEM_TYPE.h"
+#include "ui/AnimatedImage.h"
+#include "ui/InterfaceItem.h"
+#include "ui/enums/INTERFACE_ITEM_TYPE.h"
 
 using namespace::sf;
 

@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "TileMap.h"
+#include "map/TileMap.h"
 
 TileMap::TileMap(short level) : sizeTexture(64), mapH(50), mapW(100)
 {

@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "BasicImage.h"
+#include "ui/BasicImage.h"
 
 	BasicImage::BasicImage(){
 	}

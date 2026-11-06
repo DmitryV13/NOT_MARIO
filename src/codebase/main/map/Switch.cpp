@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Switch.h"
+#include "map/Switch.h"
 
 Switch::Switch() : AnimObject()
 {

@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Group.h"
+#include "ui/Group.h"
 
 	Group::Group(float x, float y, float width_, float height_)
 		: outer_width(width_), outer_height(height_), inner_width(width_), inner_height(height_)

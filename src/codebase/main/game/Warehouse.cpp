@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Warehouse.h"
+#include "game/Warehouse.h"
 
 Warehouse::Warehouse(){
 	warehouse["currency"] = vector<WarehouseItem*>();

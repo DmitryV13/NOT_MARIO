@@ -1,8 +1,8 @@
 #pragma once
-#include "INTERFACE_ITEM_TYPE.h"
-#include "InterfaceItem.h"
-#include "Group.h"
-#include "Button.h"
+#include "ui/enums/INTERFACE_ITEM_TYPE.h"
+#include "ui/InterfaceItem.h"
+#include "ui/Group.h"
+#include "ui/Button.h"
 
 using namespace::sf;
 

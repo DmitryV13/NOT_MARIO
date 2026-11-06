@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Bow.h"
+#include "equipment/Bow.h"
 
 	Bow::Bow(Vector2f player_position, FloatRect player_bounds, TileMap* sandbox_, const vector<vector<Enemy*>*>& enemies_)
 		:enemies(enemies_), sandbox(sandbox_) {
